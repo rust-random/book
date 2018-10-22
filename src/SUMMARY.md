@@ -1,3 +1,8 @@
-# Summary
+# The Rust Rand Book
 
-- [Chapter 1](./chapter_1.md)
+[Introduction](intro.md)
+
+- [Overview](overview.md)
+- [Guide](guide.md)
+- [Portability](portability.md)
+- [Contributing](contributing.md)
