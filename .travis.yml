@@ -1,0 +1,18 @@
+language: rust
+sudo: false
+cache: cargo
+rust:
+  - stable
+before_script:
+  - (mdbook -V | grep -qi "^mdbook\s*v0\.2" || cargo install mdbook --version "^0.2" --force)
+script:
+- mdbook build && mdbook test
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  github-token: $GH_TOKEN
+  local-dir: book
+  keep-history: false
+  on:
+    branch: master
