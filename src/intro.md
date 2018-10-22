@@ -25,4 +25,4 @@ and portable), then you should read this chapter.
 
 ## [Contributing](contributing.md)
 
-About contributing to the Rand project.
+About contributing to the Rand project and running its tests and benchmarks.
