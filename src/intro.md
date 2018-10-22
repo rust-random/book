@@ -8,6 +8,9 @@ See also:
 -   [API reference for the latest release](https://docs.rs/rand/)
 -   [API reference for the master branch](https://rust-random.github.io/rand/)
 
+Requirements and feature flags are not documented in this book; please see the
+[crate page](https://crates.io/crates/rand).
+
 ## [Overview](overview.md)
 
 A quick introduction to the various crates, modules and traits.
