@@ -7,8 +7,7 @@ before_script:
   - (mdbook -V | grep -qi "^mdbook\s*v0\.2" || cargo install mdbook --version "^0.2" --force)
 script:
 - mdbook build
-# we don't test, since there are unsolvable linker errors:
-# https://github.com/rust-lang-nursery/mdBook/issues/706
+- (git clone https://github.com/rust-random/rand.git && cd rand && cargo build && cd .. && mdbook test -L rand/target/debug/deps)
 
 deploy:
   provider: pages
