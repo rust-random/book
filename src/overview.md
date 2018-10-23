@@ -6,6 +6,7 @@ random numbers. More on this in [the guide](guide.md).
 
 Much of what you need should be available in the prelude:
 ```rust
+# extern crate rand;
 use rand::prelude::*;
 ```
 

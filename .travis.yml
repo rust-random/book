@@ -6,7 +6,9 @@ rust:
 before_script:
   - (mdbook -V | grep -qi "^mdbook\s*v0\.2" || cargo install mdbook --version "^0.2" --force)
 script:
-- mdbook build && mdbook test
+- mdbook build
+# we don't test, since there are unsolvable linker errors:
+# https://github.com/rust-lang-nursery/mdBook/issues/706
 
 deploy:
   provider: pages
