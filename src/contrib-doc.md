@@ -62,3 +62,11 @@ mdbook test
 # To automatically rebuild after any changes:
 mdbook watch
 ```
+
+Note that links in the book are relative and designed to work in the
+[published book](https://rust-random.github.io/book/). If you build the book
+locally, you might want to set up a symbolic link pointing to your build of the
+API documentation:
+```sh
+ln -s ../rand/target/doc rand
+```
