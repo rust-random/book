@@ -68,7 +68,11 @@ The [`Cauchy`] distribution (also known as the Lorentz distribution) is the
 distribution of the x-intercept of a ray from point `(x0, γ)` with uniformly
 distributed angle.
 
-## Probability distributions
+The [`Beta`] distribution is a two-parameter probabilty distribution, whose
+output values lie between 0 and 1. The [`Dirichlet`] distribution is a
+generalisation to any positive number of parameters.
+
+## Discrete distributions
 
 The [`Bernoulli`] distribution is very simple: given a probability `p` (or a
 ratio `num / denom`), a boolean value is produced with the given probability
@@ -82,10 +86,6 @@ number which were successful.
 
 The [`Poisson`] distribution expresses the expected number of events occurring
 within a fixed interval, given that events occur with fixed rate λ.
-
-The [`Beta`] distribution is a two-parameter probabilty distribution, whose
-output values lie between 0 and 1. The [`Dirichlet`] distribution is a
-generalisation to any positive number of parameters.
 
 ## Weighted sampling
 

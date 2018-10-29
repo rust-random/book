@@ -18,9 +18,8 @@ A **true** random number generator (TRNG) is something which produces random
 numbers by observing some natural process, such as atomic decay or thermal noise.
 (Whether or not these things are *truely* random or are in fact deterministic —
 for example if the universe itself is a simulation — is besides the point here.
-Since from our point of view these things are unpredictable and we require some
-source of *entropy*, we are forced to assume that at least some such processes
-are truely random.)
+For our purposes, it is sufficient that they are not distinguishable from true
+randomness.)
 
 Note that these processes are often biased, thus some type of *debiasing* must
 be used to yield the unbiased random data we desire.
@@ -28,7 +27,7 @@ be used to yield the unbiased random data we desire.
 ## Psuedo-random number generators
 
 CPUs are of course supposed to compute deterministically, yet it turns out they
-can do a pretty good job of emulating random processes. Most psuedo-random
+can do a pretty good job of emulating random processes. Most pseudo-random
 number generators are deterministic and can be defined by three things:
 
 -   some initial *state*
@@ -88,8 +87,22 @@ Some CSPRNGs additionally satisfy a third property:
 
 ## Hardware random number generator
 
-A **hardware** random number generator (HRNG) may be a TRNG or a PRNG or some
-combination of the two.
+A **hardware** random number generator (HRNG) is theoretically an adaptor from
+some TRNG to digital information. In practice, these may use a PRNG to de-bias
+the TRNG. Even though an HRNG has some underlying TRNG, it is not guaranteed to
+be secure: the TRNG itself may produce insufficient entropy (i.e. be too
+predictable), or the signal amplification and de-biasing process may be flawed.
+
+An HRNG may be used to provide the seed for a PRNG, although usually this is not
+the only way to obtain a secure seed (see the next section). An HRNG might
+replace a PRNG altogether, although since we now have very fast and very strong
+software PRNGs, and since software implementations are easier to verify than
+hardware ones, this is often not the preferred solution.
+
+Since a PRNG needs a random seed value to be secure, an HRNG may be used to
+provide that seed, or even replace the need for a PRNG. However, since the goal
+is usually "only" to produce unpredictable random values, it is not necessary to
+depend on a *true* random number generator; instead, one can usually 
 
 ## Entropy
 
@@ -97,7 +110,20 @@ As noted above, for a CSPRNG to be secure, its seed value must also be secure.
 The word *entropy* can be used in two ways:
 
 -   as a measure of the amount of unknown information in some piece of data
-    (typically measured in bits; see Shannon Entropy)
 -   as a piece of unknown data
 
+Ideally, a random boolean or a coin flip has 1 bit of entropy, although if the
+value is biased, there will be less. Shannon Entropy attempts to measure this.
+
+For example, a Unix timestamp (seconds since the start of 1970) contains both
+high- and low-resolution data. This is typically a 32-bit number, but the amount
+of *entropy* will depend on how precisely a hypothetical attacker can guess the
+number. If an attacker can guess the number to the nearest minute, this may be
+approximately 6 bits (2^6 = 64); if an attacker can guess this to the second,
+this is 0 bits. [`JitterRng`] uses this concept to scavange entropy without a
+HRNG (but using nanosecond resolution timers and conservatively assuming only a
+couple of bits entropy is available per timestamp, after running several tests
+on the timer's quality).
+
 [`RngCore`]: ../rand/rand_core/trait.RngCore.html
+[`JitterRng`]: ../rand/rand/rngs/jitter/struct.JitterRng.html
