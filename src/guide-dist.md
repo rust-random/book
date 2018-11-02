@@ -31,9 +31,9 @@ Rand actually has several variants of this:
 
 -   [`Standard`] requires no parameters and produces uniformly distributed
     values over the entire range of the output type (for `bool` and integers)
-    or over the range from 0 to 1 (for floats) or over valid unicode code
+    or over the range from 0 to 1 (for floats) or over valid Unicode code
     points. It also has extensions to tuples, array types and `Option`.
--   [`Uniform`] is parameterised with `low` and `high` points, and produces
+-   [`Uniform`] is parametrised with `low` and `high` points, and produces
     values uniformly distributed within this range.
 -   [`Alphanumeric`] is uniform over the values `0-9A-Za-z`
 -   [`Open01`] and [`OpenClosed01`] are variations of [`Standard`] for floating
@@ -46,7 +46,7 @@ and [`Rng::gen_range`] is a short-cut to [`Uniform`], allowing things like:
 # extern crate rand;
 # use rand::prelude::*;
 let mut rng = thread_rng();
-let cood: (f64, f64) = rng.gen();
+let coord: (f64, f64) = rng.gen();
 let die_roll = rng.gen_range(1, 7);
 ```
 
@@ -68,7 +68,7 @@ The [`Cauchy`] distribution (also known as the Lorentz distribution) is the
 distribution of the x-intercept of a ray from point `(x0, γ)` with uniformly
 distributed angle.
 
-The [`Beta`] distribution is a two-parameter probabilty distribution, whose
+The [`Beta`] distribution is a two-parameter probability distribution, whose
 output values lie between 0 and 1. The [`Dirichlet`] distribution is a
 generalisation to any positive number of parameters.
 
@@ -95,7 +95,7 @@ selection of choices each with given weight.
 [`Distribution`]: ../rand/rand/distributions/trait.Distribution.html
 [`distributions`]: ../rand/rand/distributions/index.html
 [`Rng::gen_range`]: ../rand/rand/trait.Rng.html#method.gen_range
-[`random`]: ../rand/rand/fn.random.htm
+[`random`]: ../rand/rand/fn.random.html
 [`Rng::gen_bool`]: ../rand/rand/trait.Rng.html#method.gen_bool
 [`Rng::gen_ratio`]: ../rand/rand/trait.Rng.html#method.gen_ratio
 [`Rng::gen`]: ../rand/rand/trait.Rng.html#method.gen

@@ -166,12 +166,12 @@ implementations are advised to follow this pattern (see also doc on `RngCore`).
 `SmallRng` has been added as a wrapper, currently around `XorShiftRng` (but
 likely another algorithm soon). This is for uses where small state and fast
 initialisation are important but cryptographic strength is not required.
-(Actual performance of generation varies by benchmark; dependending on usage
+(Actual performance of generation varies by benchmark; depending on usage
 this may or may not be the fastest algorithm, but will always be fast.)
 
 ### `ReseedingRng`
 
-The `ReseedingRng` wrapper has been signficantly altered to reduce overhead.
+The `ReseedingRng` wrapper has been significantly altered to reduce overhead.
 Unfortunately the new `ReseedingRng` is not compatible with all RNGs, but only
 those using `BlockRngCore`.
 
@@ -179,7 +179,7 @@ those using `BlockRngCore`.
 
 The `IsaacRng` and `Isaac64Rng` PRNGs now have an additional construction
 method: `new_from_u64(seed)`. 64 bits of state is insufficient for cryptography
-but may be of use in simulations and games. This will likely be superceeded by
+but may be of use in simulations and games. This will likely be superseded by
 a method to construct any PRNG from any hashable object in the future.
 
 ### HC-128
@@ -204,7 +204,7 @@ The `Sample` and `IndependentSample` traits have been replaced by a single
 trait, `Distribution`. This is largely equivalent to `IndependentSample`, but
 with `ind_sample` replaced by just `sample`. Support for mutable distributions
 has been dropped; although it appears there may be a few genuine uses, these
-are not used widely enough to justify the existance of two independent traits
+are not used widely enough to justify the existence of two independent traits
 or of having to provide mutable access to a distribution object. Both `Sample`
 and `IndependentSample` are still available, but deprecated; they will be
 removed in a future release.
@@ -239,9 +239,9 @@ The `Range` distribution has been heavily adapted, and renamed to `Uniform`:
 
 Two distributions have been added:
 
--   Poisson, modelling the number of events expected from a constant-rate
+-   Poisson, modeling the number of events expected from a constant-rate
     source within a fixed time interval (e.g. nuclear decay)
--   Binomial, modelling the outcome of a fixed number of yes-no trials
+-   Binomial, modeling the outcome of a fixed number of yes-no trials
 
 The sampling methods are based on those in "Numerical Recipes in C".
 

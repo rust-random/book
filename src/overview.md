@@ -44,7 +44,7 @@ Tying produces and consumers together, we have the [`RngCore`] trait
 All deterministic producers should implement [`SeedableRng`], which concerns
 seeding of PRNGs.
 
-Any implementor of [`SeedableRng`] is automatically supported by [`FromEntropy`]
+Any implementer of [`SeedableRng`] is automatically supported by [`FromEntropy`]
 which allows easy construction from an external source of randomness. For more
 direct usage, [`EntropyRng`] and [`OsRng`] directly provide data from external
 sources.

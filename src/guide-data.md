@@ -42,7 +42,7 @@ numbers can our random value come from?
     of equal size is equally likely; for example we could subdivide the interval
     `0,1` into `0,½` and `½,1` and toss a coin to decide which interval our
     random sample comes from. Say we pick `½,1` we can then toss another coin to
-    decide between `½,¾` and `¾,1`, restricting our random value to an inverval
+    decide between `½,¾` and `¾,1`, restricting our random value to an interval
     of size `¼`. We can repeat this as many times as necessary to pick a random
     value between `0` and `1` with as much precision as we want — although we
     should realise that we are not choosing an *exact* value but rather just a

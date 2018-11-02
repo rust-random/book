@@ -16,7 +16,7 @@ let mut rng = rand::thread_rng();
 
 A **true** random number generator (TRNG) is something which produces random
 numbers by observing some natural process, such as atomic decay or thermal noise.
-(Whether or not these things are *truely* random or are in fact deterministic —
+(Whether or not these things are *truly* random or are in fact deterministic —
 for example if the universe itself is a simulation — is besides the point here.
 For our purposes, it is sufficient that they are not distinguishable from true
 randomness.)
@@ -24,7 +24,7 @@ randomness.)
 Note that these processes are often biased, thus some type of *debiasing* must
 be used to yield the unbiased random data we desire.
 
-## Psuedo-random number generators
+## Pseudo-random number generators
 
 CPUs are of course supposed to compute deterministically, yet it turns out they
 can do a pretty good job of emulating random processes. Most pseudo-random
@@ -37,7 +37,7 @@ number generators are deterministic and can be defined by three things:
 The fact that these are deterministic can sometimes be very useful: it allows a
 simulation, randomised art work or game to be repeated exactly, producing a
 result which is a function of the seed. For more on this see the
-[portability](portability.md) chapter (note that deterministicity alone isn't
+[portability](portability.md) chapter (note that determinicity alone isn't
 enough to guarantee reproducibility).
 
 The other big attraction of PRNGs is their speed: some of these algorithms
@@ -61,9 +61,9 @@ values (approx 10^38); since modern CPUs have "only" around 10^17 clock
 cycles per year even a super fast generator producing one value per cycle
 would take 10^21 years to run its cycle.
 
-## Crytographically secure pseudo-random number generator
+## Cryptographically secure pseudo-random number generator
 
-Crytographically secure pseudo-random number generators (CSPRNGs) are the
+Cryptographically secure pseudo-random number generators (CSPRNGs) are the
 subset of PRNGs which are considered secure. That is:
 
 -   their state is sufficiently large that a brute-force approach simply trying
@@ -88,10 +88,10 @@ Some CSPRNGs additionally satisfy a third property:
 ## Hardware random number generator
 
 A **hardware** random number generator (HRNG) is theoretically an adaptor from
-some TRNG to digital information. In practice, these may use a PRNG to de-bias
+some TRNG to digital information. In practice, these may use a PRNG to debias
 the TRNG. Even though an HRNG has some underlying TRNG, it is not guaranteed to
 be secure: the TRNG itself may produce insufficient entropy (i.e. be too
-predictable), or the signal amplification and de-biasing process may be flawed.
+predictable), or the signal amplification and debiasing process may be flawed.
 
 An HRNG may be used to provide the seed for a PRNG, although usually this is not
 the only way to obtain a secure seed (see the next section). An HRNG might
@@ -101,8 +101,8 @@ hardware ones, this is often not the preferred solution.
 
 Since a PRNG needs a random seed value to be secure, an HRNG may be used to
 provide that seed, or even replace the need for a PRNG. However, since the goal
-is usually "only" to produce unpredictable random values, it is not necessary to
-depend on a *true* random number generator; instead, one can usually 
+is usually "only" to produce unpredictable random values, there are acceptable
+alternatives to *true* random number generators (see next section).
 
 ## Entropy
 
@@ -115,14 +115,14 @@ The word *entropy* can be used in two ways:
 Ideally, a random boolean or a coin flip has 1 bit of entropy, although if the
 value is biased, there will be less. Shannon Entropy attempts to measure this.
 
-For example, a Unix timestamp (seconds since the start of 1970) contains both
+For example, a Unix time-stamp (seconds since the start of 1970) contains both
 high- and low-resolution data. This is typically a 32-bit number, but the amount
 of *entropy* will depend on how precisely a hypothetical attacker can guess the
 number. If an attacker can guess the number to the nearest minute, this may be
 approximately 6 bits (2^6 = 64); if an attacker can guess this to the second,
-this is 0 bits. [`JitterRng`] uses this concept to scavange entropy without a
+this is 0 bits. [`JitterRng`] uses this concept to scavenge entropy without an
 HRNG (but using nanosecond resolution timers and conservatively assuming only a
-couple of bits entropy is available per timestamp, after running several tests
+couple of bits entropy is available per time-stamp, after running several tests
 on the timer's quality).
 
 [`RngCore`]: ../rand/rand_core/trait.RngCore.html
