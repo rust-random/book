@@ -7,3 +7,7 @@ automatically initializes an RNG in thread-local memory, then returns a
 reference to it. It is fast, good quality, and secure (unpredictable).
 
 TODO
+
+[`rngs` module]: ../rand/rand/rngs/index.html
+[`prng` module]: ../rand/rand/prng/index.html
+[`thread_rng`]: ../rand/rand/fn.thread_rng.html
