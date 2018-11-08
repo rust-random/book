@@ -21,5 +21,6 @@
 
 - [Contributing](contributing.md)
     - [Documentation](contrib-doc.md)
+    - [Scope](contrib-scope.md)
     - [Testing](contrib-test.md)
     - [Benchmarks](contrib-bench.md)
