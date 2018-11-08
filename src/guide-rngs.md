@@ -1,25 +1,10 @@
 # Our RNGs
 
-There are many kinds of RNGs, with different trade-offs. You can read more
-about them in the [`rngs` module] and even more in the [`prng` module],
-however, often you can just use [`thread_rng`]. This function
-automatically initializes an RNG in thread-local memory, then returns a
-reference to it. It is fast, good quality, and secure (unpredictable).
-
-
-Pseudo-random number generators.
-
-Pseudo-random number generators are algorithms to produce apparently random
-numbers deterministically, and usually fairly quickly. See the documentation
-of the [`rngs` module] for some introduction to PRNGs.
-
-As mentioned there, PRNGs fall in two broad categories:
-
-- [basic PRNGs], primarily designed for simulations
-- [CSPRNGs], primarily designed for cryptography
-
-In simple terms, the basic PRNGs are often predictable; CSPRNGs should not
-be predictable *when used correctly*.
+There are many kinds of RNGs, with different trade-offs. Rand provides some
+convenient generators in the [`rngs` module]. Often you can just use
+[`thread_rng`], a function which automatically initializes an RNG in
+thread-local memory and returns a reference to it. It is fast, good quality,
+and (to the best of our knowledge) cryptographically secure.
 
 Contents of this documentation:
 
@@ -36,13 +21,17 @@ Contents of this documentation:
 ## Basic pseudo-random number generators (PRNGs)
 
 The goal of regular, non-cryptographic PRNGs is usually to find a good
-balance between simplicity, quality, memory usage and performance. These
-algorithms are very important to Monte Carlo simulations, and also suitable
-for several other problems such as randomized algorithms and games (except
-where there is a risk of players predicting the next output value from
-previous values, in which case a CSPRNG should be used).
+balance between simplicity, quality, memory usage and performance.
+Non-cryptographic generators pre-date cryptographic ones and since we now have
+fast cryptographic generators, some people argue that the cryptographic ones
+are now obsolete. They do however still have some advantages: small state size,
+fast initialisation and simplicity.
 
-Currently Rand provides only one PRNG, and not a very good one at that:
+These algorithms are very important to Monte Carlo simulations, and also
+suitable for several other problems such as randomized algorithms and games
+(except for betting games, where a CSPRNG should be used for security).
+
+The Rand project provides the following non-cryptographic PRNGs:
 
 | name | full name | performance | memory | quality | period | features |
 |------|-----------|-------------|--------|---------|--------|----------|
@@ -50,24 +39,24 @@ Currently Rand provides only one PRNG, and not a very good one at that:
 | [`Pcg64Mcg`] | PCG XSL 128/64 (MCG) | ★★★★☆ | 16 bytes | ★★★☆☆ | `u64` * 2<sup>126</sup> | — |
 | [`XorShiftRng`] | Xorshift 32/128 | ★★★★☆ | 16 bytes | ★☆☆☆☆ | `u32` * 2<sup>128</sup> - 1 | — |
 
-// Quality stars [not rendered in documentation]:
-// 5. proven cryptographic quality (e.g. ChaCha20)
-// 4. potentially cryptographic, but low margin or lack of theory (e.g. ChaCha8, ISAAC)
-// 3. good performance on TestU01 and PractRand, good theory
-// 2. imperfect performance on tests or other limiting properties, or
-//    insufficient theory, but not terrible
-// 1. clear deficiencies in test results, cycle length, theory, or other
-//    properties
-//
-// Performance stars [not rendered in documentation]:
-// Meant to give an indication of relative performance. Roughly follows a log
-// scale, based on the performance of `next_u64` on a current i5/i7:
-// - 5. 8000 MB/s+
-// - 4. 4000 MB/s+
-// - 3. 2000 MB/s+
-// - 2. 1000 MB/s+
-// - 1. < 1000 MB/s
-//
+<!-- Quality stars [not rendered in documentation]: -->
+<!-- 5. proven cryptographic quality (e.g. ChaCha20) -->
+<!-- 4. potentially cryptographic, but low margin or lack of theory (e.g. ChaCha8, ISAAC) -->
+<!-- 3. good performance on TestU01 and PractRand, good theory -->
+<!-- 2. imperfect performance on tests or other limiting properties, or -->
+<!--    insufficient theory, but not terrible -->
+<!-- 1. clear deficiencies in test results, cycle length, theory, or other -->
+<!--    properties -->
+<!-- -->
+<!-- Performance stars [not rendered in documentation]: -->
+<!-- Meant to give an indication of relative performance. Roughly follows a log -->
+<!-- scale, based on the performance of `next_u64` on a current i5/i7: -->
+<!-- - 5. 8000 MB/s+ -->
+<!-- - 4. 4000 MB/s+ -->
+<!-- - 3. 2000 MB/s+ -->
+<!-- - 2. 1000 MB/s+ -->
+<!-- - 1. < 1000 MB/s -->
+
 ## Cryptographically secure pseudo-random number generators (CSPRNGs)
 
 CSPRNGs have much higher requirements than basic PRNGs. The primary
@@ -82,8 +71,7 @@ Any block cipher can be turned into a CSPRNG by encrypting a counter. Stream
 ciphers are basically a CSPRNG and a combining operation, usually XOR. This
 means that we can easily use any stream cipher as a CSPRNG.
 
-This crate currently provides two CSPRNGs. The sub-crate `rand_isaac`
-provides two CSPRNG-like PRNGs:
+We provide the following "CSPRNG-like" RNGs:
 
 | name | full name |  performance | initialization | memory | predictability | forward secrecy |
 |------|-----------|--------------|--------------|----------|----------------|-------------------------|
@@ -98,7 +86,9 @@ beginning. They have good quality output and no attacks are known, but have
 received little attention from cryptography experts.
 
 
-# Performance
+# Notes on generators
+
+## Performance
 
 First it has to be said most PRNGs are very fast, and will rarely be a
 performance bottleneck.
@@ -120,11 +110,12 @@ good amortised performance, and reduces or completely removes the influence
 of surrounding code on the CSPRNG performance.
 
 ### Worst-case performance
-Because CSPRNGs usually produce a block of values into a cache, they have
-poor worst case performance (in contrast to basic PRNGs, where the
-performance is usually quite regular).
+Simple PRNGs typically produce each random value on demand. In contrast, CSPRNGs
+usually produce a whole block at once, then read from this cache until it is
+exhausted, giving them much less consistent performance when drawing small
+quantities of random data.
 
-## State size
+### Memory usage
 
 Simple PRNGs often use very little memory, commonly only a few words, where
 a *word* is usually either `u32` or `u64`. This is not true for all
@@ -137,7 +128,7 @@ to be at least 192 bits and some more may be required for the algorithm,
 CSPRNGs tend to use quite a bit more, [`ChaChaRng`] is relatively small with
 136 bytes of state.
 
-## Initialization time
+### Initialization time
 
 The time required to initialize new generators varies significantly. Many
 simple PRNGs and even some cryptographic ones (including [`ChaChaRng`])
@@ -145,7 +136,7 @@ only need to copy the seed value and some constants into their state, and
 thus can be constructed very quickly. In contrast, CSPRNGs with large state
 require an expensive key-expansion.
 
-# Quality
+## Quality
 
 Many basic PRNGs are not much more than a couple of bitwise and arithmetic
 operations. Their simplicity gives good performance, but also means there
@@ -173,7 +164,7 @@ PRNGs with 3 stars or more should be good enough for any purpose.
 1 or 2 stars may be good enough for typical apps and games, but do not work
 well with all algorithms.
 
-## Period
+### Period
 
 The *period* or *cycle length* of a PRNG is the number of values that can be
 generated after which it starts repeating the same random number stream.
@@ -211,9 +202,9 @@ than the square root of the period (after 2<sup>64</sup> values for a
 period of 2<sup>128</sup>).
 
 
-# Security
+## Security
 
-## Predictability
+### Predictability
 
 From the context of any PRNG, one can ask the question *given some previous
 output from the PRNG, is it possible to predict the next output value?*
@@ -245,7 +236,7 @@ analyzing existing designs, and what was once considered good may now turn
 out to be weaker. Generally it is best to use algorithms well-analyzed by
 experts, such as those recommended by NIST or ECRYPT.
 
-## State and seeding
+### State and seeding
 
 It is worth noting that a CSPRNG's security relies absolutely on being
 seeded with a secure random key. Should the key be known or guessable, all
@@ -265,7 +256,7 @@ serialisation of CSPRNGs for convenience). Further, a running process may be
 forked by the operating system, which may leave both processes with a copy
 of the same generator.
 
-## Not a crypto library
+### Not a crypto library
 
 It should be emphasised that this is not a cryptography library; although
 Rand does take some measures to provide secure random numbers, it does not
@@ -276,7 +267,7 @@ recommended to use specialized libraries where possible, for example
 [openssl], [ring] and the [RustCrypto libraries].
 
 
-# Extra features
+## Extra features
 
 Some PRNGs may provide extra features, like:
 
@@ -285,7 +276,7 @@ Some PRNGs may provide extra features, like:
 with large periood this can be used as an alternative to streams.
 
 
-# Further reading
+## Further reading
 
 There is quite a lot that can be said about PRNGs. The [PCG paper] is a
 very approachable explaining more concepts.
@@ -296,7 +287,6 @@ http://random.mat.sbg.ac.at/results/peter/A19final.pdf) by P. Hellekalek.
 
 
 [`rngs` module]: ../rand/rand/rngs/index.html
-[`prng` module]: ../rand/rand/prng/index.html
 [`thread_rng`]: ../rand/rand/fn.thread_rng.html
 [basic PRNGs]: #basic-pseudo-random-number-generators-prngs
 [CSPRNGs]: #cryptographically-secure-pseudo-random-number-generators-csprngs
