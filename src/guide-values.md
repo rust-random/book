@@ -8,8 +8,8 @@ of *distribution* of this value (which is what the [`next`](guide-dist.md) secti
 is all about).
 
 For convenience, all generators automatically implement the [`Rng`] trait,
-which provides short-cuts to a few ways of generating values.
-Some of the most useful methods are:
+which provides short-cuts to a few ways of generating values. This has several
+convenience functions for producing uniformly distributed values:
 
 -   [`gen`] generates an unbiased random value from a range appropriate for the
     type. For integers this is normally the full representable range
@@ -18,12 +18,20 @@ Some of the most useful methods are:
     More on this in the [next section](guide-dist.html#uniform-distributions).
 -   [`gen_range`] generates an unbiased random value with given bounds
     `low` (inclusive) and `high` (exclusive)
--   [`sample`] samples directly from some distribution
+-   [`fill`] and [`try_fill`] are optimised functions for filling any byte or
+    integer slice with random values
+
+It also has convenience functions for producing non-uniform boolean values:
+
 -   [`gen_bool`] generates a boolean with the given probability
 -   [`gen_ratio`] also generates a boolean, where the probability is defined
     via a fraction
--   [`fill`] and [`try_fill`] are optimised functions for filling any byte or
-    integer slice with random values
+
+Finally, it has a function to sample from arbitrary distributions:
+
+-   [`sample`] samples directly from some [distribution](guide-dist.md)
+
+Examples:
 
 ```rust
 # extern crate rand;
