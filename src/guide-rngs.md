@@ -23,7 +23,7 @@ Contents of this documentation:
 The goal of regular, non-cryptographic PRNGs is usually to find a good
 balance between simplicity, quality, memory usage and performance.
 Non-cryptographic generators pre-date cryptographic ones and since we now have
-fast cryptographic generators, some people argue that the cryptographic ones
+fast cryptographic generators, some people argue that the non-cryptographic ones
 are now obsolete. They do however still have some advantages: small state size,
 fast initialisation and simplicity.
 
@@ -71,7 +71,7 @@ Any block cipher can be turned into a CSPRNG by encrypting a counter. Stream
 ciphers are basically a CSPRNG and a combining operation, usually XOR. This
 means that we can easily use any stream cipher as a CSPRNG.
 
-We provide the following "CSPRNG-like" RNGs:
+We provide the following CSPRNGs:
 
 | name | full name |  performance | initialization | memory | predictability | forward secrecy |
 |------|-----------|--------------|--------------|----------|----------------|-------------------------|
@@ -160,9 +160,9 @@ unpredictable. This implies there must be no obvious correlations between
 output values.
 
 ### Quality stars:
-PRNGs with 3 stars or more should be good enough for any purpose.
-1 or 2 stars may be good enough for typical apps and games, but do not work
-well with all algorithms.
+PRNGs with 3 stars or more should be good enough for most non-crypto
+applications. 1 or 2 stars may be good enough for typical apps and games, but do
+not work well with all algorithms.
 
 ### Period
 
@@ -172,10 +172,11 @@ Many PRNGs have a fixed-size period, but for some only an expected average
 cycle length can be given, where the exact length depends on the seed.
 
 On today's hardware, even a fast RNG with a cycle length of *only*
-2<sup>64</sup> can be used for centuries before cycling. Yet we recommend a
-period of 2<sup>128</sup> or more, which most modern PRNGs satisfy.
-Alternatively a PRNG with shorter period but support for multiple streams
-may be chosen. There are two reasons for this, as follows.
+2<sup>64</sup> can be used sequentially for centuries before cycling. However,
+this is not the case for parallel applications. We recommend a period of
+2<sup>128</sup> or more, which most modern PRNGs satisfy. Alternatively a PRNG
+with shorter period but support for multiple streams may be chosen. There are
+two reasons for this, as follows.
 
 If we see the entire period of an RNG as one long random number stream,
 every independently seeded RNG returns a slice of that stream. When multiple
@@ -278,10 +279,10 @@ with large periood this can be used as an alternative to streams.
 
 ## Further reading
 
-There is quite a lot that can be said about PRNGs. The [PCG paper] is a
-very approachable explaining more concepts.
+There is quite a lot that can be said about PRNGs. The [PCG paper] is very
+approachable and explains more concepts.
 
-A good paper about RNG quality is
+Another good paper about RNG quality is
 ["Good random number generators are (not so) easy to find"](
 http://random.mat.sbg.ac.at/results/peter/A19final.pdf) by P. Hellekalek.
 
