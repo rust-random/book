@@ -39,7 +39,7 @@ The Rand project provides the following non-cryptographic PRNGs:
 | [`Pcg32`] | PCG XSH RR 64/32 (LCG) | ★★★☆☆ | 16 bytes | ★★★☆☆ | `u32` * 2<sup>64</sup> | — |
 | [`Pcg64Mcg`] | PCG XSL 128/64 (MCG) | ★★★★☆ | 16 bytes | ★★★☆☆ | `u64` * 2<sup>126</sup> | — |
 | [`XorShiftRng`] | Xorshift 32/128 | ★★★★☆ | 16 bytes | ★☆☆☆☆ | `u32` * 2<sup>128</sup> - 1 | — |
-| [`Xoshiro256StarStar`] | Xoshiro256\*\* | ★★★★☆ | 32 bytes | ★★★☆☆ | `u32` * 2<sup>256</sup> - 1 | jump-ahead |
+| [`Xoshiro256StarStar`] | Xoshiro256\*\* | ★★★★☆ | 32 bytes | ★★★☆☆ | `u64` * 2<sup>256</sup> - 1 | jump-ahead |
 
 <!-- Quality stars [not rendered in documentation]: -->
 <!-- 5. proven cryptographic quality (e.g. ChaCha20) -->
