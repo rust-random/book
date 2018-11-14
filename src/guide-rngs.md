@@ -24,8 +24,9 @@ The goal of regular, non-cryptographic PRNGs is usually to find a good
 balance between simplicity, quality, memory usage and performance.
 Non-cryptographic generators pre-date cryptographic ones and since we now have
 fast cryptographic generators, some people argue that the non-cryptographic ones
-are now obsolete. They do however still have some advantages: small state size,
-fast initialisation and simplicity.
+are now obsolete. They can however have some advantages: small state size, fast
+initialisation and simplicity (though this is not true of all non-crypto PRNGs;
+e.g. the Mersenne Twister has a large state despite being easy to predict).
 
 These algorithms are very important to Monte Carlo simulations, and also
 suitable for several other problems such as randomized algorithms and games
@@ -71,13 +72,14 @@ Any block cipher can be turned into a CSPRNG by encrypting a counter. Stream
 ciphers are basically a CSPRNG and a combining operation, usually XOR. This
 means that we can easily use any stream cipher as a CSPRNG.
 
-We provide the following CSPRNGs:
+This library provides the following CSPRNGs. We can make no guarantees
+of any security claims.
 
-| name | full name |  performance | initialization | memory | predictability | forward secrecy |
+| name | full name |  performance | initialization | memory | security (predictability) | forward secrecy |
 |------|-----------|--------------|--------------|----------|----------------|-------------------------|
-| [`ChaChaRng`] | ChaCha20 | ★☆☆☆☆ | fast | 136 bytes | secure | no |
-| [`Hc128Rng`] | HC-128 | ★★☆☆☆ | slow | 4176 bytes | secure | no |
-| [`IsaacRng`] | ISAAC | ★★☆☆☆ | slow | 2072 bytes | unknown | unknown |
+| [`ChaChaRng`] | ChaCha20 | ★☆☆☆☆ | fast | 136 bytes | [rigorously analysed](https://tools.ietf.org/html/rfc7539#section-1) | no |
+| [`Hc128Rng`] | HC-128 | ★★☆☆☆ | slow | 4176 bytes | [recommended by eSTREAM](http://www.ecrypt.eu.org/stream/) | no |
+| [`IsaacRng`] | ISAAC | ★★☆☆☆ | slow | 2072 bytes | [unknown](https://burtleburtle.net/bob/rand/isaacafa.html) | unknown |
 | [`Isaac64Rng`] | ISAAC-64 | ★★☆☆☆ | slow | 4136 bytes| unknown | unknown |
 
 It should be noted that the ISAAC generators are only included for
@@ -231,11 +233,10 @@ in the event that the CSPRNGs state is revealed at some point, it must be
 infeasible to reconstruct previous states or output. Note that many CSPRNGs
 *do not* have forward secrecy in their usual formulations.
 
-As an outsider it is hard to get a good idea about the security of an
-algorithm. People in the field of cryptography spend a lot of effort
-analyzing existing designs, and what was once considered good may now turn
-out to be weaker. Generally it is best to use algorithms well-analyzed by
-experts, such as those recommended by NIST or ECRYPT.
+Verifying security claims of an algorithm is a *hard problem*, and we are not
+able to provide any guarantees of the security of algorithms used or recommended
+by this project. We refer you to the [NIST] institute and [ECRYPT] network
+for recommendations.
 
 ### State and seeding
 
@@ -308,3 +309,5 @@ http://random.mat.sbg.ac.at/results/peter/A19final.pdf) by P. Hellekalek.
 [ring]: https://crates.io/crates/ring
 [RustCrypto libraries]: https://github.com/RustCrypto
 [next-bit test]: https://en.wikipedia.org/wiki/Next-bit_test
+[NIST]: https://www.nist.gov/
+[ECRYPT]: http://www.ecrypt.eu.org/
