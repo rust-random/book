@@ -50,16 +50,9 @@ Note however that PRNGs have several limitations:
     and the algorithm is known (or guessed), then only a small number of output
     sequences are likely.
 -   Since the state size is usually fixed, only a finite number of output values
-    are possible before the generator loops and repeats itself. 
+    are possible before the generator loops and repeats itself.
 -   Several algorithms are easily predictable after seeing a few values, and
     with many other algorithms it is not clear whether they could be "cracked".
-
-TODO: move
-This is usually
-not an issue in practice; for example 16 bytes allows a length of 2^128
-values (approx 10^38); since modern CPUs have "only" around 10^17 clock
-cycles per year even a super fast generator producing one value per cycle
-would take 10^21 years to run its cycle.
 
 ## Cryptographically secure pseudo-random number generator
 

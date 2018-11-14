@@ -23,19 +23,6 @@ in the future. We therefore recommend migrating to use the prelude or the
 new module organization in your imports.
 
 
-## Distinction between Rand and `rand_core`
-
-TODO: move this to a "crate overview"
-
-The [`rand_core`] crate provides the necessary traits and functionality for
-implementing RNGs; this includes the [`RngCore`] and [`SeedableRng`] traits
-and the [`Error`] type.
-Crates implementing RNGs should depend on [`rand_core`].
-
-Applications and libraries consuming random values are encouraged to use the
-Rand crate, which re-exports the common parts of [`rand_core`].
-
-
 ## Further examples
 
 For some inspiration, see the example applications:

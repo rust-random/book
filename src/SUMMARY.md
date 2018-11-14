@@ -4,6 +4,8 @@
 
 - [Overview](overview.md)
 
+- [Feature flags](features.md)
+
 - [Guide](guide.md)
     - [Random data](guide-data.md)
     - [Random generators](guide-gen.md)
@@ -21,5 +23,6 @@
 
 - [Contributing](contributing.md)
     - [Documentation](contrib-doc.md)
+    - [Scope](contrib-scope.md)
     - [Testing](contrib-test.md)
     - [Benchmarks](contrib-bench.md)
