@@ -18,7 +18,8 @@ The `rand` library has the following scope:
 -   sampling from various random number distributions
 
 The `rand_chacha`, `rand_hc`, `rand_isaac`, `rand_pcg` and `rand_xorshift`
-libraries provide additional PRNGs.
+libraries provide additional PRNGs. They are recommended over `StdRng` and
+`SmallRng` when reproducibility is needed.
 
 ## New PRNG Algorithms
 
