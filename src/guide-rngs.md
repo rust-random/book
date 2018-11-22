@@ -298,6 +298,7 @@ http://random.mat.sbg.ac.at/results/peter/A19final.pdf) by P. Hellekalek.
 [`Pcg64Mcg`]: ../rand/rand_pcg/type.Pcg64Mcg.html
 [`XorShiftRng`]: ../rand/rand_xorshift/struct.XorShiftRng.html
 [`Xoshiro256StarStar`]: ../rand/rand_xoshiro/struct.Xoshiro256StarStar.html
+[`Xoshiro256Plus`]: ../rand/rand_xoshiro/struct.Xoshiro256Plus.html
 [`ChaChaRng`]: ../rand/rand_chacha/struct.ChaChaRng.html
 [`Hc128Rng`]: ../rand/rand_hc/struct.Hc128Rng.html
 [`IsaacRng`]: ../rand/rand_isaac/isaac/struct.IsaacRng.html
