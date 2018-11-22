@@ -4,7 +4,7 @@ The previous section introduced [`RngCore`], the trait which all *random data
 sources* must implement. But what exactly is a random data source?
 
 This section concerns theory; see also the chapter on
-[random number generators](rngs.md).
+[random number generators](guide-rngs.md).
 
 ```rust
 # extern crate rand;

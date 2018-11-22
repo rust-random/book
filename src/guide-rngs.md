@@ -39,6 +39,8 @@ The Rand project provides the following non-cryptographic PRNGs:
 | [`Pcg32`] | PCG XSH RR 64/32 (LCG) | ★★★☆☆ | 16 bytes | ★★★☆☆ | `u32` * 2<sup>64</sup> | — |
 | [`Pcg64Mcg`] | PCG XSL 128/64 (MCG) | ★★★★☆ | 16 bytes | ★★★☆☆ | `u64` * 2<sup>126</sup> | — |
 | [`XorShiftRng`] | Xorshift 32/128 | ★★★★☆ | 16 bytes | ★☆☆☆☆ | `u32` * 2<sup>128</sup> - 1 | — |
+| [`Xoshiro256StarStar`] | Xoshiro256\*\* | ★★★★☆ | 32 bytes | ★★★☆☆ | `u64` * 2<sup>256</sup> - 1 | jump-ahead |
+| [`Xoshiro256Plus`] | Xoshiro256+ | ★★★★★ | 32 bytes | ★★☆☆☆ | `u64` * 2<sup>256</sup> - 1 | jump-ahead |
 
 <!-- Quality stars [not rendered in documentation]: -->
 <!-- 5. proven cryptographic quality (e.g. ChaCha20) -->
@@ -295,6 +297,8 @@ http://random.mat.sbg.ac.at/results/peter/A19final.pdf) by P. Hellekalek.
 [`Pcg32`]: ../rand/rand_pcg/type.Pcg32.html
 [`Pcg64Mcg`]: ../rand/rand_pcg/type.Pcg64Mcg.html
 [`XorShiftRng`]: ../rand/rand_xorshift/struct.XorShiftRng.html
+[`Xoshiro256StarStar`]: ../rand/rand_xoshiro/struct.Xoshiro256StarStar.html
+[`Xoshiro256Plus`]: ../rand/rand_xoshiro/struct.Xoshiro256Plus.html
 [`ChaChaRng`]: ../rand/rand_chacha/struct.ChaChaRng.html
 [`Hc128Rng`]: ../rand/rand_hc/struct.Hc128Rng.html
 [`IsaacRng`]: ../rand/rand_isaac/isaac/struct.IsaacRng.html
