@@ -15,7 +15,7 @@ algorithms, and an external crate with Xoshiro / Xoroshiro algorithms:
 -   [`rand_chacha`](https://crates.io/crates/rand_hc)
 -   [`rand_hc`](https://crates.io/crates/rand_hc)
 -   [`rand_isaac`](https://crates.io/crates/rand_isaac)
--   [`rand_xorshift`](https://crates.io/crates/rand_pcg)
+-   [`rand_xorshift`](https://crates.io/crates/rand_xorshift)
 -   [`rand_pcg`](https://crates.io/crates/rand_pcg)
 -   [`xoshiro`](https://crates.io/crates/xoshiro)
 
