@@ -29,8 +29,10 @@ initialisation and simplicity (though this is not true of all non-crypto PRNGs;
 e.g. the Mersenne Twister has a large state despite being easy to predict).
 
 These algorithms are very important to Monte Carlo simulations, and also
-suitable for several other problems such as randomized algorithms and games
-(except for betting games, where a CSPRNG should be used for security).
+suitable for several other problems such as randomized algorithms and games,
+where predictability is not an issue. (Note that it might be problematic for
+betting games and multiplayer games, where a cryptographic PRNG is usually more
+appropriate.)
 
 The Rand project provides the following non-cryptographic PRNGs:
 
@@ -79,7 +81,8 @@ of any security claims.
 
 | name | full name |  performance | initialization | memory | security (predictability) | forward secrecy |
 |------|-----------|--------------|--------------|----------|----------------|-------------------------|
-| [`ChaChaRng`] | ChaCha20 | ★☆☆☆☆ | fast | 136 bytes | [rigorously analysed](https://tools.ietf.org/html/rfc7539#section-1) | no |
+| [`ChaCha20Rng`] | ChaCha20 | ★★☆☆☆ | fast | 136 bytes | [rigorously analysed](https://tools.ietf.org/html/rfc7539#section-1) | no |
+| [`ChaCha8Rng`] | ChaCha8 | ★★★☆☆ | fast | 136 bytes | small security margin | no |
 | [`Hc128Rng`] | HC-128 | ★★☆☆☆ | slow | 4176 bytes | [recommended by eSTREAM](http://www.ecrypt.eu.org/stream/) | no |
 | [`IsaacRng`] | ISAAC | ★★☆☆☆ | slow | 2072 bytes | [unknown](https://burtleburtle.net/bob/rand/isaacafa.html) | unknown |
 | [`Isaac64Rng`] | ISAAC-64 | ★★☆☆☆ | slow | 4136 bytes| unknown | unknown |
@@ -300,6 +303,8 @@ http://random.mat.sbg.ac.at/results/peter/A19final.pdf) by P. Hellekalek.
 [`Xoshiro256StarStar`]: ../rand/rand_xoshiro/struct.Xoshiro256StarStar.html
 [`Xoshiro256Plus`]: ../rand/rand_xoshiro/struct.Xoshiro256Plus.html
 [`ChaChaRng`]: ../rand/rand_chacha/struct.ChaChaRng.html
+[`ChaCha20Rng`]: ../rand/rand_chacha/struct.ChaCha20Rng.html
+[`ChaCha8Rng`]: ../rand/rand_chacha/struct.ChaCha8Rng.html
 [`Hc128Rng`]: ../rand/rand_hc/struct.Hc128Rng.html
 [`IsaacRng`]: ../rand/rand_isaac/isaac/struct.IsaacRng.html
 [`Isaac64Rng`]: ../rand/rand_isaac/isaac64/struct.Isaac64Rng.html
