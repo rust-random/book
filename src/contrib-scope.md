@@ -1,5 +1,8 @@
 # Scope
 
+The [`getrandom`](https://github.com/rust-random/getrandom/) library deals with
+platform-specific interfaces.
+
 The `rand_core` library has the following scope:
 
 -   the core traits which RNGs may implement
@@ -8,14 +11,21 @@ The `rand_core` library has the following scope:
 The `rand` library has the following scope:
 
 -   re-export all parts of `rand_core` applicable to end users
--   an interface to request entropy from an external source
--   hooks to provide entropy from several platform-specific sources
--   traits covering common RNG functionality
--   some PRNGs, notably `StdRng` and `SmallRng`
--   `thread_rng` auto-seeding source of randomness
--   conversion of random bits to common types and uses
--   shuffling and sampling from sequences
--   sampling from various random number distributions
+-   the `Rng` extension trait
+-   misc. rngs: `thread_rng`, `StdRng`, `ReadRng`, `mock::StepRng`, etc.
+-   `seq` functionality
+-   the `Distribution` trait and most used implementations
+
+The `rand_distr` library hosts additional random number distributions, and
+re-exports all distributions provided by `rand`. Note that this crate has
+significant functional overlap with `statrs`, however `rand_distr` focusses
+almost exclusively on sampling (and doing so fast), while `statrs` includes
+more functionality, e.g. PDFs, CDFs, `beta`, `gamma` and `error` functions.
+
+The `rand_os` crate provides a simple wrapper around `getrandom`, which is
+duplicated within the `rand` crate.
+
+The `rand_jitter` crate houses `JitterRng`.
 
 The `rand_chacha`, `rand_hc`, `rand_isaac`, `rand_pcg` and `rand_xorshift`
 libraries provide additional PRNGs. They are recommended over `StdRng` and
@@ -39,10 +49,3 @@ evaluating such requests we must consider several things:
 -   performance and features of the generator
 -   scope of the project
 -   reception and third-party review of the algorithm
-
-## New distributions
-
-Currently the `rand` lib and [`statrs`](https://github.com/boxtown/statrs) have
-significant overlap in that both libraries implement sampling for many of the
-same statistical distributions. Because of this, we are reluctant to accept new
-sampling algorithms in Rand itself. This issue is not yet resolved (see #290).

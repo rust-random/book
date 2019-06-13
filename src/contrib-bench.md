@@ -1,13 +1,17 @@
 # Benchmarks
 
-Running benchmarks is easy (but requires a nightly compiler):
+We already have many benchmarks:
 
 ```sh
-cargo bench
+cargo +nightly bench
 
 # In a few cases, nightly features may use different code paths:
-cargo bench --features=nightly
+cargo +nightly bench --features=nightly
 ```
+
+Benchmarks for distributions now live in the `rand_distr` crate; all other
+benchmarks (including all our RNGs) live in the main `rand` crate
+(hence the many dev-dependencies).
 
 A lot of code in Rand is performance sensitive, most of it is expected to be
 used in hot loops in some libraries/applications. If you change code in
