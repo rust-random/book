@@ -1,12 +1,6 @@
 # Documentation
 
-We are very happy to recieve documentation pull-requests.
-
-Documentation is split into two parts: the API documentation (from the code,
-usually in [rust-random/rand](https://github.com/rust-random/rand)), and this
-book (from [rust-random/book](https://github.com/rust-random/book)).
-
-## Style
+### Style
 
 All documentation is in English, but no particular dialect is preferred.
 
@@ -17,11 +11,12 @@ often impossible to write appropriate one-size-fits-all documentation, we
 prefer concise technical documentation with reference to extended articles
 aimed at more specific audiences.
 
-## Building and testing
+## API documentation
 
-### API documentation
+### Rand crates
 
-To build the API documentation locally, run:
+To build all API documentation for all crates in the
+[rust-random/rand](https://github.com/rust-random/rand) repository, run:
 
 ```sh
 # Build doc for all modules:
@@ -33,7 +28,7 @@ xdg-open target/doc/rand/index.html
 
 On Linux, it is easy to set up automatic rebuilds after any edit:
 ```sh
-while inotifywait -r -e close_write src/ rand_core/; do cargo doc; done
+while inotifywait -r -e close_write src/ rand_*/; do cargo doc; done
 ```
 
 After editing API documentation, we reccomend testing examples and
@@ -49,9 +44,37 @@ cargo doc --all --no-deps
 cargo deadlinks --dir target/doc
 ```
 
+TODO: document how to make cross-links
+
+Rand API docs are automatically built and hosted at
+[rust-random.github.io/rand/](https://rust-random.github.io/rand/) for the
+latest code in master.
+
+### Getrandom crate
+
+The [rust-random/getrandom](https://github.com/rust-random/getrandom)
+repository contains only a single crate, hence a simple `cargo doc` will
+suffice.
+
+## Auxilliary documentation
+
+### README files
+
+TODO: for `rand_jitter/README.md`, example code is checked by `cargo test`.
+
+### CHANGELOG files
+
+Changelog formats are based on the
+[Keep a Changelog](http://keepachangelog.com/en/1.0.0/) format.
+
+All significant changes merged since the last release should be listed under an
+`[Unreleased]` section at the top of log.
+
 ### The book
 
-The book is built using mdbook, which makes building and testing easy:
+The source to this book is contained in the
+[rust-random/book](https://github.com/rust-random/book) repository.
+It is built using mdbook, which makes building and testing easy:
 
 ```sh
 cargo install mdbook --version "^0.2"

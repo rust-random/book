@@ -1,51 +1,81 @@
 # Scope
 
-The [`getrandom`](https://github.com/rust-random/getrandom/) library deals with
-platform-specific interfaces.
+Over time, the scope of the project has grown, and Rand has moved from using a
+monolithic crate to using a "main" crate plus multiple single-purpose crates.
+For new functionality, one must consider where, and whether, it fits within the
+Rand project.
 
-The `rand_core` library has the following scope:
+Small, focussed crates may be used for a few reasons, but we aim *not* to
+maximally divide functionality into small crates. Valid reasons for using a
+separate crate for a feature are therefore:
 
--   the core traits which RNGs may implement
--   tools for implementing these traits
+-   to allow a clear dependency hierarchy (`rand_core`)
+-   to make the feature available in a stand-alone fashion (e.g. `getrandom`)
+-   to remove little-used features with non-trivial amounts of code from widely
+    used crates (e.g. `rand_jitter` and `rand_distr` both extracted
+    functionality from `rand`)
+-   to allow choice, without including large amounts of unused code for all
+    users, but also without producing an enormous number of new crates
+    (RNG family crates like `rand_xoshiro` and `rand_isaac`)
 
-The `rand` library has the following scope:
 
--   re-export all parts of `rand_core` applicable to end users
--   the `Rng` extension trait
--   misc. rngs: `thread_rng`, `StdRng`, `ReadRng`, `mock::StepRng`, etc.
--   `seq` functionality
--   the `Distribution` trait and most used implementations
+## Traits, basics and UI
 
-The `rand_distr` library hosts additional random number distributions, and
-re-exports all distributions provided by `rand`. Note that this crate has
-significant functional overlap with `statrs`, however `rand_distr` focusses
-almost exclusively on sampling (and doing so fast), while `statrs` includes
-more functionality, e.g. PDFs, CDFs, `beta`, `gamma` and `error` functions.
+The main user interface to the Rand project remains the central `rand` crate.
+Goals for this crate are:
 
-The `rand_os` crate provides a simple wrapper around `getrandom`, which is
-duplicated within the `rand` crate.
+-   ease of use
+-   expose commonly used functionality in a single place
+-   permit usage of additional randomness sources and distribution samplers
 
-The `rand_jitter` crate houses `JitterRng`.
+To allow better modularity, the core traits have been moved to the `rand_core`
+crate. Goals of this crate are:
 
-The `rand_chacha`, `rand_hc`, `rand_isaac`, `rand_pcg` and `rand_xorshift`
-libraries provide additional PRNGs. They are recommended over `StdRng` and
-`SmallRng` when reproducibility is needed.
+-   expose the core traits with minimal dependencies
+-   provide common tools needed to implement various randomness sources
 
-## New PRNG Algorithms
+## External random sources
+
+The main (and usually only) external source of randomness is the Operating
+System, interfaced via the `getrandom` crate. This crate also supports usage of
+RDRAND on a few `no_std` targets.
+
+Support for other `no_std` targets has been discussed but with little real
+implementation effort. See
+[getrandom#4](https://github.com/rust-random/getrandom/issues/4).
+
+The `rand_jitter` crate provides an implementation of a
+[CPU Jitter](http://www.chronox.de/jent.html) entropy harvestor, and is only
+included in Rand for historical reasons.
+
+The `rand_os` crate proves an `RngCore` implementation around `getrandom`.
+
+## Pseudo-random generators
 
 The Rand library includes several pseudo-random number generators, for the
 following reasons:
 
 -   to implement the `StdRng` and `SmallRng` generators
--   to provide a strong, widely trusted CSPRNG (ChaCha)
+-   to provide a few high-quality alternative generators
 -   historical usage
+
+These are implemented within "family" crates, e.g. `rand_chacha`, `rand_pcg`,
+`rand_xoshiro`.
 
 We have received several requests to adopt new algorithms into the library; when
 evaluating such requests we must consider several things:
 
+-   purpose for inclusion within Rand
 -   whether the PRNG is cryptographically secure, and if so, how trustworthy
     such claims are
 -   statistical quality of output
 -   performance and features of the generator
--   scope of the project
 -   reception and third-party review of the algorithm
+
+## Distributions
+
+The `Distribution` trait is provided by Rand, along with commonly-used
+distributions (mostly linear ones).
+
+Additional distributions are packaged within the `rand_distr` crate, which
+depends on `rand` and re-exports all of its distributions.

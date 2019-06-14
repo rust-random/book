@@ -25,7 +25,7 @@ thus we may take considerable time to get back to you.
 
 -   **Changelog:** unless your change is trivial, please include a note in the
     changelog (`CHANGELOG.md`) of each crate affected, under the `[Unreleased]`
-    heading at the top(add if necessary). Please include the PR number (this
+    heading at the top (add if necessary). Please include the PR number (this
     implies the note must be added *after* opening a PR).
 -   **Commits:** if contributing large changes, consider splitting these over
     multiple commits, if possible such that each commit at least compiles.
