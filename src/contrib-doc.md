@@ -44,17 +44,50 @@ cargo doc --all --no-deps
 cargo deadlinks --dir target/doc
 ```
 
-TODO: document how to make cross-links
-
 Rand API docs are automatically built and hosted at
-[rust-random.github.io/rand/](https://rust-random.github.io/rand/) for the
-latest code in master.
+[rust-random.github.io/rand] for the latest code in master.
 
 ### Getrandom crate
 
 The [rust-random/getrandom](https://github.com/rust-random/getrandom)
 repository contains only a single crate, hence a simple `cargo doc` will
 suffice.
+
+### Cross-crate links
+
+When referring to another crate, we prefer linking to the crate page on
+crates.io since (a) this includes the README documenting the purpose of the
+crate and (b) this links directly to both the repository and the API
+documentation. Example:
+
+```rust
+// Link to the crate page:
+//! [`rand_chacha`]: https://crates.io/crates/rand_chacha
+```
+
+When referring to an item from within another crate,
+
+1.  if that item is accessible via a crate dependency (even if not via the
+    public API), use the Rust item path
+2.  when linking to another crate within the `rust-random/rand` repository,
+    relative paths within the generated documentation files (under `target/doc`)
+    can be used; these work on [rust-random.github.io/rand] but not
+    currently on `docs.rs` (see [docs#204])
+3.  if neither of the above are applicable, use an absolute link
+4.  consider revising documentation, e.g. refer to the crate instead
+
+Examples:
+
+```
+// We depend on rand_core, therefore can use the Rust path:
+/// [`BlockRngCore`]: rand_core::block::BlockRngCore
+
+// rand_chacha is not a dependency, but is within the same repository:
+//! [`ChaCha20Rng`]: ../../rand_chacha/struct.ChaCha20Rng.html
+
+// Link directly to docs.rs, with major & minor but no patch version:
+https://docs.rs/getrandom/0.1/getrandom/fn.getrandom.html
+```
 
 ## Auxilliary documentation
 
@@ -93,3 +126,6 @@ API documentation:
 ```sh
 ln -s ../rand/target/doc rand
 ```
+
+[rust-random.github.io/rand]: https://rust-random.github.io/rand
+[docs#204]: https://github.com/rust-lang/docs.rs/issues/204
