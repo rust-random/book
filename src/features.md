@@ -44,7 +44,7 @@ Almost all Rand libraries can be used without Rust's standard library:
 -   The [`rand_core`] and [`rand_jitter`] crates assume `no_std` by default, but
     support some additional functionality when the `std` feature is enabled.
 -   [`getrandom`] (and by extension [`rand_os`]) has limited support for `no_std`.
-    It does not use of feature flags but detects based on the target platform.
+    It does not use feature flags, instead detecting requirements based on the target platform.
 -   The [`rand_distr`] crate does not support `no_std` mode.
 -   All PRNG crates other than [`rand_chacha`] do not require `std`.
 
