@@ -15,6 +15,8 @@ aimed at more specific audiences.
 
 ### Rand crates
 
+It is recommended to use nightly Rust for correct link handling.
+
 To build all API documentation for all crates in the
 [rust-random/rand](https://github.com/rust-random/rand) repository, run:
 
