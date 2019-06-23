@@ -2,6 +2,7 @@
 
 This section attempts to explain some of the concepts used in this library.
 
+1.  [Intro: Hello Random example](guide-start.md)
 1.  [What is random data and what is randomness anyway?](guide-data.md)
 1.  [What kind of random generators are there?](guide-gen.md)
 1.  [What random number generators does Rand provide?](guide-rngs.md)

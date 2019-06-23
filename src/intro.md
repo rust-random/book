@@ -1,54 +1,20 @@
 # The Rust Rand Book
 
-This is the extended documentation set for Rust's **Rand**om number lib
-([source](https://github.com/rust-random/book)).
+This is the extended documentation for Rust's **Rand**om number library.
 
-See also:
+This book contains:
 
--   [The Rand repository](https://github.com/rust-random/rand)
+1.  An overview of [crates and functionality](crates.md)
+2.  Documentation of crate [feature flags](features.md)
+3.  The [Users' Guide](guide.md)
+4.  Notes on [Portability and Reproducibility](portability.md).
+    (Read this if you want reproducibility across builds.)
+5.  [Updating guides](update.md)
+6.  [Contributor's guide](contributing.md)
+
+Outside this book, you may want:
+
 -   [API reference for the latest release](https://docs.rs/rand/)
 -   [API reference for the master branch](https://rust-random.github.io/rand/)
--   [The crate page](https://crates.io/crates/rand)
-
-
-## Distinction between Rand and `rand_core`
-
-The [`rand_core`] crate provides the necessary traits and functionality for
-implementing RNGs; this includes the [`RngCore`] and [`SeedableRng`] traits
-and the [`Error`] type.
-Crates implementing RNGs should depend on [`rand_core`].
-
-Applications and libraries consuming random values are encouraged to use the
-Rand crate, which re-exports the common parts of [`rand_core`].
-
-## [Overview](overview.md)
-
-A quick introduction to the various crates, modules and traits.
-
-## [Feature flags](features.md)
-
-A run-down of our feature gates (extra functionality).
-
-## [Guide](guide.md)
-
-Want an overview of how everything fits together? Or confused by some of the
-terminology used in this lib? Read the guide.
-
-## [Portability](portability.md)
-
-"Random number generation" often involves producing deterministic yet "random"
-data. If you wish to produce reproducible results (i.e. deterministic, stable
-and portable), then you should read this chapter.
-
-## [Updating](update.md)
-
-A guide to upgrading to the next signficant version.
-
-## [Contributing](contributing.md)
-
-About contributing to the Rand project and running its tests and benchmarks.
-
-[`rand_core`]: https://crates.io/crates/rand_core
-[`RngCore`]: ../rand/rand_core/trait.RngCore.html
-[`SeedableRng`]: ../rand/rand_core/trait.SeedableRng.html
-[`Error`]: ../rand/rand_core/struct.Error.html
+-   [The Rand repository](https://github.com/rust-random/rand/)
+-   [The Book source](https://github.com/rust-random/book/)

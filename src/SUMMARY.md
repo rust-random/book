@@ -2,11 +2,12 @@
 
 [Introduction](intro.md)
 
-- [Overview](overview.md)
+- [Crates](crates.md)
 
 - [Feature flags](features.md)
 
 - [Guide](guide.md)
+    - [Getting Started](guide-start.md)
     - [Random data](guide-data.md)
     - [Random generators](guide-gen.md)
     - [Our RNGs](guide-rngs.md)
