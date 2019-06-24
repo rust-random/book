@@ -3,39 +3,6 @@
 This section provides a birds-eye view of Rand. If you want more details,
 skip to the next section, [the guide](guide.md).
 
-The following example demonstrates usage of the [`prelude`], [`random()`],
-[`thread_rng()`] and [`Rng::gen()`]:
-
-```rust
-extern crate rand;
-
-// import commonly used items from the prelude:
-use rand::prelude::*;
-
-fn main() {
-    // We can use random() immediately. It can produce values of many common types:
-    let x: u8 = random();
-    println!("{}", x);
-
-    let y = random::<f64>();
-    println!("{}", y);
-
-    if random() { // generates a boolean
-        println!("Heads!");
-    }
-
-    // If we want to be a bit more explicit (and a little more efficient) we can
-    // make a handle to the thread-local generator:
-    let mut rng = thread_rng();
-    if rng.gen() { // random bool
-        let x: f64 = rng.gen(); // random number in range [0, 1)
-        println!("x is: {}", x);
-        println!("Random char: {}", rng.gen::<char>());
-        println!("Number from 0 to 9: {}", rng.gen_range(0, 10));
-    }
-}
-```
-
 ## Producers
 
 Tying produces and consumers together, we have the [`RngCore`] trait

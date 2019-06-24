@@ -4,3 +4,6 @@ multilingual = false
 src = "src"
 title = "The Rust Rand Book"
 description = "Extended documentation for Rust's Rand lib"
+
+[output.html.playgen]
+editable = true

@@ -1,5 +1,19 @@
 # Portability
 
+## Definitions
+
+Given fixed inputs, all items (should) fall into one of three categories:
+
+-   Output is non-deterministic, thus never reproducible
+-   Output is deterministic, but not considered portable
+-   Output is deterministic and portable
+
+In general, functionality is considered deterministic and portable *unless*
+it is clearly non-deterministic (e.g. `getrandom`, `ThreadRng`) *or* it is
+documented as being unportable (e.g. `StdRng`, `SmallRng`).
+
+## Crate versions
+
 We try to follow [semver rules](https://docs.npmjs.com/misc/semver) regarding
 API-breaking changes and `MAJOR.MINOR.PATCH` versions:
 
@@ -7,42 +21,28 @@ API-breaking changes and `MAJOR.MINOR.PATCH` versions:
     features
 -   Before 1.0, *minor* versions may include API breaking changes. After 1.0
     they should not.
--   We may make pre-releases like `0.5.0-pre.0`. In this case:
-    
-    -   although these are public versions, they are not used by default unless
-        opting into using a pre-release on the specific `MAJOR.MINOR.PATCH`
-        version
-    -   pre-releases are considered semantically less than their final release
-        (e.g. Cargo may automatically upgrade from `0.5.0-pre.0` to `0.5.0`)
-    -   all pre-release versions are unstable and may make any change
-    -   we make no commitment to support users of pre-releases
 
 Additionally, we must also consider *value-breaking changes* and *portability*.
-A function is *value-stable* if, given the same inputs:
+When given fixed inputs,
 
--   it is portable (produces the same results on all platforms)
--   changing the output value for some input in a new library version is
-    considered a breaking change
+-   For non-deterministic items, implementations may change in any release
+-   For deterministic unportable items, output should be preserved in patch
+    releases, but may change in any minor release (including after 1.0)
+-   For portable items, any change of output across versions is considered
+    equivalent to an API breaking change.
 
-Note that some Rand functionality is supposed to be value stable, and some
-functionality is supposed to be non-deterministic (i.e. depend on something
-external). Some functionality may be deterministic but not value-stable.
+## Portability of usize
 
-A trait should define which of its functions are expected to be value-stable.
-An implementation of a trait must meet those stability requirements, unless the
-object for which the trait is implemented is explicitly not value-stable.
-As an example, `SeedableRng::from_seed` is required to be value-stable, but
-`SeedableRng::from_rng` is not. RNGs implementing the trait are value-stable
-when they guarantee `SeedableRng::from_seed` is value-stable, while
-`SeedableRng::from_rng` may receive optimisations.
+There is unfortunately one non-portable item baked into the heart of the Rust
+language: `usize` (and `isize`). For example, the size of an empty
+`Vec` will differ on 32-bit and 64-bit targets. For most purposes this is not an
+issue, but when it comes to generating random numbers in a portable manner
+it does matter.
 
-Before 1.0, we allow any new *minor* version to break value-stability, though
-we do expect such changes to be mentioned in the changelog. Post 1.0 we have
-not yet determined exact stability rules.
+A simple rule follows: if portability is required, *never* sample a `usize` or
+`isize` value directly.
 
-Additionally, we expect patch versions not to change the output of any
-deterministic functions, even if not value-stable (this is not a hard
-requirement, but exceptions should be noted in the changelog).
-
-Defining which parts of Rand are value-stable is still in progress. Many parts
-of `rand_core` have some documentation on value-stability.
+Within Rand we adhere to this rule whenever possible. All sequence-releated
+code requiring a bounded `usize` value will sample a `u32` value unless the
+upper bound exceeds `u32::MAX`.
+(Note that this actually improves benchmark performance in many cases.)
