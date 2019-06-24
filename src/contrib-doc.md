@@ -95,7 +95,14 @@ https://docs.rs/getrandom/0.1/getrandom/fn.getrandom.html
 
 ### README files
 
-TODO: for `rand_jitter/README.md`, example code is checked by `cargo test`.
+README files contain a brief introduction to the crate, shield badges, useful
+links, feature-flag documentation, licence information, and potentially an
+example.
+
+For the most part these files do not have any continuous testing.
+Where examples are included (currently only for the `rand_jitter` crate),
+we enable continuous testing via `doc_comment` (see
+[lib.rs:62 onwards](https://github.com/rust-random/rand/blob/master/rand_jitter/src/lib.rs#L62)).
 
 ### CHANGELOG files
 
