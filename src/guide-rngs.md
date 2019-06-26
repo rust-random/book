@@ -34,33 +34,33 @@ where predictability is not an issue. (Note that it might be problematic for
 betting games and multiplayer games, where a cryptographic PRNG is usually more
 appropriate.)
 
-The Rand project provides the following non-cryptographic PRNGs:
+The Rand project provides several non-cryptographic PRNGs. A sub-set of these
+are summarised below.
+You may wish to refer to the [pcg-random] and [xoshiro] websites.
 
 | name | full name | performance | memory | quality | period | features |
 |------|-----------|-------------|--------|---------|--------|----------|
-| [`Pcg32`] | PCG XSH RR 64/32 (LCG) | ★★★☆☆ | 16 bytes | ★★★☆☆ | `u32` * 2<sup>64</sup> | — |
-| [`Pcg64Mcg`] | PCG XSL 128/64 (MCG) | ★★★★☆ | 16 bytes | ★★★☆☆ | `u64` * 2<sup>126</sup> | — |
-| [`XorShiftRng`] | Xorshift 32/128 | ★★★★☆ | 16 bytes | ★☆☆☆☆ | `u32` * 2<sup>128</sup> - 1 | — |
-| [`Xoshiro256StarStar`] | Xoshiro256\*\* | ★★★★☆ | 32 bytes | ★★★☆☆ | `u64` * 2<sup>256</sup> - 1 | jump-ahead |
-| [`Xoshiro256Plus`] | Xoshiro256+ | ★★★★★ | 32 bytes | ★★☆☆☆ | `u64` * 2<sup>256</sup> - 1 | jump-ahead |
+| [`SmallRng`] | (unspecified) | 7 GB/s | 16 bytes | ★★★☆☆ | ≥ `u32` * 2<sup>64</sup> | not portable |
+| [`Pcg32`] | PCG XSH RR 64/32 (LCG) | 3 GB/s | 16 bytes | ★★★☆☆ | `u32` * 2<sup>64</sup> | — |
+| [`Pcg64`] | PCG XSL 128/64 (LCG) | 4 GB/s | 32 bytes | ★★★★☆ | `u64` * 2<sup>128</sup> | — |
+| [`Pcg64Mcg`] | PCG XSL 128/64 (MCG) | 7 GB/s | 16 bytes | ★★★☆☆ | `u64` * 2<sup>126</sup> | — |
+| [`XorShiftRng`] | Xorshift 32/128 | 5 GB/s | 16 bytes | ★☆☆☆☆ | `u32` * 2<sup>128</sup> - 1 | — |
+| [`Xoshiro256StarStar`] | Xoshiro256\*\* | 7 GB/s | 32 bytes | ★★★☆☆ | `u64` * 2<sup>256</sup> - 1 | jump-ahead |
+| [`Xoshiro256Plus`] | Xoshiro256+ | 8 GB/s | 32 bytes | ★★☆☆☆ | `u64` * 2<sup>256</sup> - 1 | jump-ahead |
+| [`SplitMix64`] | splitmix64 | 8 GB/s | 8 bytes | ★☆☆☆☆ | `u64` * 2<sup>64</sup> | — |
+| [`StepRng`] | counter | 51 GB/s | 16 bytes | ☆☆☆☆☆ | `u64` * 2<sup>64</sup> | — |
 
-<!-- Quality stars [not rendered in documentation]: -->
-<!-- 5. proven cryptographic quality (e.g. ChaCha20) -->
-<!-- 4. potentially cryptographic, but low margin or lack of theory (e.g. ChaCha8, ISAAC) -->
-<!-- 3. good performance on TestU01 and PractRand, good theory -->
-<!-- 2. imperfect performance on tests or other limiting properties, or -->
-<!--    insufficient theory, but not terrible -->
-<!-- 1. clear deficiencies in test results, cycle length, theory, or other -->
-<!--    properties -->
-<!-- -->
-<!-- Performance stars [not rendered in documentation]: -->
-<!-- Meant to give an indication of relative performance. Roughly follows a log -->
-<!-- scale, based on the performance of `next_u64` on a current i5/i7: -->
-<!-- - 5. 8000 MB/s+ -->
-<!-- - 4. 4000 MB/s+ -->
-<!-- - 3. 2000 MB/s+ -->
-<!-- - 2. 1000 MB/s+ -->
-<!-- - 1. < 1000 MB/s -->
+Here, performance is measured roughly for `u64` outputs on a 3.4GHz Haswell CPU
+(note that this will vary significantly by application; in general cryptographic
+RNGs do better with byte sequence output). Quality ratings are
+based on theory and observable defects, roughly as follows:
+
+-   ★☆☆☆☆ = suitable for simple applications but with significant flaws
+-   ★★☆☆☆ = good performance in most tests, some issues
+-   ★★★☆☆ = good performance and theory, no major issues
+-   ★★★★☆ = no observable issues and not trivial to predict (but not
+    recommended for security)
+-   ★★★★★ = cryptographic quality
 
 ## Cryptographically secure pseudo-random number generators (CSPRNGs)
 
@@ -77,15 +77,17 @@ ciphers are basically a CSPRNG and a combining operation, usually XOR. This
 means that we can easily use any stream cipher as a CSPRNG.
 
 This library provides the following CSPRNGs. We can make no guarantees
-of any security claims.
+of any security claims. This table omits the "quality" column from the previous
+table since CSPRNGs may not have observable defects.
 
 | name | full name |  performance | initialization | memory | security (predictability) | forward secrecy |
 |------|-----------|--------------|--------------|----------|----------------|-------------------------|
-| [`ChaCha20Rng`] | ChaCha20 | ★★☆☆☆ | fast | 136 bytes | [rigorously analysed](https://tools.ietf.org/html/rfc7539#section-1) | no |
-| [`ChaCha8Rng`] | ChaCha8 | ★★★☆☆ | fast | 136 bytes | small security margin | no |
-| [`Hc128Rng`] | HC-128 | ★★☆☆☆ | slow | 4176 bytes | [recommended by eSTREAM](http://www.ecrypt.eu.org/stream/) | no |
-| [`IsaacRng`] | ISAAC | ★★☆☆☆ | slow | 2072 bytes | [unknown](https://burtleburtle.net/bob/rand/isaacafa.html) | unknown |
-| [`Isaac64Rng`] | ISAAC-64 | ★★☆☆☆ | slow | 4136 bytes| unknown | unknown |
+| [`StdRng`] | (unspecified) | 1.5 GB/s | fast | 136 bytes | widely trusted | no |
+| [`ChaCha20Rng`] | ChaCha20 | 1.8 GB/s | fast | 136 bytes | [rigorously analysed](https://tools.ietf.org/html/rfc7539#section-1) | no |
+| [`ChaCha8Rng`] | ChaCha8 | 2.2 GB/s | fast | 136 bytes | small security margin | no |
+| [`Hc128Rng`] | HC-128 | 2.1 GB/s | slow | 4176 bytes | [recommended by eSTREAM](http://www.ecrypt.eu.org/stream/) | no |
+| [`IsaacRng`] | ISAAC | 1.1 GB/s | slow | 2072 bytes | [unknown](https://burtleburtle.net/bob/rand/isaacafa.html) | unknown |
+| [`Isaac64Rng`] | ISAAC-64 | 2.2 GB/s | slow | 4136 bytes| unknown | unknown |
 
 It should be noted that the ISAAC generators are only included for
 historical reasons, they have been with the Rust language since the very
@@ -294,14 +296,19 @@ http://random.mat.sbg.ac.at/results/peter/A19final.pdf) by P. Hellekalek.
 
 
 [`rngs` module]: ../rand/rand/rngs/index.html
+[`SmallRng`]: ../rand/rand/rngs/struct.SmallRng.html
+[`StdRng`]: ../rand/rand/rngs/struct.StdRng.html
+[`StepRng`]: ../rand/rand/rngs/mock/struct.StepRng.html
 [`thread_rng`]: ../rand/rand/fn.thread_rng.html
 [basic PRNGs]: #basic-pseudo-random-number-generators-prngs
 [CSPRNGs]: #cryptographically-secure-pseudo-random-number-generators-csprngs
 [`Pcg32`]: ../rand/rand_pcg/type.Pcg32.html
+[`Pcg64`]: ../rand/rand_pcg/type.Pcg64.html
 [`Pcg64Mcg`]: ../rand/rand_pcg/type.Pcg64Mcg.html
 [`XorShiftRng`]: ../rand/rand_xorshift/struct.XorShiftRng.html
 [`Xoshiro256StarStar`]: ../rand/rand_xoshiro/struct.Xoshiro256StarStar.html
 [`Xoshiro256Plus`]: ../rand/rand_xoshiro/struct.Xoshiro256Plus.html
+[`SplitMix64`]: ../rand/rand_xoshiro/struct.SplitMix64.html
 [`ChaChaRng`]: ../rand/rand_chacha/struct.ChaChaRng.html
 [`ChaCha20Rng`]: ../rand/rand_chacha/struct.ChaCha20Rng.html
 [`ChaCha8Rng`]: ../rand/rand_chacha/struct.ChaCha8Rng.html
@@ -313,6 +320,8 @@ http://random.mat.sbg.ac.at/results/peter/A19final.pdf) by P. Hellekalek.
 [`EntropyRng`]: ../rand/rand/rngs/struct.EntropyRng.html
 [TestU01]: http://simul.iro.umontreal.ca/testu01/tu01.html
 [PractRand]: http://pracrand.sourceforge.net/
+[pcg-random]: http://www.pcg-random.org/
+[xoshiro]: http://xoshiro.di.unimi.it/
 [PCG paper]: http://www.pcg-random.org/pdf/hmc-cs-2014-0905.pdf
 [openssl]: https://crates.io/crates/openssl
 [ring]: https://crates.io/crates/ring

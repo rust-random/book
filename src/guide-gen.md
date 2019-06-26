@@ -8,8 +8,13 @@ This section concerns theory; see also the chapter on
 
 ```rust
 # extern crate rand;
-// prepare a random number generator:
+# extern crate rand_pcg;
+// prepare a non-deterministic random number generator:
 let mut rng = rand::thread_rng();
+
+// prepare a deterministic generator:
+use rand::SeedableRng;
+let mut rng = rand_pcg::Pcg32::seed_from_u64(123);
 ```
 
 ## True random number generators
