@@ -12,7 +12,7 @@ All PRNGs in our [old PRNG module](https://docs.rs/rand/0.5/rand/prng/index.html
 have been moved to new crates. We also added an additional crate with the PCG
 algorithms, and an external crate with Xoshiro / Xoroshiro algorithms:
 
--   [`rand_chacha`](https://crates.io/crates/rand_hc)
+-   [`rand_chacha`](https://crates.io/crates/rand_chacha)
 -   [`rand_hc`](https://crates.io/crates/rand_hc)
 -   [`rand_isaac`](https://crates.io/crates/rand_isaac)
 -   [`rand_xorshift`](https://crates.io/crates/rand_xorshift)
