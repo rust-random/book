@@ -282,7 +282,7 @@ Some PRNGs may provide extra features, like:
 
 - Support for multiple streams, which can help with parallel tasks.
 - The ability to jump or seek around in the random number stream;
-with large periood this can be used as an alternative to streams.
+with a large period this can be used as an alternative to streams.
 
 
 ## Further reading
