@@ -63,7 +63,29 @@ All generators implement the [`Rng`] trait, which provides the [`gen`],
 Rand provides functionality on iterators and slices via two more traits,
 [`IteratorRandom`] and [`SliceRandom`].
 
+## Fixed seed RNGs
 
+You may have noticed the use of `thread_rng()` above and wondered how to
+specify a fixed seed. To do so, you need to specify an RNG then use a method
+like [`seed_from_u64`] or [`from_seed`].
+
+We use `ChaCha8Rng` below because it is fast and portable with good quality.
+See the [RNGs] section for more RNGs, but avoid `SmallRng` and `StdRng` if you
+care about reproducible results.
+
+```rust,editable
+extern crate rand;
+extern crate rand_chacha;
+
+use rand::{Rng, SeedableRng};
+
+fn main() {
+    let mut rng = rand_chacha::ChaCha8Rng::seed_from_u64(10);
+    println!("Random f32: {}", rng.gen::<f32>());
+}
+```
+
+[RNGs]: guide-rngs.html
 [prelude]: https://rust-random.github.io/rand/rand/prelude/index.html
 [`Rng`]: https://rust-random.github.io/rand/rand/trait.Rng.html
 [`gen`]: https://rust-random.github.io/rand/rand/trait.Rng.html#method.gen
@@ -74,3 +96,5 @@ Rand provides functionality on iterators and slices via two more traits,
 [`Standard`]: https://rust-random.github.io/rand/rand/distributions/struct.Standard.html
 [`IteratorRandom`]: https://rust-random.github.io/rand/rand/seq/trait.IteratorRandom.html
 [`SliceRandom`]: https://rust-random.github.io/rand/rand/seq/trait.SliceRandom.html
+[`seed_from_u64`]: https://rust-random.github.io/rand/rand/trait.SeedableRng.html#method.seed_from_u64
+[`from_seed`]: https://rust-random.github.io/rand/rand/trait.SeedableRng.html#tymethod.from_seed
