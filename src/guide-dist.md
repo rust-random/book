@@ -116,4 +116,4 @@ selection of choices each with given weight.
 [`Poisson`]: ../rand/rand/distributions/struct.Poisson.html
 [`Beta`]: ../rand/rand/distributions/struct.Beta.html
 [`Dirichlet`]: ../rand/rand/distributions/struct.Dirichlet.html
-[`WeightedIndex`]: ../rand/rand/distributions/struct.WeightedIndex.html
+[`WeightedIndex`]: ../rand/rand/distributions/weighted/struct.WeightedIndex.html
