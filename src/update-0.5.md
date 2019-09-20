@@ -175,6 +175,31 @@ The `ReseedingRng` wrapper has been significantly altered to reduce overhead.
 Unfortunately the new `ReseedingRng` is not compatible with all RNGs, but only
 those using `BlockRngCore`.
 
+### ChaCha
+
+The method `ChaChaRng::set_counter` has been replaced by two new methods,
+`set_word_pos` and `set_stream`. Where necessary, the behaviour of the old
+method may be emulated as follows:
+
+```rust
+# use rand::prelude::*;
+# use rand_chacha::ChaChaRng;
+let lower = 88293;
+let higher = 9300932;
+
+// previously:
+// let mut rng = rand::ChaChaRng::new_unseeded();
+// rng.set_counter(lower, higher);
+
+// now:
+let mut rng = ChaChaRng::from_seed([0u8; 32]);
+rng.set_word_pos(lower << 4);
+rng.set_stream(higher);
+
+assert_eq!(4060232610, rng.next_u32());
+assert_eq!(2786236710, rng.next_u32());
+```
+
 ### ISAAC PRNGs
 
 The `IsaacRng` and `Isaac64Rng` PRNGs now have an additional construction
