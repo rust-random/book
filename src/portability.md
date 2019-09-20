@@ -46,3 +46,11 @@ Within Rand we adhere to this rule whenever possible. All sequence-releated
 code requiring a bounded `usize` value will sample a `u32` value unless the
 upper bound exceeds `u32::MAX`.
 (Note that this actually improves benchmark performance in many cases.)
+
+## Portability of floats
+
+The results of floating point arithmetic depend on rounding modes and
+implementation details. Especially the results of transcendental functions vary
+from platform to platform. Due to this, the distributions in `rand_distr` are
+not always portable for `f32` and `f64`. However, we strive to make them as
+portable as possible.
