@@ -69,6 +69,10 @@ You may have noticed the use of `thread_rng()` above and wondered how to
 specify a fixed seed. To do so, you need to specify an RNG then use a method
 like [`seed_from_u64`] or [`from_seed`].
 
+Note that [`seed_from_u64`] is **not suitable for cryptographic uses** since a
+single `u64` cannot provide sufficient entropy to securely seed an RNG.
+All cryptographic RNGs accept a more appropriate seed via [`from_seed`].
+
 We use `ChaCha8Rng` below because it is fast and portable with good quality.
 See the [RNGs] section for more RNGs, but avoid `SmallRng` and `StdRng` if you
 care about reproducible results.
