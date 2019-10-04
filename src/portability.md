@@ -31,7 +31,18 @@ When given fixed inputs,
 -   For portable items, any change of output across versions is considered
     equivalent to an API breaking change.
 
-## Portability of usize
+### Testing
+
+We expect all pseudo-random algorithms to test the value-stability of their
+output, where possible:
+
+-   PRNGs should be compared with a reference vector ([example](https://github.com/rust-random/rngs/blob/master/rand_xoshiro/src/xoshiro256starstar.rs#L113))
+-   Other algorithms should include their own test vectors within a
+    `value_stability` test or similar ([example](https://github.com/rust-random/rand/blob/master/src/distributions/bernoulli.rs#L168))
+
+## Limitations
+
+### Portability of usize
 
 There is unfortunately one non-portable item baked into the heart of the Rust
 language: `usize` (and `isize`). For example, the size of an empty
@@ -47,7 +58,7 @@ code requiring a bounded `usize` value will sample a `u32` value unless the
 upper bound exceeds `u32::MAX`.
 (Note that this actually improves benchmark performance in many cases.)
 
-## Portability of floats
+### Portability of floats
 
 The results of floating point arithmetic depend on rounding modes and
 implementation details. Especially the results of transcendental functions vary
