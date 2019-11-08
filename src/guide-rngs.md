@@ -42,7 +42,7 @@ You may wish to refer to the [pcg-random] and [xoshiro] websites.
 |------|-----------|-------------|--------|---------|--------|----------|
 | [`SmallRng`] | (unspecified) | 7 GB/s | 16 bytes | ★★★☆☆ | ≥ `u32` * 2<sup>64</sup> | not portable |
 | [`Pcg32`] | PCG XSH RR 64/32 (LCG) | 3 GB/s | 16 bytes | ★★★☆☆ | `u32` * 2<sup>64</sup> | — |
-| [`Pcg64`] | PCG XSL 128/64 (LCG) | 4 GB/s | 32 bytes | ★★★★☆ | `u64` * 2<sup>128</sup> | — |
+| [`Pcg64`] | PCG XSL 128/64 (LCG) | 4 GB/s | 32 bytes | ★★★☆☆ | `u64` * 2<sup>128</sup> | — |
 | [`Pcg64Mcg`] | PCG XSL 128/64 (MCG) | 7 GB/s | 16 bytes | ★★★☆☆ | `u64` * 2<sup>126</sup> | — |
 | [`XorShiftRng`] | Xorshift 32/128 | 5 GB/s | 16 bytes | ★☆☆☆☆ | `u32` * 2<sup>128</sup> - 1 | — |
 | [`Xoshiro256StarStar`] | Xoshiro256\*\* | 7 GB/s | 32 bytes | ★★★☆☆ | `u64` * 2<sup>256</sup> - 1 | jump-ahead |
@@ -58,8 +58,6 @@ based on theory and observable defects, roughly as follows:
 -   ★☆☆☆☆ = suitable for simple applications but with significant flaws
 -   ★★☆☆☆ = good performance in most tests, some issues
 -   ★★★☆☆ = good performance and theory, no major issues
--   ★★★★☆ = no observable issues and not trivial to predict (but not
-    recommended for security)
 -   ★★★★★ = cryptographic quality
 
 ## Cryptographically secure pseudo-random number generators (CSPRNGs)
