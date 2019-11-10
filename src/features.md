@@ -10,7 +10,7 @@ rand = { version = "0.7", features = ["log", "serde1"] }
 ### Small RNG
 
 From Rand version 0.7, the [`SmallRng`] type is gated behind the `small_rng`
-feature flag (this reduces `rand`'s depnedency count by one if not used).
+feature flag (this reduces `rand`'s dependency count by one if not used).
 
 ### Logging
 
