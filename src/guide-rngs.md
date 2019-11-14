@@ -20,19 +20,18 @@ Contents of this documentation:
 
 ## Basic pseudo-random number generators (PRNGs)
 
-The goal of regular, non-cryptographic PRNGs is usually to find a good
+The goal of "standard" non-cryptographic PRNGs is usually to find a good
 balance between simplicity, quality, memory usage and performance.
-Non-cryptographic generators pre-date cryptographic ones and since we now have
-fast cryptographic generators, some people argue that the non-cryptographic ones
-are now obsolete. They can however have some advantages: small state size, fast
-initialisation and simplicity (though this is not true of all non-crypto PRNGs;
-e.g. the Mersenne Twister has a large state despite being easy to predict).
+Non-cryptographic generators pre-date cryptographic ones and are in some ways
+obsoleted by them, however some advantages may be on available:
+a small state size, fast initialisation, simplicity, lower energy usage for
+embedded CPUs. (However, not all non-crypto PRNGs provide these benefits,
+e.g. the Mersenne Twister has a very large state despite being easy to predict).
 
 These algorithms are very important to Monte Carlo simulations, and also
 suitable for several other problems such as randomized algorithms and games,
-where predictability is not an issue. (Note that it might be problematic for
-betting games and multiplayer games, where a cryptographic PRNG is usually more
-appropriate.)
+where predictability is not an issue. (Note however that for gambling games
+predictability may be an issue and a cryptographic PRNG is recommended.)
 
 The Rand project provides several non-cryptographic PRNGs. A sub-set of these
 are summarised below.
