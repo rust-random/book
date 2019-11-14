@@ -63,12 +63,10 @@ random value (an unbiased random value) is in several contexts:
     random value (it would be infinitely large, and use infinite amounts of memory)
 -   `f64`: we treat this as an approximation of the real numbers, and,
     *by convention*, restrict to the range 0 to 1 (if not otherwise specified).
-    Note that this type has finite precision, so we use the coin-flipping method
-    above (but with random bits instead of coins) until we get as much precision
-    as the type can represent; however, since floating-point numbers are much
-    more precise close to 0 than they are near 1, we typically simplify here and
-    stop once we have enough precision to differentiate between 1 and the next
-    smallest value representable (`1 - ε/2`).
+    We will come back to the conversions used later;
+    for now note that these produce 52-53 bits of precision (depending on which
+    conversion is used, output will be in steps of `ε` or `ε/2`, where `1+ε` is
+    the smallest representable value greater than `1`).
 
 ## Random data
 
