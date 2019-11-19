@@ -181,9 +181,6 @@ Note that a long period does not imply high quality (e.g. a counter through
 `u128` values provides a decently long period). Conversely, a short period may
 be a problem, especially when multiple RNGs are used simultaneously.
 In general, we recommend a period of at least 2<sup>128</sup>.
-(Alternatively, a PRNG with shorter period of at least 2<sup>64</sup> and
-support for multiple streams may be sufficient. Note however that in the case
-of PCG, its streams are closely correlated.)
 
 *Avoid reusing values!*
 On today's hardware, a fast RNG with a cycle length of *only*
@@ -202,10 +199,13 @@ to use more than `√P` outputs. A generalisation for `kw`-bit state and `w`-bit
 generators is to ensure `kL² < P`. This requirement stems from the
 *generalised birthday problem*, asking how many unbiased samples from a set of
 size `d = 2^w` can be taken before the probability of a repeat is at least half.
-Note that for `kL² > P` a generator with `kw`-dimensional equidistribution
-*cannot* generate the expected number of repeated samples, however generators
-without this property are *also* not guaranteed to generate the expected number
-of repeats.
+Note that for `kL² > P`, a generator with equidistribution (in the maximum
+possible dimension) *cannot* generate the expected number of repeated samples,
+however generators without equidistribution are *also* not guaranteed to
+generate the expected number of repeats. Note further that equidistribution (in
+the dimension of the output size or greater) is a useful property to have, since
+without this property it may be impossible to generate some values within the
+output space with any seed.
 
 ## Security
 
