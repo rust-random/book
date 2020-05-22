@@ -60,8 +60,8 @@ let rng = ChaCha8Rng::from_seed(seed);
 behave badly when seeded from the same type of generator (in this case, Xorshift
 generates a clone). For cryptographic PRNGs this is not a problem;
 for others it is recommended to seed from a different type of generator.
-[`ChaCha8Rng`] is an excellent choice for a fast, non-cryptographic
-deterministic master generator.
+[`ChaCha8Rng`] is an excellent choice for a deterministic master generator
+(but for cryptographic uses, prefer the 12-round variant or higher).
 
 ### A simple number
 
@@ -81,7 +81,7 @@ let rng = Pcg64::seed_from_u64(2);
 ```
 
 Note that a number with 64-bits or less **cannot be secure**, so this should
-not be used for applications such as gambling games.
+not be used for applications such as cryptography or gambling games.
 
 ### A string, or any hashable data
 
@@ -106,6 +106,12 @@ let hasher_rng = hasher.into_rng(); // this is a full RNG: use it directly if yo
 let mut seed = [0u8; 16];
 hasher_rng.fill(&mut seed);
 ```
+
+Note that `rand_seeder` has **not been reviewed** for cryptographic usage, nor
+is it obvious according to which criteria it should be reviewed.
+It is **not a password hasher** (such things must meet special criteria,
+such as including a salt and not being easily parallelizable;
+specific password-hashing algorithms *must*) be used).
 
 
 [`SeedableRng`]: ../rand/rand_core/trait.SeedableRng.html
