@@ -4,8 +4,8 @@ This is the extended documentation for Rust's **Rand**om number library.
 
 This book contains:
 
+1.  [Getting Started](guide-start.md)
 1.  An overview of [crates and functionality](crates.md)
-2.  Documentation of crate [feature flags](features.md)
 3.  The [Users' Guide](guide.md)
 4.  Notes on [Portability and Reproducibility](portability.md).
     (Read this if you want reproducibility across builds.)

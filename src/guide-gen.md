@@ -1,4 +1,4 @@
-# Random generators
+# Types of generators
 
 The previous section introduced [`RngCore`], the trait which all *random data
 sources* must implement. But what exactly is a random data source?
@@ -33,11 +33,12 @@ be used to yield the unbiased random data we desire.
 
 CPUs are of course supposed to compute deterministically, yet it turns out they
 can do a pretty good job of emulating random processes. Most pseudo-random
-number generators are deterministic and can be defined by three things:
+number generators are deterministic and can be defined by just:
 
 -   some initial *state*
 -   a function to compute a random value from the state
 -   a function to advance to the next state
+-   (optionally) a function to derive the initial state from a *seed* or *key*
 
 The fact that these are deterministic can sometimes be very useful: it allows a
 simulation, randomised art work or game to be repeated exactly, producing a

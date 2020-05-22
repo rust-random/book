@@ -1,10 +1,12 @@
 # Getting Started
 
+Below we list a short example. For more, please refer to the [API documentation]
+or the [guide].
+
 Lets kick things off with an example ([playground link](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=4cad6600b21578cfa22009c281c780fe)):
 
 ```rust,editable
 # extern crate rand;
-
 // import commonly used items from the prelude:
 use rand::prelude::*;
 
@@ -89,7 +91,9 @@ fn main() {
 }
 ```
 
-[RNGs]: guide-rngs.html
+[API documentation]: https://rust-random.github.io/rand/rand/index.html
+[guide]: guide.md
+[RNGs]: guide-rngs.md
 [prelude]: https://rust-random.github.io/rand/rand/prelude/index.html
 [`Rng`]: https://rust-random.github.io/rand/rand/trait.Rng.html
 [`gen`]: https://rust-random.github.io/rand/rand/trait.Rng.html#method.gen
