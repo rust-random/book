@@ -2,9 +2,9 @@
 
 [Introduction](intro.md)
 
-- [Crates](crates.md)
-
-- [Feature flags](features.md)
+- [Crates and features](crates.md)
+    - [Rand and co](crates-rand.md)
+    - [Random generators](crates-gen.md)
 
 - [Guide](guide.md)
     - [Getting Started](guide-start.md)

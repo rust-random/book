@@ -1,87 +1,55 @@
-# Crates
+# Crates and features
 
-The Rand library consists of a family of crates. For common usage, the `rand`
-crate alone will often suffice. Other crates serve as building-blocks and/or
-provide additional functionality.
+The Rand library consists of a family of crates. The [`rand`] crate provides the
+main user-interface; where additional distributions are required, the
+[`rand_distr`] or [`statrs`] crate may be used in addition.
 
-### rand_core
+The library contains several building blocks: [`getrandom`] interfaces with the
+platform-dependent random number source, [`rand_core`] defines the API that
+generators must implement, and a number of crates like [`rand_chacha`] and
+[`rand_xoshiro`] provide pseudo-random generators.
 
-The [`rand_core`] crate defines the core traits implemented by RNGs. This exists
-as a separate crate with two purposes:
+```
+getrandom ┐
+          └ rand_core ┐
+                      ├ rand_chacha ┐
+                      ├ rand_hc     ┤
+                      ├ rand_pcg    ┤
+                      └─────────────┴ rand ┐
+                                           ├ rand_distr
+                                           └ statrs
+```
 
--   to provide a minimal API for defining and using RNGs
--   to provide tools to aid implementation of RNGs
+## Feature flags
 
-The [`RngCore`], [`SeedableRng`], [`CryptoRng`] traits and [`Error`] type are
-all defined by this crate and re-exported by the [`rand`] crate.
+Rand crates allow some configuration via feature flags. Check the READMEs of
+individual crates for details.
 
-### rand
+No-std support is available across most Rand crates by disabling default
+features: `rand = { version = "0.7", default-features = false }`.
+This is affected by the following flags:
 
-The [`rand`] crate is optimised for easy usage of common random-number
-functionality. This has several aspects:
+-   `std` opts-in to functionality dependent on the `std` lib
+-   `alloc` (implied by `std`) enables functionality requiring an allocator
+    (when using this feature in `no_std`, Rand requires Rustc version 1.36 or greater)
 
--   the [`rngs`] module provides a few convenient generators
--   the [`distributions`] module concerns sampling of random values
--   the [`seq`] module concerns sampling from and shuffling sequences
--   the [`Rng`] trait provides a few convenience methods for generating
-    random values
--   the [`random`] function provides convenient generation in a single call
+Some Rand crates can be built with support for the following third-party crates:
 
-## Distributions
+-   `log` enables a few log messages via [`log`]
+-   `serde1` enables serialization via [`serde`], version 1.0
 
-The [`rand`] crate only implements sampling from the most common random
-number distributions: uniform and weighted sampling. For everything else,
+Note that cryptographic RNGs *do not* support serialisation since this could be
+a security risk. If you need state-restore functionality on a cryptographic RNG,
+the ChaCha generator supports [getting and setting the stream position](https://rust-random.github.io/rand/rand_chacha/struct.ChaCha20Rng.html#method.get_word_pos),
+which, together with the seed, can be used to reconstruct the generator's state.
 
--   [`rand_distr`] provides fast sampling from a variety of other distributions,
-    including Normal (Gauss), Binomial, Poisson, UnitCircle, and many more
--   [`statrs`] is a port of the C# Math.NET library, implementing many of the
-    same distributions (plus/minus a few), along with PDF and CDF functions,
-    the *error*, *beta*, *gamma* and *logistic* special functions, plus a few
-    utilities. (For clarity, [`statrs`] is not part of the Rand library.)
-
-## Generators
-
-### Deterministic generators
-
-The following crates implement [PRNGs]:
-
--   [`rand_chacha`] provides generators using the ChaCha cipher
--   [`rand_hc`] implements a generator using the HC-128 cipher
--   [`rand_isaac`] implements the ISAAC generators
--   [`rand_pcg`] implements a small selection of PCG generators
--   [`rand_xoshiro`] implements the SplitMix and Xoshiro generators
--   [`rand_xorshift`] implements the basic Xorshift generator
-
-### Non-deterministic generators
-
-The following crates provide non-deterministic random data:
-
--   [`getrandom`] provides an interface to system-specific random data sources
--   [`rand_os`] provides a simple RNG wrapping [`getrandom`] functionality
-    (this wrapper is duplicated by the [`rand`] crate)
--   [`rand_jitter`] implements a CPU-jitter-based entropy harvestor
 
 [`rand_core`]: https://rust-random.github.io/rand/rand_core/index.html
 [`rand`]: https://rust-random.github.io/rand/rand/index.html
 [`rand_distr`]: https://rust-random.github.io/rand/rand_distr/index.html
-[`rand_chacha`]: https://rust-random.github.io/rand/rand_chacha/index.html
-[`rand_hc`]: https://rust-random.github.io/rand/rand_hc/index.html
-[`rand_isaac`]: https://rust-random.github.io/rand/rand_isaac/index.html
-[`rand_pcg`]: https://rust-random.github.io/rand/rand_pcg/index.html
-[`rand_xoshiro`]: https://rust-random.github.io/rand/rand_xoshiro/index.html
-[`rand_xorshift`]: https://rust-random.github.io/rand/rand_xorshift/index.html
-[`rand_os`]: https://rust-random.github.io/rand/rand_os/index.html
-[`rand_jitter`]: https://rust-random.github.io/rand/rand_jitter/index.html
-[`getrandom`]: https://docs.rs/getrandom/
 [`statrs`]: https://github.com/boxtown/statrs
-
-[`RngCore`]: https://rust-random.github.io/rand/rand_core/trait.RngCore.html
-[`SeedableRng`]: https://rust-random.github.io/rand/rand_core/trait.SeedableRng.html
-[`CryptoRng`]: https://rust-random.github.io/rand/rand_core/trait.CryptoRng.html
-[`Error`]: https://rust-random.github.io/rand/rand_core/struct.Error.html
-
-[`rngs`]: https://rust-random.github.io/rand/rand/rngs/index.html
-[`distributions`]: https://rust-random.github.io/rand/rand/distributions/index.html
-[`seq`]: https://rust-random.github.io/rand/rand/seq/index.html
-[`Rng`]: https://rust-random.github.io/rand/rand/trait.Rng.html
-[`random`]: https://rust-random.github.io/rand/rand/fn.random.html
+[`getrandom`]: https://docs.rs/getrandom/
+[`rand_chacha`]: https://rust-random.github.io/rand/rand_chacha/index.html
+[`rand_xoshiro`]: https://rust-random.github.io/rand/rand_xoshiro/index.html
+[`log`]: https://docs.rs/log/
+[`serde`]: https://serde.rs/
