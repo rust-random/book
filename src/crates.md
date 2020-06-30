@@ -43,6 +43,14 @@ a security risk. If you need state-restore functionality on a cryptographic RNG,
 the ChaCha generator supports [getting and setting the stream position](https://rust-random.github.io/rand/rand_chacha/struct.ChaCha20Rng.html#method.get_word_pos),
 which, together with the seed, can be used to reconstruct the generator's state.
 
+## WASM support
+
+Almost all Rand crates support WASM out of the box. Only the `rand_core` crate [may
+require enabling features for WASM support](https://github.com/rust-random/getrandom#features).
+Consequently, if you are using another crate depending on `rand_core` (such as
+most Rand crates), you may have to explicitly enable `getrandom` features for it
+to work.
+
 
 [`rand_core`]: https://rust-random.github.io/rand/rand_core/index.html
 [`rand`]: https://rust-random.github.io/rand/rand/index.html
