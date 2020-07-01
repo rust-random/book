@@ -2,15 +2,17 @@
 
 [Introduction](intro.md)
 
-- [Crates](crates.md)
+- [Getting Started](guide-start.md)
 
-- [Feature flags](features.md)
+- [Crates and features](crates.md)
+    - [Rand and co](crates-rand.md)
+    - [Random generators](crates-gen.md)
 
 - [Guide](guide.md)
-    - [Getting Started](guide-start.md)
     - [Random data](guide-data.md)
-    - [Random generators](guide-gen.md)
+    - [Types of generators](guide-gen.md)
     - [Our RNGs](guide-rngs.md)
+    - [Seeding RNGs](guide-seeding.md)
     - [Random values](guide-values.md)
     - [Random distributions](guide-dist.md)
     - [Sequences](guide-seq.md)
