@@ -98,13 +98,20 @@ use rand::prelude::*;
 use rand_seeder::{Seeder, SipHasher};
 use rand_pcg::Pcg64;
 
+// In one line:
 let rng: Pcg64 = Seeder::from("stripy zebra").make_rng();
 
-// Or, more explicitly:
+// If we want to be more explicit, first we create a SipRng:
 let hasher = SipHasher::from("a sailboat");
-let hasher_rng = hasher.into_rng(); // this is a full RNG: use it directly if you want
-let mut seed = [0u8; 16];
+let mut hasher_rng = hasher.into_rng();
+// (Note: hasher_rng is a full RNG and can be used directly.)
+
+// Now, we use hasher_rng to create a seed:
+let mut seed: <Pcg64 as SeedableRng>::Seed = Default::default();
 hasher_rng.fill(&mut seed);
+
+// And create our RNG from that seed:
+let rng = Pcg64::from_seed(seed);
 ```
 
 Note that `rand_seeder` is **not suitable** for cryptographic usage.
