@@ -107,11 +107,9 @@ let mut seed = [0u8; 16];
 hasher_rng.fill(&mut seed);
 ```
 
-Note that `rand_seeder` has **not been reviewed** for cryptographic usage, nor
-is it obvious according to which criteria it should be reviewed.
-It is **not a password hasher** (such things must meet special criteria,
-such as including a salt and not being easily parallelizable;
-specific password-hashing algorithms *must*) be used).
+Note that `rand_seeder` is **not suitable** for cryptographic usage.
+It is **not a password hasher**, for such applications a key-derivation
+function such as Argon2 must be used.
 
 
 [`SeedableRng`]: ../rand/rand_core/trait.SeedableRng.html
