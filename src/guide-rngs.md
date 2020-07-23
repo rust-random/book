@@ -287,7 +287,8 @@ approachable and explains more concepts.
 
 Another good paper about RNG quality is
 ["Good random number generators are (not so) easy to find"](
-http://random.mat.sbg.ac.at/results/peter/A19final.pdf) by P. Hellekalek.
+https://web.archive.org/web/20160801142711/http://random.mat.sbg.ac.at/results/peter/A19final.pdf)
+by P. Hellekalek.
 
 
 [`rngs` module]: ../rand/rand/rngs/index.html
