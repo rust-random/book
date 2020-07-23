@@ -1,0 +1,357 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Random distributions - The Rust Rand Book</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Extended documentation for Rust's Rand lib">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="intro.html">Introduction</a></li><li><a href="guide-start.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><a href="crates.html"><strong aria-hidden="true">2.</strong> Crates and features</a></li><li><ol class="section"><li><a href="crates-rand.html"><strong aria-hidden="true">2.1.</strong> Rand and co</a></li><li><a href="crates-gen.html"><strong aria-hidden="true">2.2.</strong> Random generators</a></li></ol></li><li><a href="guide.html"><strong aria-hidden="true">3.</strong> Guide</a></li><li><ol class="section"><li><a href="guide-data.html"><strong aria-hidden="true">3.1.</strong> Random data</a></li><li><a href="guide-gen.html"><strong aria-hidden="true">3.2.</strong> Types of generators</a></li><li><a href="guide-rngs.html"><strong aria-hidden="true">3.3.</strong> Our RNGs</a></li><li><a href="guide-seeding.html"><strong aria-hidden="true">3.4.</strong> Seeding RNGs</a></li><li><a href="guide-values.html"><strong aria-hidden="true">3.5.</strong> Random values</a></li><li><a href="guide-dist.html" class="active"><strong aria-hidden="true">3.6.</strong> Random distributions</a></li><li><a href="guide-seq.html"><strong aria-hidden="true">3.7.</strong> Sequences</a></li><li><a href="guide-err.html"><strong aria-hidden="true">3.8.</strong> Error handling</a></li></ol></li><li><a href="portability.html"><strong aria-hidden="true">4.</strong> Portability</a></li><li><a href="update.html"><strong aria-hidden="true">5.</strong> Updating</a></li><li><ol class="section"><li><a href="update-0.5.html"><strong aria-hidden="true">5.1.</strong> Updating to 0.5</a></li><li><a href="update-0.6.html"><strong aria-hidden="true">5.2.</strong> Updating to 0.6</a></li><li><a href="update-0.7.html"><strong aria-hidden="true">5.3.</strong> Updating to 0.7</a></li></ol></li><li><a href="contributing.html"><strong aria-hidden="true">6.</strong> Contributing</a></li><li><ol class="section"><li><a href="contrib-doc.html"><strong aria-hidden="true">6.1.</strong> Documentation</a></li><li><a href="contrib-scope.html"><strong aria-hidden="true">6.2.</strong> Scope</a></li><li><a href="contrib-test.html"><strong aria-hidden="true">6.3.</strong> Testing</a></li><li><a href="contrib-bench.html"><strong aria-hidden="true">6.4.</strong> Benchmarks</a></li></ol></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">The Rust Rand Book</h1> 
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#random-distributions" id="random-distributions"><h1>Random distributions</h1></a>
+<p>For maximum flexibility when producing random values, we define the
+<a href="../rand/rand/distributions/trait.Distribution.html"><code>Distribution</code></a> trait:</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+// a producer of data of type T:
+pub trait Distribution&lt;T&gt; {
+    // the key function:
+    fn sample&lt;R: Rng + ?Sized&gt;(&amp;self, rng: &amp;mut R) -&gt; T;
+
+    // a convenience function defined using sample:
+    fn sample_iter&lt;R&gt;(self, rng: R) -&gt; DistIter&lt;Self, R, T&gt;
+    where
+        Self: Sized,
+        R: Rng,
+    { ... }
+}
+#}</code></pre></pre>
+<p>Rand provides implementations of many different distributions; we cover the most
+common of these here, but for full details refer to the <a href="../rand/rand/distributions/index.html"><code>distributions</code></a> module
+and the <a href="../rand/rand_distr/index.html"><code>rand_distr</code></a> crate.</p>
+<a class="header" href="#uniform-distributions" id="uniform-distributions"><h1>Uniform distributions</h1></a>
+<p>The most obvious type of distribution is the one we already discussed: one
+without pattern, where each value or range of values is equally likely. This is
+known as <em>uniform</em>.</p>
+<p>Rand actually has several variants of this, repesenting different ranges:</p>
+<ul>
+<li><a href="../rand/rand/distributions/struct.Standard.html"><code>Standard</code></a> requires no parameters and samples values uniformly according
+to the type. <a href="../rand/rand/trait.Rng.html#method.gen"><code>Rng::gen</code></a> provides a short-cut to this distribution.</li>
+<li><a href="../rand/rand/distributions/struct.Uniform.html"><code>Uniform</code></a> is parametrised by <code>Uniform::new(low, high)</code> (including <code>low</code>,
+excluding <code>high</code>) or <code>Uniform::new_inclusive(low, high)</code> (including both),
+and samples values uniformly within this range.
+<a href="../rand/rand/trait.Rng.html#method.gen_range"><code>Rng::gen_range</code></a> is a convenience method defined over
+<a href="../rand/rand/distributions/struct.Uniform.html#method.sample_single"><code>Uniform::sample_single</code></a>, optimised for single-sample usage.</li>
+<li><a href="../rand/rand/distributions/struct.Alphanumeric.html"><code>Alphanumeric</code></a> is uniform over the <code>char</code> values <code>0-9A-Za-z</code>.</li>
+<li><a href="../rand/rand/distributions/struct.Open01.html"><code>Open01</code></a> and <a href="../rand/rand/distributions/struct.OpenClosed01.html"><code>OpenClosed01</code></a> are provide alternate sampling ranges for
+floating-point types (see below).</li>
+</ul>
+<a class="header" href="#uniform-sampling-by-type" id="uniform-sampling-by-type"><h2>Uniform sampling by type</h2></a>
+<p>Lets go over the distributions by type:</p>
+<ul>
+<li>
+<p>For <code>bool</code>, <a href="../rand/rand/distributions/struct.Standard.html"><code>Standard</code></a> samples each value with probability 50%.</p>
+</li>
+<li>
+<p>For <code>Option&lt;T&gt;</code>, the <a href="../rand/rand/distributions/struct.Standard.html"><code>Standard</code></a> distribution samples <code>None</code> with
+probability 50%, otherwise <code>Some(value)</code> is sampled, according to its type.</p>
+</li>
+<li>
+<p>For integers (<code>u8</code> through to <code>u128</code>, <code>usize</code>, and <code>i*</code> variants),
+<a href="../rand/rand/distributions/struct.Standard.html"><code>Standard</code></a> samples from all possible values while
+<a href="../rand/rand/distributions/struct.Uniform.html"><code>Uniform</code></a> samples from the parameterised range.</p>
+</li>
+<li>
+<p>For <code>NonZeroU8</code> and other &quot;non-zero&quot; types, <a href="../rand/rand/distributions/struct.Standard.html"><code>Standard</code></a> samples uniformly
+from all non-zero values (rejection method).</p>
+</li>
+<li>
+<p><code>Wrapping&lt;T&gt;</code> integer types are sampled as for the corresponding integer
+type by the <a href="../rand/rand/distributions/struct.Standard.html"><code>Standard</code></a> distribution.</p>
+</li>
+<li>
+<p>For floats (<code>f32</code>, <code>f64</code>),</p>
+<ul>
+<li><a href="../rand/rand/distributions/struct.Standard.html"><code>Standard</code></a> samples from the half-open range <code>[0, 1)</code> with 24 or 53
+bits of precision (for <code>f32</code> and <code>f64</code> respectively)</li>
+<li><a href="../rand/rand/distributions/struct.OpenClosed01.html"><code>OpenClosed01</code></a> samples from the half-open range <code>(0, 1]</code> with 24 or
+53 bits of precision</li>
+<li><a href="../rand/rand/distributions/struct.Open01.html"><code>Open01</code></a> samples from the open range <code>(0, 1)</code> with 23 or 52 bits of
+precision</li>
+<li><a href="../rand/rand/distributions/struct.Uniform.html"><code>Uniform</code></a> samples from a given range with 23 or 52 bits of precision</li>
+</ul>
+</li>
+<li>
+<p>For the <code>char</code> type, the <a href="../rand/rand/distributions/struct.Standard.html"><code>Standard</code></a> distribution samples from all
+available Unicode code points, uniformly; many of these values may not be
+printable (depending on font support). The <a href="../rand/rand/distributions/struct.Alphanumeric.html"><code>Alphanumeric</code></a> samples from
+only a-z, A-Z and 0-9 uniformly.</p>
+</li>
+<li>
+<p>For tuples and arrays, each element is sampled as above, where supported.
+The <a href="../rand/rand/distributions/struct.Standard.html"><code>Standard</code></a> and <a href="../rand/rand/distributions/struct.Uniform.html"><code>Uniform</code></a> distributions each support a selection of
+these types (up to 12-tuples and 32-element arrays).
+This includes the empty tuple <code>()</code> and array.</p>
+</li>
+<li>
+<p>For SIMD types, each element is sampled as above, for <a href="../rand/rand/distributions/struct.Standard.html"><code>Standard</code></a> and
+<a href="../rand/rand/distributions/struct.Uniform.html"><code>Uniform</code></a> (for the latter, <code>low</code> and <code>high</code> parameters are <em>also</em> SIMD
+types, effectively sampling from multiple ranges simultaneously). SIMD
+support is gated behind a <a href="../features.html#simd-support">feature flag</a>.</p>
+</li>
+</ul>
+<a class="header" href="#non-uniform-distributions" id="non-uniform-distributions"><h1>Non-uniform distributions</h1></a>
+<p>Non-uniform distributions can be divided into two categories, as follows.
+Some of these discrete and all of the continuous distributions have been moved
+from the main <a href="../rand/rand/index.html"><code>rand</code></a> crate to a dedicated <a href="../rand/rand_distr/index.html"><code>rand_distr</code></a> crate.</p>
+<a class="header" href="#discrete-non-uniform-distributions" id="discrete-non-uniform-distributions"><h2>Discrete non-uniform distributions</h2></a>
+<p>Discrete distributions sample from boolean or integer types. As above, these
+can be sampled uniformly, or, as below, via a non-uniform distribution.</p>
+<p>Potentially a discrete distribution could sample directly from a set of discrete
+values such as a slice or an <code>enum</code>. See the section on <a href="../guide-seq.html">Sequences</a> regarding
+Rand's traits for slice and iterator types. Rand does not provide direct
+sampling from <code>enum</code>s, with the exception of <code>Option</code> (see above).</p>
+<a class="header" href="#booleans" id="booleans"><h3>Booleans</h3></a>
+<p>The <a href="../rand/rand/distributions/struct.Bernoulli.html"><code>Bernoulli</code></a> distribution is a fancy name for generating a boolean
+with a given a probability <code>p</code> of being <code>true</code>, or defined via a
+<code>success : failure</code> ratio. Often this is described as a <em>trial</em> with
+probability <code>p</code> of <em>success</em> (<code>true</code>).</p>
+<p>The methods <a href="../rand/rand/trait.Rng.html#method.gen_bool"><code>Rng::gen_bool</code></a> and <a href="../rand/rand/trait.Rng.html#method.gen_ratio"><code>Rng::gen_ratio</code></a> are short-cuts to this
+distribution.</p>
+<a class="header" href="#integers" id="integers"><h3>Integers</h3></a>
+<p>The <a href="../rand/rand/distributions/struct.Binomial.html"><code>Binomial</code></a> distribution is related to the <a href="../rand/rand/distributions/struct.Bernoulli.html"><code>Bernoulli</code></a> in that it
+models running <code>n</code> independent trials each with probability <code>p</code> of success,
+then counts the number of successes.</p>
+<p>Note that for large <code>n</code> the <a href="../rand/rand/distributions/struct.Binomial.html"><code>Binomial</code></a> distribution's implementation is
+much faster than sampling <code>n</code> trials individually.</p>
+<p>The <a href="../rand/rand/distributions/struct.Poisson.html"><code>Poisson</code></a> distribution expresses the expected number of events
+occurring within a fixed interval, given that events occur with fixed rate λ.</p>
+<a class="header" href="#weighted-sequences" id="weighted-sequences"><h3>Weighted sequences</h3></a>
+<p>The <a href="../rand/rand/distributions/weighted/struct.WeightedIndex.html"><code>WeightedIndex</code></a> distribution samples an index from sequence of weights.
+See the <a href="../guide-seq.html">Sequences</a> section for convenience wrappers directly sampling a slice
+element.</p>
+<p>For example, weighted sampling could be used to model the colour of a marble
+sampled from a bucket containing 5 green, 15 red and 80 blue marbles.</p>
+<p>Currently the Rand lib only implements <em>sampling with replacement</em>, i.e.
+repeated sampling assumes the same distribution (that any sampled marble
+has been replaced). An alternative distribution implementing
+<em>sampling without replacement</em> has been
+<a href="https://github.com/rust-random/rand/issues/596">requested</a>.</p>
+<p>Note also that two implementations of <a href="../rand/rand/distributions/weighted/struct.WeightedIndex.html"><code>WeightedIndex</code></a> are available; the
+first is optimised for a small number of samples while
+<a href="../rand/rand/distributions/weighted/alias_method/struct.WeightedIndex.html"><code>alias_method::WeightedIndex</code></a> is optimised for a large number of samples
+(where &quot;large&quot; may mean &quot;&gt; 1000&quot;; benchmarks recommended).</p>
+<a class="header" href="#continuous-non-uniform-distributions" id="continuous-non-uniform-distributions"><h2>Continuous non-uniform distributions</h2></a>
+<p>Continuous distributions model samples drawn from the real number line ℝ, or in
+some cases a point from a higher dimension (ℝ², ℝ³, etc.). We provide
+implementations for <code>f64</code> and for <code>f32</code> output in most cases, although currently
+the <code>f32</code> implementations simply reduce the precision of an <code>f64</code> sample.</p>
+<p>The exponential distribution, <a href="../rand/rand/distributions/struct.Exp.html"><code>Exp</code></a>, simulates time until decay, assuming a
+fixed rate of decay (i.e. exponential decay).</p>
+<p>The <a href="../rand/rand/distributions/struct.Normal.html"><code>Normal</code></a> distribution (also known as Gaussian) simulates sampling from
+the Normal distribution (&quot;Bell curve&quot;) with the given mean and standard
+deviation. The <a href="../rand/rand/distributions/struct.LogNormal.html"><code>LogNormal</code></a> is related: for sample <code>X</code> from the log-normal
+distribution, <code>log(X)</code> is normally distributed; this &quot;skews&quot; the normal
+distribution to avoid negative values and to have a long positive tail.</p>
+<p>The <a href="../rand/rand/distributions/struct.UnitCircle.html"><code>UnitCircle</code></a> and <a href="../rand/rand/distributions/struct.UnitSphereSurface.html"><code>UnitSphereSurface</code></a> distributions simulate uniform
+sampling from the edge of a circle or surface of a sphere.</p>
+<p>The <a href="../rand/rand/distributions/struct.Cauchy.html"><code>Cauchy</code></a> distribution (also known as the Lorentz distribution) is the
+distribution of the x-intercept of a ray from point <code>(x0, γ)</code> with uniformly
+distributed angle.</p>
+<p>The <a href="../rand/rand/distributions/struct.Beta.html"><code>Beta</code></a> distribution is a two-parameter probability distribution, whose
+output values lie between 0 and 1. The <a href="../rand/rand/distributions/struct.Dirichlet.html"><code>Dirichlet</code></a> distribution is a
+generalisation to any positive number of parameters.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="guide-values.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="guide-seq.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="guide-values.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="guide-seq.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

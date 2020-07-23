@@ -1,0 +1,306 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Seeding RNGs - The Rust Rand Book</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Extended documentation for Rust's Rand lib">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="intro.html">Introduction</a></li><li><a href="guide-start.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><a href="crates.html"><strong aria-hidden="true">2.</strong> Crates and features</a></li><li><ol class="section"><li><a href="crates-rand.html"><strong aria-hidden="true">2.1.</strong> Rand and co</a></li><li><a href="crates-gen.html"><strong aria-hidden="true">2.2.</strong> Random generators</a></li></ol></li><li><a href="guide.html"><strong aria-hidden="true">3.</strong> Guide</a></li><li><ol class="section"><li><a href="guide-data.html"><strong aria-hidden="true">3.1.</strong> Random data</a></li><li><a href="guide-gen.html"><strong aria-hidden="true">3.2.</strong> Types of generators</a></li><li><a href="guide-rngs.html"><strong aria-hidden="true">3.3.</strong> Our RNGs</a></li><li><a href="guide-seeding.html" class="active"><strong aria-hidden="true">3.4.</strong> Seeding RNGs</a></li><li><a href="guide-values.html"><strong aria-hidden="true">3.5.</strong> Random values</a></li><li><a href="guide-dist.html"><strong aria-hidden="true">3.6.</strong> Random distributions</a></li><li><a href="guide-seq.html"><strong aria-hidden="true">3.7.</strong> Sequences</a></li><li><a href="guide-err.html"><strong aria-hidden="true">3.8.</strong> Error handling</a></li></ol></li><li><a href="portability.html"><strong aria-hidden="true">4.</strong> Portability</a></li><li><a href="update.html"><strong aria-hidden="true">5.</strong> Updating</a></li><li><ol class="section"><li><a href="update-0.5.html"><strong aria-hidden="true">5.1.</strong> Updating to 0.5</a></li><li><a href="update-0.6.html"><strong aria-hidden="true">5.2.</strong> Updating to 0.6</a></li><li><a href="update-0.7.html"><strong aria-hidden="true">5.3.</strong> Updating to 0.7</a></li></ol></li><li><a href="contributing.html"><strong aria-hidden="true">6.</strong> Contributing</a></li><li><ol class="section"><li><a href="contrib-doc.html"><strong aria-hidden="true">6.1.</strong> Documentation</a></li><li><a href="contrib-scope.html"><strong aria-hidden="true">6.2.</strong> Scope</a></li><li><a href="contrib-test.html"><strong aria-hidden="true">6.3.</strong> Testing</a></li><li><a href="contrib-bench.html"><strong aria-hidden="true">6.4.</strong> Benchmarks</a></li></ol></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">The Rust Rand Book</h1> 
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#seeding-rngs" id="seeding-rngs"><h1>Seeding RNGs</h1></a>
+<p>As we have seen, the output of pseudo-random number generators (PRNGs) is
+determined by their initial state.</p>
+<p>Some PRNG definitions specify how the initial state should be generated from a
+key, usually specified as a byte-sequence for cryptographic generators or,
+for small PRNGs, often just a word. We formalise this for all our generators
+with the <a href="../rand/rand_core/trait.SeedableRng.html"><code>SeedableRng</code></a> trait.</p>
+<a class="header" href="#the-seed-type" id="the-seed-type"><h2>The Seed type</h2></a>
+<p>We require all seedable RNGs to define a <a href="../rand/rand_core/trait.SeedableRng.html#type.Seed"><code>Seed</code></a> type satisfying
+<code>AsMut&lt;[u8]&gt; + Default + Sized</code> (usually <code>[u8; N]</code> for a fixed <code>N</code>).
+We recommend using <code>[u8; 12]</code> or larger for non-cryptographic PRNGs and
+<code>[u8; 32]</code> for cryptographic PRNGs.</p>
+<p>PRNGs may be seeded directly from such a value with <a href="../rand/rand_core/trait.SeedableRng.html#tymethod.from_seed"><code>SeedableRng::from_seed</code></a>.</p>
+<a class="header" href="#seeding-from-" id="seeding-from-"><h2>Seeding from ...</h2></a>
+<a class="header" href="#fresh-entropy" id="fresh-entropy"><h3>Fresh entropy</h3></a>
+<p>Using a fresh seed (direct from the OS) is easy using <a href="../rand/rand_core/trait.SeedableRng.html#method.from_entropy"><code>SeedableRng::from_entropy</code></a>:</p>
+<pre><pre class="playpen"><code class="language-rust editable">
+# #![allow(unused_variables)]
+#fn main() {
+use rand::prelude::*;
+use rand_chacha::ChaCha20Rng;
+
+let rng = ChaCha20Rng::from_entropy();
+#}</code></pre></pre>
+<p>Note that this requires <code>rand_core</code> has the feature <code>getrandom</code> enabled.</p>
+<a class="header" href="#another-rng" id="another-rng"><h3>Another RNG</h3></a>
+<p>Quite obviously, another RNG may be used to fill a seed. We provide a
+convenience method for this:</p>
+<pre><pre class="playpen"><code class="language-rust editable">
+# #![allow(unused_variables)]
+#fn main() {
+use rand::prelude::*;
+use rand_pcg::Pcg64;
+
+let rng = Pcg64::from_rng(thread_rng());
+#}</code></pre></pre>
+<p>But, say you want to save a key and use it later. For that you need to be a
+little bit more explicit:</p>
+<pre><pre class="playpen"><code class="language-rust editable">
+# #![allow(unused_variables)]
+#fn main() {
+use rand::prelude::*;
+use rand_chacha::ChaCha8Rng;
+
+let mut seed: &lt;ChaCha8Rng as SeedableRng&gt;::Seed = Default::default();
+thread_rng().fill(&amp;mut seed);
+let rng = ChaCha8Rng::from_seed(seed);
+#}</code></pre></pre>
+<p><strong>Obligatory warning</strong>: a few simple PRNGs, notably <a href="../rand/rand_xorshift/struct.XorShiftRng.html"><code>XorShiftRng</code></a>,
+behave badly when seeded from the same type of generator (in this case, Xorshift
+generates a clone). For cryptographic PRNGs this is not a problem;
+for others it is recommended to seed from a different type of generator.
+<a href="../rand/rand_chacha/struct.ChaCha8Rng.html"><code>ChaCha8Rng</code></a> is an excellent choice for a deterministic master generator
+(but for cryptographic uses, prefer the 12-round variant or higher).</p>
+<a class="header" href="#a-simple-number" id="a-simple-number"><h3>A simple number</h3></a>
+<p>For some applications, especially simulations, all you want are a sequence of
+distinct, fixed random number seeds, e.g. 1, 2, 3, etc.</p>
+<p><a href="../rand/rand_core/trait.SeedableRng.html#method.seed_from_u64"><code>SeedableRng::seed_from_u64</code></a> is designed exactly for this use-case.
+Internally, it uses a simple PRNG to fill the bits of the seed from the input
+number while providing good bit-avalance (so that two similar numbers such as
+0 and 1 translate to very different seeds and independent RNG sequences).</p>
+<pre><pre class="playpen"><code class="language-rust editable">
+# #![allow(unused_variables)]
+#fn main() {
+use rand::prelude::*;
+use rand_pcg::Pcg64;
+
+let rng = Pcg64::seed_from_u64(2);
+#}</code></pre></pre>
+<p>Note that a number with 64-bits or less <strong>cannot be secure</strong>, so this should
+not be used for applications such as cryptography or gambling games.</p>
+<a class="header" href="#a-string-or-any-hashable-data" id="a-string-or-any-hashable-data"><h3>A string, or any hashable data</h3></a>
+<p>Say you let users enter a string to seed the random number generator. Ideally,
+all parts of the string should influence the generator and making only a small
+change to the string should result in a fully independent generator sequence.</p>
+<p>This can be achieved via use of a hash function to compress all input data down
+to a hash result, then using that result to seed a generator. The
+<a href="https://github.com/rust-random/seeder/"><code>rand_seeder</code></a> crate is designed for just this purpose.</p>
+<pre><pre class="playpen"><code class="language-rust editable">
+# #![allow(unused_variables)]
+#fn main() {
+use rand::prelude::*;
+use rand_seeder::{Seeder, SipHasher};
+use rand_pcg::Pcg64;
+
+// In one line:
+let rng: Pcg64 = Seeder::from(&quot;stripy zebra&quot;).make_rng();
+
+// If we want to be more explicit, first we create a SipRng:
+let hasher = SipHasher::from(&quot;a sailboat&quot;);
+let mut hasher_rng = hasher.into_rng();
+// (Note: hasher_rng is a full RNG and can be used directly.)
+
+// Now, we use hasher_rng to create a seed:
+let mut seed: &lt;Pcg64 as SeedableRng&gt;::Seed = Default::default();
+hasher_rng.fill(&amp;mut seed);
+
+// And create our RNG from that seed:
+let rng = Pcg64::from_seed(seed);
+#}</code></pre></pre>
+<p>Note that <code>rand_seeder</code> is <strong>not suitable</strong> for cryptographic usage.
+It is <strong>not a password hasher</strong>, for such applications a key-derivation
+function such as Argon2 must be used.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="guide-rngs.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="guide-values.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="guide-rngs.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="guide-values.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>

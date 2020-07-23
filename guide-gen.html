@@ -1,0 +1,312 @@
+<!DOCTYPE HTML>
+<html lang="en" class="sidebar-visible no-js">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Types of generators - The Rust Rand Book</title>
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Extended documentation for Rust's Rand lib">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
+        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+
+        
+    </head>
+    <body class="light">
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            document.body.className = theme;
+            document.querySelector('html').className = theme + ' js';
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <ol class="chapter"><li class="affix"><a href="intro.html">Introduction</a></li><li><a href="guide-start.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><a href="crates.html"><strong aria-hidden="true">2.</strong> Crates and features</a></li><li><ol class="section"><li><a href="crates-rand.html"><strong aria-hidden="true">2.1.</strong> Rand and co</a></li><li><a href="crates-gen.html"><strong aria-hidden="true">2.2.</strong> Random generators</a></li></ol></li><li><a href="guide.html"><strong aria-hidden="true">3.</strong> Guide</a></li><li><ol class="section"><li><a href="guide-data.html"><strong aria-hidden="true">3.1.</strong> Random data</a></li><li><a href="guide-gen.html" class="active"><strong aria-hidden="true">3.2.</strong> Types of generators</a></li><li><a href="guide-rngs.html"><strong aria-hidden="true">3.3.</strong> Our RNGs</a></li><li><a href="guide-seeding.html"><strong aria-hidden="true">3.4.</strong> Seeding RNGs</a></li><li><a href="guide-values.html"><strong aria-hidden="true">3.5.</strong> Random values</a></li><li><a href="guide-dist.html"><strong aria-hidden="true">3.6.</strong> Random distributions</a></li><li><a href="guide-seq.html"><strong aria-hidden="true">3.7.</strong> Sequences</a></li><li><a href="guide-err.html"><strong aria-hidden="true">3.8.</strong> Error handling</a></li></ol></li><li><a href="portability.html"><strong aria-hidden="true">4.</strong> Portability</a></li><li><a href="update.html"><strong aria-hidden="true">5.</strong> Updating</a></li><li><ol class="section"><li><a href="update-0.5.html"><strong aria-hidden="true">5.1.</strong> Updating to 0.5</a></li><li><a href="update-0.6.html"><strong aria-hidden="true">5.2.</strong> Updating to 0.6</a></li><li><a href="update-0.7.html"><strong aria-hidden="true">5.3.</strong> Updating to 0.7</a></li></ol></li><li><a href="contributing.html"><strong aria-hidden="true">6.</strong> Contributing</a></li><li><ol class="section"><li><a href="contrib-doc.html"><strong aria-hidden="true">6.1.</strong> Documentation</a></li><li><a href="contrib-scope.html"><strong aria-hidden="true">6.2.</strong> Scope</a></li><li><a href="contrib-test.html"><strong aria-hidden="true">6.3.</strong> Testing</a></li><li><a href="contrib-bench.html"><strong aria-hidden="true">6.4.</strong> Benchmarks</a></li></ol></li></ol>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar" class="menu-bar">
+                    <div id="menu-bar-sticky-container">
+                        <div class="left-buttons">
+                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                                <i class="fa fa-bars"></i>
+                            </button>
+                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                                <i class="fa fa-paint-brush"></i>
+                            </button>
+                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                            </ul>
+                            
+                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                                <i class="fa fa-search"></i>
+                            </button>
+                            
+                        </div>
+
+                        <h1 class="menu-title">The Rust Rand Book</h1> 
+
+                        <div class="right-buttons">
+                            <a href="print.html" title="Print this book" aria-label="Print this book">
+                                <i id="print-button" class="fa fa-print"></i>
+                            </a>
+                            
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" name="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <a class="header" href="#types-of-generators" id="types-of-generators"><h1>Types of generators</h1></a>
+<p>The previous section introduced <a href="../rand/rand_core/trait.RngCore.html"><code>RngCore</code></a>, the trait which all <em>random data
+sources</em> must implement. But what exactly is a random data source?</p>
+<p>This section concerns theory; see also the chapter on
+<a href="guide-rngs.html">random number generators</a>.</p>
+<pre><pre class="playpen"><code class="language-rust">
+# #![allow(unused_variables)]
+#fn main() {
+# extern crate rand;
+# extern crate rand_pcg;
+// prepare a non-deterministic random number generator:
+let mut rng = rand::thread_rng();
+
+// prepare a deterministic generator:
+use rand::SeedableRng;
+let mut rng = rand_pcg::Pcg32::seed_from_u64(123);
+#}</code></pre></pre>
+<a class="header" href="#true-random-number-generators" id="true-random-number-generators"><h2>True random number generators</h2></a>
+<p>A <strong>true</strong> random number generator (TRNG) is something which produces random
+numbers by observing some natural process, such as atomic decay or thermal noise.
+(Whether or not these things are <em>truly</em> random or are in fact deterministic —
+for example if the universe itself is a simulation — is besides the point here.
+For our purposes, it is sufficient that they are not distinguishable from true
+randomness.)</p>
+<p>Note that these processes are often biased, thus some type of <em>debiasing</em> must
+be used to yield the unbiased random data we desire.</p>
+<a class="header" href="#pseudo-random-number-generators" id="pseudo-random-number-generators"><h2>Pseudo-random number generators</h2></a>
+<p>CPUs are of course supposed to compute deterministically, yet it turns out they
+can do a pretty good job of emulating random processes. Most pseudo-random
+number generators are deterministic and can be defined by just:</p>
+<ul>
+<li>some initial <em>state</em></li>
+<li>a function to compute a random value from the state</li>
+<li>a function to advance to the next state</li>
+<li>(optionally) a function to derive the initial state from a <em>seed</em> or <em>key</em></li>
+</ul>
+<p>The fact that these are deterministic can sometimes be very useful: it allows a
+simulation, randomised art work or game to be repeated exactly, producing a
+result which is a function of the seed. For more on this see the
+<a href="portability.html">portability</a> chapter (note that determinicity alone isn't
+enough to guarantee reproducibility).</p>
+<p>The other big attraction of PRNGs is their speed: some of these algorithms
+require only a few CPU operations per random value, and thus can produce
+random data on demand much more quickly than most TRNGs.</p>
+<p>Note however that PRNGs have several limitations:</p>
+<ul>
+<li>They are no stronger than their seed: if the seed is known or guessable,
+and the algorithm is known (or guessed), then only a small number of output
+sequences are likely.</li>
+<li>Since the state size is usually fixed, only a finite number of output values
+are possible before the generator loops and repeats itself.</li>
+<li>Several algorithms are easily predictable after seeing a few values, and
+with many other algorithms it is not clear whether they could be &quot;cracked&quot;.</li>
+</ul>
+<a class="header" href="#cryptographically-secure-pseudo-random-number-generator" id="cryptographically-secure-pseudo-random-number-generator"><h2>Cryptographically secure pseudo-random number generator</h2></a>
+<p>Cryptographically secure pseudo-random number generators (CSPRNGs) are the
+subset of PRNGs which are considered secure. That is:</p>
+<ul>
+<li>their state is sufficiently large that a brute-force approach simply trying
+all initial values is not a feasible method of finding the initial state
+used to produce an observed sequence of output values,</li>
+<li>and there is no other algorithm which is sufficiently better than the
+brute-force method which would make it feasible to predict the next output
+value.</li>
+</ul>
+<p>Achieving secure generation requires not only a secure algorithm (CSPRNG), but
+also a secure and sufficiently large seed value (typically 256 bits), and
+protection against side-channel attacks (i.e. preventing attackers from reading
+the internal state).</p>
+<p>Some CSPRNGs additionally satisfy a third property:</p>
+<ul>
+<li>a CSPRNG is backtracking resistant if it is impossible for an attacker to
+calculate prior output values of the PRNG despite having discovered the
+value of the current internal state (implying that all future output is
+compromised).</li>
+</ul>
+<a class="header" href="#hardware-random-number-generator" id="hardware-random-number-generator"><h2>Hardware random number generator</h2></a>
+<p>A <strong>hardware</strong> random number generator (HRNG) is theoretically an adaptor from
+some TRNG to digital information. In practice, these may use a PRNG to debias
+the TRNG. Even though an HRNG has some underlying TRNG, it is not guaranteed to
+be secure: the TRNG itself may produce insufficient entropy (i.e. be too
+predictable), or the signal amplification and debiasing process may be flawed.</p>
+<p>An HRNG may be used to provide the seed for a PRNG, although usually this is not
+the only way to obtain a secure seed (see the next section). An HRNG might
+replace a PRNG altogether, although since we now have very fast and very strong
+software PRNGs, and since software implementations are easier to verify than
+hardware ones, this is often not the preferred solution.</p>
+<p>Since a PRNG needs a random seed value to be secure, an HRNG may be used to
+provide that seed, or even replace the need for a PRNG. However, since the goal
+is usually &quot;only&quot; to produce unpredictable random values, there are acceptable
+alternatives to <em>true</em> random number generators (see next section).</p>
+<a class="header" href="#entropy" id="entropy"><h2>Entropy</h2></a>
+<p>As noted above, for a CSPRNG to be secure, its seed value must also be secure.
+The word <em>entropy</em> can be used in two ways:</p>
+<ul>
+<li>as a measure of the amount of unknown information in some piece of data</li>
+<li>as a piece of unknown data</li>
+</ul>
+<p>Ideally, a random boolean or a coin flip has 1 bit of entropy, although if the
+value is biased, there will be less. Shannon Entropy attempts to measure this.</p>
+<p>For example, a Unix time-stamp (seconds since the start of 1970) contains both
+high- and low-resolution data. This is typically a 32-bit number, but the amount
+of <em>entropy</em> will depend on how precisely a hypothetical attacker can guess the
+number. If an attacker can guess the number to the nearest minute, this may be
+approximately 6 bits (2^6 = 64); if an attacker can guess this to the second,
+this is 0 bits. <a href="../rand/rand/rngs/jitter/struct.JitterRng.html"><code>JitterRng</code></a> uses this concept to scavenge entropy without an
+HRNG (but using nanosecond resolution timers and conservatively assuming only a
+couple of bits entropy is available per time-stamp, after running several tests
+on the timer's quality).</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="guide-data.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="guide-rngs.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a href="guide-data.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a href="guide-rngs.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script src="elasticlunr.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="mark.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="searcher.js" type="text/javascript" charset="utf-8"></script>
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+
+        
+
+    </body>
+</html>
