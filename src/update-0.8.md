@@ -13,7 +13,7 @@ This allowed us to remove some unsafe code and simplify the internal `cfg` logic
 [`Rng::gen_range`] now takes a `Range` instead of two numbers. This requires
 replacing `gen_range(a, b)` with `gen_range(a..b)` in code written for `rand
 0.7`. We suggest to replace the regular expression
-`gen_range\(([^,]*),\s*([^)]*)\)` with `gen_range(\1..\2)`. Additionally, if `a`
+`gen_range\(([^,]*),\s*([^)]*)\)` with `gen_range($1..$2)`. Additionally, if `a`
 or `b` were a reference, explicit dereferencing may now be required. Inclusive
 ranges are now supported: `gen_range(a, b + 1)` can be replaced with
 `gen_range(a..=b)`.
