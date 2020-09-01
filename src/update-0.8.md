@@ -1,5 +1,8 @@
 # Updating to 0.8
 
+In the following, instructions are provided for porting your code from
+`rand 0.7` and `rand_distr 0.2` to `rand 0.8` and `rand_distr 0.3`.
+
 ## Dependencies
 
 Rand crates now require `rustc` version 1.36.0 or later.
