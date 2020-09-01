@@ -58,14 +58,23 @@ changes:
         .take(7)
         .collect();
     ```
--   The alternative implementation of [`WeightedIndex`] employing the alias method
-    was moved from `rand` to [`rand_distr::WeightedAliasIndex`]. Old code has to
-    be adapted accordingly.
--   [`rand_distr::WeightedAliasIndex`] and [`rand_distr::Dirchlet`] now use boxed
-    slices instead of `Vec`. Existing code may have to be updated to reflect
-    this change.
+-   The alternative implementation of [`WeightedIndex`] employing the alias
+    method was moved from `rand` to [`rand_distr::WeightedAliasIndex`]. The
+    alias method is faster for large sizes, but it suffers from a slow
+    initialization, making it less generally useful.
+-   [`rand_distr::Dirchlet`] now uses boxed slices internally instead of `Vec`.
+    Therefore, the weights are taken as a slice instead of a `Vec` as input.
+    For example, the following `rand_distr 0.2` code
+    ```
+    Dirichlet::new(vec![1.0, 2.0, 3.0]).unwrap();
+    ```
+    can be replaced with the following `rand_distr 0.3` code:
+    ```
+    Dirichlet::new(&[1.0, 2.0, 3.0]).unwrap();
+    ```
 -   [`rand_distr::Poisson`] does no longer support sampling `u64` values directly.
-    Old code may have to perform the conversion from `f64` explicitly.
+    Old code may have to be updated to perform the conversion from `f64`
+    explicitly.
 -   The custom `Float` trait in `rand_distr` was replaced with
     `num_traits::Float`. Any implementations of `Float` for user-defined types
     have to be migrated. Thanks to the math functions from `num_traits::Float`,
