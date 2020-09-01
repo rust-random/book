@@ -42,7 +42,22 @@ changes:
 
 -   The [`Alphanumeric`] distribution now samples bytes instead of chars. This
     more closely reflects the internally used type, but old code likely has to
-    be adapted to perform the conversion from `u8` to `char`.
+    be adapted to perform the conversion from `u8` to `char`. For example, with
+    Rand 0.7 you could write:
+    ```
+    let chars: String = iter::repeat(())
+        .map(|()| rng.sample(Alphanumeric))
+        .take(7)
+        .collect();
+    ```
+    With Rand 0.8, this is equivalent to the following:
+    ```
+    let chars: String = iter::repeat(())
+        .map(|()| rng.sample(Alphanumeric))
+        .map(char::from)
+        .take(7)
+        .collect();
+    ```
 -   The alternative implementation of [`WeightedIndex`] employing the alias method
     was moved from `rand` to [`rand_distr::WeightedAliasIndex`]. Old code has to
     be adapted accordingly.
