@@ -10,6 +10,21 @@ This allowed us to remove some unsafe code and simplify the internal `cfg` logic
 
 ## Core features
 
+`ThreadRng` no longer implements `Copy`. This was necessary to fix a possible
+use-after-free in its thread-local destructor. Any code relying on `ThreadRng`
+being copied must be updated to use a mutable reference instead. For example,
+```
+let rng = thread_rng();
+let a: u32 = Standard.sample(rng);
+let b: u32 = Standard.sample(rng);
+```
+can be replaced with the following code:
+```
+let mut rng = thread_rng();
+let a: u32 = Standard.sample(&mut rng);
+let b: u32 = Standard.sample(&mut rng);
+```
+
 [`Rng::gen_range`] now takes a `Range` instead of two numbers. This requires
 replacing `gen_range(a, b)` with `gen_range(a..b)` in code written for `rand
 0.7`. We suggest to replace the regular expression
