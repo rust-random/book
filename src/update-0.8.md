@@ -8,6 +8,30 @@ In the following, instructions are provided for porting your code from
 Rand crates now require `rustc` version 1.36.0 or later.
 This allowed us to remove some unsafe code and simplify the internal `cfg` logic.
 
+The dependency on `getrandom` was bumped to version 0.2. While this does not
+affect Rand's API, you may be affected by some of the breaking changes even if
+you use `getrandom` only as a dependency:
+
+-    You may have to update the `getrandom` features you are using. The
+     following features are now available:
+     -   `"rdrand"`: Use the RDRAND instruction on `no_std` `x86/x86_64`
+         targets.
+     -   `"js"`: Use JavaScript calls on `wasm32-unknown-unknown`. This
+         replaces the `stdweb` and `wasm-bindgen` features, which are
+         removed.
+     -   `"custom"`: Allows you to specify a custom implementation.
+-   Unsupported targets no longer compile. If you require the previous behavior
+    (panicking at runtime instead of failing to compile), you can use the
+    `custom` feature to provide a panicking implementation.
+-   Hermit, L4Re and UEFI are no longer officially supported. You can use the
+    `rdrand` feature on these platforms.
+-   The minimum supported Linux kernel version is now 2.6.32.
+
+If you are using `getrandom`'s API directly, there are further breaking changes
+that may affect you. See its
+[changelog](https://github.com/rust-random/getrandom/blob/master/CHANGELOG.md#020---2020-09-10).
+
+
 ## Core features
 
 `ThreadRng` no longer implements `Copy`. This was necessary to fix a possible
