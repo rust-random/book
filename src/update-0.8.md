@@ -51,6 +51,10 @@ These have seen only small changes, but noteworthy is:
 -   [`StdRng`] and [`ThreadRng`] now use the ChaCha12 instead of the ChaCha20
     algorithm. This improves performance and is a value-breaking change for
     [`StdRng`].
+-   [`SmallRng`] now uses the Xoshiro128++ and Xoshiro256++ algorithm on 32-bit
+    and 64-bit platforms respectively. This reduces correlations of random data
+    generated from similar seeds, improves performance and is a value-breaking
+    change.
 -   [`StdRng`], [`SmallRng`], and [`StepRng`] now implement `PartialEq` and `Eq`.
 
 ## Distributions
