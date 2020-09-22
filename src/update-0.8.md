@@ -141,6 +141,10 @@ We also added several distributions:
 -   [`rand_distr::InverseGaussian`]
 -   [`rand_distr::NormalInverseGaussian`]
 
+The `nightly` feature no longer implies the `simd_support` feature. If you were
+relying on this for SIMD support, you will have to use `simd_support` feature
+directly.
+
 ## Sequences
 
 Weighted sampling without replacement is now supported, see
