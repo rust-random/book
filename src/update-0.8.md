@@ -151,6 +151,11 @@ Weighted sampling without replacement is now supported, see
 [`rand::seq::index::sample_weighted`] and
 [`SliceRandom::choose_multiple_weighted`].
 
+There have been value-breaking changes to [`IteratorRandom::choose`] improving
+accuracy and performance. Furthermore, [`IteratorRandom::choose_stable`] was
+added to provide an alternative that sacrifices performance for independence of
+iterator size hints.
+
 
 [`Fill`]: ../rand/rand/trait.Fill.html
 [`Rng::gen_range`]: ../rand/rand/trait.Rng.html#method.gen_range
@@ -169,6 +174,8 @@ Weighted sampling without replacement is now supported, see
 [`rand::rngs::adapter`]: ../rand/rand/rngs/adapter/index.html
 [`rand::seq::index::sample_weighted`]: ../rand/rand/seq/index/fn.sample_weighted.html
 [`SliceRandom::choose_multiple_weighted`]: ../rand/rand/seq/trait.SliceRandom.html#method.choose_multiple_weighted
+[`IteratorRandom::choose`]: ../rand/rand/seq/trait.IteratorRandom.html#method.choose
+[`IteratorRandom::choose_stable`]: ../rand/rand/seq/trait.IteratorRandom.html#method.choose_stable
 [`rand_distr::WeightedAliasIndex`]: ../rand/rand_distr/struct.WeightedAliasIndex.html
 [`rand_distr::InverseGaussian`]: ../rand/rand_distr/struct.InverseGaussian.html
 [`rand_distr::NormalInverseGaussian`]: ../rand/rand_distr/struct.NormalInverseGaussian.html
