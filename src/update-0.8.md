@@ -151,10 +151,11 @@ Weighted sampling without replacement is now supported, see
 [`rand::seq::index::sample_weighted`] and
 [`SliceRandom::choose_multiple_weighted`].
 
-There have been value-breaking changes to [`IteratorRandom::choose`] improving
-accuracy and performance. Furthermore, [`IteratorRandom::choose_stable`] was
-added to provide an alternative that sacrifices performance for independence of
-iterator size hints.
+There have been [value-breaking
+changes](https://github.com/rust-random/rand/pull/1059) to
+[`IteratorRandom::choose`], improving accuracy and performance. Furthermore,
+[`IteratorRandom::choose_stable`] was added to provide an alternative that
+sacrifices performance for independence of iterator size hints.
 
 
 [`Fill`]: ../rand/rand/trait.Fill.html
