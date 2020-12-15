@@ -109,7 +109,7 @@ changes:
     method was moved from `rand` to [`rand_distr::WeightedAliasIndex`]. The
     alias method is faster for large sizes, but it suffers from a slow
     initialization, making it less generally useful.
--   [`rand_distr::Dirchlet`] now uses boxed slices internally instead of `Vec`.
+-   [`rand_distr::Dirichlet`] now uses boxed slices internally instead of `Vec`.
     Therefore, the weights are taken as a slice instead of a `Vec` as input.
     For example, the following `rand_distr 0.2` code
     ```
