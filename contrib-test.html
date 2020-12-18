@@ -1,24 +1,40 @@
 <!DOCTYPE HTML>
-<html lang="en" class="sidebar-visible no-js">
+<html lang="en" class="sidebar-visible no-js light">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Testing - The Rust Rand Book</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Extended documentation for Rust's Rand lib">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
 
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
         <link rel="shortcut icon" href="favicon.png">
+        
         <link rel="stylesheet" href="css/variables.css">
         <link rel="stylesheet" href="css/general.css">
         <link rel="stylesheet" href="css/chrome.css">
+        
         <link rel="stylesheet" href="css/print.css" media="print">
+        
 
         <!-- Fonts -->
         <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
-        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css">
-        <link href="https://fonts.googleapis.com/css?family=Source+Code+Pro:500" rel="stylesheet" type="text/css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
 
         <!-- Highlight.js Stylesheets -->
         <link rel="stylesheet" href="highlight.css">
@@ -30,11 +46,11 @@
 
         
     </head>
-    <body class="light">
+    <body>
         <!-- Provide site root to javascript -->
         <script type="text/javascript">
             var path_to_root = "";
-            var default_theme = "light";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
@@ -56,10 +72,13 @@
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script type="text/javascript">
             var theme;
-            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { } 
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
-            document.body.className = theme;
-            document.querySelector('html').className = theme + ' js';
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
@@ -75,44 +94,48 @@
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
-            <ol class="chapter"><li class="affix"><a href="intro.html">Introduction</a></li><li><a href="guide-start.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li><a href="crates.html"><strong aria-hidden="true">2.</strong> Crates and features</a></li><li><ol class="section"><li><a href="crates-rand.html"><strong aria-hidden="true">2.1.</strong> Rand and co</a></li><li><a href="crates-gen.html"><strong aria-hidden="true">2.2.</strong> Random generators</a></li></ol></li><li><a href="guide.html"><strong aria-hidden="true">3.</strong> Guide</a></li><li><ol class="section"><li><a href="guide-data.html"><strong aria-hidden="true">3.1.</strong> Random data</a></li><li><a href="guide-gen.html"><strong aria-hidden="true">3.2.</strong> Types of generators</a></li><li><a href="guide-rngs.html"><strong aria-hidden="true">3.3.</strong> Our RNGs</a></li><li><a href="guide-seeding.html"><strong aria-hidden="true">3.4.</strong> Seeding RNGs</a></li><li><a href="guide-values.html"><strong aria-hidden="true">3.5.</strong> Random values</a></li><li><a href="guide-dist.html"><strong aria-hidden="true">3.6.</strong> Random distributions</a></li><li><a href="guide-seq.html"><strong aria-hidden="true">3.7.</strong> Sequences</a></li><li><a href="guide-err.html"><strong aria-hidden="true">3.8.</strong> Error handling</a></li></ol></li><li><a href="portability.html"><strong aria-hidden="true">4.</strong> Portability</a></li><li><a href="update.html"><strong aria-hidden="true">5.</strong> Updating</a></li><li><ol class="section"><li><a href="update-0.5.html"><strong aria-hidden="true">5.1.</strong> Updating to 0.5</a></li><li><a href="update-0.6.html"><strong aria-hidden="true">5.2.</strong> Updating to 0.6</a></li><li><a href="update-0.7.html"><strong aria-hidden="true">5.3.</strong> Updating to 0.7</a></li></ol></li><li><a href="contributing.html"><strong aria-hidden="true">6.</strong> Contributing</a></li><li><ol class="section"><li><a href="contrib-doc.html"><strong aria-hidden="true">6.1.</strong> Documentation</a></li><li><a href="contrib-scope.html"><strong aria-hidden="true">6.2.</strong> Scope</a></li><li><a href="contrib-test.html" class="active"><strong aria-hidden="true">6.3.</strong> Testing</a></li><li><a href="contrib-bench.html"><strong aria-hidden="true">6.4.</strong> Benchmarks</a></li></ol></li></ol>
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="guide-start.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li class="chapter-item expanded "><a href="crates.html"><strong aria-hidden="true">2.</strong> Crates and features</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="crates-rand.html"><strong aria-hidden="true">2.1.</strong> Rand and co</a></li><li class="chapter-item expanded "><a href="crates-gen.html"><strong aria-hidden="true">2.2.</strong> Random generators</a></li></ol></li><li class="chapter-item expanded "><a href="guide.html"><strong aria-hidden="true">3.</strong> Guide</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="guide-data.html"><strong aria-hidden="true">3.1.</strong> Random data</a></li><li class="chapter-item expanded "><a href="guide-gen.html"><strong aria-hidden="true">3.2.</strong> Types of generators</a></li><li class="chapter-item expanded "><a href="guide-rngs.html"><strong aria-hidden="true">3.3.</strong> Our RNGs</a></li><li class="chapter-item expanded "><a href="guide-seeding.html"><strong aria-hidden="true">3.4.</strong> Seeding RNGs</a></li><li class="chapter-item expanded "><a href="guide-values.html"><strong aria-hidden="true">3.5.</strong> Random values</a></li><li class="chapter-item expanded "><a href="guide-dist.html"><strong aria-hidden="true">3.6.</strong> Random distributions</a></li><li class="chapter-item expanded "><a href="guide-seq.html"><strong aria-hidden="true">3.7.</strong> Sequences</a></li><li class="chapter-item expanded "><a href="guide-err.html"><strong aria-hidden="true">3.8.</strong> Error handling</a></li></ol></li><li class="chapter-item expanded "><a href="portability.html"><strong aria-hidden="true">4.</strong> Portability</a></li><li class="chapter-item expanded "><a href="update.html"><strong aria-hidden="true">5.</strong> Updating</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="update-0.5.html"><strong aria-hidden="true">5.1.</strong> Updating to 0.5</a></li><li class="chapter-item expanded "><a href="update-0.6.html"><strong aria-hidden="true">5.2.</strong> Updating to 0.6</a></li><li class="chapter-item expanded "><a href="update-0.7.html"><strong aria-hidden="true">5.3.</strong> Updating to 0.7</a></li></ol></li><li class="chapter-item expanded "><a href="contributing.html"><strong aria-hidden="true">6.</strong> Contributing</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="contrib-doc.html"><strong aria-hidden="true">6.1.</strong> Documentation</a></li><li class="chapter-item expanded "><a href="contrib-scope.html"><strong aria-hidden="true">6.2.</strong> Scope</a></li><li class="chapter-item expanded "><a href="contrib-test.html" class="active"><strong aria-hidden="true">6.3.</strong> Testing</a></li><li class="chapter-item expanded "><a href="contrib-bench.html"><strong aria-hidden="true">6.4.</strong> Benchmarks</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
 
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
                 
-                <div id="menu-bar" class="menu-bar">
-                    <div id="menu-bar-sticky-container">
-                        <div class="left-buttons">
-                            <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
-                                <i class="fa fa-bars"></i>
-                            </button>
-                            <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
-                                <i class="fa fa-paint-brush"></i>
-                            </button>
-                            <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                                <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
-                                <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
-                            </ul>
-                            
-                            <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
-                                <i class="fa fa-search"></i>
-                            </button>
-                            
-                        </div>
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                        
+                    </div>
 
-                        <h1 class="menu-title">The Rust Rand Book</h1> 
+                    <h1 class="menu-title">The Rust Rand Book</h1>
 
-                        <div class="right-buttons">
-                            <a href="print.html" title="Print this book" aria-label="Print this book">
-                                <i id="print-button" class="fa fa-print"></i>
-                            </a>
-                            
-                        </div>
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
                     </div>
                 </div>
 
@@ -140,7 +163,7 @@
 
                 <div id="content" class="content">
                     <main>
-                        <a class="header" href="#testing" id="testing"><h1>Testing</h1></a>
+                        <h1><a class="header" href="#testing" id="testing">Testing</a></h1>
 <p>Rand has a number of unit tests, though these are not comprehensive or perfect
 (improvements welcome). We prefer to have tests for all new functionality.</p>
 <p>The first line of testing is simply to run <code>cargo test</code> from the appropriate
@@ -159,27 +182,28 @@ cargo +nightly test --tests --no-default-features --features=alloc
 </code></pre>
 <p>Note that this only tests the current package (i.e. the main Rand lib when run
 from the repo's top level). To test another lib, <code>cd</code> to its directory.</p>
-<p>We do not recommend using Cargo's <code>--package</code> option due to its
+<p>We do not recommend using Cargo's <code>--package</code> option due to its 
 <a href="https://github.com/rust-lang/cargo/issues/5364">surprising interactions</a>
 with <code>--feature</code> options and failure when multiple versions of the same package
 are in the build tree. The CI instead uses <code>--manifest-path</code> to select packages;
 while developing, using <code>cd</code> is easier.</p>
-<a class="header" href="#writing-tests" id="writing-tests"><h2>Writing tests</h2></a>
+<h2><a class="header" href="#writing-tests" id="writing-tests">Writing tests</a></h2>
 <p>Tests may be unit tests within a <code>test</code> sub-module, documentation examples,
 example applications (<code>examples</code> dir), integration tests (<code>tests</code> dir), or
 benchmarks (<code>benches</code> dir).</p>
 <p>Note that <em>only</em> unit tests and integration tests are expected to pass in
 <code>no_std</code> (core only) and <code>core+alloc</code> configurations. This is a deliberate
 choice; example code should only need to target the common case (<code>std</code>).</p>
-<a class="header" href="#random-number-generators" id="random-number-generators"><h3>Random Number Generators</h3></a>
+<h3><a class="header" href="#random-number-generators" id="random-number-generators">Random Number Generators</a></h3>
 <p>Often test code needs some RNG to test with, but does not need any particular
 RNG. In this case, we prefer use of <code>::test::rng</code> which is simple, fast to
 initialise and deterministic:</p>
-<pre><pre class="playpen"><code class="language-rust">
-# #![allow(unused_variables)]
-#fn main() {
-let mut rng = ::test::rng(528); // just pick some number
-#}</code></pre></pre>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let mut rng = ::test::rng(528); // just pick some number
+<span class="boring">}
+</span></code></pre></pre>
 <p>Various tests concern properties which are <em>probably</em> true, but not definitely.
 We prefer that such tests are deterministic to avoid spurious failures.</p>
 
@@ -206,13 +230,13 @@ We prefer that such tests are deterministic to avoid spurious failures.</p>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a href="contrib-scope.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="contrib-scope.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a href="contrib-bench.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="contrib-bench.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
@@ -222,6 +246,14 @@ We prefer that such tests are deterministic to avoid spurious failures.</p>
 
         
 
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
         
 
         
