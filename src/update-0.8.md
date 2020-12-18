@@ -23,6 +23,9 @@ you use `getrandom` only as a dependency:
 -   Unsupported targets no longer compile. If you require the previous behavior
     (panicking at runtime instead of failing to compile), you can use the
     `custom` feature to provide a panicking implementation.
+-   Windows XP and stdweb are, as of `getrandom` version 0.2.1, no longer
+    supported. If you require support for either of these platforms you may add
+    a dependency on `getrandom = "=0.2.0"` to pin this version.
 -   Hermit, L4Re and UEFI are no longer officially supported. You can use the
     `rdrand` feature on these platforms.
 -   The minimum supported Linux kernel version is now 2.6.32.

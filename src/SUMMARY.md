@@ -24,6 +24,7 @@
     - [Updating to 0.5](update-0.5.md)
     - [Updating to 0.6](update-0.6.md)
     - [Updating to 0.7](update-0.7.md)
+    - [Updating to 0.8](update-0.8.md)
 
 - [Contributing](contributing.md)
     - [Documentation](contrib-doc.md)
