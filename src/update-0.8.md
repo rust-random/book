@@ -5,10 +5,10 @@ In the following, instructions are provided for porting your code from
 
 ## Dependencies
 
-Rand crates now require `rustc` version 1.36.0 or later.
+Rand crates now require **`rustc`** version 1.36.0 or later.
 This allowed us to remove some unsafe code and simplify the internal `cfg` logic.
 
-The dependency on `getrandom` was bumped to version 0.2. While this does not
+The dependency on **`getrandom`** was bumped to version 0.2. While this does not
 affect Rand's API, you may be affected by some of the breaking changes even if
 you use `getrandom` only as a dependency:
 
@@ -34,8 +34,13 @@ If you are using `getrandom`'s API directly, there are further breaking changes
 that may affect you. See its
 [changelog](https://github.com/rust-random/getrandom/blob/master/CHANGELOG.md#020---2020-09-10).
 
+[Serde] has been re-added as an optional dependency (use the `serde1` feature
+flag), supporting many types (where appropriate). `StdRng` and `SmallRng` are
+deliberately excluded since these types are not portable.
 
 ## Core features
+
+#### ThreadRng
 
 `ThreadRng` no longer implements `Copy`. This was necessary to fix a possible
 use-after-free in its thread-local destructor. Any code relying on `ThreadRng`
@@ -52,44 +57,60 @@ let a: u32 = Standard.sample(&mut rng);
 let b: u32 = Standard.sample(&mut rng);
 ```
 
-[`Rng::gen_range`] now takes a `Range` instead of two numbers. This requires
-replacing `gen_range(a, b)` with `gen_range(a..b)` in code written for `rand
-0.7`. We suggest to replace the regular expression
-`gen_range\(([^,]*),\s*([^)]*)\)` with `gen_range(\1..\2)` (or
-`gen_range($1..$2)` in some tools without support for backreferences).
-Additionally, if `a` or `b` were a reference, explicit dereferencing may now be
-required. Inclusive ranges are now supported: `gen_range(a, b + 1)` can be
-replaced with `gen_range(a..=b)`.
+#### gen_range
+
+[`Rng::gen_range`] now takes a `Range` instead of two numbers. Thus, replace
+`gen_range(a, b)` with `gen_range(a..b)`. We suggest using the following regular
+expression to search-replace in all files:
+
+-   replace `gen_range\(([^,]*),\s*([^)]*)\)`
+-   with `gen_range(\1..\2)`
+-   or with `gen_range($1..$2)` (if your tool does not support backreferences)
+
+Most IDEs support search-replace-across-files or similar; alternatively an
+external tool such as Regexxer may be used.
+
+This change has a couple of other implications:
+
+-   inclusive ranges are now supported, e.g. `gen_range(1..=6)` or `gen_range('A'..='Z')`
+-   it may be necessary to explicitly dereference some parameters
+-   SIMD types are no longer supported (`Uniform` types may still be used directly)
+
+#### fill
 
 The `AsByteSliceMut` trait was replaced with the [`Fill`] trait. This should
-only affect code implementing `AsByteSliceMut` on user-defined types, so they
-are supported by [`Rng::fill`] and [`Rng::try_fill`]. Now, the [`Fill`] trait
-has to be implemented instead: Rather than providing a mutable byte slice, the
-user-defined type must be filled with random data.
+only affect code implementing `AsByteSliceMut` on user-defined types, since the
+[`Rng::fill`] and [`Rng::try_fill`] retain support for previously-supported types.
+
+`Fill` supports some additional slice types which could not be supported with
+`AsByteSliceMut`: `[bool], [char], [f32], [f64]`.
+
+#### adapter
 
 The entire [`rand::rngs::adapter`] module is now restricted to the `std` feature.
 While this is technically a breaking change, it should only affect `no_std` code
 using [`ReseedingRng`], which is unlikely to exist in the wild.
 
-## PRNGs
+## Generators
 
-These have seen only small changes, but noteworthy is:
+**StdRng** has switched from the 20-round ChaCha20 to ChaCha12 for improved
+performance. This is a reduction in complexity but the 12-round variant is still
+considered secure: see [rand#932]. This is a value-breaking change for `StdRng`.
 
--   [`StdRng`] and [`ThreadRng`] now use the ChaCha12 instead of the ChaCha20
-    algorithm. This improves performance and is a value-breaking change for
-    [`StdRng`].
--   [`SmallRng`] now uses the Xoshiro128++ and Xoshiro256++ algorithm on 32-bit
-    and 64-bit platforms respectively. This reduces correlations of random data
-    generated from similar seeds, improves performance and is a value-breaking
-    change.
--   [`StdRng`], [`SmallRng`], and [`StepRng`] now implement `PartialEq` and `Eq`.
+**SmallRng** now uses the Xoshiro128++ and Xoshiro256++ algorithm on 32-bit
+and 64-bit platforms respectively. This reduces correlations of random data
+generated from similar seeds and improves performance. It is a value-breaking
+change.
+
+We now implement `PartialEq` and `Eq` for [`StdRng`], [`SmallRng`], and [`StepRng`].
 
 ## Distributions
 
-The most widely used distributions ([`Standard`] and [`Uniform`]), were not
-significantly changed. Only the following distributions suffered breaking
-changes:
+Several smaller changes occurred to rand distributions:
 
+-   The [`Uniform`] distribution now additionally supports the `char` type, so
+    for example `rng.gen_range('a'..='f')` is now supported.
+-   [`UniformSampler::sample_single_inclusive`] was added.
 -   The [`Alphanumeric`] distribution now samples bytes instead of chars. This
     more closely reflects the internally used type, but old code likely has to
     be adapted to perform the conversion from `u8` to `char`. For example, with
@@ -112,6 +133,17 @@ changes:
     method was moved from `rand` to [`rand_distr::WeightedAliasIndex`]. The
     alias method is faster for large sizes, but it suffers from a slow
     initialization, making it less generally useful.
+
+In `rand_distr` v0.4, more changes occurred (since v0.2):
+
+-   [`rand_distr::WeightedAliasIndex`] was added (moved from the `rand` crate)
+-   [`rand_distr::InverseGaussian`] and [`rand_distr::NormalInverseGaussian`]
+    were added
+-   The [`Geometric`] and [`Hypergeometric`] distributions are now supported.
+-   A different algorithm is used for the [`Beta`] distribution, improving both
+    performance and accuracy. This is a value-breaking change.
+-   The [`Normal`] and [`LogNormal`] distributions now support a `from_mean_cv`
+    constructor method and `from_zscore` sampler method.
 -   [`rand_distr::Dirichlet`] now uses boxed slices internally instead of `Vec`.
     Therefore, the weights are taken as a slice instead of a `Vec` as input.
     For example, the following `rand_distr 0.2` code
@@ -134,19 +166,8 @@ Additonally, there were some minor improvements:
 
 -   The treatment of rounding errors and NaN was improved for the
     [`WeightedIndex`] distribution.
--   The [`UniformInt`] and [`WeightedIndex`] distributions now support serialization
-    via the `serde1` feature.
 -   The [`rand_distr::Exp`] distribution now supports the `lambda = 0` parametrization.
 
-We also added several distributions:
-
--   [`rand_distr::WeightedAliasIndex`] (moved from the `rand` crate)
--   [`rand_distr::InverseGaussian`]
--   [`rand_distr::NormalInverseGaussian`]
-
-The `nightly` feature no longer implies the `simd_support` feature. If you were
-relying on this for SIMD support, you will have to use `simd_support` feature
-directly.
 
 ## Sequences
 
@@ -159,6 +180,20 @@ changes](https://github.com/rust-random/rand/pull/1059) to
 [`IteratorRandom::choose`], improving accuracy and performance. Furthermore,
 [`IteratorRandom::choose_stable`] was added to provide an alternative that
 sacrifices performance for independence of iterator size hints.
+
+## Feature flags
+
+`StdRng` is now gated behind a new feature flag, `std_rng`. This is enabled by
+default.
+
+The `nightly` feature no longer implies the `simd_support` feature. If you were
+relying on this for SIMD support, you will have to use `simd_support` feature
+directly.
+
+## Tests
+
+Value-stability tests were added for all distributions ([rand#786]), helping
+enforce our rules regarding value-breaking changes (see [Portability] section).
 
 
 [`Fill`]: ../rand/rand/trait.Fill.html
@@ -173,9 +208,10 @@ sacrifices performance for independence of iterator size hints.
 [`Standard`]: ../rand/rand/distributions/struct.Standard.html
 [`Uniform`]: ../rand/rand/distributions/struct.Uniform.html
 [`UniformInt`]: ../rand/rand/distributions/struct.UniformInt.html
+[`UniformSampler::sample_single_inclusive`]: ../rand/rand/distributions/uniform/trait.UniformSampler.html#method.sample_single_inclusive
 [`Alphanumeric`]: ../rand/rand/distributions/struct.Alphanumeric.html
 [`WeightedIndex`]: ../rand/rand/distributions/struct.WeightedIndex.html
-[`rand::rngs::adapter`]: ../rand/rand/rngs/adapter/index.html
+[`rand::rngs::adpater`]: ../rand/rand/rngs/adapter/index.html
 [`rand::seq::index::sample_weighted`]: ../rand/rand/seq/index/fn.sample_weighted.html
 [`SliceRandom::choose_multiple_weighted`]: ../rand/rand/seq/trait.SliceRandom.html#method.choose_multiple_weighted
 [`IteratorRandom::choose`]: ../rand/rand/seq/trait.IteratorRandom.html#method.choose
@@ -186,3 +222,12 @@ sacrifices performance for independence of iterator size hints.
 [`rand_distr::Dirichlet`]: ../rand/rand_distr/struct.Dirichlet.html
 [`rand_distr::Poisson`]: ../rand/rand_distr/struct.Poisson.html
 [`rand_distr::Exp`]: ../rand/rand_distr/struct.Exp.html
+[`Geometric`]: ../rand/rand_distr/struct.Geometric.html
+[`Hypergeometric`]: ../rand/rand_distr/struct.Hypergeometric.html
+[`Beta`]: ../rand/rand_distr/struct.Beta.html
+[`Normal`]: ../rand/rand_distr/struct.Normal.html
+[`LogNormal`]: ../rand/rand_distr/struct.LogNormal.html
+[rand#932]: https://github.com/rust-random/rand/issues/932
+[rand#786]: https://github.com/rust-random/rand/issues/786
+[Portability]: ./portability.html
+[Serde]: https://serde.rs/
