@@ -40,7 +40,7 @@ deliberately excluded since these types are not portable.
 
 ## Core features
 
-#### ThreadRng
+#### `ThreadRng`
 
 `ThreadRng` no longer implements `Copy`. This was necessary to fix a possible
 use-after-free in its thread-local destructor. Any code relying on `ThreadRng`
@@ -57,7 +57,7 @@ let a: u32 = Standard.sample(&mut rng);
 let b: u32 = Standard.sample(&mut rng);
 ```
 
-#### gen_range
+#### `gen_range`
 
 [`Rng::gen_range`] now takes a `Range` instead of two numbers. Thus, replace
 `gen_range(a, b)` with `gen_range(a..b)`. We suggest using the following regular
@@ -76,7 +76,7 @@ This change has a couple of other implications:
 -   it may be necessary to explicitly dereference some parameters
 -   SIMD types are no longer supported (`Uniform` types may still be used directly)
 
-#### fill
+#### `fill`
 
 The `AsByteSliceMut` trait was replaced with the [`Fill`] trait. This should
 only affect code implementing `AsByteSliceMut` on user-defined types, since the
@@ -85,7 +85,7 @@ only affect code implementing `AsByteSliceMut` on user-defined types, since the
 `Fill` supports some additional slice types which could not be supported with
 `AsByteSliceMut`: `[bool], [char], [f32], [f64]`.
 
-#### adapter
+#### `adapter`
 
 The entire [`rand::rngs::adapter`] module is now restricted to the `std` feature.
 While this is technically a breaking change, it should only affect `no_std` code
