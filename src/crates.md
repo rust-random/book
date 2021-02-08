@@ -58,6 +58,6 @@ to work.
 [`statrs`]: https://github.com/boxtown/statrs
 [`getrandom`]: https://docs.rs/getrandom/
 [`rand_chacha`]: https://rust-random.github.io/rand/rand_chacha/index.html
-[`rand_xoshiro`]: https://rust-random.github.io/rand/rand_xoshiro/index.html
+[`rand_xoshiro`]: https://docs.rs/rand_xoshiro/
 [`log`]: https://docs.rs/log/
 [`serde`]: https://serde.rs/

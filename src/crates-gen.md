@@ -42,9 +42,9 @@ The following crates implement pseudo-random number generators
 
 [`rand_chacha`]: https://rust-random.github.io/rand/rand_chacha/index.html
 [`rand_hc`]: https://rust-random.github.io/rand/rand_hc/index.html
-[`rand_isaac`]: https://rust-random.github.io/rand/rand_isaac/index.html
+[`rand_isaac`]: https://docs.rs/rand_isaac/
 [`rand_pcg`]: https://rust-random.github.io/rand/rand_pcg/index.html
-[`rand_xoshiro`]: https://rust-random.github.io/rand/rand_xoshiro/index.html
-[`rand_xorshift`]: https://rust-random.github.io/rand/rand_xorshift/index.html
-[`rand_jitter`]: https://rust-random.github.io/rand/rand_jitter/index.html
-[`getrandom`]: https://github.com/rust-random/getrandom
+[`rand_xoshiro`]: https://docs.rs/rand_xoshiro/
+[`rand_xorshift`]: https://docs.rs/rand_xorshift/
+[`rand_jitter`]: https://docs.rs/rand_jitter/
+[`getrandom`]: https://docs.rs/getrandom/
