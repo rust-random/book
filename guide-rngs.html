@@ -199,10 +199,10 @@ You may wish to refer to the <a href="http://www.pcg-random.org/">pcg-random</a>
 <tr><td><a href="../rand/rand_pcg/type.Pcg32.html"><code>Pcg32</code></a></td><td>PCG XSH RR 64/32 (LCG)</td><td>3 GB/s</td><td>16 bytes</td><td>★★★☆☆</td><td><code>u32</code> * 2<sup>64</sup></td><td>—</td></tr>
 <tr><td><a href="../rand/rand_pcg/type.Pcg64.html"><code>Pcg64</code></a></td><td>PCG XSL 128/64 (LCG)</td><td>4 GB/s</td><td>32 bytes</td><td>★★★☆☆</td><td><code>u64</code> * 2<sup>128</sup></td><td>—</td></tr>
 <tr><td><a href="../rand/rand_pcg/type.Pcg64Mcg.html"><code>Pcg64Mcg</code></a></td><td>PCG XSL 128/64 (MCG)</td><td>7 GB/s</td><td>16 bytes</td><td>★★★☆☆</td><td><code>u64</code> * 2<sup>126</sup></td><td>—</td></tr>
-<tr><td><a href="../rand/rand_xorshift/struct.XorShiftRng.html"><code>XorShiftRng</code></a></td><td>Xorshift 32/128</td><td>5 GB/s</td><td>16 bytes</td><td>★☆☆☆☆</td><td><code>u32</code> * 2<sup>128</sup> - 1</td><td>—</td></tr>
-<tr><td><a href="../rand/rand_xoshiro/struct.Xoshiro256PlusPlus.html"><code>Xoshiro256PlusPlus</code></a></td><td>Xoshiro256++</td><td>7 GB/s</td><td>32 bytes</td><td>★★★☆☆</td><td><code>u64</code> * 2<sup>256</sup> - 1</td><td>jump-ahead</td></tr>
-<tr><td><a href="../rand/rand_xoshiro/struct.Xoshiro256Plus.html"><code>Xoshiro256Plus</code></a></td><td>Xoshiro256+</td><td>8 GB/s</td><td>32 bytes</td><td>★★☆☆☆</td><td><code>u64</code> * 2<sup>256</sup> - 1</td><td>jump-ahead</td></tr>
-<tr><td><a href="../rand/rand_xoshiro/struct.SplitMix64.html"><code>SplitMix64</code></a></td><td>splitmix64</td><td>8 GB/s</td><td>8 bytes</td><td>★☆☆☆☆</td><td><code>u64</code> * 2<sup>64</sup></td><td>—</td></tr>
+<tr><td><a href="https://docs.rs/rand_xorshift/latest/rand_xorshift/struct.XorShiftRng.html"><code>XorShiftRng</code></a></td><td>Xorshift 32/128</td><td>5 GB/s</td><td>16 bytes</td><td>★☆☆☆☆</td><td><code>u32</code> * 2<sup>128</sup> - 1</td><td>—</td></tr>
+<tr><td><a href="https://docs.rs/rand_xoshiro/latest/rand_xoshiro/struct.Xoshiro256PlusPlus.html"><code>Xoshiro256PlusPlus</code></a></td><td>Xoshiro256++</td><td>7 GB/s</td><td>32 bytes</td><td>★★★☆☆</td><td><code>u64</code> * 2<sup>256</sup> - 1</td><td>jump-ahead</td></tr>
+<tr><td><a href="https://docs.rs/rand_xoshiro/latest/rand_xoshiro/struct.Xoshiro256Plus.html"><code>Xoshiro256Plus</code></a></td><td>Xoshiro256+</td><td>8 GB/s</td><td>32 bytes</td><td>★★☆☆☆</td><td><code>u64</code> * 2<sup>256</sup> - 1</td><td>jump-ahead</td></tr>
+<tr><td><a href="https://docs.rs/rand_xoshiro/latest/rand_xoshiro/struct.SplitMix64.html"><code>SplitMix64</code></a></td><td>splitmix64</td><td>8 GB/s</td><td>8 bytes</td><td>★☆☆☆☆</td><td><code>u64</code> * 2<sup>64</sup></td><td>—</td></tr>
 <tr><td><a href="../rand/rand/rngs/mock/struct.StepRng.html"><code>StepRng</code></a></td><td>counter</td><td>51 GB/s</td><td>16 bytes</td><td>☆☆☆☆☆</td><td><code>u64</code> * 2<sup>64</sup></td><td>—</td></tr>
 </tbody></table>
 <p>Here, performance is measured roughly for <code>u64</code> outputs on a 3.4GHz Haswell CPU
@@ -234,8 +234,8 @@ table since CSPRNGs may not have observable defects.</p>
 <tr><td><a href="../rand/rand_chacha/struct.ChaCha20Rng.html"><code>ChaCha20Rng</code></a></td><td>ChaCha20</td><td>1.8 GB/s</td><td>fast</td><td>136 bytes</td><td><a href="https://tools.ietf.org/html/rfc7539#section-1">rigorously analysed</a></td><td>no</td></tr>
 <tr><td><a href="../rand/rand_chacha/struct.ChaCha8Rng.html"><code>ChaCha8Rng</code></a></td><td>ChaCha8</td><td>2.2 GB/s</td><td>fast</td><td>136 bytes</td><td>small security margin</td><td>no</td></tr>
 <tr><td><a href="../rand/rand_hc/struct.Hc128Rng.html"><code>Hc128Rng</code></a></td><td>HC-128</td><td>2.1 GB/s</td><td>slow</td><td>4176 bytes</td><td><a href="http://www.ecrypt.eu.org/stream/">recommended by eSTREAM</a></td><td>no</td></tr>
-<tr><td><a href="../rand/rand_isaac/isaac/struct.IsaacRng.html"><code>IsaacRng</code></a></td><td>ISAAC</td><td>1.1 GB/s</td><td>slow</td><td>2072 bytes</td><td><a href="https://burtleburtle.net/bob/rand/isaacafa.html">unknown</a></td><td>unknown</td></tr>
-<tr><td><a href="../rand/rand_isaac/isaac64/struct.Isaac64Rng.html"><code>Isaac64Rng</code></a></td><td>ISAAC-64</td><td>2.2 GB/s</td><td>slow</td><td>4136 bytes</td><td>unknown</td><td>unknown</td></tr>
+<tr><td><a href="https://docs.rs/rand_isaac/latest/rand_isaac/isaac/struct.IsaacRng.html"><code>IsaacRng</code></a></td><td>ISAAC</td><td>1.1 GB/s</td><td>slow</td><td>2072 bytes</td><td><a href="https://burtleburtle.net/bob/rand/isaacafa.html">unknown</a></td><td>unknown</td></tr>
+<tr><td><a href="https://docs.rs/rand_isaac/latest/rand_isaac/isaac64/struct.Isaac64Rng.html"><code>Isaac64Rng</code></a></td><td>ISAAC-64</td><td>2.2 GB/s</td><td>slow</td><td>4136 bytes</td><td>unknown</td><td>unknown</td></tr>
 </tbody></table>
 <p>It should be noted that the ISAAC generators are only included for
 historical reasons, they have been with the Rust language since the very
