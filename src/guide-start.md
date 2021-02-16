@@ -3,7 +3,7 @@
 Below we list a short example. For more, please refer to the [API documentation]
 or the [guide].
 
-Lets kick things off with an example ([playground link](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=88d3e2fb7727c4817f81dae8721fa504)):
+Lets kick things off with an example ([playground link](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=7792ed032694bc558ca229be71a7783a)):
 
 ```rust,editable
 # extern crate rand;
@@ -38,7 +38,8 @@ fn main() {
     for x in &mut nums {
         *x = rng.sample(distr);
     }
-    
+    println!("Some numbers: {:?}", nums);
+
     // We can also interact with iterators and slices:
     let arrows_iter = "➡⬈⬆⬉⬅⬋⬇⬊".chars();
     println!("Lets go in this direction: {}", arrows_iter.choose(&mut rng).unwrap());
