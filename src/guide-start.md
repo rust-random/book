@@ -3,7 +3,7 @@
 Below we list a short example. For more, please refer to the [API documentation]
 or the [guide].
 
-Lets kick things off with an example ([playground link](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=4cad6600b21578cfa22009c281c780fe)):
+Lets kick things off with an example ([playground link](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=7792ed032694bc558ca229be71a7783a)):
 
 ```rust,editable
 # extern crate rand;
@@ -24,11 +24,13 @@ fn main() {
     let mut rng = thread_rng();
     if rng.gen() { // random bool
         let x: f64 = rng.gen(); // random number in range [0, 1)
-        let y = rng.gen_range(-10.0, 10.0);
+        let y = rng.gen_range(-10.0..10.0);
         println!("x is: {}", x);
         println!("y is: {}", y);
-        println!("Number from 0 to 9: {}", rng.gen_range(0, 10));
     }
+
+    println!("Die roll: {}", rng.gen_range(1..=6));
+    println!("Number from 0 to 9: {}", rng.gen_range(0..10));
     
     // Sometimes it's useful to use distributions directly:
     let distr = rand::distributions::Uniform::new_inclusive(1, 100);
@@ -37,7 +39,7 @@ fn main() {
         *x = rng.sample(distr);
     }
     println!("Some numbers: {:?}", nums);
-    
+
     // We can also interact with iterators and slices:
     let arrows_iter = "➡⬈⬆⬉⬅⬋⬇⬊".chars();
     println!("Lets go in this direction: {}", arrows_iter.choose(&mut rng).unwrap());
