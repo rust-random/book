@@ -187,7 +187,7 @@
 <h1><a class="header" href="#getting-started" id="getting-started">Getting Started</a></h1>
 <p>Below we list a short example. For more, please refer to the <a href="https://rust-random.github.io/rand/rand/index.html">API documentation</a>
 or the <a href="guide.html">guide</a>.</p>
-<p>Lets kick things off with an example (<a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2018&amp;gist=4cad6600b21578cfa22009c281c780fe">playground link</a>):</p>
+<p>Lets kick things off with an example (<a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2018&amp;gist=7792ed032694bc558ca229be71a7783a">playground link</a>):</p>
 <pre><pre class="playground"><code class="language-rust editable"><span class="boring">extern crate rand;
 </span>// import commonly used items from the prelude:
 use rand::prelude::*;
@@ -206,11 +206,13 @@ fn main() {
     let mut rng = thread_rng();
     if rng.gen() { // random bool
         let x: f64 = rng.gen(); // random number in range [0, 1)
-        let y = rng.gen_range(-10.0, 10.0);
+        let y = rng.gen_range(-10.0..10.0);
         println!(&quot;x is: {}&quot;, x);
         println!(&quot;y is: {}&quot;, y);
-        println!(&quot;Number from 0 to 9: {}&quot;, rng.gen_range(0, 10));
     }
+
+    println!(&quot;Die roll: {}&quot;, rng.gen_range(1..=6));
+    println!(&quot;Number from 0 to 9: {}&quot;, rng.gen_range(0..10));
     
     // Sometimes it's useful to use distributions directly:
     let distr = rand::distributions::Uniform::new_inclusive(1, 100);
@@ -219,7 +221,7 @@ fn main() {
         *x = rng.sample(distr);
     }
     println!(&quot;Some numbers: {:?}&quot;, nums);
-    
+
     // We can also interact with iterators and slices:
     let arrows_iter = &quot;➡⬈⬆⬉⬅⬋⬇⬊&quot;.chars();
     println!(&quot;Lets go in this direction: {}&quot;, arrows_iter.choose(&amp;mut rng).unwrap());
