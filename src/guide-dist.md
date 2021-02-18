@@ -114,6 +114,11 @@ much faster than sampling `n` trials individually.
 
 The [`Poisson`] distribution expresses the expected number of events
 occurring within a fixed interval, given that events occur with fixed rate λ.
+[`Poisson`] distribution sampling generates `Float` values because `Float`s
+are used in the sampling calculations, and we prefer to defer to the user on
+integer types and the potentially lossy and panicking associated conversions.
+For example, in Rust >= 1.45, `u64` values can be attained with
+`rng.sample(Poisson) as u64`.
 
 ### Weighted sequences
 
