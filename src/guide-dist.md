@@ -117,8 +117,10 @@ occurring within a fixed interval, given that events occur with fixed rate λ.
 [`Poisson`] distribution sampling generates `Float` values because `Float`s
 are used in the sampling calculations, and we prefer to defer to the user on
 integer types and the potentially lossy and panicking associated conversions.
-For example, in Rust >= 1.45, `u64` values can be attained with
-`rng.sample(Poisson) as u64`.
+For example, `u64` values can be attained with `rng.sample(Poisson) as u64`.
+
+Note that out of range float to int conversions with `as` result in undefined
+behavior for Rust <1.45 and a saturating conversion for Rust >=1.45.
 
 ### Weighted sequences
 
