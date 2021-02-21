@@ -1124,7 +1124,13 @@ then counts the number of successes.</p>
 <p>Note that for large <code>n</code> the <a href="../rand/rand/distributions/struct.Binomial.html"><code>Binomial</code></a> distribution's implementation is
 much faster than sampling <code>n</code> trials individually.</p>
 <p>The <a href="../rand/rand/distributions/struct.Poisson.html"><code>Poisson</code></a> distribution expresses the expected number of events
-occurring within a fixed interval, given that events occur with fixed rate λ.</p>
+occurring within a fixed interval, given that events occur with fixed rate λ.
+<a href="../rand/rand/distributions/struct.Poisson.html"><code>Poisson</code></a> distribution sampling generates <code>Float</code> values because <code>Float</code>s
+are used in the sampling calculations, and we prefer to defer to the user on
+integer types and the potentially lossy and panicking associated conversions.
+For example, <code>u64</code> values can be attained with <code>rng.sample(Poisson) as u64</code>.</p>
+<p>Note that out of range float to int conversions with <code>as</code> result in undefined
+behavior for Rust &lt;1.45 and a saturating conversion for Rust &gt;=1.45.</p>
 <h3><a class="header" href="#weighted-sequences" id="weighted-sequences">Weighted sequences</a></h3>
 <p>The <a href="../rand/rand/distributions/weighted/struct.WeightedIndex.html"><code>WeightedIndex</code></a> distribution samples an index from sequence of weights.
 See the <a href="../guide-seq.html">Sequences</a> section for convenience wrappers directly sampling a slice
