@@ -29,7 +29,7 @@ The [`Rng`] trait provides a layer of convenience on top of [`RngCore`], whose
 highlights are:
 
 -   [`Rng::gen()`] provides a random value of any type supporting the [`Standard`] distribution.
--   [`Rng::gen_range(low, high)`] provides a uniform random value within the given range.
+-   [`Rng::gen_range(low..high)`] provides a uniform random value within the given range.
 -   [`Rng::gen_bool(p)`] yields `true` with probability `p`.
 -   [`Rng::sample(distribution)`] produces a value from the supplied `distribution`.
 -   [`Rng::fill(dest)`] fills any "byte slice" with random data.
@@ -48,7 +48,7 @@ random values. Key contents:
     different types, from ints to floats to tuples, arrays and `Option`).
 -   [`Open01`] and [`OpenClosed01`] provide variations on sampling floating point
     values from the 0-1 range.
--   [`Uniform`] is the backbone behind [`Rng::gen_range(low, high)`], allowing uniform sampling
+-   [`Uniform`] is the backbone behind [`Rng::gen_range(low..high)`], allowing uniform sampling
     from a configured type-specific range.
 
 Many more distributions are available; consult the API documentation.
@@ -63,7 +63,7 @@ The [`seq`] module allows:
 
 [`prelude`]: ../rand/rand/prelude/index.html
 [`distributions`]: ../rand/rand/distributions/index.html
-[`Rng::gen_range(low, high)`]: ../rand/rand/trait.Rng.html#method.gen_range
+[`Rng::gen_range(low..high)`]: ../rand/rand/trait.Rng.html#method.gen_range
 [`random()`]: ../rand/rand/fn.random.html
 [`Rng::fill(dest)`]: ../rand/rand/trait.Rng.html#method.fill
 [`Rng::gen_bool(p)`]: ../rand/rand/trait.Rng.html#method.gen_bool

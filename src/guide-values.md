@@ -21,8 +21,7 @@ convenience functions for producing uniformly distributed values:
     
     This method is a convenience wrapper around the [`Standard`] distribution,
     as documented in the [next section](guide-dist.html#uniform-distributions).
--   [`Rng::gen_range`] generates an unbiased random value with given bounds
-    `low` (inclusive) and `high` (exclusive)
+-   [`Rng::gen_range`] generates an unbiased random value in the given range
 -   [`Rng::fill`] and [`Rng::try_fill`] are optimised functions for filling any byte or
     integer slice with random values
 
@@ -50,7 +49,7 @@ let i: i32 = rng.gen();
 let x: f64 = rng.gen();
 
 // simulate rolling a die:
-let roll = rng.gen_range(1, 7);
+let roll = rng.gen_range(1..7);
 ```
 
 Additionally, the [`random`] function is a short-cut to [`Rng::gen`] on the [`thread_rng`]:
