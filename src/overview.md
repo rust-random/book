@@ -29,7 +29,12 @@ The [`Rng`] trait provides a layer of convenience on top of [`RngCore`], whose
 highlights are:
 
 -   [`Rng::gen()`] provides a random value of any type supporting the [`Standard`] distribution.
--   [`Rng::gen_range(low..high)`] provides a uniform random value within the given range.
+-   [`Rng::gen_range(low..high)`] provides a uniform random value within the
+    given range. A range includes the lower bound `low` and excludes the upper
+    bound `high`.
+-   [`Rng::gen_range(low..=high)`] provides a uniform random value within the
+    given inclusive range. Here the range is inclusive of both the lower bound
+    `low` and the upper bound `high`.
 -   [`Rng::gen_bool(p)`] yields `true` with probability `p`.
 -   [`Rng::sample(distribution)`] produces a value from the supplied `distribution`.
 -   [`Rng::fill(dest)`] fills any "byte slice" with random data.
@@ -64,6 +69,7 @@ The [`seq`] module allows:
 [`prelude`]: ../rand/rand/prelude/index.html
 [`distributions`]: ../rand/rand/distributions/index.html
 [`Rng::gen_range(low..high)`]: ../rand/rand/trait.Rng.html#method.gen_range
+[`Rng::gen_range(low..=high)`]: ../rand/rand/trait.Rng.html#method.gen_range
 [`random()`]: ../rand/rand/fn.random.html
 [`Rng::fill(dest)`]: ../rand/rand/trait.Rng.html#method.fill
 [`Rng::gen_bool(p)`]: ../rand/rand/trait.Rng.html#method.gen_bool
