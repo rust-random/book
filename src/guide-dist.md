@@ -72,6 +72,8 @@ Lets go over the distributions by type:
     The [`Standard`] and [`Uniform`] distributions each support a selection of
     these types (up to 12-tuples and 32-element arrays).
     This includes the empty tuple `()` and array.
+    When using `rustc` ≥ 1.51, enable the `min_const_gen` feature to support
+    arrays larger than 32 elements.
 -   For SIMD types, each element is sampled as above, for [`Standard`] and
     [`Uniform`] (for the latter, `low` and `high` parameters are *also* SIMD
     types, effectively sampling from multiple ranges simultaneously). SIMD
