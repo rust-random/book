@@ -183,7 +183,7 @@ and (to the best of our knowledge) cryptographically secure.</p>
 <p>The goal of &quot;standard&quot; non-cryptographic PRNGs is usually to find a good
 balance between simplicity, quality, memory usage and performance.
 Non-cryptographic generators pre-date cryptographic ones and are in some ways
-obsoleted by them, however some advantages may be on available:
+obsoleted by them, however non-cryptographic generators do have some advantages:
 a small state size, fast initialisation, simplicity, lower energy usage for
 embedded CPUs. (However, not all non-crypto PRNGs provide these benefits,
 e.g. the Mersenne Twister has a very large state despite being easy to predict).</p>
@@ -238,7 +238,7 @@ table since CSPRNGs may not have observable defects.</p>
 <tr><td><a href="https://docs.rs/rand_isaac/latest/rand_isaac/isaac64/struct.Isaac64Rng.html"><code>Isaac64Rng</code></a></td><td>ISAAC-64</td><td>2.2 GB/s</td><td>slow</td><td>4136 bytes</td><td>unknown</td><td>unknown</td></tr>
 </tbody></table>
 <p>It should be noted that the ISAAC generators are only included for
-historical reasons, they have been with the Rust language since the very
+historical reasons: they have been with the Rust language since the very
 beginning. They have good quality output and no attacks are known, but have
 received little attention from cryptography experts.</p>
 <h1><a class="header" href="#notes-on-generators" id="notes-on-generators">Notes on generators</a></h1>
@@ -289,7 +289,7 @@ the random numbers and the algorithm they are used in, the results can be
 wrong or misleading.</p>
 <p>A random number generator can be considered good if it gives the correct
 results in as many applications as possible. The quality of PRNG
-algorithms can be evaluated to some extend analytically, to determine the
+algorithms can be evaluated to some extent analytically, to determine the
 cycle length and to rule out some correlations. Then there are empirical
 test suites designed to test how well a PRNG performs on a wide range of
 possible uses, the latest and most complete of which are <a href="http://simul.iro.umontreal.ca/testu01/tu01.html">TestU01</a> and
