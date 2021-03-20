@@ -23,7 +23,7 @@ Contents of this documentation:
 The goal of "standard" non-cryptographic PRNGs is usually to find a good
 balance between simplicity, quality, memory usage and performance.
 Non-cryptographic generators pre-date cryptographic ones and are in some ways
-obsoleted by them, however some advantages may be on available:
+obsoleted by them, however non-cryptographic generators do have some advantages:
 a small state size, fast initialisation, simplicity, lower energy usage for
 embedded CPUs. (However, not all non-crypto PRNGs provide these benefits,
 e.g. the Mersenne Twister has a very large state despite being easy to predict).
@@ -87,7 +87,7 @@ table since CSPRNGs may not have observable defects.
 | [`Isaac64Rng`] | ISAAC-64 | 2.2 GB/s | slow | 4136 bytes| unknown | unknown |
 
 It should be noted that the ISAAC generators are only included for
-historical reasons, they have been with the Rust language since the very
+historical reasons: they have been with the Rust language since the very
 beginning. They have good quality output and no attacks are known, but have
 received little attention from cryptography experts.
 
@@ -155,7 +155,7 @@ wrong or misleading.
 
 A random number generator can be considered good if it gives the correct
 results in as many applications as possible. The quality of PRNG
-algorithms can be evaluated to some extend analytically, to determine the
+algorithms can be evaluated to some extent analytically, to determine the
 cycle length and to rule out some correlations. Then there are empirical
 test suites designed to test how well a PRNG performs on a wide range of
 possible uses, the latest and most complete of which are [TestU01] and
