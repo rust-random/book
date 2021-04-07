@@ -1090,7 +1090,9 @@ only a-z, A-Z and 0-9 uniformly.</p>
 <p>For tuples and arrays, each element is sampled as above, where supported.
 The <a href="../rand/rand/distributions/struct.Standard.html"><code>Standard</code></a> and <a href="../rand/rand/distributions/struct.Uniform.html"><code>Uniform</code></a> distributions each support a selection of
 these types (up to 12-tuples and 32-element arrays).
-This includes the empty tuple <code>()</code> and array.</p>
+This includes the empty tuple <code>()</code> and array.
+When using <code>rustc</code> ≥ 1.51, enable the <code>min_const_gen</code> feature to support
+arrays larger than 32 elements.</p>
 </li>
 <li>
 <p>For SIMD types, each element is sampled as above, for <a href="../rand/rand/distributions/struct.Standard.html"><code>Standard</code></a> and
