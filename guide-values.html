@@ -184,8 +184,7 @@ and some other types are supported, including arrays and tuples.</p>
 as documented in the <a href="guide-dist.html#uniform-distributions">next section</a>.</p>
 </li>
 <li>
-<p><a href="../rand/rand/trait.Rng.html#method.gen_range"><code>Rng::gen_range</code></a> generates an unbiased random value with given bounds
-<code>low</code> (inclusive) and <code>high</code> (exclusive)</p>
+<p><a href="../rand/rand/trait.Rng.html#method.gen_range"><code>Rng::gen_range</code></a> generates an unbiased random value in the given range</p>
 </li>
 <li>
 <p><a href="../rand/rand/trait.Rng.html#method.fill"><code>Rng::fill</code></a> and <a href="../rand/rand/trait.Rng.html#method.try_fill"><code>Rng::try_fill</code></a> are optimised functions for filling any byte or
@@ -217,7 +216,7 @@ let i: i32 = rng.gen();
 let x: f64 = rng.gen();
 
 // simulate rolling a die:
-let roll = rng.gen_range(1, 7);
+let roll = rng.gen_range(1..7);
 <span class="boring">}
 </span></code></pre></pre>
 <p>Additionally, the <a href="../rand/rand/fn.random.htm"><code>random</code></a> function is a short-cut to <a href="../rand/rand/trait.Rng.html#method.gen"><code>Rng::gen</code></a> on the <a href="../rand/rand/fn.thread_rng.html"><code>thread_rng</code></a>:</p>
