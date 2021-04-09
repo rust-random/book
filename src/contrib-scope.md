@@ -48,7 +48,6 @@ The `rand_jitter` crate provides an implementation of a
 [CPU Jitter](http://www.chronox.de/jent.html) entropy harvestor, and is only
 included in Rand for historical reasons.
 
-The `rand_os` crate proves an `RngCore` implementation around `getrandom`.
 
 ## Pseudo-random generators
 
