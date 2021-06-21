@@ -33,17 +33,10 @@ On Linux, it is easy to set up automatic rebuilds after any edit:
 while inotifywait -r -e close_write src/ rand_*/; do cargo doc; done
 ```
 
-After editing API documentation, we reccomend testing examples and
-checking for broken links:
+After editing API documentation, we reccomend testing examples:
 
 ```sh
 cargo test --doc
-
-cargo install cargo-deadlinks
-# It is recommended to remove left-over files from previous compilations
-rm -rf /target/doc
-cargo doc --all --no-deps
-cargo deadlinks --dir target/doc
 ```
 
 Rand API docs are automatically built and hosted at
