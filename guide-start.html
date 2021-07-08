@@ -233,10 +233,9 @@ All cryptographic RNGs accept a more appropriate seed via <a href="https://rust-
 <p>We use <code>ChaCha8Rng</code> below because it is fast and portable with good quality.
 See the <a href="guide-rngs.html">RNGs</a> section for more RNGs, but avoid <code>SmallRng</code> and <code>StdRng</code> if you
 care about reproducible results.</p>
-<pre><pre class="playground"><code class="language-rust editable">extern crate rand;
-extern crate rand_chacha;
-
-use rand::{Rng, SeedableRng};
+<pre><pre class="playground"><code class="language-rust editable"><span class="boring">extern crate rand;
+</span><span class="boring">extern crate rand_chacha;
+</span>use rand::{Rng, SeedableRng};
 
 fn main() {
     let mut rng = rand_chacha::ChaCha8Rng::seed_from_u64(10);
