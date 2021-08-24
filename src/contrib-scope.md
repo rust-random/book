@@ -5,7 +5,7 @@ monolithic crate to using a "main" crate plus multiple single-purpose crates.
 For new functionality, one must consider where, and whether, it fits within the
 Rand project.
 
-Small, focussed crates may be used for a few reasons, but we aim *not* to
+Small, focused crates may be used for a few reasons, but we aim *not* to
 maximally divide functionality into small crates. Valid reasons for using a
 separate crate for a feature are therefore:
 
@@ -45,7 +45,7 @@ implementation effort. See
 [getrandom#4](https://github.com/rust-random/getrandom/issues/4).
 
 The `rand_jitter` crate provides an implementation of a
-[CPU Jitter](http://www.chronox.de/jent.html) entropy harvestor, and is only
+[CPU Jitter](http://www.chronox.de/jent.html) entropy harvester, and is only
 included in Rand for historical reasons.
 
 

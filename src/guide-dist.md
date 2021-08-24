@@ -28,7 +28,7 @@ The most obvious type of distribution is the one we already discussed: one
 without pattern, where each value or range of values is equally likely. This is
 known as *uniform*.
 
-Rand actually has several variants of this, repesenting different ranges:
+Rand actually has several variants of this, representing different ranges:
 
 -   [`Standard`] requires no parameters and samples values uniformly according
     to the type. [`Rng::gen`] provides a short-cut to this distribution.

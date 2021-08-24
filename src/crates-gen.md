@@ -7,17 +7,17 @@ random-number sources, and is an important building block of `rand` and
 `rand_core` as well as a number of cryptography libraries.
 It is not intended for usage outside of low-level libraries.
 
-In some cases, particularly when targetting WASM, end-users may need to
+In some cases, particularly when targeting WASM, end-users may need to
 configure this crate.
 Consult the [`getrandom`] documentation for the relevant version.
 
 ## CPU Jitter
 
-The [`rand_jitter`] crate implements a CPU-jitter-based entropy harvestor which
+The [`rand_jitter`] crate implements a CPU-jitter-based entropy harvester which
 may be used to provide an alternative source of entropy where a high-resolution
 CPU timer is available.
 
-It should be noted that CPU-jitter harvestors [may be prone to side-channel
+It should be noted that CPU-jitter harvesters [may be prone to side-channel
 attacks](https://github.com/rust-random/rand/issues/699) and that this
 implementation is quite slow (due to conservative estimates of entropy gained
 per step).

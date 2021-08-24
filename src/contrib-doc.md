@@ -33,7 +33,7 @@ On Linux, it is easy to set up automatic rebuilds after any edit:
 while inotifywait -r -e close_write src/ rand_*/; do cargo doc; done
 ```
 
-After editing API documentation, we reccomend testing examples and
+After editing API documentation, we recommend testing examples and
 checking for broken links:
 
 ```sh
@@ -91,7 +91,7 @@ Examples:
 https://docs.rs/getrandom/0.1/getrandom/fn.getrandom.html
 ```
 
-## Auxilliary documentation
+## Auxiliary documentation
 
 ### README files
 
