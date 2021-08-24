@@ -78,6 +78,27 @@ Lets go over the distributions by type:
     [`Uniform`] (for the latter, `low` and `high` parameters are *also* SIMD
     types, effectively sampling from multiple ranges simultaneously). SIMD
     support is gated behind a [feature flag](../features.html#simd-support).
+-   For enums, you have to implement uniform sampling yourself. For example, you
+    could use the following approach:
+    ```rust
+    pub enum Food {
+        Burger,
+        Pizza,
+        Kebab,
+    }
+
+    impl Distribution<Food> for Standard {
+        fn sample<R: Rng + ?Sized>(&self, rng: &mut R) -> Food {
+            let index: u8 = rng.gen_range(0..3);
+            match index {
+                0 => Food::Burger,
+                1 => Food::Pizza,
+                2 => Food::Kebab,
+                _ => unreachable!(),
+            }
+        }
+    }
+    ```
 
 # Non-uniform distributions
 
