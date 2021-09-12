@@ -355,14 +355,14 @@ utilities. (For clarity, <a href="https://github.com/boxtown/statrs"><code>statr
 random-number sources, and is an important building block of <code>rand</code> and
 <code>rand_core</code> as well as a number of cryptography libraries.
 It is not intended for usage outside of low-level libraries.</p>
-<p>In some cases, particularly when targetting WASM, end-users may need to
+<p>In some cases, particularly when targeting WASM, end-users may need to
 configure this crate.
 Consult the <a href="https://docs.rs/getrandom/"><code>getrandom</code></a> documentation for the relevant version.</p>
 <h2><a class="header" href="#cpu-jitter" id="cpu-jitter">CPU Jitter</a></h2>
-<p>The <a href="https://docs.rs/rand_jitter/"><code>rand_jitter</code></a> crate implements a CPU-jitter-based entropy harvestor which
+<p>The <a href="https://docs.rs/rand_jitter/"><code>rand_jitter</code></a> crate implements a CPU-jitter-based entropy harvester which
 may be used to provide an alternative source of entropy where a high-resolution
 CPU timer is available.</p>
-<p>It should be noted that CPU-jitter harvestors <a href="https://github.com/rust-random/rand/issues/699">may be prone to side-channel
+<p>It should be noted that CPU-jitter harvesters <a href="https://github.com/rust-random/rand/issues/699">may be prone to side-channel
 attacks</a> and that this
 implementation is quite slow (due to conservative estimates of entropy gained
 per step).</p>
@@ -526,7 +526,7 @@ number generators are deterministic and can be defined by just:</p>
 <p>The fact that these are deterministic can sometimes be very useful: it allows a
 simulation, randomised art work or game to be repeated exactly, producing a
 result which is a function of the seed. For more on this see the
-<a href="portability.html">portability</a> chapter (note that determinicity alone isn't
+<a href="portability.html">portability</a> chapter (note that determinism alone isn't
 enough to guarantee reproducibility).</p>
 <p>The other big attraction of PRNGs is their speed: some of these algorithms
 require only a few CPU operations per random value, and thus can produce
@@ -1030,7 +1030,7 @@ and the <a href="../rand/rand_distr/index.html"><code>rand_distr</code></a> crat
 <p>The most obvious type of distribution is the one we already discussed: one
 without pattern, where each value or range of values is equally likely. This is
 known as <em>uniform</em>.</p>
-<p>Rand actually has several variants of this, repesenting different ranges:</p>
+<p>Rand actually has several variants of this, representing different ranges:</p>
 <ul>
 <li><a href="../rand/rand/distributions/struct.Standard.html"><code>Standard</code></a> requires no parameters and samples values uniformly according
 to the type. <a href="../rand/rand/trait.Rng.html#method.gen"><code>Rng::gen</code></a> provides a short-cut to this distribution.</li>
@@ -1097,6 +1097,32 @@ arrays larger than 32 elements.</p>
 <a href="../rand/rand/distributions/struct.Uniform.html"><code>Uniform</code></a> (for the latter, <code>low</code> and <code>high</code> parameters are <em>also</em> SIMD
 types, effectively sampling from multiple ranges simultaneously). SIMD
 support is gated behind a <a href="../features.html#simd-support">feature flag</a>.</p>
+</li>
+<li>
+<p>For enums, you have to implement uniform sampling yourself. For example, you
+could use the following approach:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub enum Food {
+    Burger,
+    Pizza,
+    Kebab,
+}
+
+impl Distribution&lt;Food&gt; for Standard {
+    fn sample&lt;R: Rng + ?Sized&gt;(&amp;self, rng: &amp;mut R) -&gt; Food {
+        let index: u8 = rng.gen_range(0..3);
+        match index {
+            0 =&gt; Food::Burger,
+            1 =&gt; Food::Pizza,
+            2 =&gt; Food::Kebab,
+            _ =&gt; unreachable!(),
+        }
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
 </li>
 </ul>
 <h1><a class="header" href="#non-uniform-distributions" id="non-uniform-distributions">Non-uniform distributions</a></h1>
@@ -1255,7 +1281,7 @@ issue, but when it comes to generating random numbers in a portable manner
 it does matter.</p>
 <p>A simple rule follows: if portability is required, <em>never</em> sample a <code>usize</code> or
 <code>isize</code> value directly.</p>
-<p>Within Rand we adhere to this rule whenever possible. All sequence-releated
+<p>Within Rand we adhere to this rule whenever possible. All sequence-related
 code requiring a bounded <code>usize</code> value will sample a <code>u32</code> value unless the
 upper bound exceeds <code>u32::MAX</code>.
 (Note that this actually improves benchmark performance in many cases.)</p>
@@ -1753,7 +1779,7 @@ explicitly.</li>
 have to be migrated. Thanks to the math functions from <code>num_traits::Float</code>,
 <code>rand_distr</code> now supports <code>no_std</code>.</li>
 </ul>
-<p>Additonally, there were some minor improvements:</p>
+<p>Additionally, there were some minor improvements:</p>
 <ul>
 <li>The treatment of rounding errors and NaN was improved for the
 <a href="../rand/rand/distributions/struct.WeightedIndex.html"><code>WeightedIndex</code></a> distribution.</li>
@@ -1797,7 +1823,7 @@ support.</p>
 <li>
 <p><strong>Fixes:</strong> if you can easily fix this yourself, please consider making a PR
 instead of opening an issue. On the other hand if it's less easy or looks
-like it may conflict with other work, don't hesistate to open an issue.</p>
+like it may conflict with other work, don't hesitate to open an issue.</p>
 </li>
 </ul>
 <h2><a class="header" href="#pull-requests" id="pull-requests">Pull Requests</a></h2>
@@ -1869,7 +1895,7 @@ xdg-open target/doc/rand/index.html
 <p>On Linux, it is easy to set up automatic rebuilds after any edit:</p>
 <pre><code class="language-sh">while inotifywait -r -e close_write src/ rand_*/; do cargo doc; done
 </code></pre>
-<p>After editing API documentation, we reccomend testing examples and
+<p>After editing API documentation, we recommend testing examples and
 checking for broken links:</p>
 <pre><code class="language-sh">cargo test --doc
 
@@ -1918,7 +1944,7 @@ currently on <code>docs.rs</code> (see <a href="https://github.com/rust-lang/doc
 // Link directly to docs.rs, with major &amp; minor but no patch version:
 https://docs.rs/getrandom/0.1/getrandom/fn.getrandom.html
 </code></pre>
-<h2><a class="header" href="#auxilliary-documentation" id="auxilliary-documentation">Auxilliary documentation</a></h2>
+<h2><a class="header" href="#auxiliary-documentation" id="auxiliary-documentation">Auxiliary documentation</a></h2>
 <h3><a class="header" href="#readme-files" id="readme-files">README files</a></h3>
 <p>README files contain a brief introduction to the crate, shield badges, useful
 links, feature-flag documentation, licence information, and potentially an
@@ -1955,7 +1981,7 @@ API documentation:</p>
 monolithic crate to using a &quot;main&quot; crate plus multiple single-purpose crates.
 For new functionality, one must consider where, and whether, it fits within the
 Rand project.</p>
-<p>Small, focussed crates may be used for a few reasons, but we aim <em>not</em> to
+<p>Small, focused crates may be used for a few reasons, but we aim <em>not</em> to
 maximally divide functionality into small crates. Valid reasons for using a
 separate crate for a feature are therefore:</p>
 <ul>
@@ -1990,7 +2016,7 @@ RDRAND on a few <code>no_std</code> targets.</p>
 implementation effort. See
 <a href="https://github.com/rust-random/getrandom/issues/4">getrandom#4</a>.</p>
 <p>The <code>rand_jitter</code> crate provides an implementation of a
-<a href="http://www.chronox.de/jent.html">CPU Jitter</a> entropy harvestor, and is only
+<a href="http://www.chronox.de/jent.html">CPU Jitter</a> entropy harvester, and is only
 included in Rand for historical reasons.</p>
 <h2><a class="header" href="#pseudo-random-generators" id="pseudo-random-generators">Pseudo-random generators</a></h2>
 <p>The Rand library includes several pseudo-random number generators, for the

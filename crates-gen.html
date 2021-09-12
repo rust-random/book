@@ -169,14 +169,14 @@
 random-number sources, and is an important building block of <code>rand</code> and
 <code>rand_core</code> as well as a number of cryptography libraries.
 It is not intended for usage outside of low-level libraries.</p>
-<p>In some cases, particularly when targetting WASM, end-users may need to
+<p>In some cases, particularly when targeting WASM, end-users may need to
 configure this crate.
 Consult the <a href="https://docs.rs/getrandom/"><code>getrandom</code></a> documentation for the relevant version.</p>
 <h2><a class="header" href="#cpu-jitter" id="cpu-jitter">CPU Jitter</a></h2>
-<p>The <a href="https://docs.rs/rand_jitter/"><code>rand_jitter</code></a> crate implements a CPU-jitter-based entropy harvestor which
+<p>The <a href="https://docs.rs/rand_jitter/"><code>rand_jitter</code></a> crate implements a CPU-jitter-based entropy harvester which
 may be used to provide an alternative source of entropy where a high-resolution
 CPU timer is available.</p>
-<p>It should be noted that CPU-jitter harvestors <a href="https://github.com/rust-random/rand/issues/699">may be prone to side-channel
+<p>It should be noted that CPU-jitter harvesters <a href="https://github.com/rust-random/rand/issues/699">may be prone to side-channel
 attacks</a> and that this
 implementation is quite slow (due to conservative estimates of entropy gained
 per step).</p>

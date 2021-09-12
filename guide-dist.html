@@ -190,7 +190,7 @@ and the <a href="../rand/rand_distr/index.html"><code>rand_distr</code></a> crat
 <p>The most obvious type of distribution is the one we already discussed: one
 without pattern, where each value or range of values is equally likely. This is
 known as <em>uniform</em>.</p>
-<p>Rand actually has several variants of this, repesenting different ranges:</p>
+<p>Rand actually has several variants of this, representing different ranges:</p>
 <ul>
 <li><a href="../rand/rand/distributions/struct.Standard.html"><code>Standard</code></a> requires no parameters and samples values uniformly according
 to the type. <a href="../rand/rand/trait.Rng.html#method.gen"><code>Rng::gen</code></a> provides a short-cut to this distribution.</li>
@@ -257,6 +257,32 @@ arrays larger than 32 elements.</p>
 <a href="../rand/rand/distributions/struct.Uniform.html"><code>Uniform</code></a> (for the latter, <code>low</code> and <code>high</code> parameters are <em>also</em> SIMD
 types, effectively sampling from multiple ranges simultaneously). SIMD
 support is gated behind a <a href="../features.html#simd-support">feature flag</a>.</p>
+</li>
+<li>
+<p>For enums, you have to implement uniform sampling yourself. For example, you
+could use the following approach:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub enum Food {
+    Burger,
+    Pizza,
+    Kebab,
+}
+
+impl Distribution&lt;Food&gt; for Standard {
+    fn sample&lt;R: Rng + ?Sized&gt;(&amp;self, rng: &amp;mut R) -&gt; Food {
+        let index: u8 = rng.gen_range(0..3);
+        match index {
+            0 =&gt; Food::Burger,
+            1 =&gt; Food::Pizza,
+            2 =&gt; Food::Kebab,
+            _ =&gt; unreachable!(),
+        }
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
 </li>
 </ul>
 <h1><a class="header" href="#non-uniform-distributions" id="non-uniform-distributions">Non-uniform distributions</a></h1>

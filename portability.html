@@ -209,7 +209,7 @@ issue, but when it comes to generating random numbers in a portable manner
 it does matter.</p>
 <p>A simple rule follows: if portability is required, <em>never</em> sample a <code>usize</code> or
 <code>isize</code> value directly.</p>
-<p>Within Rand we adhere to this rule whenever possible. All sequence-releated
+<p>Within Rand we adhere to this rule whenever possible. All sequence-related
 code requiring a bounded <code>usize</code> value will sample a <code>u32</code> value unless the
 upper bound exceeds <code>u32::MAX</code>.
 (Note that this actually improves benchmark performance in many cases.)</p>
