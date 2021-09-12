@@ -53,7 +53,7 @@ it does matter.
 A simple rule follows: if portability is required, *never* sample a `usize` or
 `isize` value directly.
 
-Within Rand we adhere to this rule whenever possible. All sequence-releated
+Within Rand we adhere to this rule whenever possible. All sequence-related
 code requiring a bounded `usize` value will sample a `u32` value unless the
 upper bound exceeds `u32::MAX`.
 (Note that this actually improves benchmark performance in many cases.)

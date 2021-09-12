@@ -82,9 +82,8 @@ See the [RNGs] section for more RNGs, but avoid `SmallRng` and `StdRng` if you
 care about reproducible results.
 
 ```rust,editable
-extern crate rand;
-extern crate rand_chacha;
-
+# extern crate rand;
+# extern crate rand_chacha;
 use rand::{Rng, SeedableRng};
 
 fn main() {

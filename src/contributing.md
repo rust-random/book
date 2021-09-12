@@ -13,13 +13,13 @@ thus we may take considerable time to get back to you.
     scope of the project or is an enhancement. Note that whether something is
     considered a *defect* may depend on your point of view. We may choose to
     reject contributions to avoid increasing our workload.
-    
+
     If you wish to expand the scope of the project (e.g. new platforms or
     additional CI testing) then please be prepared to provide on-going
     support.
 -   **Fixes:** if you can easily fix this yourself, please consider making a PR
     instead of opening an issue. On the other hand if it's less easy or looks
-    like it may conflict with other work, don't hesistate to open an issue.
+    like it may conflict with other work, don't hesitate to open an issue.
 
 ## Pull Requests
 

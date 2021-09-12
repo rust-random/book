@@ -162,7 +162,7 @@ In `rand_distr` v0.4, more changes occurred (since v0.2):
     have to be migrated. Thanks to the math functions from `num_traits::Float`,
     `rand_distr` now supports `no_std`.
 
-Additonally, there were some minor improvements:
+Additionally, there were some minor improvements:
 
 -   The treatment of rounding errors and NaN was improved for the
     [`WeightedIndex`] distribution.
