@@ -186,15 +186,8 @@ xdg-open target/doc/rand/index.html
 <p>On Linux, it is easy to set up automatic rebuilds after any edit:</p>
 <pre><code class="language-sh">while inotifywait -r -e close_write src/ rand_*/; do cargo doc; done
 </code></pre>
-<p>After editing API documentation, we recommend testing examples and
-checking for broken links:</p>
+<p>After editing API documentation, we recommend testing examples:</p>
 <pre><code class="language-sh">cargo test --doc
-
-cargo install cargo-deadlinks
-# It is recommended to remove left-over files from previous compilations
-rm -rf /target/doc
-cargo doc --all --no-deps
-cargo deadlinks --dir target/doc
 </code></pre>
 <p>Rand API docs are automatically built and hosted at
 <a href="https://rust-random.github.io/rand">rust-random.github.io/rand</a> for the latest code in master.</p>
