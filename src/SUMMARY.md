@@ -15,6 +15,7 @@
     - [Seeding RNGs](guide-seeding.md)
     - [Random values](guide-values.md)
     - [Random distributions](guide-dist.md)
+    - [Random processess](guide-process.md)
     - [Sequences](guide-seq.md)
     - [Error handling](guide-err.md)
 

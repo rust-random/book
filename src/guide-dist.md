@@ -18,6 +18,15 @@ pub trait Distribution<T> {
 }
 ```
 
+Implementations of [`Distribution`] are *probability distribution*: mappings
+from events to probabilities (e.g. for a die roll `P(x = i) = ⅙` or for a Normal
+distribution with mean `μ=0`, `P(x > 0) = ½`).
+
+Note that although probability distributions all have properties such as a mean,
+a Probability Density Function, and can be sampled by inverting the Cumulative
+Density Function, here we only concern ourselves with *sampling random values*.
+If you require use of such properties you may prefer to use the [`statrs`] crate.
+
 Rand provides implementations of many different distributions; we cover the most
 common of these here, but for full details refer to the [`distributions`] module
 and the [`rand_distr`] crate.
@@ -222,3 +231,4 @@ generalisation to any positive number of parameters.
 [`Dirichlet`]: ../rand/rand/distributions/struct.Dirichlet.html
 [`WeightedIndex`]: ../rand/rand/distributions/weighted/struct.WeightedIndex.html
 [`alias_method::WeightedIndex`]: ../rand/rand/distributions/weighted/alias_method/struct.WeightedIndex.html
+[`statrs`]: https://github.com/statrs-dev/statrs/
