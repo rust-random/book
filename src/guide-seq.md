@@ -56,7 +56,7 @@ For convenience, you may use:
 -   [`SliceRandom::choose_weighted`]
 -   [`SliceRandom::choose_weighted_mut`]
 
-#### Without replacement
+### Without replacement
 
 Sampling *without replacement* implies that the action of sampling modifies the
 distribution. Since the [`Distribution`] trait is built around the idea of

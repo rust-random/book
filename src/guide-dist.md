@@ -124,7 +124,7 @@ The [`rand`] crate provides only two non-uniform distributions:
 -   The [`WeightedIndex`] distribution may be used to sample from a sequence of
     weighted values. See the [Sequences] section.
 
-Many more distributions are provided by the [`rand_distr`] crate.
+Many more non-uniform distributions are provided by the [`rand_distr`] crate.
 
 ### Integers
 
