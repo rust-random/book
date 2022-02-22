@@ -1,1 +1,3 @@
 book
+tests/src/*
+Cargo.lock

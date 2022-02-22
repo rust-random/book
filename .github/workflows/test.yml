@@ -1,0 +1,25 @@
+name: Tests
+
+on:
+  push:
+    branches: [ master, '0.[0-9]+' ]
+  pull_request:
+    branches: [ master, '0.[0-9]+' ]
+
+jobs:
+  code-samples:
+    name: Test code samples
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          profile: minimal
+          toolchain: stable
+      - name: Generate harness
+        working-directory: ./tests
+        run: ./generate.sh
+      - name: Test code samples
+        working-directory: ./tests
+        run: cargo test
