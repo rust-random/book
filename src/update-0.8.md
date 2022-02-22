@@ -137,13 +137,13 @@ Several smaller changes occurred to rand distributions:
         .collect();
     ```
 -   The alternative implementation of [`WeightedIndex`] employing the alias
-    method was moved from `rand` to [`rand_distr::WeightedAliasIndex`]. The
+    method was moved from `rand` to [`rand_distr::weighted_alias::WeightedAliasIndex`]. The
     alias method is faster for large sizes, but it suffers from a slow
     initialization, making it less generally useful.
 
 In `rand_distr` v0.4, more changes occurred (since v0.2):
 
--   [`rand_distr::WeightedAliasIndex`] was added (moved from the `rand` crate)
+-   [`rand_distr::weighted_alias::WeightedAliasIndex`] was added (moved from the `rand` crate)
 -   [`rand_distr::InverseGaussian`] and [`rand_distr::NormalInverseGaussian`]
     were added
 -   The [`Geometric`] and [`Hypergeometric`] distributions are now supported.
@@ -211,7 +211,7 @@ enforce our rules regarding value-breaking changes (see [Portability] section).
 [`Rng::try_fill`]: ../rand/rand/trait.Rng.html#method.try_fill
 [`SmallRng`]: ../rand/rand/rngs/struct.SmallRng.html
 [`StdRng`]: ../rand/rand/rngs/struct.StdRng.html
-[`StepRng`]: ../rand/rand/rngs/struct.StepRng.html
+[`StepRng`]: ../rand/rand/rngs/mock/struct.StepRng.html
 [`ThreadRng`]: ../rand/rand/rngs/struct.ThreadRng.html
 [`ReseedingRng`]: ../rand/rand/rngs/adapter/struct.ReseedingRng.html
 [`Standard`]: ../rand/rand/distributions/struct.Standard.html
@@ -220,12 +220,12 @@ enforce our rules regarding value-breaking changes (see [Portability] section).
 [`UniformSampler::sample_single_inclusive`]: ../rand/rand/distributions/uniform/trait.UniformSampler.html#method.sample_single_inclusive
 [`Alphanumeric`]: ../rand/rand/distributions/struct.Alphanumeric.html
 [`WeightedIndex`]: ../rand/rand/distributions/struct.WeightedIndex.html
-[`rand::rngs::adpater`]: ../rand/rand/rngs/adapter/index.html
+[`rand::rngs::adapter`]: ../rand/rand/rngs/adapter/index.html
 [`rand::seq::index::sample_weighted`]: ../rand/rand/seq/index/fn.sample_weighted.html
 [`SliceRandom::choose_multiple_weighted`]: ../rand/rand/seq/trait.SliceRandom.html#method.choose_multiple_weighted
 [`IteratorRandom::choose`]: ../rand/rand/seq/trait.IteratorRandom.html#method.choose
 [`IteratorRandom::choose_stable`]: ../rand/rand/seq/trait.IteratorRandom.html#method.choose_stable
-[`rand_distr::WeightedAliasIndex`]: ../rand/rand_distr/struct.WeightedAliasIndex.html
+[`rand_distr::weighted_alias::WeightedAliasIndex`]: ../rand/rand_distr/weighted_alias/struct.WeightedAliasIndex.html
 [`rand_distr::InverseGaussian`]: ../rand/rand_distr/struct.InverseGaussian.html
 [`rand_distr::NormalInverseGaussian`]: ../rand/rand_distr/struct.NormalInverseGaussian.html
 [`rand_distr::Dirichlet`]: ../rand/rand_distr/struct.Dirichlet.html

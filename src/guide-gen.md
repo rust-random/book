@@ -130,4 +130,4 @@ couple of bits entropy is available per time-stamp, after running several tests
 on the timer's quality).
 
 [`RngCore`]: ../rand/rand_core/trait.RngCore.html
-[`JitterRng`]: ../rand/rand/rngs/jitter/struct.JitterRng.html
+[`JitterRng`]: https://docs.rs/rand_jitter/latest/rand_jitter/struct.JitterRng.html

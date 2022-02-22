@@ -51,9 +51,9 @@ These have seen less change than in the previous release, but noteworthy is:
 For the most widely used distributions ([`Standard`] and [`Uniform`]), there have
 been no significant changes. But for *most* of the rest...
 
--   We added a new crate, [rand_distr], to house the all distributions
+-   We added a new crate, [`rand_distr`], to house the all distributions
     (including re-exporting those still within [`rand::distributions`]). If you
-    previously used [`rand::distributions::Normal`], now you use
+    previously used `rand::distributions::Normal`, now you use
     [`rand_distr::Normal`].
 -   Constructors for many distributions changed in order to return a `Result`
     instead of panicking on error.
@@ -88,7 +88,7 @@ architectures.
 [`StdRng`]: ../rand/rand/rngs/struct.StdRng.html
 [`ThreadRng`]: ../rand/rand/rngs/struct.ThreadRng.html
 [`Pcg64`]: ../rand/rand_pcg/type.Pcg64.html
-[`rand::distributions::weighted::alias_method::WeightedIndex`]: ../rand/rand/distributions/alias_method/struct.WeightedIndex.html
+[`rand::distributions::weighted::alias_method::WeightedIndex`]: https://docs.rs/rand/0.7/rand/distributions/weighted/alias_method/struct.WeightedIndex.html
 [getrandom]: https://github.com/rust-random/getrandom
 [`FromEntropy`]: https://docs.rs/rand/0.6.0/rand/trait.FromEntropy.html
 [`SeedableRng`]: https://rust-random.github.io/rand/rand/trait.SeedableRng.html
@@ -96,7 +96,7 @@ architectures.
 [`Standard`]: ../rand/rand/distributions/struct.Standard.html
 [`Uniform`]: ../rand/rand/distributions/struct.Uniform.html
 [`rand::distributions`]: ../rand/rand/distributions/index.html
-[`rand::distributions::Normal`]: ../rand/rand/distributions/struct.Normal.html
+[`rand_distr`]: ../rand/rand_distr/index.html
 [`rand_distr::Normal`]: ../rand/rand_distr/struct.Normal.html
 [`NonZeroU*`]: https://doc.rust-lang.org/std/num/index.html
 [`rand_distr::Pert`]: ../rand/rand_distr/struct.Pert.html
@@ -104,3 +104,4 @@ architectures.
 [`rand_distr::UnitBall`]: ../rand/rand_distr/struct.UnitBall.html
 [`rand_distr::UnitDisc`]: ../rand/rand_distr/struct.UnitDisc.html
 [`rand_distr::UnitSphere`]: ../rand/rand_distr/struct.UnitSphere.html
+[`OsRng`]: ../rand/rand_core/struct.OsRng.html

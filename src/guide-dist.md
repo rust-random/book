@@ -90,7 +90,7 @@ Lets go over the distributions by type:
 -   For SIMD types, each element is sampled as above, for [`Standard`] and
     [`Uniform`] (for the latter, `low` and `high` parameters are *also* SIMD
     types, effectively sampling from multiple ranges simultaneously). SIMD
-    support is gated behind a [feature flag](../features.html#simd-support).
+    support requires using the `simd_support` feature flag and nightly `rustc`.
 -   For enums, you have to implement uniform sampling yourself. For example, you
     could use the following approach:
     ```rust
@@ -116,29 +116,15 @@ Lets go over the distributions by type:
 
 # Non-uniform distributions
 
-Non-uniform distributions can be divided into two categories, as follows.
-Some of these discrete and all of the continuous distributions have been moved
-from the main [`rand`] crate to a dedicated [`rand_distr`] crate.
+The [`rand`] crate provides only two non-uniform distributions:
 
-## Discrete non-uniform distributions
+-   The [`Bernoulli`] distribution simply generates a boolean where the
+    probability of sampling `true` is some constant (`Bernoulli::new(0.5)`) or
+    ratio (`Bernoulli::from_ratio(1, 6)`).
+-   The [`WeightedIndex`] distribution may be used to sample from a sequence of
+    weighted values. See the [Sequences] section.
 
-Discrete distributions sample from boolean or integer types. As above, these
-can be sampled uniformly, or, as below, via a non-uniform distribution.
-
-Potentially a discrete distribution could sample directly from a set of discrete
-values such as a slice or an `enum`. See the section on [Sequences] regarding
-Rand's traits for slice and iterator types. Rand does not provide direct
-sampling from `enum`s, with the exception of `Option` (see above).
-
-### Booleans
-
-The [`Bernoulli`] distribution is a fancy name for generating a boolean
-with a given a probability `p` of being `true`, or defined via a
-`success : failure` ratio. Often this is described as a *trial* with
-probability `p` of *success* (`true`).
-
-The methods [`Rng::gen_bool`] and [`Rng::gen_ratio`] are short-cuts to this
-distribution.
+Many more distributions are provided by the [`rand_distr`] crate.
 
 ### Integers
 
@@ -159,26 +145,6 @@ For example, `u64` values can be attained with `rng.sample(Poisson) as u64`.
 Note that out of range float to int conversions with `as` result in undefined
 behavior for Rust <1.45 and a saturating conversion for Rust >=1.45.
 
-### Weighted sequences
-
-The [`WeightedIndex`] distribution samples an index from sequence of weights.
-See the [Sequences] section for convenience wrappers directly sampling a slice
-element.
-
-For example, weighted sampling could be used to model the colour of a marble
-sampled from a bucket containing 5 green, 15 red and 80 blue marbles.
-
-Currently the Rand lib only implements *sampling with replacement*, i.e.
-repeated sampling assumes the same distribution (that any sampled marble
-has been replaced). An alternative distribution implementing
-*sampling without replacement* has been
-[requested](https://github.com/rust-random/rand/issues/596).
-
-Note also that two implementations of [`WeightedIndex`] are available; the
-first is optimised for a small number of samples while
-[`alias_method::WeightedIndex`] is optimised for a large number of samples
-(where "large" may mean "> 1000"; benchmarks recommended).
-
 ## Continuous non-uniform distributions
 
 Continuous distributions model samples drawn from the real number line ℝ, or in
@@ -195,7 +161,7 @@ deviation. The [`LogNormal`] is related: for sample `X` from the log-normal
 distribution, `log(X)` is normally distributed; this "skews" the normal
 distribution to avoid negative values and to have a long positive tail.
 
-The [`UnitCircle`] and [`UnitSphereSurface`] distributions simulate uniform
+The [`UnitCircle`] and [`UnitSphere`] distributions simulate uniform
 sampling from the edge of a circle or surface of a sphere.
 
 The [`Cauchy`] distribution (also known as the Lorentz distribution) is the
@@ -206,7 +172,7 @@ The [`Beta`] distribution is a two-parameter probability distribution, whose
 output values lie between 0 and 1. The [`Dirichlet`] distribution is a
 generalisation to any positive number of parameters.
 
-[Sequences]: ../guide-seq.html
+[Sequences]: guide-seq.html
 [`Distribution`]: ../rand/rand/distributions/trait.Distribution.html
 [`distributions`]: ../rand/rand/distributions/index.html
 [`rand`]: ../rand/rand/index.html
@@ -224,16 +190,15 @@ generalisation to any positive number of parameters.
 [`Open01`]: ../rand/rand/distributions/struct.Open01.html
 [`OpenClosed01`]: ../rand/rand/distributions/struct.OpenClosed01.html
 [`Bernoulli`]: ../rand/rand/distributions/struct.Bernoulli.html
-[`Binomial`]: ../rand/rand/distributions/struct.Binomial.html
-[`Exp`]: ../rand/rand/distributions/struct.Exp.html
-[`Normal`]: ../rand/rand/distributions/struct.Normal.html
-[`LogNormal`]: ../rand/rand/distributions/struct.LogNormal.html
-[`UnitCircle`]: ../rand/rand/distributions/struct.UnitCircle.html
-[`UnitSphereSurface`]: ../rand/rand/distributions/struct.UnitSphereSurface.html
-[`Cauchy`]: ../rand/rand/distributions/struct.Cauchy.html
-[`Poisson`]: ../rand/rand/distributions/struct.Poisson.html
-[`Beta`]: ../rand/rand/distributions/struct.Beta.html
-[`Dirichlet`]: ../rand/rand/distributions/struct.Dirichlet.html
-[`WeightedIndex`]: ../rand/rand/distributions/weighted/struct.WeightedIndex.html
-[`alias_method::WeightedIndex`]: ../rand/rand/distributions/weighted/alias_method/struct.WeightedIndex.html
+[`Binomial`]: ../rand/rand_distr/struct.Binomial.html
+[`Exp`]: ../rand/rand_distr/struct.Exp.html
+[`Normal`]: ../rand/rand_distr/struct.Normal.html
+[`LogNormal`]: ../rand/rand_distr/struct.LogNormal.html
+[`UnitCircle`]: ../rand/rand_distr/struct.UnitCircle.html
+[`UnitSphere`]: ../rand/rand_distr/struct.UnitSphere.html
+[`Cauchy`]: ../rand/rand_distr/struct.Cauchy.html
+[`Poisson`]: ../rand/rand_distr/struct.Poisson.html
+[`Beta`]: ../rand/rand_distr/struct.Beta.html
+[`Dirichlet`]: ../rand/rand_distr/struct.Dirichlet.html
 [`statrs`]: https://github.com/statrs-dev/statrs/
+[`WeightedIndex`]: ../rand/rand/distributions/struct.WeightedIndex.html

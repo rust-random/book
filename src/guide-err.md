@@ -19,17 +19,10 @@ reduce to calls to [`RngCore`]'s "infallible" methods. Since most RNGs cannot
 fail anyway this is usually not a problem, but the few generators which can may
 be forced to fail in this case:
 
--   [`OsRng`] interfaces with the Operating System's generator; in rare cases
-    this may fail as "not ready" or simply "unavailable".
--   [`JitterRng`] is a generator based on timer jitter; if the timer does not
-    appear to be capable of sufficient precision or is too predictable, this
-    will fail.
--   [`EntropyRng`] is an abstraction over the above, falling back to the next
-    option when the first fails but ultimately failing if all sources fail
--   [`thread_rng`] seeds itself via [`EntropyRng`], thus can potentially fail
-    on its first use on each thread (though it never fails after the first use)
--   [`ReadRng`] tries to read data from its source but fails when the stream
-    ends or errors (though it retries on interrupt).
+-   [`OsRng`] is a wrapper over [`getrandom`]. "In general, on supported
+    platforms, failure is highly unlikely, though not impossible."
+-   [`thread_rng`] seeds itself via [`OsRng`] on first use and periodically
+    thereafter, thus can potentially fail, though unlikely
 
 [`Rng::try_fill`]: ../rand/rand/trait.Rng.html#method.try_fill
 [`RngCore::try_fill_bytes`]: ../rand/rand_core/trait.RngCore.html#tymethod.try_fill_bytes
@@ -37,6 +30,4 @@ be forced to fail in this case:
 [`RngCore`]: ../rand/rand_core/trait.RngCore.html
 [`thread_rng`]: ../rand/rand/fn.thread_rng.html
 [`OsRng`]: ../rand/rand/rngs/struct.OsRng.html
-[`JitterRng`]: ../rand/rand/rngs/struct.JitterRng.html
-[`EntropyRng`]: ../rand/rand/rngs/struct.EntropyRng.html
-[`ReadRng`]: ../rand/rand/rngs/adapter/struct.ReadRng.html
+[`getrandom`]: https://docs.rs/getrandom/latest/getrandom/

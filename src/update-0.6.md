@@ -59,7 +59,7 @@ feature flag still exists to avoid breakage, but no longer does anything.
 [`SmallRng`]: ../rand/rand/rngs/struct.SmallRng.html
 [`Pcg32`]: ../rand/rand_pcg/type.Pcg32.html
 [`Pcg64Mcg`]: ../rand/rand_pcg/type.Pcg64Mcg.html
-[`Rng`]: ../rand/trait.Rng.html
+[`Rng`]: ../rand/rand/trait.Rng.html
 [`IteratorRandom`]: ../rand/rand/seq/trait.IteratorRandom.html
 [`SliceRandom`]: ../rand/rand/seq/trait.SliceRandom.html
 [`WeightedChoice`]: https://docs.rs/rand/0.5/rand/distributions/struct.WeightedChoice.html
