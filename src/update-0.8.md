@@ -46,15 +46,18 @@ deliberately excluded since these types are not portable.
 use-after-free in its thread-local destructor. Any code relying on `ThreadRng`
 being copied must be updated to use a mutable reference instead. For example,
 ```
-let rng = thread_rng();
-let a: u32 = Standard.sample(rng);
-let b: u32 = Standard.sample(rng);
+# use rand_0_7::distributions::{Distribution, Standard};
+let rng = rand_0_7::thread_rng();
+let a: u32 = Standard.sample_iter(rng).next().unwrap();
+let b: u32 = Standard.sample_iter(rng).next().unwrap();
 ```
 can be replaced with the following code:
 ```
+# use rand::prelude::*;
+# use rand::distributions::Standard;
 let mut rng = thread_rng();
-let a: u32 = Standard.sample(&mut rng);
-let b: u32 = Standard.sample(&mut rng);
+let a: u32 = Standard.sample_iter(&mut rng).next().unwrap();
+let b: u32 = Standard.sample_iter(&mut rng).next().unwrap();
 ```
 
 #### `gen_range`
@@ -116,14 +119,18 @@ Several smaller changes occurred to rand distributions:
     be adapted to perform the conversion from `u8` to `char`. For example, with
     Rand 0.7 you could write:
     ```
-    let chars: String = iter::repeat(())
+    # use rand_0_7::{distributions::Alphanumeric, Rng};
+    # let mut rng = rand_0_7::thread_rng();
+    let chars: String = std::iter::repeat(())
         .map(|()| rng.sample(Alphanumeric))
         .take(7)
         .collect();
     ```
     With Rand 0.8, this is equivalent to the following:
     ```
-    let chars: String = iter::repeat(())
+    # use rand::{distributions::Alphanumeric, Rng};
+    # let mut rng = rand::thread_rng();
+    let chars: String = std::iter::repeat(())
         .map(|()| rng.sample(Alphanumeric))
         .map(char::from)
         .take(7)
@@ -148,10 +155,12 @@ In `rand_distr` v0.4, more changes occurred (since v0.2):
     Therefore, the weights are taken as a slice instead of a `Vec` as input.
     For example, the following `rand_distr 0.2` code
     ```
+    # use rand_distr_0_2::Dirichlet;
     Dirichlet::new(vec![1.0, 2.0, 3.0]).unwrap();
     ```
     can be replaced with the following `rand_distr 0.3` code:
     ```
+    # use rand_distr::Dirichlet;
     Dirichlet::new(&[1.0, 2.0, 3.0]).unwrap();
     ```
 -   [`rand_distr::Poisson`] does no longer support sampling `u64` values directly.
