@@ -73,7 +73,7 @@ When referring to an item from within another crate,
 
 Examples:
 
-```
+```ignore
 // We depend on rand_core, therefore can use the Rust path:
 /// [`BlockRngCore`]: rand_core::block::BlockRngCore
 
