@@ -4,6 +4,7 @@ For maximum flexibility when producing random values, we define the
 [`Distribution`] trait:
 
 ```rust
+# use rand::{Rng, distributions::DistIter};
 // a producer of data of type T:
 pub trait Distribution<T> {
     // the key function:
@@ -14,7 +15,10 @@ pub trait Distribution<T> {
     where
         Self: Sized,
         R: Rng,
-    { ... }
+    {
+        // [has a default implementation]
+        # todo!()
+    }
 }
 ```
 
@@ -90,6 +94,7 @@ Lets go over the distributions by type:
 -   For enums, you have to implement uniform sampling yourself. For example, you
     could use the following approach:
     ```rust
+    # use rand::{Rng, distributions::{Distribution, Standard}};
     pub enum Food {
         Burger,
         Pizza,
