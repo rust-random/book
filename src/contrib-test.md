@@ -48,7 +48,7 @@ Often test code needs some RNG to test with, but does not need any particular
 RNG. In this case, we prefer use of `::test::rng` which is simple, fast to
 initialise and deterministic:
 
-```rust
+```rust,ignore
 let mut rng = ::test::rng(528); // just pick some number
 ```
 

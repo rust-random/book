@@ -46,15 +46,18 @@ deliberately excluded since these types are not portable.
 use-after-free in its thread-local destructor. Any code relying on `ThreadRng`
 being copied must be updated to use a mutable reference instead. For example,
 ```
-let rng = thread_rng();
-let a: u32 = Standard.sample(rng);
-let b: u32 = Standard.sample(rng);
+# use rand_0_7::distributions::{Distribution, Standard};
+let rng = rand_0_7::thread_rng();
+let a: u32 = Standard.sample_iter(rng).next().unwrap();
+let b: u32 = Standard.sample_iter(rng).next().unwrap();
 ```
 can be replaced with the following code:
 ```
+# use rand::prelude::*;
+# use rand::distributions::Standard;
 let mut rng = thread_rng();
-let a: u32 = Standard.sample(&mut rng);
-let b: u32 = Standard.sample(&mut rng);
+let a: u32 = Standard.sample_iter(&mut rng).next().unwrap();
+let b: u32 = Standard.sample_iter(&mut rng).next().unwrap();
 ```
 
 #### `gen_range`
@@ -116,27 +119,31 @@ Several smaller changes occurred to rand distributions:
     be adapted to perform the conversion from `u8` to `char`. For example, with
     Rand 0.7 you could write:
     ```
-    let chars: String = iter::repeat(())
+    # use rand_0_7::{distributions::Alphanumeric, Rng};
+    # let mut rng = rand_0_7::thread_rng();
+    let chars: String = std::iter::repeat(())
         .map(|()| rng.sample(Alphanumeric))
         .take(7)
         .collect();
     ```
     With Rand 0.8, this is equivalent to the following:
     ```
-    let chars: String = iter::repeat(())
+    # use rand::{distributions::Alphanumeric, Rng};
+    # let mut rng = rand::thread_rng();
+    let chars: String = std::iter::repeat(())
         .map(|()| rng.sample(Alphanumeric))
         .map(char::from)
         .take(7)
         .collect();
     ```
 -   The alternative implementation of [`WeightedIndex`] employing the alias
-    method was moved from `rand` to [`rand_distr::WeightedAliasIndex`]. The
+    method was moved from `rand` to [`rand_distr::weighted_alias::WeightedAliasIndex`]. The
     alias method is faster for large sizes, but it suffers from a slow
     initialization, making it less generally useful.
 
 In `rand_distr` v0.4, more changes occurred (since v0.2):
 
--   [`rand_distr::WeightedAliasIndex`] was added (moved from the `rand` crate)
+-   [`rand_distr::weighted_alias::WeightedAliasIndex`] was added (moved from the `rand` crate)
 -   [`rand_distr::InverseGaussian`] and [`rand_distr::NormalInverseGaussian`]
     were added
 -   The [`Geometric`] and [`Hypergeometric`] distributions are now supported.
@@ -148,10 +155,12 @@ In `rand_distr` v0.4, more changes occurred (since v0.2):
     Therefore, the weights are taken as a slice instead of a `Vec` as input.
     For example, the following `rand_distr 0.2` code
     ```
+    # use rand_distr_0_2::Dirichlet;
     Dirichlet::new(vec![1.0, 2.0, 3.0]).unwrap();
     ```
     can be replaced with the following `rand_distr 0.3` code:
     ```
+    # use rand_distr::Dirichlet;
     Dirichlet::new(&[1.0, 2.0, 3.0]).unwrap();
     ```
 -   [`rand_distr::Poisson`] does no longer support sampling `u64` values directly.
@@ -202,7 +211,7 @@ enforce our rules regarding value-breaking changes (see [Portability] section).
 [`Rng::try_fill`]: ../rand/rand/trait.Rng.html#method.try_fill
 [`SmallRng`]: ../rand/rand/rngs/struct.SmallRng.html
 [`StdRng`]: ../rand/rand/rngs/struct.StdRng.html
-[`StepRng`]: ../rand/rand/rngs/struct.StepRng.html
+[`StepRng`]: ../rand/rand/rngs/mock/struct.StepRng.html
 [`ThreadRng`]: ../rand/rand/rngs/struct.ThreadRng.html
 [`ReseedingRng`]: ../rand/rand/rngs/adapter/struct.ReseedingRng.html
 [`Standard`]: ../rand/rand/distributions/struct.Standard.html
@@ -211,12 +220,12 @@ enforce our rules regarding value-breaking changes (see [Portability] section).
 [`UniformSampler::sample_single_inclusive`]: ../rand/rand/distributions/uniform/trait.UniformSampler.html#method.sample_single_inclusive
 [`Alphanumeric`]: ../rand/rand/distributions/struct.Alphanumeric.html
 [`WeightedIndex`]: ../rand/rand/distributions/struct.WeightedIndex.html
-[`rand::rngs::adpater`]: ../rand/rand/rngs/adapter/index.html
+[`rand::rngs::adapter`]: ../rand/rand/rngs/adapter/index.html
 [`rand::seq::index::sample_weighted`]: ../rand/rand/seq/index/fn.sample_weighted.html
 [`SliceRandom::choose_multiple_weighted`]: ../rand/rand/seq/trait.SliceRandom.html#method.choose_multiple_weighted
 [`IteratorRandom::choose`]: ../rand/rand/seq/trait.IteratorRandom.html#method.choose
 [`IteratorRandom::choose_stable`]: ../rand/rand/seq/trait.IteratorRandom.html#method.choose_stable
-[`rand_distr::WeightedAliasIndex`]: ../rand/rand_distr/struct.WeightedAliasIndex.html
+[`rand_distr::weighted_alias::WeightedAliasIndex`]: ../rand/rand_distr/weighted_alias/struct.WeightedAliasIndex.html
 [`rand_distr::InverseGaussian`]: ../rand/rand_distr/struct.InverseGaussian.html
 [`rand_distr::NormalInverseGaussian`]: ../rand/rand_distr/struct.NormalInverseGaussian.html
 [`rand_distr::Dirichlet`]: ../rand/rand_distr/struct.Dirichlet.html

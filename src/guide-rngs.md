@@ -245,11 +245,11 @@ for recommendations.
 It is worth noting that a CSPRNG's security relies absolutely on being
 seeded with a secure random key. Should the key be known or guessable, all
 output of the CSPRNG is easy to guess. This implies that the seed should
-come from a trusted source; usually either the OS or another CSPRNG. Our
-seeding helper trait, [`FromEntropy`], and the source it uses
-([`EntropyRng`]), should be secure. Additionally, [`ThreadRng`] is a CSPRNG,
-thus it is acceptable to seed from this (although for security applications
-fresh/external entropy should be preferred).
+come from a trusted source; usually either the OS or another CSPRNG. For this
+purpose, we recommend using the [`getrandom`] crate which interfaces the OS's
+secure random interface. [`SeedableRng::from_entropy`] is a wrapper around
+[`getrandom`] for convenience. Alternatively, using a user-space CSPRNG such as
+[`ThreadRng`] for seeding should be sufficient.
 
 Further, it should be obvious that the internal state of a CSPRNG must be
 kept secret. With that in mind, our implementations do not provide direct
@@ -305,10 +305,10 @@ by P. Hellekalek.
 [`Xoshiro256PlusPlus`]: https://docs.rs/rand_xoshiro/latest/rand_xoshiro/struct.Xoshiro256PlusPlus.html
 [`Xoshiro256Plus`]: https://docs.rs/rand_xoshiro/latest/rand_xoshiro/struct.Xoshiro256Plus.html
 [`SplitMix64`]: https://docs.rs/rand_xoshiro/latest/rand_xoshiro/struct.SplitMix64.html
-[`ChaChaRng`]: ../rand/rand_chacha/struct.ChaChaRng.html
+[`ChaChaRng`]: ../rand/rand_chacha/type.ChaChaRng.html
 [`ChaCha20Rng`]: ../rand/rand_chacha/struct.ChaCha20Rng.html
 [`ChaCha8Rng`]: ../rand/rand_chacha/struct.ChaCha8Rng.html
-[`Hc128Rng`]: ../rand/rand_hc/struct.Hc128Rng.html
+[`Hc128Rng`]: https://docs.rs/rand_hc/latest/rand_hc/struct.Hc128Rng.html
 [`IsaacRng`]: https://docs.rs/rand_isaac/latest/rand_isaac/isaac/struct.IsaacRng.html
 [`Isaac64Rng`]: https://docs.rs/rand_isaac/latest/rand_isaac/isaac64/struct.Isaac64Rng.html
 [`ThreadRng`]: ../rand/rand/rngs/struct.ThreadRng.html
@@ -325,3 +325,5 @@ by P. Hellekalek.
 [next-bit test]: https://en.wikipedia.org/wiki/Next-bit_test
 [NIST]: https://www.nist.gov/
 [ECRYPT]: http://www.ecrypt.eu.org/
+[`getrandom`]: https://docs.rs/getrandom/
+[`SeedableRng::from_entropy`]: ../rand/rand/trait.SeedableRng.html#method.from_entropy

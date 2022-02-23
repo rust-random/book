@@ -67,6 +67,6 @@ if rand::random() {
 [`Rng::gen_ratio`]: ../rand/rand/trait.Rng.html#method.gen_ratio
 [`Rng::fill`]: ../rand/rand/trait.Rng.html#method.fill
 [`Rng::try_fill`]: ../rand/rand/trait.Rng.html#method.try_fill
-[`random`]: ../rand/rand/fn.random.htm
+[`random`]: ../rand/rand/fn.random.html
 [`thread_rng`]: ../rand/rand/fn.thread_rng.html
 [`Standard`]: ../rand/rand/distributions/struct.Standard.html

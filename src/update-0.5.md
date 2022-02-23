@@ -75,7 +75,7 @@ any type supporting `SeedableRng`, and provides construction from fresh, strong
 entropy:
 
 ```rust
-use rand::{ChaChaRng, FromEntropy};
+use rand_0_5::{ChaChaRng, FromEntropy};
 
 let mut rng = ChaChaRng::from_entropy();
 ```
@@ -120,7 +120,7 @@ use cannot be guaranteed.*
 A new `Error` type has been added, designed explicitly for no-std compatibility,
 simplicity, and enough flexibility for our uses (carrying a `cause` when
 possible):
-```rust
+```ignore
 pub struct Error {
     pub kind: ErrorKind,
     pub msg: &'static str,

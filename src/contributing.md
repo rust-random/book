@@ -47,5 +47,5 @@ thus we may take considerable time to get back to you.
     
     Our works are attributed to "The Rand Project Developers". This is not a
     formal entity but merely the collection of all contributors to this project.
-    For more, see the [COPYRIGHT](COPYRIGHT) file.
+    For more, see the `COPYRIGHT` file.
 -   **Thank you!**

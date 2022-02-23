@@ -9,7 +9,7 @@ platform-dependent random number source, [`rand_core`] defines the API that
 generators must implement, and a number of crates like [`rand_chacha`] and
 [`rand_xoshiro`] provide pseudo-random generators.
 
-```
+```plain
 getrandom ┐
           └ rand_core ┐
                       ├ rand_chacha ┐

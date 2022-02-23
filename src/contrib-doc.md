@@ -73,7 +73,7 @@ When referring to an item from within another crate,
 
 Examples:
 
-```
+```ignore
 // We depend on rand_core, therefore can use the Rust path:
 /// [`BlockRngCore`]: rand_core::block::BlockRngCore
 
@@ -95,7 +95,7 @@ example.
 For the most part these files do not have any continuous testing.
 Where examples are included (currently only for the `rand_jitter` crate),
 we enable continuous testing via `doc_comment` (see
-[lib.rs:62 onwards](https://github.com/rust-random/rand/blob/master/rand_jitter/src/lib.rs#L62)).
+[lib.rs:62 onwards](https://github.com/rust-random/rngs/blob/master/rand_jitter/src/lib.rs#L62)).
 
 ### CHANGELOG files
 

@@ -41,7 +41,7 @@ The following crates implement pseudo-random number generators
 
 
 [`rand_chacha`]: https://rust-random.github.io/rand/rand_chacha/index.html
-[`rand_hc`]: https://rust-random.github.io/rand/rand_hc/index.html
+[`rand_hc`]: https://docs.rs/rand_hc/
 [`rand_isaac`]: https://docs.rs/rand_isaac/
 [`rand_pcg`]: https://rust-random.github.io/rand/rand_pcg/index.html
 [`rand_xoshiro`]: https://docs.rs/rand_xoshiro/

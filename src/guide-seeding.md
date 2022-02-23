@@ -27,7 +27,10 @@ Using a fresh seed (direct from the OS) is easy using [`SeedableRng::from_entrop
 use rand::prelude::*;
 use rand_chacha::ChaCha20Rng;
 
-let rng = ChaCha20Rng::from_entropy();
+fn main() {
+    let mut rng = ChaCha20Rng::from_entropy();
+    println!("{}", rng.gen::<char>());
+}
 ```
 
 Note that this requires `rand_core` has the feature `getrandom` enabled.
@@ -41,7 +44,10 @@ convenience method for this:
 use rand::prelude::*;
 use rand_pcg::Pcg64;
 
-let rng = Pcg64::from_rng(thread_rng());
+fn main() {
+    let mut rng = Pcg64::from_rng(thread_rng()).unwrap();
+    println!("{}", rng.gen::<char>());
+}
 ```
 
 But, say you want to save a key and use it later. For that you need to be a
@@ -51,9 +57,12 @@ little bit more explicit:
 use rand::prelude::*;
 use rand_chacha::ChaCha8Rng;
 
-let mut seed: <ChaCha8Rng as SeedableRng>::Seed = Default::default();
-thread_rng().fill(&mut seed);
-let rng = ChaCha8Rng::from_seed(seed);
+fn main() {
+    let mut seed: <ChaCha8Rng as SeedableRng>::Seed = Default::default();
+    thread_rng().fill(&mut seed);
+    let mut rng = ChaCha8Rng::from_seed(seed);
+    println!("{}", rng.gen::<char>());
+}
 ```
 
 **Obligatory warning**: a few simple PRNGs, notably [`XorShiftRng`],
@@ -77,7 +86,10 @@ number while providing good bit-avalance (so that two similar numbers such as
 use rand::prelude::*;
 use rand_pcg::Pcg64;
 
-let rng = Pcg64::seed_from_u64(2);
+fn main() {
+    let mut rng = Pcg64::seed_from_u64(2);
+    println!("{}", rng.gen::<char>());
+}
 ```
 
 Note that a number with 64-bits or less **cannot be secure**, so this should
@@ -98,20 +110,24 @@ use rand::prelude::*;
 use rand_seeder::{Seeder, SipHasher};
 use rand_pcg::Pcg64;
 
-// In one line:
-let rng: Pcg64 = Seeder::from("stripy zebra").make_rng();
+fn main() {
+    // In one line:
+    let mut rng: Pcg64 = Seeder::from("stripy zebra").make_rng();
+    println!("{}", rng.gen::<char>());
 
-// If we want to be more explicit, first we create a SipRng:
-let hasher = SipHasher::from("a sailboat");
-let mut hasher_rng = hasher.into_rng();
-// (Note: hasher_rng is a full RNG and can be used directly.)
+    // If we want to be more explicit, first we create a SipRng:
+    let hasher = SipHasher::from("a sailboat");
+    let mut hasher_rng = hasher.into_rng();
+    // (Note: hasher_rng is a full RNG and can be used directly.)
 
-// Now, we use hasher_rng to create a seed:
-let mut seed: <Pcg64 as SeedableRng>::Seed = Default::default();
-hasher_rng.fill(&mut seed);
+    // Now, we use hasher_rng to create a seed:
+    let mut seed: <Pcg64 as SeedableRng>::Seed = Default::default();
+    hasher_rng.fill(&mut seed);
 
-// And create our RNG from that seed:
-let rng = Pcg64::from_seed(seed);
+    // And create our RNG from that seed:
+    let mut rng = Pcg64::from_seed(seed);
+    println!("{}", rng.gen::<char>());
+}
 ```
 
 Note that `rand_seeder` is **not suitable** for cryptographic usage.
@@ -125,6 +141,6 @@ function such as Argon2 must be used.
 [`SeedableRng::from_rng`]: ../rand/rand_core/trait.SeedableRng.html#method.from_rng
 [`SeedableRng::seed_from_u64`]: ../rand/rand_core/trait.SeedableRng.html#method.seed_from_u64
 [`SeedableRng::from_entropy`]: ../rand/rand_core/trait.SeedableRng.html#method.from_entropy
-[`XorShiftRng`]: ../rand/rand_xorshift/struct.XorShiftRng.html
+[`XorShiftRng`]: https://docs.rs/rand_xorshift/latest/rand_xorshift/struct.XorShiftRng.html
 [`ChaCha8Rng`]: ../rand/rand_chacha/struct.ChaCha8Rng.html
 [`rand_seeder`]: https://github.com/rust-random/seeder/

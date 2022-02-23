@@ -14,7 +14,7 @@ documented as being unportable (e.g. `StdRng`, `SmallRng`).
 
 ## Crate versions
 
-We try to follow [semver rules](https://docs.npmjs.com/misc/semver) regarding
+We try to follow [semver rules](https://semver.org/) regarding
 API-breaking changes and `MAJOR.MINOR.PATCH` versions:
 
 -   New *patch* versions should not include API-breaking changes or major new
@@ -36,9 +36,9 @@ When given fixed inputs,
 We expect all pseudo-random algorithms to test the value-stability of their
 output, where possible:
 
--   PRNGs should be compared with a reference vector ([example](https://github.com/rust-random/rngs/blob/master/rand_xoshiro/src/xoshiro256starstar.rs#L113))
+-   PRNGs should be compared with a reference vector ([example](https://github.com/rust-random/rngs/blob/master/rand_xoshiro/src/xoshiro256starstar.rs#L115))
 -   Other algorithms should include their own test vectors within a
-    `value_stability` test or similar ([example](https://github.com/rust-random/rand/blob/master/src/distributions/bernoulli.rs#L168))
+    `value_stability` test or similar ([example](https://github.com/rust-random/rand/blob/master/src/distributions/bernoulli.rs#L203))
 
 ## Limitations
 
