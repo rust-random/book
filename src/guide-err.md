@@ -19,10 +19,15 @@ reduce to calls to [`RngCore`]'s "infallible" methods. Since most RNGs cannot
 fail anyway this is usually not a problem, but the few generators which can may
 be forced to fail in this case:
 
--   [`OsRng`] is a wrapper over [`getrandom`]. "In general, on supported
-    platforms, failure is highly unlikely, though not impossible."
+-   [`OsRng`] is a wrapper over [`getrandom`]. From the latter's documentation:
+    "In general, on supported platforms, failure is highly unlikely, though not
+    impossible." [`OsRng`] will forward errors through
+    [`RngCore::try_fill_bytes`] while other methods panic on error.
 -   [`thread_rng`] seeds itself via [`OsRng`] on first use and periodically
-    thereafter, thus can potentially fail, though unlikely
+    thereafter, thus can potentially fail, though unlikely. If initial seeding
+    fails, a panic will result. If a failure happens during reseeding (less
+    likely) then the RNG continues without reseeding; a log message (warning)
+    is emitted if logging is enabled.
 
 [`Rng::try_fill`]: ../rand/rand/trait.Rng.html#method.try_fill
 [`RngCore::try_fill_bytes`]: ../rand/rand_core/trait.RngCore.html#tymethod.try_fill_bytes
