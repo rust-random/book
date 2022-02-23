@@ -219,7 +219,7 @@ currently on <code>docs.rs</code> (see <a href="https://github.com/rust-lang/doc
 <li>consider revising documentation, e.g. refer to the crate instead</li>
 </ol>
 <p>Examples:</p>
-<pre><code>// We depend on rand_core, therefore can use the Rust path:
+<pre><code class="language-ignore">// We depend on rand_core, therefore can use the Rust path:
 /// [`BlockRngCore`]: rand_core::block::BlockRngCore
 
 // rand_chacha is not a dependency, but is within the same repository:
@@ -236,7 +236,7 @@ example.</p>
 <p>For the most part these files do not have any continuous testing.
 Where examples are included (currently only for the <code>rand_jitter</code> crate),
 we enable continuous testing via <code>doc_comment</code> (see
-<a href="https://github.com/rust-random/rand/blob/master/rand_jitter/src/lib.rs#L62">lib.rs:62 onwards</a>).</p>
+<a href="https://github.com/rust-random/rngs/blob/master/rand_jitter/src/lib.rs#L62">lib.rs:62 onwards</a>).</p>
 <h3><a class="header" href="#changelog-files" id="changelog-files">CHANGELOG files</a></h3>
 <p>Changelog formats are based on the
 <a href="http://keepachangelog.com/en/1.0.0/">Keep a Changelog</a> format.</p>

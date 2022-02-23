@@ -233,7 +233,7 @@ table since CSPRNGs may not have observable defects.</p>
 <tr><td><a href="../rand/rand/rngs/struct.StdRng.html"><code>StdRng</code></a></td><td>(unspecified)</td><td>1.5 GB/s</td><td>fast</td><td>136 bytes</td><td>widely trusted</td><td>no</td></tr>
 <tr><td><a href="../rand/rand_chacha/struct.ChaCha20Rng.html"><code>ChaCha20Rng</code></a></td><td>ChaCha20</td><td>1.8 GB/s</td><td>fast</td><td>136 bytes</td><td><a href="https://tools.ietf.org/html/rfc7539#section-1">rigorously analysed</a></td><td>no</td></tr>
 <tr><td><a href="../rand/rand_chacha/struct.ChaCha8Rng.html"><code>ChaCha8Rng</code></a></td><td>ChaCha8</td><td>2.2 GB/s</td><td>fast</td><td>136 bytes</td><td>small security margin</td><td>no</td></tr>
-<tr><td><a href="../rand/rand_hc/struct.Hc128Rng.html"><code>Hc128Rng</code></a></td><td>HC-128</td><td>2.1 GB/s</td><td>slow</td><td>4176 bytes</td><td><a href="http://www.ecrypt.eu.org/stream/">recommended by eSTREAM</a></td><td>no</td></tr>
+<tr><td><a href="https://docs.rs/rand_hc/latest/rand_hc/struct.Hc128Rng.html"><code>Hc128Rng</code></a></td><td>HC-128</td><td>2.1 GB/s</td><td>slow</td><td>4176 bytes</td><td><a href="http://www.ecrypt.eu.org/stream/">recommended by eSTREAM</a></td><td>no</td></tr>
 <tr><td><a href="https://docs.rs/rand_isaac/latest/rand_isaac/isaac/struct.IsaacRng.html"><code>IsaacRng</code></a></td><td>ISAAC</td><td>1.1 GB/s</td><td>slow</td><td>2072 bytes</td><td><a href="https://burtleburtle.net/bob/rand/isaacafa.html">unknown</a></td><td>unknown</td></tr>
 <tr><td><a href="https://docs.rs/rand_isaac/latest/rand_isaac/isaac64/struct.Isaac64Rng.html"><code>Isaac64Rng</code></a></td><td>ISAAC-64</td><td>2.2 GB/s</td><td>slow</td><td>4136 bytes</td><td>unknown</td><td>unknown</td></tr>
 </tbody></table>
@@ -271,11 +271,11 @@ Mersenne Twister MT19937 algorithm requires 2.5 kB of state.</p>
 <p>CSPRNGs typically require more memory; since the seed size is recommended
 to be at least 192 bits and some more may be required for the algorithm,
 256 bits would be approximately the minimum secure size. In practice,
-CSPRNGs tend to use quite a bit more, <a href="../rand/rand_chacha/struct.ChaChaRng.html"><code>ChaChaRng</code></a> is relatively small with
+CSPRNGs tend to use quite a bit more, <a href="../rand/rand_chacha/type.ChaChaRng.html"><code>ChaChaRng</code></a> is relatively small with
 136 bytes of state.</p>
 <h3><a class="header" href="#initialization-time" id="initialization-time">Initialization time</a></h3>
 <p>The time required to initialize new generators varies significantly. Many
-simple PRNGs and even some cryptographic ones (including <a href="../rand/rand_chacha/struct.ChaChaRng.html"><code>ChaChaRng</code></a>)
+simple PRNGs and even some cryptographic ones (including <a href="../rand/rand_chacha/type.ChaChaRng.html"><code>ChaChaRng</code></a>)
 only need to copy the seed value and some constants into their state, and
 thus can be constructed very quickly. In contrast, CSPRNGs with large state
 require an expensive key-expansion.</p>
@@ -363,11 +363,11 @@ for recommendations.</p>
 <p>It is worth noting that a CSPRNG's security relies absolutely on being
 seeded with a secure random key. Should the key be known or guessable, all
 output of the CSPRNG is easy to guess. This implies that the seed should
-come from a trusted source; usually either the OS or another CSPRNG. Our
-seeding helper trait, <a href="../rand/rand/trait.FromEntropy.html"><code>FromEntropy</code></a>, and the source it uses
-(<a href="../rand/rand/rngs/struct.EntropyRng.html"><code>EntropyRng</code></a>), should be secure. Additionally, <a href="../rand/rand/rngs/struct.ThreadRng.html"><code>ThreadRng</code></a> is a CSPRNG,
-thus it is acceptable to seed from this (although for security applications
-fresh/external entropy should be preferred).</p>
+come from a trusted source; usually either the OS or another CSPRNG. For this
+purpose, we recommend using the <a href="https://docs.rs/getrandom/"><code>getrandom</code></a> crate which interfaces the OS's
+secure random interface. <a href="../rand/rand/trait.SeedableRng.html#method.from_entropy"><code>SeedableRng::from_entropy</code></a> is a wrapper around
+<a href="https://docs.rs/getrandom/"><code>getrandom</code></a> for convenience. Alternatively, using a user-space CSPRNG such as
+<a href="../rand/rand/rngs/struct.ThreadRng.html"><code>ThreadRng</code></a> for seeding should be sufficient.</p>
 <p>Further, it should be obvious that the internal state of a CSPRNG must be
 kept secret. With that in mind, our implementations do not provide direct
 access to most of their internal state, and <code>Debug</code> implementations do not

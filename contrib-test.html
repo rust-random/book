@@ -198,12 +198,8 @@ choice; example code should only need to target the common case (<code>std</code
 <p>Often test code needs some RNG to test with, but does not need any particular
 RNG. In this case, we prefer use of <code>::test::rng</code> which is simple, fast to
 initialise and deterministic:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>let mut rng = ::test::rng(528); // just pick some number
-<span class="boring">}
-</span></code></pre></pre>
+<pre><code class="language-rust ignore">let mut rng = ::test::rng(528); // just pick some number
+</code></pre>
 <p>Various tests concern properties which are <em>probably</em> true, but not definitely.
 We prefer that such tests are deterministic to avoid spurious failures.</p>
 

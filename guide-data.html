@@ -164,14 +164,13 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#random-data" id="random-data">Random data</a></h1>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">extern crate rand;
+<pre><pre class="playground"><code class="language-rust"><span class="boring">extern crate rand;
 </span><span class="boring">use rand::RngCore;
+</span><span class="boring">fn main() {
 </span>// get some random data:
-let mut data = [0u8; 32];
+let mut data = [0u8; 8];
 rand::thread_rng().fill_bytes(&amp;mut data);
+println!(&quot;{:?}&quot;, data)
 <span class="boring">}
 </span></code></pre></pre>
 <h2><a class="header" href="#what-is-randomness" id="what-is-randomness">What is randomness?</a></h2>

@@ -179,42 +179,39 @@ We recommend using <code>[u8; 12]</code> or larger for non-cryptographic PRNGs a
 <h2><a class="header" href="#seeding-from-" id="seeding-from-">Seeding from ...</a></h2>
 <h3><a class="header" href="#fresh-entropy" id="fresh-entropy">Fresh entropy</a></h3>
 <p>Using a fresh seed (direct from the OS) is easy using <a href="../rand/rand_core/trait.SeedableRng.html#method.from_entropy"><code>SeedableRng::from_entropy</code></a>:</p>
-<pre><pre class="playground"><code class="language-rust editable">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use rand::prelude::*;
+<pre><pre class="playground"><code class="language-rust editable">use rand::prelude::*;
 use rand_chacha::ChaCha20Rng;
 
-let rng = ChaCha20Rng::from_entropy();
-<span class="boring">}
-</span></code></pre></pre>
+fn main() {
+    let mut rng = ChaCha20Rng::from_entropy();
+    println!(&quot;{}&quot;, rng.gen::&lt;char&gt;());
+}
+</code></pre></pre>
 <p>Note that this requires <code>rand_core</code> has the feature <code>getrandom</code> enabled.</p>
 <h3><a class="header" href="#another-rng" id="another-rng">Another RNG</a></h3>
 <p>Quite obviously, another RNG may be used to fill a seed. We provide a
 convenience method for this:</p>
-<pre><pre class="playground"><code class="language-rust editable">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use rand::prelude::*;
+<pre><pre class="playground"><code class="language-rust editable">use rand::prelude::*;
 use rand_pcg::Pcg64;
 
-let rng = Pcg64::from_rng(thread_rng());
-<span class="boring">}
-</span></code></pre></pre>
+fn main() {
+    let mut rng = Pcg64::from_rng(thread_rng()).unwrap();
+    println!(&quot;{}&quot;, rng.gen::&lt;char&gt;());
+}
+</code></pre></pre>
 <p>But, say you want to save a key and use it later. For that you need to be a
 little bit more explicit:</p>
-<pre><pre class="playground"><code class="language-rust editable">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use rand::prelude::*;
+<pre><pre class="playground"><code class="language-rust editable">use rand::prelude::*;
 use rand_chacha::ChaCha8Rng;
 
-let mut seed: &lt;ChaCha8Rng as SeedableRng&gt;::Seed = Default::default();
-thread_rng().fill(&amp;mut seed);
-let rng = ChaCha8Rng::from_seed(seed);
-<span class="boring">}
-</span></code></pre></pre>
-<p><strong>Obligatory warning</strong>: a few simple PRNGs, notably <a href="../rand/rand_xorshift/struct.XorShiftRng.html"><code>XorShiftRng</code></a>,
+fn main() {
+    let mut seed: &lt;ChaCha8Rng as SeedableRng&gt;::Seed = Default::default();
+    thread_rng().fill(&amp;mut seed);
+    let mut rng = ChaCha8Rng::from_seed(seed);
+    println!(&quot;{}&quot;, rng.gen::&lt;char&gt;());
+}
+</code></pre></pre>
+<p><strong>Obligatory warning</strong>: a few simple PRNGs, notably <a href="https://docs.rs/rand_xorshift/latest/rand_xorshift/struct.XorShiftRng.html"><code>XorShiftRng</code></a>,
 behave badly when seeded from the same type of generator (in this case, Xorshift
 generates a clone). For cryptographic PRNGs this is not a problem;
 for others it is recommended to seed from a different type of generator.
@@ -227,15 +224,14 @@ distinct, fixed random number seeds, e.g. 1, 2, 3, etc.</p>
 Internally, it uses a simple PRNG to fill the bits of the seed from the input
 number while providing good bit-avalance (so that two similar numbers such as
 0 and 1 translate to very different seeds and independent RNG sequences).</p>
-<pre><pre class="playground"><code class="language-rust editable">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use rand::prelude::*;
+<pre><pre class="playground"><code class="language-rust editable">use rand::prelude::*;
 use rand_pcg::Pcg64;
 
-let rng = Pcg64::seed_from_u64(2);
-<span class="boring">}
-</span></code></pre></pre>
+fn main() {
+    let mut rng = Pcg64::seed_from_u64(2);
+    println!(&quot;{}&quot;, rng.gen::&lt;char&gt;());
+}
+</code></pre></pre>
 <p>Note that a number with 64-bits or less <strong>cannot be secure</strong>, so this should
 not be used for applications such as cryptography or gambling games.</p>
 <h3><a class="header" href="#a-string-or-any-hashable-data" id="a-string-or-any-hashable-data">A string, or any hashable data</a></h3>
@@ -245,29 +241,29 @@ change to the string should result in a fully independent generator sequence.</p
 <p>This can be achieved via use of a hash function to compress all input data down
 to a hash result, then using that result to seed a generator. The
 <a href="https://github.com/rust-random/seeder/"><code>rand_seeder</code></a> crate is designed for just this purpose.</p>
-<pre><pre class="playground"><code class="language-rust editable">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use rand::prelude::*;
+<pre><pre class="playground"><code class="language-rust editable">use rand::prelude::*;
 use rand_seeder::{Seeder, SipHasher};
 use rand_pcg::Pcg64;
 
-// In one line:
-let rng: Pcg64 = Seeder::from(&quot;stripy zebra&quot;).make_rng();
+fn main() {
+    // In one line:
+    let mut rng: Pcg64 = Seeder::from(&quot;stripy zebra&quot;).make_rng();
+    println!(&quot;{}&quot;, rng.gen::&lt;char&gt;());
 
-// If we want to be more explicit, first we create a SipRng:
-let hasher = SipHasher::from(&quot;a sailboat&quot;);
-let mut hasher_rng = hasher.into_rng();
-// (Note: hasher_rng is a full RNG and can be used directly.)
+    // If we want to be more explicit, first we create a SipRng:
+    let hasher = SipHasher::from(&quot;a sailboat&quot;);
+    let mut hasher_rng = hasher.into_rng();
+    // (Note: hasher_rng is a full RNG and can be used directly.)
 
-// Now, we use hasher_rng to create a seed:
-let mut seed: &lt;Pcg64 as SeedableRng&gt;::Seed = Default::default();
-hasher_rng.fill(&amp;mut seed);
+    // Now, we use hasher_rng to create a seed:
+    let mut seed: &lt;Pcg64 as SeedableRng&gt;::Seed = Default::default();
+    hasher_rng.fill(&amp;mut seed);
 
-// And create our RNG from that seed:
-let rng = Pcg64::from_seed(seed);
-<span class="boring">}
-</span></code></pre></pre>
+    // And create our RNG from that seed:
+    let mut rng = Pcg64::from_seed(seed);
+    println!(&quot;{}&quot;, rng.gen::&lt;char&gt;());
+}
+</code></pre></pre>
 <p>Note that <code>rand_seeder</code> is <strong>not suitable</strong> for cryptographic usage.
 It is <strong>not a password hasher</strong>, for such applications a key-derivation
 function such as Argon2 must be used.</p>

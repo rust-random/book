@@ -168,17 +168,18 @@
 sources</em> must implement. But what exactly is a random data source?</p>
 <p>This section concerns theory; see also the chapter on
 <a href="guide-rngs.html">random number generators</a>.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">extern crate rand;
+<pre><pre class="playground"><code class="language-rust"><span class="boring">extern crate rand;
 </span><span class="boring">extern crate rand_pcg;
+</span>use rand::{Rng, SeedableRng};
+
+<span class="boring">fn main() {
 </span>// prepare a non-deterministic random number generator:
 let mut rng = rand::thread_rng();
+println!(&quot;{}&quot;, rng.gen::&lt;i32&gt;());
 
 // prepare a deterministic generator:
-use rand::SeedableRng;
 let mut rng = rand_pcg::Pcg32::seed_from_u64(123);
+println!(&quot;{}&quot;, rng.gen::&lt;i32&gt;());
 <span class="boring">}
 </span></code></pre></pre>
 <h2><a class="header" href="#true-random-number-generators" id="true-random-number-generators">True random number generators</a></h2>
@@ -269,7 +270,7 @@ high- and low-resolution data. This is typically a 32-bit number, but the amount
 of <em>entropy</em> will depend on how precisely a hypothetical attacker can guess the
 number. If an attacker can guess the number to the nearest minute, this may be
 approximately 6 bits (2^6 = 64); if an attacker can guess this to the second,
-this is 0 bits. <a href="../rand/rand/rngs/jitter/struct.JitterRng.html"><code>JitterRng</code></a> uses this concept to scavenge entropy without an
+this is 0 bits. <a href="https://docs.rs/rand_jitter/latest/rand_jitter/struct.JitterRng.html"><code>JitterRng</code></a> uses this concept to scavenge entropy without an
 HRNG (but using nanosecond resolution timers and conservatively assuming only a
 couple of bits entropy is available per time-stamp, after running several tests
 on the timer's quality).</p>

@@ -182,17 +182,15 @@ reduce to calls to <a href="../rand/rand_core/trait.RngCore.html"><code>RngCore<
 fail anyway this is usually not a problem, but the few generators which can may
 be forced to fail in this case:</p>
 <ul>
-<li><a href="../rand/rand/rngs/struct.OsRng.html"><code>OsRng</code></a> interfaces with the Operating System's generator; in rare cases
-this may fail as &quot;not ready&quot; or simply &quot;unavailable&quot;.</li>
-<li><a href="../rand/rand/rngs/struct.JitterRng.html"><code>JitterRng</code></a> is a generator based on timer jitter; if the timer does not
-appear to be capable of sufficient precision or is too predictable, this
-will fail.</li>
-<li><a href="../rand/rand/rngs/struct.EntropyRng.html"><code>EntropyRng</code></a> is an abstraction over the above, falling back to the next
-option when the first fails but ultimately failing if all sources fail</li>
-<li><a href="../rand/rand/fn.thread_rng.html"><code>thread_rng</code></a> seeds itself via <a href="../rand/rand/rngs/struct.EntropyRng.html"><code>EntropyRng</code></a>, thus can potentially fail
-on its first use on each thread (though it never fails after the first use)</li>
-<li><a href="../rand/rand/rngs/adapter/struct.ReadRng.html"><code>ReadRng</code></a> tries to read data from its source but fails when the stream
-ends or errors (though it retries on interrupt).</li>
+<li><a href="../rand/rand/rngs/struct.OsRng.html"><code>OsRng</code></a> is a wrapper over <a href="https://docs.rs/getrandom/latest/getrandom/"><code>getrandom</code></a>. From the latter's documentation:
+&quot;In general, on supported platforms, failure is highly unlikely, though not
+impossible.&quot; <a href="../rand/rand/rngs/struct.OsRng.html"><code>OsRng</code></a> will forward errors through
+<a href="../rand/rand_core/trait.RngCore.html#tymethod.try_fill_bytes"><code>RngCore::try_fill_bytes</code></a> while other methods panic on error.</li>
+<li><a href="../rand/rand/fn.thread_rng.html"><code>thread_rng</code></a> seeds itself via <a href="../rand/rand/rngs/struct.OsRng.html"><code>OsRng</code></a> on first use and periodically
+thereafter, thus can potentially fail, though unlikely. If initial seeding
+fails, a panic will result. If a failure happens during reseeding (less
+likely) then the RNG continues without reseeding; a log message (warning)
+is emitted if logging is enabled.</li>
 </ul>
 
                     </main>

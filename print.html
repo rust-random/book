@@ -271,7 +271,7 @@ main user-interface; where additional distributions are required, the
 platform-dependent random number source, <a href="https://rust-random.github.io/rand/rand_core/index.html"><code>rand_core</code></a> defines the API that
 generators must implement, and a number of crates like <a href="https://rust-random.github.io/rand/rand_chacha/index.html"><code>rand_chacha</code></a> and
 <a href="https://docs.rs/rand_xoshiro/"><code>rand_xoshiro</code></a> provide pseudo-random generators.</p>
-<pre><code>getrandom ┐
+<pre><code class="language-plain">getrandom ┐
           └ rand_core ┐
                       ├ rand_chacha ┐
                       ├ rand_hc     ┤
@@ -374,7 +374,7 @@ In current versions it is not a dependency (not even an optional one).</p>
 (see <a href="guide-rngs.html">Our RNGs</a>):</p>
 <ul>
 <li><a href="https://rust-random.github.io/rand/rand_chacha/index.html"><code>rand_chacha</code></a> provides generators using the ChaCha cipher</li>
-<li><a href="https://rust-random.github.io/rand/rand_hc/index.html"><code>rand_hc</code></a> implements a generator using the HC-128 cipher</li>
+<li><a href="https://docs.rs/rand_hc/"><code>rand_hc</code></a> implements a generator using the HC-128 cipher</li>
 <li><a href="https://docs.rs/rand_isaac/"><code>rand_isaac</code></a> implements the ISAAC generators</li>
 <li><a href="https://rust-random.github.io/rand/rand_pcg/index.html"><code>rand_pcg</code></a> implements a small selection of PCG generators</li>
 <li><a href="https://docs.rs/rand_xoshiro/"><code>rand_xoshiro</code></a> implements the SplitMix and Xoshiro generators</li>
@@ -407,14 +407,13 @@ new module organization in your imports.</p>
 <li><a href="https://github.com/rust-random/rand/blob/master/examples/monty-hall.rs">Monty Hall Problem</a></li>
 </ul>
 <h1><a class="header" href="#random-data" id="random-data">Random data</a></h1>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">extern crate rand;
+<pre><pre class="playground"><code class="language-rust"><span class="boring">extern crate rand;
 </span><span class="boring">use rand::RngCore;
+</span><span class="boring">fn main() {
 </span>// get some random data:
-let mut data = [0u8; 32];
+let mut data = [0u8; 8];
 rand::thread_rng().fill_bytes(&amp;mut data);
+println!(&quot;{:?}&quot;, data)
 <span class="boring">}
 </span></code></pre></pre>
 <h2><a class="header" href="#what-is-randomness" id="what-is-randomness">What is randomness?</a></h2>
@@ -491,17 +490,18 @@ required.)</p>
 sources</em> must implement. But what exactly is a random data source?</p>
 <p>This section concerns theory; see also the chapter on
 <a href="guide-rngs.html">random number generators</a>.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">extern crate rand;
+<pre><pre class="playground"><code class="language-rust"><span class="boring">extern crate rand;
 </span><span class="boring">extern crate rand_pcg;
+</span>use rand::{Rng, SeedableRng};
+
+<span class="boring">fn main() {
 </span>// prepare a non-deterministic random number generator:
 let mut rng = rand::thread_rng();
+println!(&quot;{}&quot;, rng.gen::&lt;i32&gt;());
 
 // prepare a deterministic generator:
-use rand::SeedableRng;
 let mut rng = rand_pcg::Pcg32::seed_from_u64(123);
+println!(&quot;{}&quot;, rng.gen::&lt;i32&gt;());
 <span class="boring">}
 </span></code></pre></pre>
 <h2><a class="header" href="#true-random-number-generators" id="true-random-number-generators">True random number generators</a></h2>
@@ -592,7 +592,7 @@ high- and low-resolution data. This is typically a 32-bit number, but the amount
 of <em>entropy</em> will depend on how precisely a hypothetical attacker can guess the
 number. If an attacker can guess the number to the nearest minute, this may be
 approximately 6 bits (2^6 = 64); if an attacker can guess this to the second,
-this is 0 bits. <a href="../rand/rand/rngs/jitter/struct.JitterRng.html"><code>JitterRng</code></a> uses this concept to scavenge entropy without an
+this is 0 bits. <a href="https://docs.rs/rand_jitter/latest/rand_jitter/struct.JitterRng.html"><code>JitterRng</code></a> uses this concept to scavenge entropy without an
 HRNG (but using nanosecond resolution timers and conservatively assuming only a
 couple of bits entropy is available per time-stamp, after running several tests
 on the timer's quality).</p>
@@ -666,7 +666,7 @@ table since CSPRNGs may not have observable defects.</p>
 <tr><td><a href="../rand/rand/rngs/struct.StdRng.html"><code>StdRng</code></a></td><td>(unspecified)</td><td>1.5 GB/s</td><td>fast</td><td>136 bytes</td><td>widely trusted</td><td>no</td></tr>
 <tr><td><a href="../rand/rand_chacha/struct.ChaCha20Rng.html"><code>ChaCha20Rng</code></a></td><td>ChaCha20</td><td>1.8 GB/s</td><td>fast</td><td>136 bytes</td><td><a href="https://tools.ietf.org/html/rfc7539#section-1">rigorously analysed</a></td><td>no</td></tr>
 <tr><td><a href="../rand/rand_chacha/struct.ChaCha8Rng.html"><code>ChaCha8Rng</code></a></td><td>ChaCha8</td><td>2.2 GB/s</td><td>fast</td><td>136 bytes</td><td>small security margin</td><td>no</td></tr>
-<tr><td><a href="../rand/rand_hc/struct.Hc128Rng.html"><code>Hc128Rng</code></a></td><td>HC-128</td><td>2.1 GB/s</td><td>slow</td><td>4176 bytes</td><td><a href="http://www.ecrypt.eu.org/stream/">recommended by eSTREAM</a></td><td>no</td></tr>
+<tr><td><a href="https://docs.rs/rand_hc/latest/rand_hc/struct.Hc128Rng.html"><code>Hc128Rng</code></a></td><td>HC-128</td><td>2.1 GB/s</td><td>slow</td><td>4176 bytes</td><td><a href="http://www.ecrypt.eu.org/stream/">recommended by eSTREAM</a></td><td>no</td></tr>
 <tr><td><a href="https://docs.rs/rand_isaac/latest/rand_isaac/isaac/struct.IsaacRng.html"><code>IsaacRng</code></a></td><td>ISAAC</td><td>1.1 GB/s</td><td>slow</td><td>2072 bytes</td><td><a href="https://burtleburtle.net/bob/rand/isaacafa.html">unknown</a></td><td>unknown</td></tr>
 <tr><td><a href="https://docs.rs/rand_isaac/latest/rand_isaac/isaac64/struct.Isaac64Rng.html"><code>Isaac64Rng</code></a></td><td>ISAAC-64</td><td>2.2 GB/s</td><td>slow</td><td>4136 bytes</td><td>unknown</td><td>unknown</td></tr>
 </tbody></table>
@@ -704,11 +704,11 @@ Mersenne Twister MT19937 algorithm requires 2.5 kB of state.</p>
 <p>CSPRNGs typically require more memory; since the seed size is recommended
 to be at least 192 bits and some more may be required for the algorithm,
 256 bits would be approximately the minimum secure size. In practice,
-CSPRNGs tend to use quite a bit more, <a href="../rand/rand_chacha/struct.ChaChaRng.html"><code>ChaChaRng</code></a> is relatively small with
+CSPRNGs tend to use quite a bit more, <a href="../rand/rand_chacha/type.ChaChaRng.html"><code>ChaChaRng</code></a> is relatively small with
 136 bytes of state.</p>
 <h3><a class="header" href="#initialization-time" id="initialization-time">Initialization time</a></h3>
 <p>The time required to initialize new generators varies significantly. Many
-simple PRNGs and even some cryptographic ones (including <a href="../rand/rand_chacha/struct.ChaChaRng.html"><code>ChaChaRng</code></a>)
+simple PRNGs and even some cryptographic ones (including <a href="../rand/rand_chacha/type.ChaChaRng.html"><code>ChaChaRng</code></a>)
 only need to copy the seed value and some constants into their state, and
 thus can be constructed very quickly. In contrast, CSPRNGs with large state
 require an expensive key-expansion.</p>
@@ -796,11 +796,11 @@ for recommendations.</p>
 <p>It is worth noting that a CSPRNG's security relies absolutely on being
 seeded with a secure random key. Should the key be known or guessable, all
 output of the CSPRNG is easy to guess. This implies that the seed should
-come from a trusted source; usually either the OS or another CSPRNG. Our
-seeding helper trait, <a href="../rand/rand/trait.FromEntropy.html"><code>FromEntropy</code></a>, and the source it uses
-(<a href="../rand/rand/rngs/struct.EntropyRng.html"><code>EntropyRng</code></a>), should be secure. Additionally, <a href="../rand/rand/rngs/struct.ThreadRng.html"><code>ThreadRng</code></a> is a CSPRNG,
-thus it is acceptable to seed from this (although for security applications
-fresh/external entropy should be preferred).</p>
+come from a trusted source; usually either the OS or another CSPRNG. For this
+purpose, we recommend using the <a href="https://docs.rs/getrandom/"><code>getrandom</code></a> crate which interfaces the OS's
+secure random interface. <a href="../rand/rand/trait.SeedableRng.html#method.from_entropy"><code>SeedableRng::from_entropy</code></a> is a wrapper around
+<a href="https://docs.rs/getrandom/"><code>getrandom</code></a> for convenience. Alternatively, using a user-space CSPRNG such as
+<a href="../rand/rand/rngs/struct.ThreadRng.html"><code>ThreadRng</code></a> for seeding should be sufficient.</p>
 <p>Further, it should be obvious that the internal state of a CSPRNG must be
 kept secret. With that in mind, our implementations do not provide direct
 access to most of their internal state, and <code>Debug</code> implementations do not
@@ -846,42 +846,39 @@ We recommend using <code>[u8; 12]</code> or larger for non-cryptographic PRNGs a
 <h2><a class="header" href="#seeding-from-" id="seeding-from-">Seeding from ...</a></h2>
 <h3><a class="header" href="#fresh-entropy" id="fresh-entropy">Fresh entropy</a></h3>
 <p>Using a fresh seed (direct from the OS) is easy using <a href="../rand/rand_core/trait.SeedableRng.html#method.from_entropy"><code>SeedableRng::from_entropy</code></a>:</p>
-<pre><pre class="playground"><code class="language-rust editable">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use rand::prelude::*;
+<pre><pre class="playground"><code class="language-rust editable">use rand::prelude::*;
 use rand_chacha::ChaCha20Rng;
 
-let rng = ChaCha20Rng::from_entropy();
-<span class="boring">}
-</span></code></pre></pre>
+fn main() {
+    let mut rng = ChaCha20Rng::from_entropy();
+    println!(&quot;{}&quot;, rng.gen::&lt;char&gt;());
+}
+</code></pre></pre>
 <p>Note that this requires <code>rand_core</code> has the feature <code>getrandom</code> enabled.</p>
 <h3><a class="header" href="#another-rng" id="another-rng">Another RNG</a></h3>
 <p>Quite obviously, another RNG may be used to fill a seed. We provide a
 convenience method for this:</p>
-<pre><pre class="playground"><code class="language-rust editable">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use rand::prelude::*;
+<pre><pre class="playground"><code class="language-rust editable">use rand::prelude::*;
 use rand_pcg::Pcg64;
 
-let rng = Pcg64::from_rng(thread_rng());
-<span class="boring">}
-</span></code></pre></pre>
+fn main() {
+    let mut rng = Pcg64::from_rng(thread_rng()).unwrap();
+    println!(&quot;{}&quot;, rng.gen::&lt;char&gt;());
+}
+</code></pre></pre>
 <p>But, say you want to save a key and use it later. For that you need to be a
 little bit more explicit:</p>
-<pre><pre class="playground"><code class="language-rust editable">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use rand::prelude::*;
+<pre><pre class="playground"><code class="language-rust editable">use rand::prelude::*;
 use rand_chacha::ChaCha8Rng;
 
-let mut seed: &lt;ChaCha8Rng as SeedableRng&gt;::Seed = Default::default();
-thread_rng().fill(&amp;mut seed);
-let rng = ChaCha8Rng::from_seed(seed);
-<span class="boring">}
-</span></code></pre></pre>
-<p><strong>Obligatory warning</strong>: a few simple PRNGs, notably <a href="../rand/rand_xorshift/struct.XorShiftRng.html"><code>XorShiftRng</code></a>,
+fn main() {
+    let mut seed: &lt;ChaCha8Rng as SeedableRng&gt;::Seed = Default::default();
+    thread_rng().fill(&amp;mut seed);
+    let mut rng = ChaCha8Rng::from_seed(seed);
+    println!(&quot;{}&quot;, rng.gen::&lt;char&gt;());
+}
+</code></pre></pre>
+<p><strong>Obligatory warning</strong>: a few simple PRNGs, notably <a href="https://docs.rs/rand_xorshift/latest/rand_xorshift/struct.XorShiftRng.html"><code>XorShiftRng</code></a>,
 behave badly when seeded from the same type of generator (in this case, Xorshift
 generates a clone). For cryptographic PRNGs this is not a problem;
 for others it is recommended to seed from a different type of generator.
@@ -894,15 +891,14 @@ distinct, fixed random number seeds, e.g. 1, 2, 3, etc.</p>
 Internally, it uses a simple PRNG to fill the bits of the seed from the input
 number while providing good bit-avalance (so that two similar numbers such as
 0 and 1 translate to very different seeds and independent RNG sequences).</p>
-<pre><pre class="playground"><code class="language-rust editable">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use rand::prelude::*;
+<pre><pre class="playground"><code class="language-rust editable">use rand::prelude::*;
 use rand_pcg::Pcg64;
 
-let rng = Pcg64::seed_from_u64(2);
-<span class="boring">}
-</span></code></pre></pre>
+fn main() {
+    let mut rng = Pcg64::seed_from_u64(2);
+    println!(&quot;{}&quot;, rng.gen::&lt;char&gt;());
+}
+</code></pre></pre>
 <p>Note that a number with 64-bits or less <strong>cannot be secure</strong>, so this should
 not be used for applications such as cryptography or gambling games.</p>
 <h3><a class="header" href="#a-string-or-any-hashable-data" id="a-string-or-any-hashable-data">A string, or any hashable data</a></h3>
@@ -912,29 +908,29 @@ change to the string should result in a fully independent generator sequence.</p
 <p>This can be achieved via use of a hash function to compress all input data down
 to a hash result, then using that result to seed a generator. The
 <a href="https://github.com/rust-random/seeder/"><code>rand_seeder</code></a> crate is designed for just this purpose.</p>
-<pre><pre class="playground"><code class="language-rust editable">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use rand::prelude::*;
+<pre><pre class="playground"><code class="language-rust editable">use rand::prelude::*;
 use rand_seeder::{Seeder, SipHasher};
 use rand_pcg::Pcg64;
 
-// In one line:
-let rng: Pcg64 = Seeder::from(&quot;stripy zebra&quot;).make_rng();
+fn main() {
+    // In one line:
+    let mut rng: Pcg64 = Seeder::from(&quot;stripy zebra&quot;).make_rng();
+    println!(&quot;{}&quot;, rng.gen::&lt;char&gt;());
 
-// If we want to be more explicit, first we create a SipRng:
-let hasher = SipHasher::from(&quot;a sailboat&quot;);
-let mut hasher_rng = hasher.into_rng();
-// (Note: hasher_rng is a full RNG and can be used directly.)
+    // If we want to be more explicit, first we create a SipRng:
+    let hasher = SipHasher::from(&quot;a sailboat&quot;);
+    let mut hasher_rng = hasher.into_rng();
+    // (Note: hasher_rng is a full RNG and can be used directly.)
 
-// Now, we use hasher_rng to create a seed:
-let mut seed: &lt;Pcg64 as SeedableRng&gt;::Seed = Default::default();
-hasher_rng.fill(&amp;mut seed);
+    // Now, we use hasher_rng to create a seed:
+    let mut seed: &lt;Pcg64 as SeedableRng&gt;::Seed = Default::default();
+    hasher_rng.fill(&amp;mut seed);
 
-// And create our RNG from that seed:
-let rng = Pcg64::from_seed(seed);
-<span class="boring">}
-</span></code></pre></pre>
+    // And create our RNG from that seed:
+    let mut rng = Pcg64::from_seed(seed);
+    println!(&quot;{}&quot;, rng.gen::&lt;char&gt;());
+}
+</code></pre></pre>
 <p>Note that <code>rand_seeder</code> is <strong>not suitable</strong> for cryptographic usage.
 It is <strong>not a password hasher</strong>, for such applications a key-derivation
 function such as Argon2 must be used.</p>
@@ -994,7 +990,7 @@ let x: f64 = rng.gen();
 let roll = rng.gen_range(1..7);
 <span class="boring">}
 </span></code></pre></pre>
-<p>Additionally, the <a href="../rand/rand/fn.random.htm"><code>random</code></a> function is a short-cut to <a href="../rand/rand/trait.Rng.html#method.gen"><code>Rng::gen</code></a> on the <a href="../rand/rand/fn.thread_rng.html"><code>thread_rng</code></a>:</p>
+<p>Additionally, the <a href="../rand/rand/fn.random.html"><code>random</code></a> function is a short-cut to <a href="../rand/rand/trait.Rng.html#method.gen"><code>Rng::gen</code></a> on the <a href="../rand/rand/fn.thread_rng.html"><code>thread_rng</code></a>:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -1009,6 +1005,7 @@ let roll = rng.gen_range(1..7);
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
+</span><span class="boring">use rand::{Rng, distributions::DistIter};
 </span>// a producer of data of type T:
 pub trait Distribution&lt;T&gt; {
     // the key function:
@@ -1019,7 +1016,10 @@ pub trait Distribution&lt;T&gt; {
     where
         Self: Sized,
         R: Rng,
-    { ... }
+    {
+        // [has a default implementation]
+<span class="boring">        todo!()
+</span>    }
 }
 <span class="boring">}
 </span></code></pre></pre>
@@ -1103,7 +1103,7 @@ arrays larger than 32 elements.</p>
 <p>For SIMD types, each element is sampled as above, for <a href="../rand/rand/distributions/struct.Standard.html"><code>Standard</code></a> and
 <a href="../rand/rand/distributions/struct.Uniform.html"><code>Uniform</code></a> (for the latter, <code>low</code> and <code>high</code> parameters are <em>also</em> SIMD
 types, effectively sampling from multiple ranges simultaneously). SIMD
-support is gated behind a <a href="../features.html#simd-support">feature flag</a>.</p>
+support requires using the <code>simd_support</code> feature flag and nightly <code>rustc</code>.</p>
 </li>
 <li>
 <p>For enums, you have to implement uniform sampling yourself. For example, you
@@ -1111,6 +1111,7 @@ could use the following approach:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
+</span><span class="boring">use rand::{Rng, distributions::{Distribution, Standard}};
 </span>pub enum Food {
     Burger,
     Pizza,
@@ -1133,71 +1134,48 @@ impl Distribution&lt;Food&gt; for Standard {
 </li>
 </ul>
 <h1><a class="header" href="#non-uniform-distributions" id="non-uniform-distributions">Non-uniform distributions</a></h1>
-<p>Non-uniform distributions can be divided into two categories, as follows.
-Some of these discrete and all of the continuous distributions have been moved
-from the main <a href="../rand/rand/index.html"><code>rand</code></a> crate to a dedicated <a href="../rand/rand_distr/index.html"><code>rand_distr</code></a> crate.</p>
-<h2><a class="header" href="#discrete-non-uniform-distributions" id="discrete-non-uniform-distributions">Discrete non-uniform distributions</a></h2>
-<p>Discrete distributions sample from boolean or integer types. As above, these
-can be sampled uniformly, or, as below, via a non-uniform distribution.</p>
-<p>Potentially a discrete distribution could sample directly from a set of discrete
-values such as a slice or an <code>enum</code>. See the section on <a href="../guide-seq.html">Sequences</a> regarding
-Rand's traits for slice and iterator types. Rand does not provide direct
-sampling from <code>enum</code>s, with the exception of <code>Option</code> (see above).</p>
-<h3><a class="header" href="#booleans" id="booleans">Booleans</a></h3>
-<p>The <a href="../rand/rand/distributions/struct.Bernoulli.html"><code>Bernoulli</code></a> distribution is a fancy name for generating a boolean
-with a given a probability <code>p</code> of being <code>true</code>, or defined via a
-<code>success : failure</code> ratio. Often this is described as a <em>trial</em> with
-probability <code>p</code> of <em>success</em> (<code>true</code>).</p>
-<p>The methods <a href="../rand/rand/trait.Rng.html#method.gen_bool"><code>Rng::gen_bool</code></a> and <a href="../rand/rand/trait.Rng.html#method.gen_ratio"><code>Rng::gen_ratio</code></a> are short-cuts to this
-distribution.</p>
+<p>The <a href="../rand/rand/index.html"><code>rand</code></a> crate provides only two non-uniform distributions:</p>
+<ul>
+<li>The <a href="../rand/rand/distributions/struct.Bernoulli.html"><code>Bernoulli</code></a> distribution simply generates a boolean where the
+probability of sampling <code>true</code> is some constant (<code>Bernoulli::new(0.5)</code>) or
+ratio (<code>Bernoulli::from_ratio(1, 6)</code>).</li>
+<li>The <a href="../rand/rand/distributions/struct.WeightedIndex.html"><code>WeightedIndex</code></a> distribution may be used to sample from a sequence of
+weighted values. See the <a href="guide-seq.html">Sequences</a> section.</li>
+</ul>
+<p>Many more non-uniform distributions are provided by the <a href="../rand/rand_distr/index.html"><code>rand_distr</code></a> crate.</p>
 <h3><a class="header" href="#integers" id="integers">Integers</a></h3>
-<p>The <a href="../rand/rand/distributions/struct.Binomial.html"><code>Binomial</code></a> distribution is related to the <a href="../rand/rand/distributions/struct.Bernoulli.html"><code>Bernoulli</code></a> in that it
+<p>The <a href="../rand/rand_distr/struct.Binomial.html"><code>Binomial</code></a> distribution is related to the <a href="../rand/rand/distributions/struct.Bernoulli.html"><code>Bernoulli</code></a> in that it
 models running <code>n</code> independent trials each with probability <code>p</code> of success,
 then counts the number of successes.</p>
-<p>Note that for large <code>n</code> the <a href="../rand/rand/distributions/struct.Binomial.html"><code>Binomial</code></a> distribution's implementation is
+<p>Note that for large <code>n</code> the <a href="../rand/rand_distr/struct.Binomial.html"><code>Binomial</code></a> distribution's implementation is
 much faster than sampling <code>n</code> trials individually.</p>
-<p>The <a href="../rand/rand/distributions/struct.Poisson.html"><code>Poisson</code></a> distribution expresses the expected number of events
+<p>The <a href="../rand/rand_distr/struct.Poisson.html"><code>Poisson</code></a> distribution expresses the expected number of events
 occurring within a fixed interval, given that events occur with fixed rate λ.
-<a href="../rand/rand/distributions/struct.Poisson.html"><code>Poisson</code></a> distribution sampling generates <code>Float</code> values because <code>Float</code>s
+<a href="../rand/rand_distr/struct.Poisson.html"><code>Poisson</code></a> distribution sampling generates <code>Float</code> values because <code>Float</code>s
 are used in the sampling calculations, and we prefer to defer to the user on
 integer types and the potentially lossy and panicking associated conversions.
 For example, <code>u64</code> values can be attained with <code>rng.sample(Poisson) as u64</code>.</p>
 <p>Note that out of range float to int conversions with <code>as</code> result in undefined
 behavior for Rust &lt;1.45 and a saturating conversion for Rust &gt;=1.45.</p>
-<h3><a class="header" href="#weighted-sequences" id="weighted-sequences">Weighted sequences</a></h3>
-<p>The <a href="../rand/rand/distributions/weighted/struct.WeightedIndex.html"><code>WeightedIndex</code></a> distribution samples an index from sequence of weights.
-See the <a href="../guide-seq.html">Sequences</a> section for convenience wrappers directly sampling a slice
-element.</p>
-<p>For example, weighted sampling could be used to model the colour of a marble
-sampled from a bucket containing 5 green, 15 red and 80 blue marbles.</p>
-<p>Currently the Rand lib only implements <em>sampling with replacement</em>, i.e.
-repeated sampling assumes the same distribution (that any sampled marble
-has been replaced). An alternative distribution implementing
-<em>sampling without replacement</em> has been
-<a href="https://github.com/rust-random/rand/issues/596">requested</a>.</p>
-<p>Note also that two implementations of <a href="../rand/rand/distributions/weighted/struct.WeightedIndex.html"><code>WeightedIndex</code></a> are available; the
-first is optimised for a small number of samples while
-<a href="../rand/rand/distributions/weighted/alias_method/struct.WeightedIndex.html"><code>alias_method::WeightedIndex</code></a> is optimised for a large number of samples
-(where &quot;large&quot; may mean &quot;&gt; 1000&quot;; benchmarks recommended).</p>
 <h2><a class="header" href="#continuous-non-uniform-distributions" id="continuous-non-uniform-distributions">Continuous non-uniform distributions</a></h2>
 <p>Continuous distributions model samples drawn from the real number line ℝ, or in
 some cases a point from a higher dimension (ℝ², ℝ³, etc.). We provide
 implementations for <code>f64</code> and for <code>f32</code> output in most cases, although currently
 the <code>f32</code> implementations simply reduce the precision of an <code>f64</code> sample.</p>
-<p>The exponential distribution, <a href="../rand/rand/distributions/struct.Exp.html"><code>Exp</code></a>, simulates time until decay, assuming a
+<p>The exponential distribution, <a href="../rand/rand_distr/struct.Exp.html"><code>Exp</code></a>, simulates time until decay, assuming a
 fixed rate of decay (i.e. exponential decay).</p>
-<p>The <a href="../rand/rand/distributions/struct.Normal.html"><code>Normal</code></a> distribution (also known as Gaussian) simulates sampling from
+<p>The <a href="../rand/rand_distr/struct.Normal.html"><code>Normal</code></a> distribution (also known as Gaussian) simulates sampling from
 the Normal distribution (&quot;Bell curve&quot;) with the given mean and standard
-deviation. The <a href="../rand/rand/distributions/struct.LogNormal.html"><code>LogNormal</code></a> is related: for sample <code>X</code> from the log-normal
+deviation. The <a href="../rand/rand_distr/struct.LogNormal.html"><code>LogNormal</code></a> is related: for sample <code>X</code> from the log-normal
 distribution, <code>log(X)</code> is normally distributed; this &quot;skews&quot; the normal
 distribution to avoid negative values and to have a long positive tail.</p>
-<p>The <a href="../rand/rand/distributions/struct.UnitCircle.html"><code>UnitCircle</code></a> and <a href="../rand/rand/distributions/struct.UnitSphereSurface.html"><code>UnitSphereSurface</code></a> distributions simulate uniform
+<p>The <a href="../rand/rand_distr/struct.UnitCircle.html"><code>UnitCircle</code></a> and <a href="../rand/rand_distr/struct.UnitSphere.html"><code>UnitSphere</code></a> distributions simulate uniform
 sampling from the edge of a circle or surface of a sphere.</p>
-<p>The <a href="../rand/rand/distributions/struct.Cauchy.html"><code>Cauchy</code></a> distribution (also known as the Lorentz distribution) is the
+<p>The <a href="../rand/rand_distr/struct.Cauchy.html"><code>Cauchy</code></a> distribution (also known as the Lorentz distribution) is the
 distribution of the x-intercept of a ray from point <code>(x0, γ)</code> with uniformly
 distributed angle.</p>
-<p>The <a href="../rand/rand/distributions/struct.Beta.html"><code>Beta</code></a> distribution is a two-parameter probability distribution, whose
-output values lie between 0 and 1. The <a href="../rand/rand/distributions/struct.Dirichlet.html"><code>Dirichlet</code></a> distribution is a
+<p>The <a href="../rand/rand_distr/struct.Beta.html"><code>Beta</code></a> distribution is a two-parameter probability distribution, whose
+output values lie between 0 and 1. The <a href="../rand/rand_distr/struct.Dirichlet.html"><code>Dirichlet</code></a> distribution is a
 generalisation to any positive number of parameters.</p>
 <h1><a class="header" href="#random-processes" id="random-processes">Random processes</a></h1>
 <p>You may have noticed that the <a href="../rand/rand/distributions/trait.Distribution.html"><code>Distribution</code></a> trait does not allow mutation of
@@ -1234,15 +1212,62 @@ may be adjusted to this application.</li>
 </ul>
 <h1><a class="header" href="#sequences" id="sequences">Sequences</a></h1>
 <p>Rand implements a few common random operations on sequences via the
-<a href="../rand/rand/seq/trait.IteratorRandom.html"><code>IteratorRandom</code></a> and <a href="../rand/rand/seq/trait.SliceRandom.html"><code>SliceRandom</code></a> traits:</p>
+<a href="../rand/rand/seq/trait.IteratorRandom.html"><code>IteratorRandom</code></a> and <a href="../rand/rand/seq/trait.SliceRandom.html"><code>SliceRandom</code></a> traits.</p>
+<h2><a class="header" href="#generating-indices" id="generating-indices">Generating indices</a></h2>
+<p>To sample:</p>
 <ul>
-<li><code>choose</code> one element uniformly from the sequence</li>
-<li><code>choose_multiple</code> elements uniformly without replacement</li>
-<li><code>choose_weighted</code> — choose an element non-uniformly by use of a defined
-weight from a slice (also see the <a href="../rand/rand/distributions/struct.WeightedIndex.html"><code>WeightedIndex</code></a> distribution)</li>
-<li><code>shuffle</code> a slice</li>
-<li><code>partial_shuffle</code> a slice, effectively extracting <code>amount</code> elements in
-random order</li>
+<li>a single index within a given range, use <a href="../rand/rand/trait.Rng.html#method.gen_range"><code>Rng::gen_range</code></a></li>
+<li>multiple distinct indices from <code>0..length</code>, use <a href="../rand/rand/seq/index/fn.sample.html"><code>index::sample</code></a></li>
+<li>multiple distinct indices from <code>0..length</code> with weights, use <a href="../rand/rand/seq/index/fn.sample_weighted.html"><code>index::sample_weighted</code></a></li>
+</ul>
+<h2><a class="header" href="#shuffling" id="shuffling">Shuffling</a></h2>
+<p>To shuffle a slice:</p>
+<ul>
+<li><a href="../rand/rand/seq/trait.SliceRandom.html#tymethod.shuffle"><code>SliceRandom::shuffle</code></a>: fully shuffle a slice</li>
+<li><a href="../rand/rand/seq/trait.SliceRandom.html#tymethod.partial_shuffle"><code>SliceRandom::partial_shuffle</code></a>: partial shuffle; useful to extract
+<code>amount</code> random elements in random order</li>
+</ul>
+<h2><a class="header" href="#sampling" id="sampling">Sampling</a></h2>
+<p>The following provide a convenient way of sampling a value from a slice or iterator:</p>
+<ul>
+<li><a href="../rand/rand/seq/trait.SliceRandom.html#tymethod.choose"><code>SliceRandom::choose</code></a>: sample one element from a slice (by ref)</li>
+<li><a href="../rand/rand/seq/trait.SliceRandom.html#tymethod.choose_mut"><code>SliceRandom::choose_mut</code></a>: sample one element from a slice (by ref mut)</li>
+<li><a href="../rand/rand/seq/trait.SliceRandom.html#tymethod.choose_multiple"><code>SliceRandom::choose_multiple</code></a>: sample multiple distinct elements from a slice (returns iterator of references to elements)</li>
+<li><a href="../rand/rand/seq/trait.IteratorRandom.html#method.choose"><code>IteratorRandom::choose</code></a>: sample one element from an iterator (by value)</li>
+<li><a href="../rand/rand/seq/trait.IteratorRandom.html#method.choose_stable"><code>IteratorRandom::choose_stable</code></a>: sample one element from an iterator (by value), where RNG calls are unaffected by the iterator's <a href="https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.size_hint"><code>size_hint</code></a></li>
+<li><a href="../rand/rand/seq/trait.IteratorRandom.html#method.choose_multiple_fill"><code>IteratorRandom::choose_multiple_fill</code></a>: sample multiple elements, placing into a buffer</li>
+<li><a href="../rand/rand/seq/trait.IteratorRandom.html#method.choose_multiple"><code>IteratorRandom::choose_multiple</code></a>: sample multiple elements, returning a <a href="https://doc.rust-lang.org/stable/std/vec/struct.Vec.html"><code>Vec</code></a></li>
+</ul>
+<p>Note that operating on an iterator is often less efficient than operating on a
+slice.</p>
+<h2><a class="header" href="#weighted-sampling" id="weighted-sampling">Weighted sampling</a></h2>
+<p>For example, weighted sampling could be used to model the colour of a marble
+sampled from a bucket containing 5 green, 15 red and 80 blue marbles.</p>
+<h3><a class="header" href="#with-replacement" id="with-replacement">With replacement</a></h3>
+<p>Sampling <em>with replacement</em> implies that any sampled values (marbles) are
+replaced (thus, the probability of sampling each variant is not affected by the
+action of sampling).</p>
+<p>This is implemented by the following distributions:</p>
+<ul>
+<li><a href="../rand/rand/distributions/struct.WeightedIndex.html"><code>WeightedIndex</code></a> has fast setup and <code>O(log N)</code> sampling</li>
+<li><a href="../rand/rand_distr/weighted_alias/struct.WeightedAliasIndex.html"><code>WeightedAliasIndex</code></a> has slow setup and <code>O(1)</code> sampling, thus <em>may</em> be
+faster with a large number of samples</li>
+</ul>
+<p>For convenience, you may use:</p>
+<ul>
+<li><a href="../rand/rand/seq/trait.SliceRandom.html#tymethod.choose_weighted"><code>SliceRandom::choose_weighted</code></a></li>
+<li><a href="../rand/rand/seq/trait.SliceRandom.html#tymethod.choose_weighted_mut"><code>SliceRandom::choose_weighted_mut</code></a></li>
+</ul>
+<h3><a class="header" href="#without-replacement" id="without-replacement">Without replacement</a></h3>
+<p>Sampling <em>without replacement</em> implies that the action of sampling modifies the
+distribution. Since the <a href="../rand/rand/distributions/trait.Distribution.html"><code>Distribution</code></a> trait is built around the idea of
+immutable distributions, we offer the following:</p>
+<ul>
+<li><a href="../rand/rand/seq/trait.SliceRandom.html#tymethod.choose_multiple_weighted"><code>SliceRandom::choose_multiple_weighted</code></a>: sample <code>amount</code> distinct values
+from a slice with weights</li>
+<li><a href="../rand/rand/seq/index/fn.sample_weighted.html"><code>index::sample_weighted</code></a>: sample <code>amount</code> distinct indices from a range with
+weights</li>
+<li>Implement yourself: see the section in <a href="guide-process.html#sampling-without-replacement">Random processes</a></li>
 </ul>
 <h1><a class="header" href="#error-handling" id="error-handling">Error handling</a></h1>
 <p>Error handling in Rand is a compromise between simplicity and necessity.
@@ -1263,17 +1288,15 @@ reduce to calls to <a href="../rand/rand_core/trait.RngCore.html"><code>RngCore<
 fail anyway this is usually not a problem, but the few generators which can may
 be forced to fail in this case:</p>
 <ul>
-<li><a href="../rand/rand/rngs/struct.OsRng.html"><code>OsRng</code></a> interfaces with the Operating System's generator; in rare cases
-this may fail as &quot;not ready&quot; or simply &quot;unavailable&quot;.</li>
-<li><a href="../rand/rand/rngs/struct.JitterRng.html"><code>JitterRng</code></a> is a generator based on timer jitter; if the timer does not
-appear to be capable of sufficient precision or is too predictable, this
-will fail.</li>
-<li><a href="../rand/rand/rngs/struct.EntropyRng.html"><code>EntropyRng</code></a> is an abstraction over the above, falling back to the next
-option when the first fails but ultimately failing if all sources fail</li>
-<li><a href="../rand/rand/fn.thread_rng.html"><code>thread_rng</code></a> seeds itself via <a href="../rand/rand/rngs/struct.EntropyRng.html"><code>EntropyRng</code></a>, thus can potentially fail
-on its first use on each thread (though it never fails after the first use)</li>
-<li><a href="../rand/rand/rngs/adapter/struct.ReadRng.html"><code>ReadRng</code></a> tries to read data from its source but fails when the stream
-ends or errors (though it retries on interrupt).</li>
+<li><a href="../rand/rand/rngs/struct.OsRng.html"><code>OsRng</code></a> is a wrapper over <a href="https://docs.rs/getrandom/latest/getrandom/"><code>getrandom</code></a>. From the latter's documentation:
+&quot;In general, on supported platforms, failure is highly unlikely, though not
+impossible.&quot; <a href="../rand/rand/rngs/struct.OsRng.html"><code>OsRng</code></a> will forward errors through
+<a href="../rand/rand_core/trait.RngCore.html#tymethod.try_fill_bytes"><code>RngCore::try_fill_bytes</code></a> while other methods panic on error.</li>
+<li><a href="../rand/rand/fn.thread_rng.html"><code>thread_rng</code></a> seeds itself via <a href="../rand/rand/rngs/struct.OsRng.html"><code>OsRng</code></a> on first use and periodically
+thereafter, thus can potentially fail, though unlikely. If initial seeding
+fails, a panic will result. If a failure happens during reseeding (less
+likely) then the RNG continues without reseeding; a log message (warning)
+is emitted if logging is enabled.</li>
 </ul>
 <h1><a class="header" href="#portability" id="portability">Portability</a></h1>
 <h2><a class="header" href="#definitions" id="definitions">Definitions</a></h2>
@@ -1287,7 +1310,7 @@ ends or errors (though it retries on interrupt).</li>
 it is clearly non-deterministic (e.g. <code>getrandom</code>, <code>ThreadRng</code>) <em>or</em> it is
 documented as being unportable (e.g. <code>StdRng</code>, <code>SmallRng</code>).</p>
 <h2><a class="header" href="#crate-versions" id="crate-versions">Crate versions</a></h2>
-<p>We try to follow <a href="https://docs.npmjs.com/misc/semver">semver rules</a> regarding
+<p>We try to follow <a href="https://semver.org/">semver rules</a> regarding
 API-breaking changes and <code>MAJOR.MINOR.PATCH</code> versions:</p>
 <ul>
 <li>New <em>patch</em> versions should not include API-breaking changes or major new
@@ -1308,9 +1331,9 @@ equivalent to an API breaking change.</li>
 <p>We expect all pseudo-random algorithms to test the value-stability of their
 output, where possible:</p>
 <ul>
-<li>PRNGs should be compared with a reference vector (<a href="https://github.com/rust-random/rngs/blob/master/rand_xoshiro/src/xoshiro256starstar.rs#L113">example</a>)</li>
+<li>PRNGs should be compared with a reference vector (<a href="https://github.com/rust-random/rngs/blob/master/rand_xoshiro/src/xoshiro256starstar.rs#L115">example</a>)</li>
 <li>Other algorithms should include their own test vectors within a
-<code>value_stability</code> test or similar (<a href="https://github.com/rust-random/rand/blob/master/src/distributions/bernoulli.rs#L168">example</a>)</li>
+<code>value_stability</code> test or similar (<a href="https://github.com/rust-random/rand/blob/master/src/distributions/bernoulli.rs#L203">example</a>)</li>
 </ul>
 <h2><a class="header" href="#limitations" id="limitations">Limitations</a></h2>
 <h3><a class="header" href="#portability-of-usize" id="portability-of-usize">Portability of usize</a></h3>
@@ -1401,7 +1424,7 @@ entropy:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use rand::{ChaChaRng, FromEntropy};
+</span>use rand_0_5::{ChaChaRng, FromEntropy};
 
 let mut rng = ChaChaRng::from_entropy();
 <span class="boring">}
@@ -1436,16 +1459,12 @@ use cannot be guaranteed.</em></p>
 <p>A new <code>Error</code> type has been added, designed explicitly for no-std compatibility,
 simplicity, and enough flexibility for our uses (carrying a <code>cause</code> when
 possible):</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub struct Error {
+<pre><code class="language-ignore">pub struct Error {
     pub kind: ErrorKind,
     pub msg: &amp;'static str,
     // some fields omitted
 }
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>The associated <code>ErrorKind</code> allows broad classification of errors into permanent,
 unexpected, transient and not-yet-ready kinds.</p>
 <p>The following use the new error type:</p>
@@ -1590,7 +1609,7 @@ PCG algorithm (either <a href="../rand/rand_pcg/type.Pcg64Mcg.html"><code>Pcg64M
 XSH RR 64/32 LCG aka the standard PCG algorithm).</p>
 <h2><a class="header" href="#sequences-1" id="sequences-1">Sequences</a></h2>
 <p>The <a href="../rand/rand/seq/index.html"><code>seq</code> module</a> has been completely re-written,
-and the <code>choose</code> and <code>shuffle</code> methods have been removed from the <a href="../rand/trait.Rng.html"><code>Rng</code></a> trait.
+and the <code>choose</code> and <code>shuffle</code> methods have been removed from the <a href="../rand/rand/trait.Rng.html"><code>Rng</code></a> trait.
 Most functionality can now be found in the <a href="../rand/rand/seq/trait.IteratorRandom.html"><code>IteratorRandom</code></a> and
 <a href="../rand/rand/seq/trait.SliceRandom.html"><code>SliceRandom</code></a> traits.</p>
 <h3><a class="header" href="#weighted-choices" id="weighted-choices">Weighted choices</a></h3>
@@ -1618,7 +1637,7 @@ with some new ones.</p>
 <h2><a class="header" href="#getrandom-1" id="getrandom-1">Getrandom</a></h2>
 <p>As mentioned above, we have a new crate: <a href="https://github.com/rust-random/getrandom">getrandom</a>, delivering a minimal API
 around platform-independent access to fresh entropy. This replaces the previous
-implementation in [<code>OsRng</code>], which is now merely a wrapper.</p>
+implementation in <a href="../rand/rand_core/struct.OsRng.html"><code>OsRng</code></a>, which is now merely a wrapper.</p>
 <h2><a class="header" href="#core-features" id="core-features">Core features</a></h2>
 <p>The <a href="https://docs.rs/rand/0.6.0/rand/trait.FromEntropy.html"><code>FromEntropy</code></a> trait has now been removed. Fear not though, its
 <a href="https://rust-random.github.io/rand/rand/trait.SeedableRng.html#method.from_entropy"><code>from_entropy</code></a> method continues to provide easy initialisation from its new
@@ -1650,9 +1669,9 @@ value-breaking change for <a href="../rand/rand/rngs/struct.StdRng.html"><code>S
 <p>For the most widely used distributions (<a href="../rand/rand/distributions/struct.Standard.html"><code>Standard</code></a> and <a href="../rand/rand/distributions/struct.Uniform.html"><code>Uniform</code></a>), there have
 been no significant changes. But for <em>most</em> of the rest...</p>
 <ul>
-<li>We added a new crate, [rand_distr], to house the all distributions
+<li>We added a new crate, <a href="../rand/rand_distr/index.html"><code>rand_distr</code></a>, to house the all distributions
 (including re-exporting those still within <a href="../rand/rand/distributions/index.html"><code>rand::distributions</code></a>). If you
-previously used <a href="../rand/rand/distributions/struct.Normal.html"><code>rand::distributions::Normal</code></a>, now you use
+previously used <code>rand::distributions::Normal</code>, now you use
 <a href="../rand/rand_distr/struct.Normal.html"><code>rand_distr::Normal</code></a>.</li>
 <li>Constructors for many distributions changed in order to return a <code>Result</code>
 instead of panicking on error.</li>
@@ -1664,7 +1683,7 @@ algorithms always use <code>f64</code> internally.</li>
 </ul>
 <p>We also added several distributions:</p>
 <ul>
-<li><a href="../rand/rand/distributions/alias_method/struct.WeightedIndex.html"><code>rand::distributions::weighted::alias_method::WeightedIndex</code></a></li>
+<li><a href="https://docs.rs/rand/0.7/rand/distributions/weighted/alias_method/struct.WeightedIndex.html"><code>rand::distributions::weighted::alias_method::WeightedIndex</code></a></li>
 <li><a href="../rand/rand_distr/struct.Pert.html"><code>rand_distr::Pert</code></a></li>
 <li><a href="../rand/rand_distr/struct.Triangular.html"><code>rand_distr::Triangular</code></a></li>
 <li><a href="../rand/rand_distr/struct.UnitBall.html"><code>rand_distr::UnitBall</code></a></li>
@@ -1719,14 +1738,17 @@ deliberately excluded since these types are not portable.</p>
 <p><code>ThreadRng</code> no longer implements <code>Copy</code>. This was necessary to fix a possible
 use-after-free in its thread-local destructor. Any code relying on <code>ThreadRng</code>
 being copied must be updated to use a mutable reference instead. For example,</p>
-<pre><code>let rng = thread_rng();
-let a: u32 = Standard.sample(rng);
-let b: u32 = Standard.sample(rng);
+<pre><code># use rand_0_7::distributions::{Distribution, Standard};
+let rng = rand_0_7::thread_rng();
+let a: u32 = Standard.sample_iter(rng).next().unwrap();
+let b: u32 = Standard.sample_iter(rng).next().unwrap();
 </code></pre>
 <p>can be replaced with the following code:</p>
-<pre><code>let mut rng = thread_rng();
-let a: u32 = Standard.sample(&amp;mut rng);
-let b: u32 = Standard.sample(&amp;mut rng);
+<pre><code># use rand::prelude::*;
+# use rand::distributions::Standard;
+let mut rng = thread_rng();
+let a: u32 = Standard.sample_iter(&amp;mut rng).next().unwrap();
+let b: u32 = Standard.sample_iter(&amp;mut rng).next().unwrap();
 </code></pre>
 <h4><a class="header" href="#gen_range" id="gen_range"><code>gen_range</code></a></h4>
 <p><a href="../rand/rand/trait.Rng.html#method.gen_range"><code>Rng::gen_range</code></a> now takes a <code>Range</code> instead of two numbers. Thus, replace
@@ -1752,7 +1774,7 @@ only affect code implementing <code>AsByteSliceMut</code> on user-defined types,
 <p><code>Fill</code> supports some additional slice types which could not be supported with
 <code>AsByteSliceMut</code>: <code>[bool], [char], [f32], [f64]</code>.</p>
 <h4><a class="header" href="#adapter" id="adapter"><code>adapter</code></a></h4>
-<p>The entire [<code>rand::rngs::adapter</code>] module is now restricted to the <code>std</code> feature.
+<p>The entire <a href="../rand/rand/rngs/adapter/index.html"><code>rand::rngs::adapter</code></a> module is now restricted to the <code>std</code> feature.
 While this is technically a breaking change, it should only affect <code>no_std</code> code
 using <a href="../rand/rand/rngs/adapter/struct.ReseedingRng.html"><code>ReseedingRng</code></a>, which is unlikely to exist in the wild.</p>
 <h2><a class="header" href="#generators" id="generators">Generators</a></h2>
@@ -1763,7 +1785,7 @@ considered secure: see <a href="https://github.com/rust-random/rand/issues/932">
 and 64-bit platforms respectively. This reduces correlations of random data
 generated from similar seeds and improves performance. It is a value-breaking
 change.</p>
-<p>We now implement <code>PartialEq</code> and <code>Eq</code> for <a href="../rand/rand/rngs/struct.StdRng.html"><code>StdRng</code></a>, <a href="../rand/rand/rngs/struct.SmallRng.html"><code>SmallRng</code></a>, and <a href="../rand/rand/rngs/struct.StepRng.html"><code>StepRng</code></a>.</p>
+<p>We now implement <code>PartialEq</code> and <code>Eq</code> for <a href="../rand/rand/rngs/struct.StdRng.html"><code>StdRng</code></a>, <a href="../rand/rand/rngs/struct.SmallRng.html"><code>SmallRng</code></a>, and <a href="../rand/rand/rngs/mock/struct.StepRng.html"><code>StepRng</code></a>.</p>
 <h2><a class="header" href="#distributions-3" id="distributions-3">Distributions</a></h2>
 <p>Several smaller changes occurred to rand distributions:</p>
 <ul>
@@ -1774,13 +1796,17 @@ for example <code>rng.gen_range('a'..='f')</code> is now supported.</li>
 more closely reflects the internally used type, but old code likely has to
 be adapted to perform the conversion from <code>u8</code> to <code>char</code>. For example, with
 Rand 0.7 you could write:
-<pre><code>let chars: String = iter::repeat(())
+<pre><code># use rand_0_7::{distributions::Alphanumeric, Rng};
+# let mut rng = rand_0_7::thread_rng();
+let chars: String = std::iter::repeat(())
     .map(|()| rng.sample(Alphanumeric))
     .take(7)
     .collect();
 </code></pre>
 With Rand 0.8, this is equivalent to the following:
-<pre><code>let chars: String = iter::repeat(())
+<pre><code># use rand::{distributions::Alphanumeric, Rng};
+# let mut rng = rand::thread_rng();
+let chars: String = std::iter::repeat(())
     .map(|()| rng.sample(Alphanumeric))
     .map(char::from)
     .take(7)
@@ -1788,13 +1814,13 @@ With Rand 0.8, this is equivalent to the following:
 </code></pre>
 </li>
 <li>The alternative implementation of <a href="../rand/rand/distributions/struct.WeightedIndex.html"><code>WeightedIndex</code></a> employing the alias
-method was moved from <code>rand</code> to <a href="../rand/rand_distr/struct.WeightedAliasIndex.html"><code>rand_distr::WeightedAliasIndex</code></a>. The
+method was moved from <code>rand</code> to <a href="../rand/rand_distr/weighted_alias/struct.WeightedAliasIndex.html"><code>rand_distr::weighted_alias::WeightedAliasIndex</code></a>. The
 alias method is faster for large sizes, but it suffers from a slow
 initialization, making it less generally useful.</li>
 </ul>
 <p>In <code>rand_distr</code> v0.4, more changes occurred (since v0.2):</p>
 <ul>
-<li><a href="../rand/rand_distr/struct.WeightedAliasIndex.html"><code>rand_distr::WeightedAliasIndex</code></a> was added (moved from the <code>rand</code> crate)</li>
+<li><a href="../rand/rand_distr/weighted_alias/struct.WeightedAliasIndex.html"><code>rand_distr::weighted_alias::WeightedAliasIndex</code></a> was added (moved from the <code>rand</code> crate)</li>
 <li><a href="../rand/rand_distr/struct.InverseGaussian.html"><code>rand_distr::InverseGaussian</code></a> and <a href="../rand/rand_distr/struct.NormalInverseGaussian.html"><code>rand_distr::NormalInverseGaussian</code></a>
 were added</li>
 <li>The <a href="../rand/rand_distr/struct.Geometric.html"><code>Geometric</code></a> and <a href="../rand/rand_distr/struct.Hypergeometric.html"><code>Hypergeometric</code></a> distributions are now supported.</li>
@@ -1805,10 +1831,12 @@ constructor method and <code>from_zscore</code> sampler method.</li>
 <li><a href="../rand/rand_distr/struct.Dirichlet.html"><code>rand_distr::Dirichlet</code></a> now uses boxed slices internally instead of <code>Vec</code>.
 Therefore, the weights are taken as a slice instead of a <code>Vec</code> as input.
 For example, the following <code>rand_distr 0.2</code> code
-<pre><code>Dirichlet::new(vec![1.0, 2.0, 3.0]).unwrap();
+<pre><code># use rand_distr_0_2::Dirichlet;
+Dirichlet::new(vec![1.0, 2.0, 3.0]).unwrap();
 </code></pre>
 can be replaced with the following <code>rand_distr 0.3</code> code:
-<pre><code>Dirichlet::new(&amp;[1.0, 2.0, 3.0]).unwrap();
+<pre><code># use rand_distr::Dirichlet;
+Dirichlet::new(&amp;[1.0, 2.0, 3.0]).unwrap();
 </code></pre>
 </li>
 <li><a href="../rand/rand_distr/struct.Poisson.html"><code>rand_distr::Poisson</code></a> does no longer support sampling <code>u64</code> values directly.
@@ -1906,7 +1934,7 @@ and Apache Public Licence v2. We assume that all contributions are made
 under these licence grants. Copyrights are retained by their contributors.</p>
 <p>Our works are attributed to &quot;The Rand Project Developers&quot;. This is not a
 formal entity but merely the collection of all contributors to this project.
-For more, see the <a href="COPYRIGHT">COPYRIGHT</a> file.</p>
+For more, see the <code>COPYRIGHT</code> file.</p>
 </li>
 <li>
 <p><strong>Thank you!</strong></p>
@@ -1968,7 +1996,7 @@ currently on <code>docs.rs</code> (see <a href="https://github.com/rust-lang/doc
 <li>consider revising documentation, e.g. refer to the crate instead</li>
 </ol>
 <p>Examples:</p>
-<pre><code>// We depend on rand_core, therefore can use the Rust path:
+<pre><code class="language-ignore">// We depend on rand_core, therefore can use the Rust path:
 /// [`BlockRngCore`]: rand_core::block::BlockRngCore
 
 // rand_chacha is not a dependency, but is within the same repository:
@@ -1985,7 +2013,7 @@ example.</p>
 <p>For the most part these files do not have any continuous testing.
 Where examples are included (currently only for the <code>rand_jitter</code> crate),
 we enable continuous testing via <code>doc_comment</code> (see
-<a href="https://github.com/rust-random/rand/blob/master/rand_jitter/src/lib.rs#L62">lib.rs:62 onwards</a>).</p>
+<a href="https://github.com/rust-random/rngs/blob/master/rand_jitter/src/lib.rs#L62">lib.rs:62 onwards</a>).</p>
 <h3><a class="header" href="#changelog-files" id="changelog-files">CHANGELOG files</a></h3>
 <p>Changelog formats are based on the
 <a href="http://keepachangelog.com/en/1.0.0/">Keep a Changelog</a> format.</p>
@@ -2111,12 +2139,8 @@ choice; example code should only need to target the common case (<code>std</code
 <p>Often test code needs some RNG to test with, but does not need any particular
 RNG. In this case, we prefer use of <code>::test::rng</code> which is simple, fast to
 initialise and deterministic:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>let mut rng = ::test::rng(528); // just pick some number
-<span class="boring">}
-</span></code></pre></pre>
+<pre><code class="language-rust ignore">let mut rng = ::test::rng(528); // just pick some number
+</code></pre>
 <p>Various tests concern properties which are <em>probably</em> true, but not definitely.
 We prefer that such tests are deterministic to avoid spurious failures.</p>
 <h1><a class="header" href="#benchmarks" id="benchmarks">Benchmarks</a></h1>

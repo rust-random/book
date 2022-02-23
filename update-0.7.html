@@ -174,7 +174,7 @@ with some new ones.</p>
 <h2><a class="header" href="#getrandom" id="getrandom">Getrandom</a></h2>
 <p>As mentioned above, we have a new crate: <a href="https://github.com/rust-random/getrandom">getrandom</a>, delivering a minimal API
 around platform-independent access to fresh entropy. This replaces the previous
-implementation in [<code>OsRng</code>], which is now merely a wrapper.</p>
+implementation in <a href="../rand/rand_core/struct.OsRng.html"><code>OsRng</code></a>, which is now merely a wrapper.</p>
 <h2><a class="header" href="#core-features" id="core-features">Core features</a></h2>
 <p>The <a href="https://docs.rs/rand/0.6.0/rand/trait.FromEntropy.html"><code>FromEntropy</code></a> trait has now been removed. Fear not though, its
 <a href="https://rust-random.github.io/rand/rand/trait.SeedableRng.html#method.from_entropy"><code>from_entropy</code></a> method continues to provide easy initialisation from its new
@@ -206,9 +206,9 @@ value-breaking change for <a href="../rand/rand/rngs/struct.StdRng.html"><code>S
 <p>For the most widely used distributions (<a href="../rand/rand/distributions/struct.Standard.html"><code>Standard</code></a> and <a href="../rand/rand/distributions/struct.Uniform.html"><code>Uniform</code></a>), there have
 been no significant changes. But for <em>most</em> of the rest...</p>
 <ul>
-<li>We added a new crate, [rand_distr], to house the all distributions
+<li>We added a new crate, <a href="../rand/rand_distr/index.html"><code>rand_distr</code></a>, to house the all distributions
 (including re-exporting those still within <a href="../rand/rand/distributions/index.html"><code>rand::distributions</code></a>). If you
-previously used <a href="../rand/rand/distributions/struct.Normal.html"><code>rand::distributions::Normal</code></a>, now you use
+previously used <code>rand::distributions::Normal</code>, now you use
 <a href="../rand/rand_distr/struct.Normal.html"><code>rand_distr::Normal</code></a>.</li>
 <li>Constructors for many distributions changed in order to return a <code>Result</code>
 instead of panicking on error.</li>
@@ -220,7 +220,7 @@ algorithms always use <code>f64</code> internally.</li>
 </ul>
 <p>We also added several distributions:</p>
 <ul>
-<li><a href="../rand/rand/distributions/alias_method/struct.WeightedIndex.html"><code>rand::distributions::weighted::alias_method::WeightedIndex</code></a></li>
+<li><a href="https://docs.rs/rand/0.7/rand/distributions/weighted/alias_method/struct.WeightedIndex.html"><code>rand::distributions::weighted::alias_method::WeightedIndex</code></a></li>
 <li><a href="../rand/rand_distr/struct.Pert.html"><code>rand_distr::Pert</code></a></li>
 <li><a href="../rand/rand_distr/struct.Triangular.html"><code>rand_distr::Triangular</code></a></li>
 <li><a href="../rand/rand_distr/struct.UnitBall.html"><code>rand_distr::UnitBall</code></a></li>

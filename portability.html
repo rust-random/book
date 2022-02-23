@@ -175,7 +175,7 @@
 it is clearly non-deterministic (e.g. <code>getrandom</code>, <code>ThreadRng</code>) <em>or</em> it is
 documented as being unportable (e.g. <code>StdRng</code>, <code>SmallRng</code>).</p>
 <h2><a class="header" href="#crate-versions" id="crate-versions">Crate versions</a></h2>
-<p>We try to follow <a href="https://docs.npmjs.com/misc/semver">semver rules</a> regarding
+<p>We try to follow <a href="https://semver.org/">semver rules</a> regarding
 API-breaking changes and <code>MAJOR.MINOR.PATCH</code> versions:</p>
 <ul>
 <li>New <em>patch</em> versions should not include API-breaking changes or major new
@@ -196,9 +196,9 @@ equivalent to an API breaking change.</li>
 <p>We expect all pseudo-random algorithms to test the value-stability of their
 output, where possible:</p>
 <ul>
-<li>PRNGs should be compared with a reference vector (<a href="https://github.com/rust-random/rngs/blob/master/rand_xoshiro/src/xoshiro256starstar.rs#L113">example</a>)</li>
+<li>PRNGs should be compared with a reference vector (<a href="https://github.com/rust-random/rngs/blob/master/rand_xoshiro/src/xoshiro256starstar.rs#L115">example</a>)</li>
 <li>Other algorithms should include their own test vectors within a
-<code>value_stability</code> test or similar (<a href="https://github.com/rust-random/rand/blob/master/src/distributions/bernoulli.rs#L168">example</a>)</li>
+<code>value_stability</code> test or similar (<a href="https://github.com/rust-random/rand/blob/master/src/distributions/bernoulli.rs#L203">example</a>)</li>
 </ul>
 <h2><a class="header" href="#limitations" id="limitations">Limitations</a></h2>
 <h3><a class="header" href="#portability-of-usize" id="portability-of-usize">Portability of usize</a></h3>

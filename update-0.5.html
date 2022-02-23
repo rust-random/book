@@ -227,7 +227,7 @@ entropy:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use rand::{ChaChaRng, FromEntropy};
+</span>use rand_0_5::{ChaChaRng, FromEntropy};
 
 let mut rng = ChaChaRng::from_entropy();
 <span class="boring">}
@@ -262,16 +262,12 @@ use cannot be guaranteed.</em></p>
 <p>A new <code>Error</code> type has been added, designed explicitly for no-std compatibility,
 simplicity, and enough flexibility for our uses (carrying a <code>cause</code> when
 possible):</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub struct Error {
+<pre><code class="language-ignore">pub struct Error {
     pub kind: ErrorKind,
     pub msg: &amp;'static str,
     // some fields omitted
 }
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>The associated <code>ErrorKind</code> allows broad classification of errors into permanent,
 unexpected, transient and not-yet-ready kinds.</p>
 <p>The following use the new error type:</p>
