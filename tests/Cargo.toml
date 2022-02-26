@@ -6,7 +6,7 @@ publish = false
 
 [dependencies]
 doc-comment = "0.3.3"
-rand = "0.8"
+rand = { version = "0.8", features = ["small_rng"] }
 rand_0_7 = { package = "rand", version = "0.7" }
 rand_0_5 = { package = "rand", version = "0.5" }
 rand_pcg = "0.3"
