@@ -1,4 +1,10 @@
-echo >> src/lib.rs
+mkdir -p src
+cat << EOF > src/lib.rs
+#![allow(non_snake_case)]
+#[macro_use]
+extern crate doc_comment;
+EOF
+
 for doc in ../src/*.md
 do
     NAME=$(basename $doc .md)
