@@ -8,17 +8,17 @@ This section concerns theory; see also the chapter on
 
 ```rust
 # extern crate rand;
-# extern crate rand_pcg;
+# extern crate rand_chacha;
 use rand::{Rng, SeedableRng};
 
 # fn main() {
 // prepare a non-deterministic random number generator:
 let mut rng = rand::thread_rng();
-println!("{}", rng.gen::<i32>());
+println!("{}", rng.gen::<i32>()); // prints an unknown value
 
 // prepare a deterministic generator:
-let mut rng = rand_pcg::Pcg32::seed_from_u64(123);
-println!("{}", rng.gen::<i32>());
+let mut rng = rand_chacha::ChaCha8Rng::seed_from_u64(123);
+println!("{}", rng.gen::<i32>()); // prints -416273517
 # }
 ```
 

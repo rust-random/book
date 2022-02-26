@@ -3,7 +3,7 @@
 For maximum flexibility when producing random values, we define the
 [`Distribution`] trait:
 
-```rust
+```rust,noplayground
 # use rand::{Rng, distributions::DistIter};
 // a producer of data of type T:
 pub trait Distribution<T> {

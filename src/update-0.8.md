@@ -45,19 +45,22 @@ deliberately excluded since these types are not portable.
 `ThreadRng` no longer implements `Copy`. This was necessary to fix a possible
 use-after-free in its thread-local destructor. Any code relying on `ThreadRng`
 being copied must be updated to use a mutable reference instead. For example,
-```
+```rust,noplayground
 # use rand_0_7::distributions::{Distribution, Standard};
 let rng = rand_0_7::thread_rng();
 let a: u32 = Standard.sample_iter(rng).next().unwrap();
 let b: u32 = Standard.sample_iter(rng).next().unwrap();
 ```
 can be replaced with the following code:
-```
+```rust
+# extern crate rand;
 # use rand::prelude::*;
 # use rand::distributions::Standard;
+# fn main () {
 let mut rng = thread_rng();
 let a: u32 = Standard.sample_iter(&mut rng).next().unwrap();
 let b: u32 = Standard.sample_iter(&mut rng).next().unwrap();
+# }
 ```
 
 #### `gen_range`
@@ -118,7 +121,7 @@ Several smaller changes occurred to rand distributions:
     more closely reflects the internally used type, but old code likely has to
     be adapted to perform the conversion from `u8` to `char`. For example, with
     Rand 0.7 you could write:
-    ```
+    ```rust,noplayground
     # use rand_0_7::{distributions::Alphanumeric, Rng};
     # let mut rng = rand_0_7::thread_rng();
     let chars: String = std::iter::repeat(())
@@ -127,14 +130,18 @@ Several smaller changes occurred to rand distributions:
         .collect();
     ```
     With Rand 0.8, this is equivalent to the following:
-    ```
+    ```rust
+    # extern crate rand;
     # use rand::{distributions::Alphanumeric, Rng};
+    # fn main() {
     # let mut rng = rand::thread_rng();
     let chars: String = std::iter::repeat(())
         .map(|()| rng.sample(Alphanumeric))
         .map(char::from)
         .take(7)
         .collect();
+    println!("chars = \"{chars}\"");
+    # }
     ```
 -   The alternative implementation of [`WeightedIndex`] employing the alias
     method was moved from `rand` to [`rand_distr::weighted_alias::WeightedAliasIndex`]. The
@@ -154,12 +161,12 @@ In `rand_distr` v0.4, more changes occurred (since v0.2):
 -   [`rand_distr::Dirichlet`] now uses boxed slices internally instead of `Vec`.
     Therefore, the weights are taken as a slice instead of a `Vec` as input.
     For example, the following `rand_distr 0.2` code
-    ```
+    ```rust,noplayground
     # use rand_distr_0_2::Dirichlet;
     Dirichlet::new(vec![1.0, 2.0, 3.0]).unwrap();
     ```
     can be replaced with the following `rand_distr 0.3` code:
-    ```
+    ```rust,noplayground
     # use rand_distr::Dirichlet;
     Dirichlet::new(&[1.0, 2.0, 3.0]).unwrap();
     ```

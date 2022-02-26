@@ -24,12 +24,14 @@ PRNGs may be seeded directly from such a value with [`SeedableRng::from_seed`].
 Using a fresh seed (direct from the OS) is easy using [`SeedableRng::from_entropy`]:
 
 ```rust,editable
+# extern crate rand;
+# extern crate rand_chacha;
 use rand::prelude::*;
 use rand_chacha::ChaCha20Rng;
 
 fn main() {
     let mut rng = ChaCha20Rng::from_entropy();
-    println!("{}", rng.gen::<char>());
+    println!("{}", rng.gen_range(0..100));
 }
 ```
 
@@ -41,12 +43,12 @@ Quite obviously, another RNG may be used to fill a seed. We provide a
 convenience method for this:
 
 ```rust,editable
+# extern crate rand;
 use rand::prelude::*;
-use rand_pcg::Pcg64;
 
 fn main() {
-    let mut rng = Pcg64::from_rng(thread_rng()).unwrap();
-    println!("{}", rng.gen::<char>());
+    let mut rng = SmallRng::from_rng(thread_rng()).unwrap();
+    println!("{}", rng.gen_range(0..100));
 }
 ```
 
@@ -54,6 +56,8 @@ But, say you want to save a key and use it later. For that you need to be a
 little bit more explicit:
 
 ```rust,editable
+# extern crate rand;
+# extern crate rand_chacha;
 use rand::prelude::*;
 use rand_chacha::ChaCha8Rng;
 
@@ -61,7 +65,7 @@ fn main() {
     let mut seed: <ChaCha8Rng as SeedableRng>::Seed = Default::default();
     thread_rng().fill(&mut seed);
     let mut rng = ChaCha8Rng::from_seed(seed);
-    println!("{}", rng.gen::<char>());
+    println!("{}", rng.gen_range(0..100));
 }
 ```
 
@@ -83,12 +87,14 @@ number while providing good bit-avalance (so that two similar numbers such as
 0 and 1 translate to very different seeds and independent RNG sequences).
 
 ```rust,editable
+# extern crate rand;
+# extern crate rand_chacha;
 use rand::prelude::*;
-use rand_pcg::Pcg64;
+use rand_chacha::ChaCha8Rng;
 
 fn main() {
-    let mut rng = Pcg64::seed_from_u64(2);
-    println!("{}", rng.gen::<char>());
+    let mut rng = ChaCha8Rng::seed_from_u64(2);
+    println!("{}", rng.gen_range(0..100));
 }
 ```
 
@@ -105,7 +111,7 @@ This can be achieved via use of a hash function to compress all input data down
 to a hash result, then using that result to seed a generator. The
 [`rand_seeder`] crate is designed for just this purpose.
 
-```rust,editable
+```rust,noplayground
 use rand::prelude::*;
 use rand_seeder::{Seeder, SipHasher};
 use rand_pcg::Pcg64;
