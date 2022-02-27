@@ -200,13 +200,9 @@ suffice.</p>
 crates.io since (a) this includes the README documenting the purpose of the
 crate and (b) this links directly to both the repository and the API
 documentation. Example:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>// Link to the crate page:
+<pre><code class="language-rust noplayground">// Link to the crate page:
 //! [`rand_chacha`]: https://crates.io/crates/rand_chacha
-<span class="boring">}
-</span></code></pre></pre>
+</code></pre>
 <p>When referring to an item from within another crate,</p>
 <ol>
 <li>if that item is accessible via a crate dependency (even if not via the
@@ -219,14 +215,14 @@ currently on <code>docs.rs</code> (see <a href="https://github.com/rust-lang/doc
 <li>consider revising documentation, e.g. refer to the crate instead</li>
 </ol>
 <p>Examples:</p>
-<pre><code class="language-ignore">// We depend on rand_core, therefore can use the Rust path:
-/// [`BlockRngCore`]: rand_core::block::BlockRngCore
+<pre><code class="language-rust noplayground">//! We depend on rand_core, therefore can use the Rust path:
+//! [`BlockRngCore`]: rand_core::block::BlockRngCore
 
-// rand_chacha is not a dependency, but is within the same repository:
+//! rand_chacha is not a dependency, but is within the same repository:
 //! [`ChaCha20Rng`]: ../../rand_chacha/struct.ChaCha20Rng.html
 
-// Link directly to docs.rs, with major &amp; minor but no patch version:
-https://docs.rs/getrandom/0.1/getrandom/fn.getrandom.html
+//! Link directly to docs.rs, with major &amp; minor but no patch version:
+//! [`getrandom`]: https://docs.rs/getrandom/0.1/getrandom/fn.getrandom.html
 </code></pre>
 <h2><a class="header" href="#auxiliary-documentation" id="auxiliary-documentation">Auxiliary documentation</a></h2>
 <h3><a class="header" href="#readme-files" id="readme-files">README files</a></h3>

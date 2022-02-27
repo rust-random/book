@@ -310,11 +310,11 @@ those using <code>BlockRngCore</code>.</p>
 <p>The method <code>ChaChaRng::set_counter</code> has been replaced by two new methods,
 <code>set_word_pos</code> and <code>set_stream</code>. Where necessary, the behaviour of the old
 method may be emulated as follows:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
+<pre><pre class="playground"><code class="language-rust"><span class="boring">extern crate rand;
+</span><span class="boring">extern crate rand_chacha;
 </span><span class="boring">use rand::prelude::*;
 </span><span class="boring">use rand_chacha::ChaChaRng;
+</span><span class="boring">fn main() {
 </span>let lower = 88293;
 let higher = 9300932;
 

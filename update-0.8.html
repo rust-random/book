@@ -205,18 +205,21 @@ deliberately excluded since these types are not portable.</p>
 <p><code>ThreadRng</code> no longer implements <code>Copy</code>. This was necessary to fix a possible
 use-after-free in its thread-local destructor. Any code relying on <code>ThreadRng</code>
 being copied must be updated to use a mutable reference instead. For example,</p>
-<pre><code># use rand_0_7::distributions::{Distribution, Standard};
-let rng = rand_0_7::thread_rng();
+<pre><code class="language-rust noplayground"><span class="boring">use rand_0_7::distributions::{Distribution, Standard};
+</span>let rng = rand_0_7::thread_rng();
 let a: u32 = Standard.sample_iter(rng).next().unwrap();
 let b: u32 = Standard.sample_iter(rng).next().unwrap();
 </code></pre>
 <p>can be replaced with the following code:</p>
-<pre><code># use rand::prelude::*;
-# use rand::distributions::Standard;
-let mut rng = thread_rng();
+<pre><pre class="playground"><code class="language-rust"><span class="boring">extern crate rand;
+</span><span class="boring">use rand::prelude::*;
+</span><span class="boring">use rand::distributions::Standard;
+</span><span class="boring">fn main () {
+</span>let mut rng = thread_rng();
 let a: u32 = Standard.sample_iter(&amp;mut rng).next().unwrap();
 let b: u32 = Standard.sample_iter(&amp;mut rng).next().unwrap();
-</code></pre>
+<span class="boring">}
+</span></code></pre></pre>
 <h4><a class="header" href="#gen_range" id="gen_range"><code>gen_range</code></a></h4>
 <p><a href="../rand/rand/trait.Rng.html#method.gen_range"><code>Rng::gen_range</code></a> now takes a <code>Range</code> instead of two numbers. Thus, replace
 <code>gen_range(a, b)</code> with <code>gen_range(a..b)</code>. We suggest using the following regular
@@ -263,22 +266,26 @@ for example <code>rng.gen_range('a'..='f')</code> is now supported.</li>
 more closely reflects the internally used type, but old code likely has to
 be adapted to perform the conversion from <code>u8</code> to <code>char</code>. For example, with
 Rand 0.7 you could write:
-<pre><code># use rand_0_7::{distributions::Alphanumeric, Rng};
-# let mut rng = rand_0_7::thread_rng();
-let chars: String = std::iter::repeat(())
+<pre><code class="language-rust noplayground"><span class="boring">use rand_0_7::{distributions::Alphanumeric, Rng};
+</span><span class="boring">let mut rng = rand_0_7::thread_rng();
+</span>let chars: String = std::iter::repeat(())
     .map(|()| rng.sample(Alphanumeric))
     .take(7)
     .collect();
 </code></pre>
 With Rand 0.8, this is equivalent to the following:
-<pre><code># use rand::{distributions::Alphanumeric, Rng};
-# let mut rng = rand::thread_rng();
-let chars: String = std::iter::repeat(())
+<pre><pre class="playground"><code class="language-rust"><span class="boring">extern crate rand;
+</span><span class="boring">use rand::{distributions::Alphanumeric, Rng};
+</span><span class="boring">fn main() {
+</span><span class="boring">let mut rng = rand::thread_rng();
+</span>let chars: String = std::iter::repeat(())
     .map(|()| rng.sample(Alphanumeric))
     .map(char::from)
     .take(7)
     .collect();
-</code></pre>
+println!(&quot;chars = \&quot;{chars}\&quot;&quot;);
+<span class="boring">}
+</span></code></pre></pre>
 </li>
 <li>The alternative implementation of <a href="../rand/rand/distributions/struct.WeightedIndex.html"><code>WeightedIndex</code></a> employing the alias
 method was moved from <code>rand</code> to <a href="../rand/rand_distr/weighted_alias/struct.WeightedAliasIndex.html"><code>rand_distr::weighted_alias::WeightedAliasIndex</code></a>. The
@@ -298,12 +305,12 @@ constructor method and <code>from_zscore</code> sampler method.</li>
 <li><a href="../rand/rand_distr/struct.Dirichlet.html"><code>rand_distr::Dirichlet</code></a> now uses boxed slices internally instead of <code>Vec</code>.
 Therefore, the weights are taken as a slice instead of a <code>Vec</code> as input.
 For example, the following <code>rand_distr 0.2</code> code
-<pre><code># use rand_distr_0_2::Dirichlet;
-Dirichlet::new(vec![1.0, 2.0, 3.0]).unwrap();
+<pre><code class="language-rust noplayground"><span class="boring">use rand_distr_0_2::Dirichlet;
+</span>Dirichlet::new(vec![1.0, 2.0, 3.0]).unwrap();
 </code></pre>
 can be replaced with the following <code>rand_distr 0.3</code> code:
-<pre><code># use rand_distr::Dirichlet;
-Dirichlet::new(&amp;[1.0, 2.0, 3.0]).unwrap();
+<pre><code class="language-rust noplayground"><span class="boring">use rand_distr::Dirichlet;
+</span>Dirichlet::new(&amp;[1.0, 2.0, 3.0]).unwrap();
 </code></pre>
 </li>
 <li><a href="../rand/rand_distr/struct.Poisson.html"><code>rand_distr::Poisson</code></a> does no longer support sampling <code>u64</code> values directly.
