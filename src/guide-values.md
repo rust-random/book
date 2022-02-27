@@ -40,22 +40,86 @@ Examples:
 ```rust
 # extern crate rand;
 use rand::Rng;
+# fn main() {
 let mut rng = rand::thread_rng();
 
 // an unbiased integer over the entire range:
 let i: i32 = rng.gen();
+println!("i = {i}");
 
 // a uniformly distributed value between 0 and 1:
 let x: f64 = rng.gen();
+println!("x = {x}");
 
 // simulate rolling a die:
-let roll = rng.gen_range(1..7);
+println!("roll = {}", rng.gen_range(1..=6));
+# }
 ```
 
 Additionally, the [`random`] function is a short-cut to [`Rng::gen`] on the [`thread_rng`]:
 ```rust
+# extern crate rand;
+# use rand::Rng;
+# fn main() {
+println!("Tossing a coin...");
 if rand::random() {
-    println!("we got lucky!");
+    println!("We got lucky!");
+}
+# }
+```
+
+## Custom random types
+
+Notice from the above that `rng.gen()` yields a different distribution of values
+depending on the type:
+
+-   `i32` values are sampled from `i32::MIN ..= i32::MAX` uniformly
+-   `f32` values are sampled from `0.0 .. 1.0` uniformly
+
+This is the [`Standard`] distribution. [`Distribution`]s are the topic of the
+next chapter, but given the importance of the [`Standard`] distribution we
+introduce it here. As usual, standards are somewhat arbitrary, but chosen
+according to reasonable logic:
+
+-   Values are sampled uniformly: given any two sub-ranges of equal size, each
+    has an equal chance of containing the next sampled value
+-   Usually, the whole range of the target type is used
+-   For `f32` and `f64` the range `0.0 .. 1.0` is used (exclusive of `1.0`), for
+    two reasons: (a) this is common practice for random-number generators and
+    (b) because for many purposes having a uniform distribution of samples
+    (along the Real number line) is important, and this is only possible for
+    floating-point representations by restricting the range.
+
+Given that, we can implement the [`Standard`] distribution for our own types:
+```rust
+# extern crate rand;
+use rand::Rng;
+use rand::distributions::{Distribution, Standard, Uniform};
+use std::f64::consts::TAU; // = 2π
+
+/// Represents an angle, in radians
+#[derive(Debug)]
+pub struct Angle(f64);
+impl Angle {
+    pub fn from_degrees(degrees: f64) -> Self {
+        Angle(degrees * (std::f64::consts::TAU / 360.0))
+    }
+}
+
+impl Distribution<Angle> for Standard {
+    fn sample<R: Rng + ?Sized>(&self, rng: &mut R) -> Angle {
+        // It would be correct to write:
+        // Angle(rng.gen::<f64>() * TAU)
+
+        // However, the following is preferred:
+        Angle(Uniform::new(0.0, TAU).sample(rng))
+    }
+}
+
+fn main() {
+    let mut rng = rand::thread_rng();
+    let angle: Angle = rng.gen();
+    println!("Random angle: {angle:?}");
 }
 ```
 

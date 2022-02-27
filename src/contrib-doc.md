@@ -55,7 +55,7 @@ crates.io since (a) this includes the README documenting the purpose of the
 crate and (b) this links directly to both the repository and the API
 documentation. Example:
 
-```rust
+```rust,noplayground
 // Link to the crate page:
 //! [`rand_chacha`]: https://crates.io/crates/rand_chacha
 ```
@@ -73,15 +73,15 @@ When referring to an item from within another crate,
 
 Examples:
 
-```ignore
-// We depend on rand_core, therefore can use the Rust path:
-/// [`BlockRngCore`]: rand_core::block::BlockRngCore
+```rust,noplayground
+//! We depend on rand_core, therefore can use the Rust path:
+//! [`BlockRngCore`]: rand_core::block::BlockRngCore
 
-// rand_chacha is not a dependency, but is within the same repository:
+//! rand_chacha is not a dependency, but is within the same repository:
 //! [`ChaCha20Rng`]: ../../rand_chacha/struct.ChaCha20Rng.html
 
-// Link directly to docs.rs, with major & minor but no patch version:
-https://docs.rs/getrandom/0.1/getrandom/fn.getrandom.html
+//! Link directly to docs.rs, with major & minor but no patch version:
+//! [`getrandom`]: https://docs.rs/getrandom/0.1/getrandom/fn.getrandom.html
 ```
 
 ## Auxiliary documentation

@@ -182,8 +182,11 @@ The method `ChaChaRng::set_counter` has been replaced by two new methods,
 method may be emulated as follows:
 
 ```rust
+# extern crate rand;
+# extern crate rand_chacha;
 # use rand::prelude::*;
 # use rand_chacha::ChaChaRng;
+# fn main() {
 let lower = 88293;
 let higher = 9300932;
 
@@ -198,6 +201,7 @@ rng.set_stream(higher);
 
 assert_eq!(4060232610, rng.next_u32());
 assert_eq!(2786236710, rng.next_u32());
+# }
 ```
 
 ### ISAAC PRNGs

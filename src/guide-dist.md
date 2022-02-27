@@ -3,7 +3,7 @@
 For maximum flexibility when producing random values, we define the
 [`Distribution`] trait:
 
-```rust
+```rust,noplayground
 # use rand::{Rng, distributions::DistIter};
 // a producer of data of type T:
 pub trait Distribution<T> {
@@ -38,8 +38,8 @@ and the [`rand_distr`] crate.
 # Uniform distributions
 
 The most obvious type of distribution is the one we already discussed: one
-without pattern, where each value or range of values is equally likely. This is
-known as *uniform*.
+where each equally-sized sub-range has equal chance of containing the next
+sample. This is known as *uniform*.
 
 Rand actually has several variants of this, representing different ranges:
 
