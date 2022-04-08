@@ -9,6 +9,7 @@
     - [Random generators](crates-gen.md)
 
 - [Guide](guide.md)
+    - [Cargo and features](guide-cargo.md)
     - [Random data](guide-data.md)
     - [Types of generators](guide-gen.md)
     - [Our RNGs](guide-rngs.md)
