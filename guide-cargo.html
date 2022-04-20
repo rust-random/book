@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Scope - The Rust Rand Book</title>
+        <title>Cargo and features - The Rust Rand Book</title>
         
         
 
@@ -95,7 +95,7 @@
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
             <div class="sidebar-scrollbox">
-                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="guide-start.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li class="chapter-item expanded "><a href="crates.html"><strong aria-hidden="true">2.</strong> Crates and features</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="crates-rand.html"><strong aria-hidden="true">2.1.</strong> Rand and co</a></li><li class="chapter-item expanded "><a href="crates-gen.html"><strong aria-hidden="true">2.2.</strong> Random generators</a></li></ol></li><li class="chapter-item expanded "><a href="guide.html"><strong aria-hidden="true">3.</strong> Guide</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="guide-cargo.html"><strong aria-hidden="true">3.1.</strong> Cargo and features</a></li><li class="chapter-item expanded "><a href="guide-data.html"><strong aria-hidden="true">3.2.</strong> Random data</a></li><li class="chapter-item expanded "><a href="guide-gen.html"><strong aria-hidden="true">3.3.</strong> Types of generators</a></li><li class="chapter-item expanded "><a href="guide-rngs.html"><strong aria-hidden="true">3.4.</strong> Our RNGs</a></li><li class="chapter-item expanded "><a href="guide-seeding.html"><strong aria-hidden="true">3.5.</strong> Seeding RNGs</a></li><li class="chapter-item expanded "><a href="guide-values.html"><strong aria-hidden="true">3.6.</strong> Random values</a></li><li class="chapter-item expanded "><a href="guide-dist.html"><strong aria-hidden="true">3.7.</strong> Random distributions</a></li><li class="chapter-item expanded "><a href="guide-process.html"><strong aria-hidden="true">3.8.</strong> Random processess</a></li><li class="chapter-item expanded "><a href="guide-seq.html"><strong aria-hidden="true">3.9.</strong> Sequences</a></li><li class="chapter-item expanded "><a href="guide-err.html"><strong aria-hidden="true">3.10.</strong> Error handling</a></li></ol></li><li class="chapter-item expanded "><a href="portability.html"><strong aria-hidden="true">4.</strong> Portability</a></li><li class="chapter-item expanded "><a href="update.html"><strong aria-hidden="true">5.</strong> Updating</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="update-0.5.html"><strong aria-hidden="true">5.1.</strong> Updating to 0.5</a></li><li class="chapter-item expanded "><a href="update-0.6.html"><strong aria-hidden="true">5.2.</strong> Updating to 0.6</a></li><li class="chapter-item expanded "><a href="update-0.7.html"><strong aria-hidden="true">5.3.</strong> Updating to 0.7</a></li><li class="chapter-item expanded "><a href="update-0.8.html"><strong aria-hidden="true">5.4.</strong> Updating to 0.8</a></li></ol></li><li class="chapter-item expanded "><a href="contributing.html"><strong aria-hidden="true">6.</strong> Contributing</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="contrib-doc.html"><strong aria-hidden="true">6.1.</strong> Documentation</a></li><li class="chapter-item expanded "><a href="contrib-scope.html" class="active"><strong aria-hidden="true">6.2.</strong> Scope</a></li><li class="chapter-item expanded "><a href="contrib-test.html"><strong aria-hidden="true">6.3.</strong> Testing</a></li><li class="chapter-item expanded "><a href="contrib-bench.html"><strong aria-hidden="true">6.4.</strong> Benchmarks</a></li></ol></li></ol>
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="intro.html">Introduction</a></li><li class="chapter-item expanded "><a href="guide-start.html"><strong aria-hidden="true">1.</strong> Getting Started</a></li><li class="chapter-item expanded "><a href="crates.html"><strong aria-hidden="true">2.</strong> Crates and features</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="crates-rand.html"><strong aria-hidden="true">2.1.</strong> Rand and co</a></li><li class="chapter-item expanded "><a href="crates-gen.html"><strong aria-hidden="true">2.2.</strong> Random generators</a></li></ol></li><li class="chapter-item expanded "><a href="guide.html"><strong aria-hidden="true">3.</strong> Guide</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="guide-cargo.html" class="active"><strong aria-hidden="true">3.1.</strong> Cargo and features</a></li><li class="chapter-item expanded "><a href="guide-data.html"><strong aria-hidden="true">3.2.</strong> Random data</a></li><li class="chapter-item expanded "><a href="guide-gen.html"><strong aria-hidden="true">3.3.</strong> Types of generators</a></li><li class="chapter-item expanded "><a href="guide-rngs.html"><strong aria-hidden="true">3.4.</strong> Our RNGs</a></li><li class="chapter-item expanded "><a href="guide-seeding.html"><strong aria-hidden="true">3.5.</strong> Seeding RNGs</a></li><li class="chapter-item expanded "><a href="guide-values.html"><strong aria-hidden="true">3.6.</strong> Random values</a></li><li class="chapter-item expanded "><a href="guide-dist.html"><strong aria-hidden="true">3.7.</strong> Random distributions</a></li><li class="chapter-item expanded "><a href="guide-process.html"><strong aria-hidden="true">3.8.</strong> Random processess</a></li><li class="chapter-item expanded "><a href="guide-seq.html"><strong aria-hidden="true">3.9.</strong> Sequences</a></li><li class="chapter-item expanded "><a href="guide-err.html"><strong aria-hidden="true">3.10.</strong> Error handling</a></li></ol></li><li class="chapter-item expanded "><a href="portability.html"><strong aria-hidden="true">4.</strong> Portability</a></li><li class="chapter-item expanded "><a href="update.html"><strong aria-hidden="true">5.</strong> Updating</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="update-0.5.html"><strong aria-hidden="true">5.1.</strong> Updating to 0.5</a></li><li class="chapter-item expanded "><a href="update-0.6.html"><strong aria-hidden="true">5.2.</strong> Updating to 0.6</a></li><li class="chapter-item expanded "><a href="update-0.7.html"><strong aria-hidden="true">5.3.</strong> Updating to 0.7</a></li><li class="chapter-item expanded "><a href="update-0.8.html"><strong aria-hidden="true">5.4.</strong> Updating to 0.8</a></li></ol></li><li class="chapter-item expanded "><a href="contributing.html"><strong aria-hidden="true">6.</strong> Contributing</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="contrib-doc.html"><strong aria-hidden="true">6.1.</strong> Documentation</a></li><li class="chapter-item expanded "><a href="contrib-scope.html"><strong aria-hidden="true">6.2.</strong> Scope</a></li><li class="chapter-item expanded "><a href="contrib-test.html"><strong aria-hidden="true">6.3.</strong> Testing</a></li><li class="chapter-item expanded "><a href="contrib-bench.html"><strong aria-hidden="true">6.4.</strong> Benchmarks</a></li></ol></li></ol>
             </div>
             <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
         </nav>
@@ -163,86 +163,47 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1><a class="header" href="#scope" id="scope">Scope</a></h1>
-<p>Over time, the scope of the project has grown, and Rand has moved from using a
-monolithic crate to using a &quot;main&quot; crate plus multiple single-purpose crates.
-For new functionality, one must consider where, and whether, it fits within the
-Rand project.</p>
-<p>Small, focused crates may be used for a few reasons, but we aim <em>not</em> to
-maximally divide functionality into small crates. Valid reasons for using a
-separate crate for a feature are therefore:</p>
-<ul>
-<li>to allow a clear dependency hierarchy (<code>rand_core</code>)</li>
-<li>to make the feature available in a stand-alone fashion (e.g. <code>getrandom</code>)</li>
-<li>to remove little-used features with non-trivial amounts of code from widely
-used crates (e.g. <code>rand_jitter</code> and <code>rand_distr</code> both extracted
-functionality from <code>rand</code>)</li>
-<li>to allow choice, without including large amounts of unused code for all
-users, but also without producing an enormous number of new crates
-(RNG family crates like <code>rand_xoshiro</code> and <code>rand_isaac</code>)</li>
-</ul>
-<h2><a class="header" href="#traits-basics-and-ui" id="traits-basics-and-ui">Traits, basics and UI</a></h2>
-<p>The main user interface to the Rand project remains the central <code>rand</code> crate.
-Goals for this crate are:</p>
-<ul>
-<li>ease of use</li>
-<li>expose commonly used functionality in a single place</li>
-<li>permit usage of additional randomness sources and distribution samplers</li>
-</ul>
-<p>To allow better modularity, the core traits have been moved to the <code>rand_core</code>
-crate. Goals of this crate are:</p>
-<ul>
-<li>expose the core traits with minimal dependencies</li>
-<li>provide common tools needed to implement various randomness sources</li>
-</ul>
-<h2><a class="header" href="#external-random-sources" id="external-random-sources">External random sources</a></h2>
-<p>The main (and usually only) external source of randomness is the Operating
-System, interfaced via the <code>getrandom</code> crate. This crate also supports usage of
-RDRAND on a few <code>no_std</code> targets.</p>
-<p>Support for other <code>no_std</code> targets has been discussed but with little real
-implementation effort. See
-<a href="https://github.com/rust-random/getrandom/issues/4">getrandom#4</a>.</p>
-<p>The <code>rand_jitter</code> crate provides an implementation of a
-<a href="http://www.chronox.de/jent.html">CPU Jitter</a> entropy harvester, and is only
-included in Rand for historical reasons.</p>
-<h2><a class="header" href="#pseudo-random-generators" id="pseudo-random-generators">Pseudo-random generators</a></h2>
-<p>The Rand library includes several pseudo-random number generators, for the
-following reasons:</p>
-<ul>
-<li>to implement the <code>StdRng</code> and <code>SmallRng</code> generators</li>
-<li>to provide a few high-quality alternative generators</li>
-<li>historical usage</li>
-</ul>
-<p>These are implemented within &quot;family&quot; crates, e.g. <code>rand_chacha</code>, <code>rand_pcg</code>,
-<code>rand_xoshiro</code>.</p>
-<p>We have received several requests to adopt new algorithms into the library; when
-evaluating such requests we must consider several things:</p>
-<ul>
-<li>purpose for inclusion within Rand</li>
-<li>whether the PRNG is cryptographically secure, and if so, how trustworthy
-such claims are</li>
-<li>statistical quality of output</li>
-<li>performance and features of the generator</li>
-<li>reception and third-party review of the algorithm</li>
-</ul>
-<h2><a class="header" href="#distributions" id="distributions">Distributions</a></h2>
-<p>The <code>Distribution</code> trait is provided by Rand, along with commonly-used
-distributions (mostly linear ones).</p>
-<p>Additional distributions are packaged within the <code>rand_distr</code> crate, which
-depends on <code>rand</code> and re-exports all of its distributions.</p>
+                        <h1><a class="header" href="#cargo-and-features" id="cargo-and-features">Cargo and features</a></h1>
+<p>The latest version of rand is available here: <a href="https://crates.io/crates/rand">https://crates.io/crates/rand</a></p>
+<p>On the same page, and also from the repository's README, you can see documentation
+of the <a href="https://github.com/rust-random/rand#crate-features">Crate Features</a>.
+In particular, you may want to use the <code>small_rng</code> feature to enable the <code>SmallRng</code> generator.</p>
+<p>To add this dependency on Rand from the console, type:</p>
+<pre><code class="language-sh">cargo add rand --features small_rng
+</code></pre>
+<p>Or, add this to your <code>Cargo.toml</code>, under <code>[dependencies]</code>:</p>
+<pre><code class="language-toml">rand = { version = &quot;0.8.5&quot;, features = [&quot;small_rng&quot;] }
+</code></pre>
+<p>Note: using <code>version = &quot;0.8.5&quot;</code> matches version <code>0.8.5</code>, <code>0.8.6</code>, etc., but not <code>0.9</code>.
+Using instead <code>version = &quot;0.8&quot;</code> will match any <code>0.8.x</code> version. In both cases,
+Cargo will normally install the latest matching version when the dependency is
+first added. Dependencies may be updated later via <code>cargo update</code>, and in some
+cases running <code>cargo update</code> can solve dependency problems.</p>
+<p>For more on Cargo, see <a href="https://doc.rust-lang.org/cargo/index.html">The Cargo Book</a>.</p>
+<h2><a class="header" href="#other-crates" id="other-crates">Other crates</a></h2>
+<p>As noted on the <a href="crates.html">Crates</a> page, the Rand library consists of a family of crates.
+To run the examples in this guide, ensure you have the following dependencies
+in your <code>Cargo.toml</code>:</p>
+<pre><code class="language-toml">[dependencies]
+rand = { version = &quot;0.8.5&quot;, features = [&quot;small_rng&quot;] }
+rand_chacha = &quot;0.3.1&quot;
+rand_distr = &quot;0.4.3&quot;
+rand_pcg = &quot;0.3.1&quot;
+rand_seeder = &quot;0.2.3&quot;
+</code></pre>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
                         
-                            <a rel="prev" href="contrib-doc.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="guide.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
                         
 
                         
-                            <a rel="next" href="contrib-test.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next" href="guide-data.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
                         
@@ -254,13 +215,13 @@ depends on <code>rand</code> and re-exports all of its distributions.</p>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
                 
-                    <a rel="prev" href="contrib-doc.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="guide.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
                 
 
                 
-                    <a rel="next" href="contrib-test.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next" href="guide-data.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
                 
