@@ -14,6 +14,7 @@
     - [Types of generators](guide-gen.md)
     - [Our RNGs](guide-rngs.md)
     - [Seeding RNGs](guide-seeding.md)
+    - [Parallel RNGs](guide-parallel.md)
     - [Random values](guide-values.md)
     - [Random distributions](guide-dist.md)
     - [Random processess](guide-process.md)
