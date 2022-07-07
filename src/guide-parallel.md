@@ -92,7 +92,7 @@ fn main() {
 }
 ```
 
-## Practice: determinsitic multi-threaded
+## Practice: deterministic multi-threaded
 
 We use approach (4) above to achieve a deterministic result: initialize all RNGs
 from a single seed, but using multiple streams.
@@ -135,7 +135,7 @@ fn main() {
         })
         .reduce(|| 0usize, |a, b| a + b);
 
-    // prints something close to 3.14159...
+    // prints 3.1409052 (determinstic and reproducible result)
     println!(
         "π is approximately {}",
         4. * (in_circle as f64) / ((BATCH_SIZE * BATCHES) as f64)
