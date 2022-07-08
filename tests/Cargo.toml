@@ -14,3 +14,4 @@ rand_chacha = "0.3"
 rand_distr = "0.4"
 rand_distr_0_2 = { package = "rand_distr", version = "0.2" }
 rand_seeder = "0.2"
+rayon = "1.5.3"
