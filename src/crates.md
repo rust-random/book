@@ -45,11 +45,17 @@ which, together with the seed, can be used to reconstruct the generator's state.
 
 ## WASM support
 
-Almost all Rand crates support WASM out of the box. Only the `rand_core` crate [may
-require enabling features for WASM support](https://github.com/rust-random/getrandom#features).
-Consequently, if you are using another crate depending on `rand_core` (such as
-most Rand crates), you may have to explicitly enable `getrandom` features for it
-to work.
+Almost all Rand crates support WASM out of the box. However, when using the
+`wasm32-unknown-unknown` target, which doesn't make any assumptions about its
+operating environment by default, the `getrandom` crate may require enabling
+features for seeding entropy via the platform-provided APIs.
+Consequently, if you are using `rand` (or another Rand project crate)
+depending on `getrandom`, you may have to explicitly [enable `getrandom`
+features](https://github.com/rust-random/getrandom#features) for seeding to
+work. Alternatively, in case you are developing for a sandboxed or unknown
+WASM platform that can't depend on environment provided APIs, you might want
+to disable the `rand` crate's `getrandom` feature and seed the generator
+manually.
 
 
 [`rand_core`]: https://rust-random.github.io/rand/rand_core/index.html
