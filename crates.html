@@ -201,11 +201,17 @@ a security risk. If you need state-restore functionality on a cryptographic RNG,
 the ChaCha generator supports <a href="https://rust-random.github.io/rand/rand_chacha/struct.ChaCha20Rng.html#method.get_word_pos">getting and setting the stream position</a>,
 which, together with the seed, can be used to reconstruct the generator's state.</p>
 <h2><a class="header" href="#wasm-support" id="wasm-support">WASM support</a></h2>
-<p>Almost all Rand crates support WASM out of the box. Only the <code>rand_core</code> crate <a href="https://github.com/rust-random/getrandom#features">may
-require enabling features for WASM support</a>.
-Consequently, if you are using another crate depending on <code>rand_core</code> (such as
-most Rand crates), you may have to explicitly enable <code>getrandom</code> features for it
-to work.</p>
+<p>Almost all Rand crates support WASM out of the box. However, when using the
+<code>wasm32-unknown-unknown</code> target, which doesn't make any assumptions about its
+operating environment by default, the <code>getrandom</code> crate may require enabling
+features for seeding entropy via the platform-provided APIs.
+Consequently, if you are using <code>rand</code> (or another Rand project crate)
+depending on <code>getrandom</code>, you may have to explicitly <a href="https://github.com/rust-random/getrandom#features">enable <code>getrandom</code>
+features</a> for seeding to
+work. Alternatively, in case you are developing for a sandboxed or unknown
+WASM platform that can't depend on environment provided APIs, you might want
+to disable the <code>rand</code> crate's <code>getrandom</code> feature and seed the generator
+manually.</p>
 
                     </main>
 
