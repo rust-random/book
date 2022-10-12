@@ -23,7 +23,7 @@ fn main() {
     // make a handle to the thread-local generator:
     let mut rng = thread_rng();
     if rng.gen() { // random bool
-        let x: f64 = rng.gen(); // random number in range [0, 1)
+        let x: f64 = rng.gen(); // random number in range [0, 1]
         let y = rng.gen_range(-10.0..10.0);
         println!("x is: {}", x);
         println!("y is: {}", y);
