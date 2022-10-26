@@ -29,7 +29,7 @@ fn main() {
         println!("y is: {}", y);
     }
 
-    println!("Die roll: {}", rng.gen_range(1..=6));
+    println!("Dice roll: {}", rng.gen_range(1..=6));
     println!("Number from 0 to 9: {}", rng.gen_range(0..10));
     
     // Sometimes it's useful to use distributions directly:
