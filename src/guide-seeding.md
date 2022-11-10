@@ -83,7 +83,7 @@ distinct, fixed random number seeds, e.g. 1, 2, 3, etc.
 
 [`SeedableRng::seed_from_u64`] is designed exactly for this use-case.
 Internally, it uses a simple PRNG to fill the bits of the seed from the input
-number while providing good bit-avalance (so that two similar numbers such as
+number while providing good bit-avalanche (so that two similar numbers such as
 0 and 1 translate to very different seeds and independent RNG sequences).
 
 ```rust,editable
