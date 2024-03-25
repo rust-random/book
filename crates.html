@@ -164,12 +164,12 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#crates-and-features" id="crates-and-features">Crates and features</a></h1>
-<p>The Rand library consists of a family of crates. The <a href="https://rust-random.github.io/rand/rand/index.html"><code>rand</code></a> crate provides the
+<p>The Rand library consists of a family of crates. The <a href="https://docs.rs/rand/"><code>rand</code></a> crate provides the
 main user-interface; where additional distributions are required, the
-<a href="https://rust-random.github.io/rand/rand_distr/index.html"><code>rand_distr</code></a> or <a href="https://github.com/boxtown/statrs"><code>statrs</code></a> crate may be used in addition.</p>
+<a href="https://docs.rs/rand_distr/"><code>rand_distr</code></a> or <a href="https://docs.rs/statrs/"><code>statrs</code></a> crate may be used in addition.</p>
 <p>The library contains several building blocks: <a href="https://docs.rs/getrandom/"><code>getrandom</code></a> interfaces with the
-platform-dependent random number source, <a href="https://rust-random.github.io/rand/rand_core/index.html"><code>rand_core</code></a> defines the API that
-generators must implement, and a number of crates like <a href="https://rust-random.github.io/rand/rand_chacha/index.html"><code>rand_chacha</code></a> and
+platform-dependent random number source, <a href="https://docs.rs/rand_core/"><code>rand_core</code></a> defines the API that
+generators must implement, and a number of crates like <a href="https://docs.rs/rand_chacha/"><code>rand_chacha</code></a> and
 <a href="https://docs.rs/rand_xoshiro/"><code>rand_xoshiro</code></a> provide pseudo-random generators.</p>
 <pre><code class="language-plain">getrandom ┐
           └ rand_core ┐
@@ -198,7 +198,7 @@ This is affected by the following flags:</p>
 </ul>
 <p>Note that cryptographic RNGs <em>do not</em> support serialisation since this could be
 a security risk. If you need state-restore functionality on a cryptographic RNG,
-the ChaCha generator supports <a href="https://rust-random.github.io/rand/rand_chacha/struct.ChaCha20Rng.html#method.get_word_pos">getting and setting the stream position</a>,
+the ChaCha generator supports <a href="https://docs.rs/rand_chacha/latest/rand_chacha/struct.ChaCha20Rng.html#method.get_word_pos">getting and setting the stream position</a>,
 which, together with the seed, can be used to reconstruct the generator's state.</p>
 <h2><a class="header" href="#wasm-support" id="wasm-support">WASM support</a></h2>
 <p>Almost all Rand crates support WASM out of the box. However, when using the

@@ -234,11 +234,11 @@ the smallest representable value greater than <code>1</code>).</li>
 <p>As seen above, the term &quot;random number&quot; is meaningless without context. &quot;Random
 data&quot; typically means a sequence of random <em>bytes</em>, where for each byte, each of
 the 256 possible values are equally likely.</p>
-<p><a href="../rand/rand_core/trait.RngCore.html#tymethod.fill_bytes"><code>RngCore::fill_bytes</code></a> produces exactly this: a sequence of random bytes.</p>
+<p><a href="https://docs.rs/rand_core/latest/rand_core/trait.RngCore.html#tymethod.fill_bytes"><code>RngCore::fill_bytes</code></a> produces exactly this: a sequence of random bytes.</p>
 <p>If a sequence of unbiased random bytes of the correct length is instead
 interpreted as an integer — say a <code>u32</code> or <code>u64</code> — the result is an unbiased
-integer. Since this conversion is trivial, <a href="../rand/rand_core/trait.RngCore.html#tymethod.next_u32"><code>RngCore::next_u32</code></a> and
-<a href="../rand/rand_core/trait.RngCore.html#tymethod.next_u64"><code>RngCore::next_u64</code></a> are part of the same trait. (In fact the conversion is
+integer. Since this conversion is trivial, <a href="https://docs.rs/rand_core/latest/rand_core/trait.RngCore.html#tymethod.next_u32"><code>RngCore::next_u32</code></a> and
+<a href="https://docs.rs/rand_core/latest/rand_core/trait.RngCore.html#tymethod.next_u64"><code>RngCore::next_u64</code></a> are part of the same trait. (In fact the conversion is
 often the other way around — algorithmic generators usually work with integers
 internally, which are then converted to whichever form of random data is
 required.)</p>

@@ -169,7 +169,7 @@
 but if you'd like to help us decorate, a <a href="https://github.com/rust-random/rand/issues/278">new logo</a> would be appreciated!</p>
 <p>We also found a new home for user-centric documentation — this book!</p>
 <h2><a class="header" href="#prngs" id="prngs">PRNGs</a></h2>
-<p>All PRNGs in our <a href="https://docs.rs/rand/0.5/rand/prng/index.html">old PRNG module</a>
+<p>All PRNGs in our <a href="https://docs.rs/rand/0.5/rand/prng/">old PRNG module</a>
 have been moved to new crates. We also added an additional crate with the PCG
 algorithms, and an external crate with Xoshiro / Xoroshiro algorithms:</p>
 <ul>
@@ -181,20 +181,20 @@ algorithms, and an external crate with Xoshiro / Xoroshiro algorithms:</p>
 <li><a href="https://crates.io/crates/xoshiro"><code>xoshiro</code></a></li>
 </ul>
 <h3><a class="header" href="#smallrng" id="smallrng">SmallRng</a></h3>
-<p>This update, we switched the algorithm behind <a href="../rand/rand/rngs/struct.SmallRng.html"><code>SmallRng</code></a> from Xorshift to a
-PCG algorithm (either <a href="../rand/rand_pcg/type.Pcg64Mcg.html"><code>Pcg64Mcg</code></a> aka XSL 128/64 MCG, or <a href="../rand/rand_pcg/type.Pcg32.html"><code>Pcg32</code></a> aka
+<p>This update, we switched the algorithm behind <a href="https://docs.rs/rand/latest/rand/rngs/struct.SmallRng.html"><code>SmallRng</code></a> from Xorshift to a
+PCG algorithm (either <a href="https://docs.rs/rand_pcg/latest/rand_pcg/type.Pcg64Mcg.html"><code>Pcg64Mcg</code></a> aka XSL 128/64 MCG, or <a href="https://docs.rs/rand_pcg/latest/rand_pcg/type.Pcg32.html"><code>Pcg32</code></a> aka
 XSH RR 64/32 LCG aka the standard PCG algorithm).</p>
 <h2><a class="header" href="#sequences" id="sequences">Sequences</a></h2>
-<p>The <a href="../rand/rand/seq/index.html"><code>seq</code> module</a> has been completely re-written,
-and the <code>choose</code> and <code>shuffle</code> methods have been removed from the <a href="../rand/rand/trait.Rng.html"><code>Rng</code></a> trait.
-Most functionality can now be found in the <a href="../rand/rand/seq/trait.IteratorRandom.html"><code>IteratorRandom</code></a> and
-<a href="../rand/rand/seq/trait.SliceRandom.html"><code>SliceRandom</code></a> traits.</p>
+<p>The <a href="https://docs.rs/rand/latest/rand/seq/"><code>seq</code> module</a> has been completely re-written,
+and the <code>choose</code> and <code>shuffle</code> methods have been removed from the <a href="https://docs.rs/rand/latest/rand/trait.Rng.html"><code>Rng</code></a> trait.
+Most functionality can now be found in the <a href="https://docs.rs/rand/latest/rand/seq/trait.IteratorRandom.html"><code>IteratorRandom</code></a> and
+<a href="https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html"><code>SliceRandom</code></a> traits.</p>
 <h3><a class="header" href="#weighted-choices" id="weighted-choices">Weighted choices</a></h3>
 <p>The <a href="https://docs.rs/rand/0.5/rand/distributions/struct.WeightedChoice.html"><code>WeightedChoice</code></a> distribution has now been replaced with
-<a href="../rand/rand/distributions/struct.WeightedIndex.html"><code>WeightedIndex</code></a>, solving a few issues by making the functionality more
+<a href="https://docs.rs/rand/latest/rand/distributions/struct.WeightedIndex.html"><code>WeightedIndex</code></a>, solving a few issues by making the functionality more
 generic.</p>
-<p>For convenience, the <a href="../rand/rand/seq/trait.SliceRandom.html#tymethod.choose_weighted"><code>SliceRandom::choose_weighted</code></a> method (and <code>_mut</code>
-variant) allow a <a href="../rand/rand/distributions/struct.WeightedIndex.html"><code>WeightedIndex</code></a> sample to be applied directly to a slice.</p>
+<p>For convenience, the <a href="https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.choose_weighted"><code>SliceRandom::choose_weighted</code></a> method (and <code>_mut</code>
+variant) allow a <a href="https://docs.rs/rand/latest/rand/distributions/struct.WeightedIndex.html"><code>WeightedIndex</code></a> sample to be applied directly to a slice.</p>
 <h2><a class="header" href="#other-features" id="other-features">Other features</a></h2>
 <h3><a class="header" href="#simd-types" id="simd-types">SIMD types</a></h3>
 <p>Rand now has rudimentary support for generating SIMD types, gated behind the

@@ -165,29 +165,29 @@
                     <main>
                         <h1><a class="header" href="#rand-and-co" id="rand-and-co">Rand and co</a></h1>
 <h2><a class="header" href="#rand_core-api" id="rand_core-api">rand_core (API)</a></h2>
-<p>The <a href="https://rust-random.github.io/rand/rand_core/index.html"><code>rand_core</code></a> crate defines the core traits implemented by RNGs. This exists
+<p>The <a href="https://docs.rs/rand_core/"><code>rand_core</code></a> crate defines the core traits implemented by RNGs. This exists
 as a separate crate with two purposes:</p>
 <ul>
 <li>to provide a minimal API for defining and using RNGs</li>
 <li>to provide tools to aid implementation of RNGs</li>
 </ul>
-<p>The <a href="https://rust-random.github.io/rand/rand_core/trait.RngCore.html"><code>RngCore</code></a>, <a href="https://rust-random.github.io/rand/rand_core/trait.SeedableRng.html"><code>SeedableRng</code></a>, <a href="https://rust-random.github.io/rand/rand_core/trait.CryptoRng.html"><code>CryptoRng</code></a> traits and <a href="https://rust-random.github.io/rand/rand_core/struct.Error.html"><code>Error</code></a> type are
-all defined by this crate and re-exported by the <a href="https://rust-random.github.io/rand/rand/index.html"><code>rand</code></a> crate.</p>
+<p>The <a href="https://docs.rs/rand_core/latest/rand_core/trait.RngCore.html"><code>RngCore</code></a>, <a href="https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html"><code>SeedableRng</code></a>, <a href="https://docs.rs/rand_core/latest/rand_core/trait.CryptoRng.html"><code>CryptoRng</code></a> traits and <a href="https://docs.rs/rand_core/latest/rand_core/struct.Error.html"><code>Error</code></a> type are
+all defined by this crate and re-exported by the <a href="https://docs.rs/rand/"><code>rand</code></a> crate.</p>
 <h2><a class="header" href="#rand-primary-interface" id="rand-primary-interface">rand (primary interface)</a></h2>
-<p>The <a href="https://rust-random.github.io/rand/rand/index.html"><code>rand</code></a> crate is optimised for easy usage of common random-number
+<p>The <a href="https://docs.rs/rand/"><code>rand</code></a> crate is optimised for easy usage of common random-number
 functionality. This has several aspects:</p>
 <ul>
-<li>the <a href="https://rust-random.github.io/rand/rand/rngs/index.html"><code>rngs</code></a> module provides a few convenient generators</li>
-<li>the <a href="https://rust-random.github.io/rand/rand/distributions/index.html"><code>distributions</code></a> module concerns sampling of random values</li>
-<li>the <a href="https://rust-random.github.io/rand/rand/seq/index.html"><code>seq</code></a> module concerns sampling from and shuffling sequences</li>
-<li>the <a href="https://rust-random.github.io/rand/rand/trait.Rng.html"><code>Rng</code></a> trait provides a few convenience methods for generating
+<li>the <a href="https://docs.rs/rand/latest/rand/rngs/"><code>rngs</code></a> module provides a few convenient generators</li>
+<li>the <a href="https://docs.rs/rand/latest/rand/distributions/"><code>distributions</code></a> module concerns sampling of random values</li>
+<li>the <a href="https://docs.rs/rand/latest/rand/seq/"><code>seq</code></a> module concerns sampling from and shuffling sequences</li>
+<li>the <a href="https://docs.rs/rand/latest/rand/trait.Rng.html"><code>Rng</code></a> trait provides a few convenience methods for generating
 random values</li>
-<li>the <a href="https://rust-random.github.io/rand/rand/fn.random.html"><code>random</code></a> function provides convenient generation in a single call</li>
+<li>the <a href="https://docs.rs/rand/latest/rand/fn.random.html"><code>random</code></a> function provides convenient generation in a single call</li>
 </ul>
 <h3><a class="header" href="#feature-flags" id="feature-flags">Feature flags</a></h3>
 <p>Besides the <a href="crates.html#feature-flags">common feature flags</a>, several aspects are configurable:</p>
 <ul>
-<li><code>small_rng</code> enables the <a href="https://rust-random.github.io/rand/rand/rngs/struct.SmallRng.html"><code>SmallRng</code></a> generator (feature-gated since v0.7)</li>
+<li><code>small_rng</code> enables the <a href="https://docs.rs/rand/latest/rand/rngs/struct.SmallRng.html"><code>SmallRng</code></a> generator (feature-gated since v0.7)</li>
 <li><code>simd_support</code> enables experimental (nightly-only) support for generating
 SIMD values</li>
 </ul>
@@ -196,15 +196,15 @@ only and not optimisation. SIMD operations may be used internally regardless of
 this flag; e.g. the ChaCha generator has explicit support for SIMD operations
 internally.</p>
 <h2><a class="header" href="#distributions" id="distributions">Distributions</a></h2>
-<p>The <a href="https://rust-random.github.io/rand/rand/index.html"><code>rand</code></a> crate only implements sampling from the most common random
+<p>The <a href="https://docs.rs/rand/"><code>rand</code></a> crate only implements sampling from the most common random
 number distributions: uniform and weighted sampling. For everything else,</p>
 <ul>
-<li><a href="https://rust-random.github.io/rand/rand_distr/index.html"><code>rand_distr</code></a> provides fast sampling from a variety of other distributions,
+<li><a href="https://docs.rs/rand_distr/"><code>rand_distr</code></a> provides fast sampling from a variety of other distributions,
 including Normal (Gauss), Binomial, Poisson, UnitCircle, and many more</li>
-<li><a href="https://github.com/boxtown/statrs"><code>statrs</code></a> is a port of the C# Math.NET library, implementing many of the
+<li><a href="https://docs.rs/statrs/"><code>statrs</code></a> is a port of the C# Math.NET library, implementing many of the
 same distributions (plus/minus a few), along with PDF and CDF functions,
 the <em>error</em>, <em>beta</em>, <em>gamma</em> and <em>logistic</em> special functions, plus a few
-utilities. (For clarity, <a href="https://github.com/boxtown/statrs"><code>statrs</code></a> is not part of the Rand library.)</li>
+utilities. (For clarity, <a href="https://docs.rs/statrs/"><code>statrs</code></a> is not part of the Rand library.)</li>
 </ul>
 
                     </main>

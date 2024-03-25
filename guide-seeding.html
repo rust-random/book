@@ -169,16 +169,16 @@ determined by their initial state.</p>
 <p>Some PRNG definitions specify how the initial state should be generated from a
 key, usually specified as a byte-sequence for cryptographic generators or,
 for small PRNGs, often just a word. We formalise this for all our generators
-with the <a href="../rand/rand_core/trait.SeedableRng.html"><code>SeedableRng</code></a> trait.</p>
+with the <a href="https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html"><code>SeedableRng</code></a> trait.</p>
 <h2><a class="header" href="#the-seed-type" id="the-seed-type">The Seed type</a></h2>
-<p>We require all seedable RNGs to define a <a href="../rand/rand_core/trait.SeedableRng.html#type.Seed"><code>Seed</code></a> type satisfying
+<p>We require all seedable RNGs to define a <a href="https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#type.Seed"><code>Seed</code></a> type satisfying
 <code>AsMut&lt;[u8]&gt; + Default + Sized</code> (usually <code>[u8; N]</code> for a fixed <code>N</code>).
 We recommend using <code>[u8; 12]</code> or larger for non-cryptographic PRNGs and
 <code>[u8; 32]</code> for cryptographic PRNGs.</p>
-<p>PRNGs may be seeded directly from such a value with <a href="../rand/rand_core/trait.SeedableRng.html#tymethod.from_seed"><code>SeedableRng::from_seed</code></a>.</p>
+<p>PRNGs may be seeded directly from such a value with <a href="https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#tymethod.from_seed"><code>SeedableRng::from_seed</code></a>.</p>
 <h2><a class="header" href="#seeding-from-" id="seeding-from-">Seeding from ...</a></h2>
 <h3><a class="header" href="#fresh-entropy" id="fresh-entropy">Fresh entropy</a></h3>
-<p>Using a fresh seed (direct from the OS) is easy using <a href="../rand/rand_core/trait.SeedableRng.html#method.from_entropy"><code>SeedableRng::from_entropy</code></a>:</p>
+<p>Using a fresh seed (direct from the OS) is easy using <a href="https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#method.from_entropy"><code>SeedableRng::from_entropy</code></a>:</p>
 <pre><pre class="playground"><code class="language-rust editable"><span class="boring">extern crate rand;
 </span><span class="boring">extern crate rand_chacha;
 </span>use rand::prelude::*;
@@ -219,12 +219,12 @@ fn main() {
 behave badly when seeded from the same type of generator (in this case, Xorshift
 generates a clone). For cryptographic PRNGs this is not a problem;
 for others it is recommended to seed from a different type of generator.
-<a href="../rand/rand_chacha/struct.ChaCha8Rng.html"><code>ChaCha8Rng</code></a> is an excellent choice for a deterministic master generator
+<a href="https://docs.rs/rand_chacha/latest/rand_chacha/struct.ChaCha8Rng.html"><code>ChaCha8Rng</code></a> is an excellent choice for a deterministic master generator
 (but for cryptographic uses, prefer the 12-round variant or higher).</p>
 <h3><a class="header" href="#a-simple-number" id="a-simple-number">A simple number</a></h3>
 <p>For some applications, especially simulations, all you want are a sequence of
 distinct, fixed random number seeds, e.g. 1, 2, 3, etc.</p>
-<p><a href="../rand/rand_core/trait.SeedableRng.html#method.seed_from_u64"><code>SeedableRng::seed_from_u64</code></a> is designed exactly for this use-case.
+<p><a href="https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#method.seed_from_u64"><code>SeedableRng::seed_from_u64</code></a> is designed exactly for this use-case.
 Internally, it uses a simple PRNG to fill the bits of the seed from the input
 number while providing good bit-avalanche (so that two similar numbers such as
 0 and 1 translate to very different seeds and independent RNG sequences).</p>

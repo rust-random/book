@@ -174,11 +174,11 @@ with some new ones.</p>
 <h2><a class="header" href="#getrandom" id="getrandom">Getrandom</a></h2>
 <p>As mentioned above, we have a new crate: <a href="https://github.com/rust-random/getrandom">getrandom</a>, delivering a minimal API
 around platform-independent access to fresh entropy. This replaces the previous
-implementation in <a href="../rand/rand_core/struct.OsRng.html"><code>OsRng</code></a>, which is now merely a wrapper.</p>
+implementation in <a href="https://docs.rs/rand_core/latest/rand_core/struct.OsRng.html"><code>OsRng</code></a>, which is now merely a wrapper.</p>
 <h2><a class="header" href="#core-features" id="core-features">Core features</a></h2>
 <p>The <a href="https://docs.rs/rand/0.6.0/rand/trait.FromEntropy.html"><code>FromEntropy</code></a> trait has now been removed. Fear not though, its
-<a href="https://rust-random.github.io/rand/rand/trait.SeedableRng.html#method.from_entropy"><code>from_entropy</code></a> method continues to provide easy initialisation from its new
-home in the <a href="https://rust-random.github.io/rand/rand/trait.SeedableRng.html"><code>SeedableRng</code></a> trait (this requires that <code>rand_core</code> has the <code>std</code>
+<a href="https://docs.rs/rand/latest/rand/trait.SeedableRng.html#method.from_entropy"><code>from_entropy</code></a> method continues to provide easy initialisation from its new
+home in the <a href="https://docs.rs/rand/latest/rand/trait.SeedableRng.html"><code>SeedableRng</code></a> trait (this requires that <code>rand_core</code> has the <code>std</code>
 or <code>getrandom</code> feature enabled):</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -187,45 +187,45 @@ or <code>getrandom</code> feature enabled):</p>
 let mut rng = StdRng::from_entropy();
 <span class="boring">}
 </span></code></pre></pre>
-<p>The <a href="https://rust-random.github.io/rand/rand/trait.SeedableRng.html#method.from_rng"><code>SeedableRng::from_rng</code></a> method is now considered value-stable:
+<p>The <a href="https://docs.rs/rand/latest/rand/trait.SeedableRng.html#method.from_rng"><code>SeedableRng::from_rng</code></a> method is now considered value-stable:
 implementations should have portable results.</p>
-<p>The <a href="https://rust-random.github.io/rand/rand_core/struct.Error.html"><code>Error</code></a> type of <code>rand_core</code> and <code>rand</code> has seen a major redesign; direct
+<p>The <a href="https://docs.rs/rand_core/latest/rand_core/struct.Error.html"><code>Error</code></a> type of <code>rand_core</code> and <code>rand</code> has seen a major redesign; direct
 usage of this type is likely to need adjustment.</p>
 <h2><a class="header" href="#prngs" id="prngs">PRNGs</a></h2>
 <p>These have seen less change than in the previous release, but noteworthy is:</p>
 <ul>
 <li><a href="https://crates.io/crates/rand_chacha"><code>rand_chacha</code></a> has been rewritten
 for much better performance (via SIMD instructions)</li>
-<li><a href="../rand/rand/rngs/struct.StdRng.html"><code>StdRng</code></a> and <a href="../rand/rand/rngs/struct.ThreadRng.html"><code>ThreadRng</code></a> now use the ChaCha algorithm. This is a
-value-breaking change for <a href="../rand/rand/rngs/struct.StdRng.html"><code>StdRng</code></a>.</li>
-<li><a href="../rand/rand/rngs/struct.SmallRng.html"><code>SmallRng</code></a> is now gated behind the <code>small_rng</code> feature flag.</li>
+<li><a href="https://docs.rs/rand/latest/rand/rngs/struct.StdRng.html"><code>StdRng</code></a> and <a href="https://docs.rs/rand/latest/rand/rngs/struct.ThreadRng.html"><code>ThreadRng</code></a> now use the ChaCha algorithm. This is a
+value-breaking change for <a href="https://docs.rs/rand/latest/rand/rngs/struct.StdRng.html"><code>StdRng</code></a>.</li>
+<li><a href="https://docs.rs/rand/latest/rand/rngs/struct.SmallRng.html"><code>SmallRng</code></a> is now gated behind the <code>small_rng</code> feature flag.</li>
 <li>The <code>xoshiro</code> crate is now <a href="https://crates.io/crates/rand_xoshiro"><code>rand_xoshiro</code></a>.</li>
-<li><code>rand_pcg</code> now includes <a href="../rand/rand_pcg/type.Pcg64.html"><code>Pcg64</code></a>.</li>
+<li><code>rand_pcg</code> now includes <a href="https://docs.rs/rand_pcg/latest/rand_pcg/type.Pcg64.html"><code>Pcg64</code></a>.</li>
 </ul>
 <h2><a class="header" href="#distributions" id="distributions">Distributions</a></h2>
-<p>For the most widely used distributions (<a href="../rand/rand/distributions/struct.Standard.html"><code>Standard</code></a> and <a href="../rand/rand/distributions/struct.Uniform.html"><code>Uniform</code></a>), there have
+<p>For the most widely used distributions (<a href="https://docs.rs/rand/latest/rand/distributions/struct.Standard.html"><code>Standard</code></a> and <a href="https://docs.rs/rand/latest/rand/distributions/struct.Uniform.html"><code>Uniform</code></a>), there have
 been no significant changes. But for <em>most</em> of the rest...</p>
 <ul>
-<li>We added a new crate, <a href="../rand/rand_distr/index.html"><code>rand_distr</code></a>, to house the all distributions
-(including re-exporting those still within <a href="../rand/rand/distributions/index.html"><code>rand::distributions</code></a>). If you
+<li>We added a new crate, <a href="https://docs.rs/rand_distr/"><code>rand_distr</code></a>, to house the all distributions
+(including re-exporting those still within <a href="https://docs.rs/rand/latest/rand/distributions/"><code>rand::distributions</code></a>). If you
 previously used <code>rand::distributions::Normal</code>, now you use
-<a href="../rand/rand_distr/struct.Normal.html"><code>rand_distr::Normal</code></a>.</li>
+<a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Normal.html"><code>rand_distr::Normal</code></a>.</li>
 <li>Constructors for many distributions changed in order to return a <code>Result</code>
 instead of panicking on error.</li>
 <li>Many distributions are now generic over their parameter type (in most cases
 supporting <code>f32</code> and <code>f64</code>). This aids usage with generic code, and allows
 reduced size of parameterised distributions. Currently the more complex
 algorithms always use <code>f64</code> internally.</li>
-<li><a href="../rand/rand/distributions/struct.Standard.html"><code>Standard</code></a> can now sample <a href="https://doc.rust-lang.org/std/num/index.html"><code>NonZeroU*</code></a> values</li>
+<li><a href="https://docs.rs/rand/latest/rand/distributions/struct.Standard.html"><code>Standard</code></a> can now sample <a href="https://doc.rust-lang.org/std/num/https://docs.rs/rand_chacha/latest/rand_chacha/"><code>NonZeroU*</code></a> values</li>
 </ul>
 <p>We also added several distributions:</p>
 <ul>
 <li><a href="https://docs.rs/rand/0.7/rand/distributions/weighted/alias_method/struct.WeightedIndex.html"><code>rand::distributions::weighted::alias_method::WeightedIndex</code></a></li>
-<li><a href="../rand/rand_distr/struct.Pert.html"><code>rand_distr::Pert</code></a></li>
-<li><a href="../rand/rand_distr/struct.Triangular.html"><code>rand_distr::Triangular</code></a></li>
-<li><a href="../rand/rand_distr/struct.UnitBall.html"><code>rand_distr::UnitBall</code></a></li>
-<li><a href="../rand/rand_distr/struct.UnitDisc.html"><code>rand_distr::UnitDisc</code></a></li>
-<li><a href="../rand/rand_distr/struct.UnitSphere.html"><code>rand_distr::UnitSphere</code></a> (previously named <code>rand::distributions::UnitSphereSurface</code>)</li>
+<li><a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Pert.html"><code>rand_distr::Pert</code></a></li>
+<li><a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Triangular.html"><code>rand_distr::Triangular</code></a></li>
+<li><a href="https://docs.rs/rand_distr/latest/rand_distr/struct.UnitBall.html"><code>rand_distr::UnitBall</code></a></li>
+<li><a href="https://docs.rs/rand_distr/latest/rand_distr/struct.UnitDisc.html"><code>rand_distr::UnitDisc</code></a></li>
+<li><a href="https://docs.rs/rand_distr/latest/rand_distr/struct.UnitSphere.html"><code>rand_distr::UnitSphere</code></a> (previously named <code>rand::distributions::UnitSphereSurface</code>)</li>
 </ul>
 <h2><a class="header" href="#sequences" id="sequences">Sequences</a></h2>
 <p>To aid portability, all random samples of type <code>usize</code> now instead sample a

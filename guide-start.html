@@ -164,7 +164,7 @@
                 <div id="content" class="content">
                     <main>
                         <h1><a class="header" href="#getting-started" id="getting-started">Getting Started</a></h1>
-<p>Below we list a short example. For more, please refer to the <a href="https://rust-random.github.io/rand/rand/index.html">API documentation</a>
+<p>Below we list a short example. For more, please refer to the <a href="https://docs.rs/rand/">API documentation</a>
 or the <a href="guide.html">guide</a>.</p>
 <p>Lets kick things off with an example (<a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2018&amp;gist=7792ed032694bc558ca229be71a7783a">playground link</a>):</p>
 <pre><pre class="playground"><code class="language-rust editable"><span class="boring">extern crate rand;
@@ -210,26 +210,26 @@ fn main() {
 }
 </code></pre></pre>
 <p>The first thing you may have noticed is that we imported everything from the
-<a href="https://rust-random.github.io/rand/rand/prelude/index.html">prelude</a>. This is the lazy way to <code>use</code> rand, and like the
-<a href="https://doc.rust-lang.org/std/prelude/index.html">standard library's prelude</a>,
+<a href="https://docs.rs/rand/latest/rand/prelude/">prelude</a>. This is the lazy way to <code>use</code> rand, and like the
+<a href="https://doc.rust-lang.org/std/prelude/">standard library's prelude</a>,
 only imports the most common items. If you don't wish to use the prelude,
-remember to import the <a href="https://rust-random.github.io/rand/rand/trait.Rng.html"><code>Rng</code></a> trait!</p>
+remember to import the <a href="https://docs.rs/rand/latest/rand/trait.Rng.html"><code>Rng</code></a> trait!</p>
 <p>The Rand library automatically initialises a secure, thread-local generator
-on demand. This can be accessed via the <a href="https://rust-random.github.io/rand/rand/fn.thread_rng.html"><code>thread_rng</code></a> and <a href="https://rust-random.github.io/rand/rand/fn.random.html"><code>random</code></a> functions.
+on demand. This can be accessed via the <a href="https://docs.rs/rand/latest/rand/fn.thread_rng.html"><code>thread_rng</code></a> and <a href="https://docs.rs/rand/latest/rand/fn.random.html"><code>random</code></a> functions.
 For more on this topic, see <a href="guide-gen.html">Random generators</a>.</p>
-<p>While the <a href="https://rust-random.github.io/rand/rand/fn.random.html"><code>random</code></a> function can only sample values in a <a href="https://rust-random.github.io/rand/rand/distributions/struct.Standard.html"><code>Standard</code></a>
-(type-dependent) manner, <a href="https://rust-random.github.io/rand/rand/fn.thread_rng.html"><code>thread_rng</code></a> gives you a handle to a generator.
-All generators implement the <a href="https://rust-random.github.io/rand/rand/trait.Rng.html"><code>Rng</code></a> trait, which provides the <a href="https://rust-random.github.io/rand/rand/trait.Rng.html#method.gen"><code>gen</code></a>,
-<a href="https://rust-random.github.io/rand/rand/trait.Rng.html#method.gen_range"><code>gen_range</code></a> and <a href="https://rust-random.github.io/rand/rand/trait.Rng.html#method.sample"><code>sample</code></a> methods used above.</p>
+<p>While the <a href="https://docs.rs/rand/latest/rand/fn.random.html"><code>random</code></a> function can only sample values in a <a href="https://docs.rs/rand/latest/rand/distributions/struct.Standard.html"><code>Standard</code></a>
+(type-dependent) manner, <a href="https://docs.rs/rand/latest/rand/fn.thread_rng.html"><code>thread_rng</code></a> gives you a handle to a generator.
+All generators implement the <a href="https://docs.rs/rand/latest/rand/trait.Rng.html"><code>Rng</code></a> trait, which provides the <a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.gen"><code>gen</code></a>,
+<a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.gen_range"><code>gen_range</code></a> and <a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.sample"><code>sample</code></a> methods used above.</p>
 <p>Rand provides functionality on iterators and slices via two more traits,
-<a href="https://rust-random.github.io/rand/rand/seq/trait.IteratorRandom.html"><code>IteratorRandom</code></a> and <a href="https://rust-random.github.io/rand/rand/seq/trait.SliceRandom.html"><code>SliceRandom</code></a>.</p>
+<a href="https://docs.rs/rand/latest/rand/seq/trait.IteratorRandom.html"><code>IteratorRandom</code></a> and <a href="https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html"><code>SliceRandom</code></a>.</p>
 <h2><a class="header" href="#fixed-seed-rngs" id="fixed-seed-rngs">Fixed seed RNGs</a></h2>
 <p>You may have noticed the use of <code>thread_rng()</code> above and wondered how to
 specify a fixed seed. To do so, you need to specify an RNG then use a method
-like <a href="https://rust-random.github.io/rand/rand/trait.SeedableRng.html#method.seed_from_u64"><code>seed_from_u64</code></a> or <a href="https://rust-random.github.io/rand/rand/trait.SeedableRng.html#tymethod.from_seed"><code>from_seed</code></a>.</p>
-<p>Note that <a href="https://rust-random.github.io/rand/rand/trait.SeedableRng.html#method.seed_from_u64"><code>seed_from_u64</code></a> is <strong>not suitable for cryptographic uses</strong> since a
+like <a href="https://docs.rs/rand/latest/rand/trait.SeedableRng.html#method.seed_from_u64"><code>seed_from_u64</code></a> or <a href="https://docs.rs/rand/latest/rand/trait.SeedableRng.html#tymethod.from_seed"><code>from_seed</code></a>.</p>
+<p>Note that <a href="https://docs.rs/rand/latest/rand/trait.SeedableRng.html#method.seed_from_u64"><code>seed_from_u64</code></a> is <strong>not suitable for cryptographic uses</strong> since a
 single <code>u64</code> cannot provide sufficient entropy to securely seed an RNG.
-All cryptographic RNGs accept a more appropriate seed via <a href="https://rust-random.github.io/rand/rand/trait.SeedableRng.html#tymethod.from_seed"><code>from_seed</code></a>.</p>
+All cryptographic RNGs accept a more appropriate seed via <a href="https://docs.rs/rand/latest/rand/trait.SeedableRng.html#tymethod.from_seed"><code>from_seed</code></a>.</p>
 <p>We use <code>ChaCha8Rng</code> below because it is fast and portable with good quality.
 See the <a href="guide-rngs.html">RNGs</a> section for more RNGs, but avoid <code>SmallRng</code> and <code>StdRng</code> if you
 care about reproducible results.</p>

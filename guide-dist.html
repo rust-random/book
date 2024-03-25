@@ -165,7 +165,7 @@
                     <main>
                         <h1><a class="header" href="#random-distributions" id="random-distributions">Random distributions</a></h1>
 <p>For maximum flexibility when producing random values, we define the
-<a href="../rand/rand/distributions/trait.Distribution.html"><code>Distribution</code></a> trait:</p>
+<a href="https://docs.rs/rand/latest/rand/distributions/trait.Distribution.html"><code>Distribution</code></a> trait:</p>
 <pre><code class="language-rust noplayground"><span class="boring">use rand::{Rng, distributions::DistIter};
 </span>// a producer of data of type T:
 pub trait Distribution&lt;T&gt; {
@@ -183,7 +183,7 @@ pub trait Distribution&lt;T&gt; {
 </span>    }
 }
 </code></pre>
-<p>Implementations of <a href="../rand/rand/distributions/trait.Distribution.html"><code>Distribution</code></a> are <em>probability distribution</em>: mappings
+<p>Implementations of <a href="https://docs.rs/rand/latest/rand/distributions/trait.Distribution.html"><code>Distribution</code></a> are <em>probability distribution</em>: mappings
 from events to probabilities (e.g. for a die roll <code>P(x = i) = ⅙</code> or for a Normal
 distribution with mean <code>μ=0</code>, <code>P(x &gt; 0) = ½</code>).</p>
 <p>Note that although probability distributions all have properties such as a mean,
@@ -191,77 +191,77 @@ a Probability Density Function, and can be sampled by inverting the Cumulative
 Density Function, here we only concern ourselves with <em>sampling random values</em>.
 If you require use of such properties you may prefer to use the <a href="https://github.com/statrs-dev/statrs/"><code>statrs</code></a> crate.</p>
 <p>Rand provides implementations of many different distributions; we cover the most
-common of these here, but for full details refer to the <a href="../rand/rand/distributions/index.html"><code>distributions</code></a> module
-and the <a href="../rand/rand_distr/index.html"><code>rand_distr</code></a> crate.</p>
+common of these here, but for full details refer to the <a href="https://docs.rs/rand/latest/rand/distributions/"><code>distributions</code></a> module
+and the <a href="https://docs.rs/rand_distr/"><code>rand_distr</code></a> crate.</p>
 <h1><a class="header" href="#uniform-distributions" id="uniform-distributions">Uniform distributions</a></h1>
 <p>The most obvious type of distribution is the one we already discussed: one
 where each equally-sized sub-range has equal chance of containing the next
 sample. This is known as <em>uniform</em>.</p>
 <p>Rand actually has several variants of this, representing different ranges:</p>
 <ul>
-<li><a href="../rand/rand/distributions/struct.Standard.html"><code>Standard</code></a> requires no parameters and samples values uniformly according
-to the type. <a href="../rand/rand/trait.Rng.html#method.gen"><code>Rng::gen</code></a> provides a short-cut to this distribution.</li>
-<li><a href="../rand/rand/distributions/struct.Uniform.html"><code>Uniform</code></a> is parametrised by <code>Uniform::new(low, high)</code> (including <code>low</code>,
+<li><a href="https://docs.rs/rand/latest/rand/distributions/struct.Standard.html"><code>Standard</code></a> requires no parameters and samples values uniformly according
+to the type. <a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.gen"><code>Rng::gen</code></a> provides a short-cut to this distribution.</li>
+<li><a href="https://docs.rs/rand/latest/rand/distributions/struct.Uniform.html"><code>Uniform</code></a> is parametrised by <code>Uniform::new(low, high)</code> (including <code>low</code>,
 excluding <code>high</code>) or <code>Uniform::new_inclusive(low, high)</code> (including both),
 and samples values uniformly within this range.
-<a href="../rand/rand/trait.Rng.html#method.gen_range"><code>Rng::gen_range</code></a> is a convenience method defined over
-<a href="../rand/rand/distributions/struct.Uniform.html#method.sample_single"><code>Uniform::sample_single</code></a>, optimised for single-sample usage.</li>
-<li><a href="../rand/rand/distributions/struct.Alphanumeric.html"><code>Alphanumeric</code></a> is uniform over the <code>char</code> values <code>0-9A-Za-z</code>.</li>
-<li><a href="../rand/rand/distributions/struct.Open01.html"><code>Open01</code></a> and <a href="../rand/rand/distributions/struct.OpenClosed01.html"><code>OpenClosed01</code></a> are provide alternate sampling ranges for
+<a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.gen_range"><code>Rng::gen_range</code></a> is a convenience method defined over
+<a href="https://docs.rs/rand/latest/rand/distributions/struct.Uniform.html#method.sample_single"><code>Uniform::sample_single</code></a>, optimised for single-sample usage.</li>
+<li><a href="https://docs.rs/rand/latest/rand/distributions/struct.Alphanumeric.html"><code>Alphanumeric</code></a> is uniform over the <code>char</code> values <code>0-9A-Za-z</code>.</li>
+<li><a href="https://docs.rs/rand/latest/rand/distributions/struct.Open01.html"><code>Open01</code></a> and <a href="https://docs.rs/rand/latest/rand/distributions/struct.OpenClosed01.html"><code>OpenClosed01</code></a> are provide alternate sampling ranges for
 floating-point types (see below).</li>
 </ul>
 <h2><a class="header" href="#uniform-sampling-by-type" id="uniform-sampling-by-type">Uniform sampling by type</a></h2>
 <p>Lets go over the distributions by type:</p>
 <ul>
 <li>
-<p>For <code>bool</code>, <a href="../rand/rand/distributions/struct.Standard.html"><code>Standard</code></a> samples each value with probability 50%.</p>
+<p>For <code>bool</code>, <a href="https://docs.rs/rand/latest/rand/distributions/struct.Standard.html"><code>Standard</code></a> samples each value with probability 50%.</p>
 </li>
 <li>
-<p>For <code>Option&lt;T&gt;</code>, the <a href="../rand/rand/distributions/struct.Standard.html"><code>Standard</code></a> distribution samples <code>None</code> with
+<p>For <code>Option&lt;T&gt;</code>, the <a href="https://docs.rs/rand/latest/rand/distributions/struct.Standard.html"><code>Standard</code></a> distribution samples <code>None</code> with
 probability 50%, otherwise <code>Some(value)</code> is sampled, according to its type.</p>
 </li>
 <li>
 <p>For integers (<code>u8</code> through to <code>u128</code>, <code>usize</code>, and <code>i*</code> variants),
-<a href="../rand/rand/distributions/struct.Standard.html"><code>Standard</code></a> samples from all possible values while
-<a href="../rand/rand/distributions/struct.Uniform.html"><code>Uniform</code></a> samples from the parameterised range.</p>
+<a href="https://docs.rs/rand/latest/rand/distributions/struct.Standard.html"><code>Standard</code></a> samples from all possible values while
+<a href="https://docs.rs/rand/latest/rand/distributions/struct.Uniform.html"><code>Uniform</code></a> samples from the parameterised range.</p>
 </li>
 <li>
-<p>For <code>NonZeroU8</code> and other &quot;non-zero&quot; types, <a href="../rand/rand/distributions/struct.Standard.html"><code>Standard</code></a> samples uniformly
+<p>For <code>NonZeroU8</code> and other &quot;non-zero&quot; types, <a href="https://docs.rs/rand/latest/rand/distributions/struct.Standard.html"><code>Standard</code></a> samples uniformly
 from all non-zero values (rejection method).</p>
 </li>
 <li>
 <p><code>Wrapping&lt;T&gt;</code> integer types are sampled as for the corresponding integer
-type by the <a href="../rand/rand/distributions/struct.Standard.html"><code>Standard</code></a> distribution.</p>
+type by the <a href="https://docs.rs/rand/latest/rand/distributions/struct.Standard.html"><code>Standard</code></a> distribution.</p>
 </li>
 <li>
 <p>For floats (<code>f32</code>, <code>f64</code>),</p>
 <ul>
-<li><a href="../rand/rand/distributions/struct.Standard.html"><code>Standard</code></a> samples from the half-open range <code>[0, 1)</code> with 24 or 53
+<li><a href="https://docs.rs/rand/latest/rand/distributions/struct.Standard.html"><code>Standard</code></a> samples from the half-open range <code>[0, 1)</code> with 24 or 53
 bits of precision (for <code>f32</code> and <code>f64</code> respectively)</li>
-<li><a href="../rand/rand/distributions/struct.OpenClosed01.html"><code>OpenClosed01</code></a> samples from the half-open range <code>(0, 1]</code> with 24 or
+<li><a href="https://docs.rs/rand/latest/rand/distributions/struct.OpenClosed01.html"><code>OpenClosed01</code></a> samples from the half-open range <code>(0, 1]</code> with 24 or
 53 bits of precision</li>
-<li><a href="../rand/rand/distributions/struct.Open01.html"><code>Open01</code></a> samples from the open range <code>(0, 1)</code> with 23 or 52 bits of
+<li><a href="https://docs.rs/rand/latest/rand/distributions/struct.Open01.html"><code>Open01</code></a> samples from the open range <code>(0, 1)</code> with 23 or 52 bits of
 precision</li>
-<li><a href="../rand/rand/distributions/struct.Uniform.html"><code>Uniform</code></a> samples from a given range with 23 or 52 bits of precision</li>
+<li><a href="https://docs.rs/rand/latest/rand/distributions/struct.Uniform.html"><code>Uniform</code></a> samples from a given range with 23 or 52 bits of precision</li>
 </ul>
 </li>
 <li>
-<p>For the <code>char</code> type, the <a href="../rand/rand/distributions/struct.Standard.html"><code>Standard</code></a> distribution samples from all
+<p>For the <code>char</code> type, the <a href="https://docs.rs/rand/latest/rand/distributions/struct.Standard.html"><code>Standard</code></a> distribution samples from all
 available Unicode code points, uniformly; many of these values may not be
-printable (depending on font support). The <a href="../rand/rand/distributions/struct.Alphanumeric.html"><code>Alphanumeric</code></a> samples from
+printable (depending on font support). The <a href="https://docs.rs/rand/latest/rand/distributions/struct.Alphanumeric.html"><code>Alphanumeric</code></a> samples from
 only a-z, A-Z and 0-9 uniformly.</p>
 </li>
 <li>
 <p>For tuples and arrays, each element is sampled as above, where supported.
-The <a href="../rand/rand/distributions/struct.Standard.html"><code>Standard</code></a> and <a href="../rand/rand/distributions/struct.Uniform.html"><code>Uniform</code></a> distributions each support a selection of
+The <a href="https://docs.rs/rand/latest/rand/distributions/struct.Standard.html"><code>Standard</code></a> and <a href="https://docs.rs/rand/latest/rand/distributions/struct.Uniform.html"><code>Uniform</code></a> distributions each support a selection of
 these types (up to 12-tuples and 32-element arrays).
 This includes the empty tuple <code>()</code> and array.
 When using <code>rustc</code> ≥ 1.51, enable the <code>min_const_gen</code> feature to support
 arrays larger than 32 elements.</p>
 </li>
 <li>
-<p>For SIMD types, each element is sampled as above, for <a href="../rand/rand/distributions/struct.Standard.html"><code>Standard</code></a> and
-<a href="../rand/rand/distributions/struct.Uniform.html"><code>Uniform</code></a> (for the latter, <code>low</code> and <code>high</code> parameters are <em>also</em> SIMD
+<p>For SIMD types, each element is sampled as above, for <a href="https://docs.rs/rand/latest/rand/distributions/struct.Standard.html"><code>Standard</code></a> and
+<a href="https://docs.rs/rand/latest/rand/distributions/struct.Uniform.html"><code>Uniform</code></a> (for the latter, <code>low</code> and <code>high</code> parameters are <em>also</em> SIMD
 types, effectively sampling from multiple ranges simultaneously). SIMD
 support requires using the <code>simd_support</code> feature flag and nightly <code>rustc</code>.</p>
 </li>
@@ -294,24 +294,24 @@ impl Distribution&lt;Food&gt; for Standard {
 </li>
 </ul>
 <h1><a class="header" href="#non-uniform-distributions" id="non-uniform-distributions">Non-uniform distributions</a></h1>
-<p>The <a href="../rand/rand/index.html"><code>rand</code></a> crate provides only two non-uniform distributions:</p>
+<p>The <a href="https://docs.rs/rand/"><code>rand</code></a> crate provides only two non-uniform distributions:</p>
 <ul>
-<li>The <a href="../rand/rand/distributions/struct.Bernoulli.html"><code>Bernoulli</code></a> distribution simply generates a boolean where the
+<li>The <a href="https://docs.rs/rand/latest/rand/distributions/struct.Bernoulli.html"><code>Bernoulli</code></a> distribution simply generates a boolean where the
 probability of sampling <code>true</code> is some constant (<code>Bernoulli::new(0.5)</code>) or
 ratio (<code>Bernoulli::from_ratio(1, 6)</code>).</li>
-<li>The <a href="../rand/rand/distributions/struct.WeightedIndex.html"><code>WeightedIndex</code></a> distribution may be used to sample from a sequence of
+<li>The <a href="https://docs.rs/rand/latest/rand/distributions/struct.WeightedIndex.html"><code>WeightedIndex</code></a> distribution may be used to sample from a sequence of
 weighted values. See the <a href="guide-seq.html">Sequences</a> section.</li>
 </ul>
-<p>Many more non-uniform distributions are provided by the <a href="../rand/rand_distr/index.html"><code>rand_distr</code></a> crate.</p>
+<p>Many more non-uniform distributions are provided by the <a href="https://docs.rs/rand_distr/"><code>rand_distr</code></a> crate.</p>
 <h3><a class="header" href="#integers" id="integers">Integers</a></h3>
-<p>The <a href="../rand/rand_distr/struct.Binomial.html"><code>Binomial</code></a> distribution is related to the <a href="../rand/rand/distributions/struct.Bernoulli.html"><code>Bernoulli</code></a> in that it
+<p>The <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Binomial.html"><code>Binomial</code></a> distribution is related to the <a href="https://docs.rs/rand/latest/rand/distributions/struct.Bernoulli.html"><code>Bernoulli</code></a> in that it
 models running <code>n</code> independent trials each with probability <code>p</code> of success,
 then counts the number of successes.</p>
-<p>Note that for large <code>n</code> the <a href="../rand/rand_distr/struct.Binomial.html"><code>Binomial</code></a> distribution's implementation is
+<p>Note that for large <code>n</code> the <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Binomial.html"><code>Binomial</code></a> distribution's implementation is
 much faster than sampling <code>n</code> trials individually.</p>
-<p>The <a href="../rand/rand_distr/struct.Poisson.html"><code>Poisson</code></a> distribution expresses the expected number of events
+<p>The <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Poisson.html"><code>Poisson</code></a> distribution expresses the expected number of events
 occurring within a fixed interval, given that events occur with fixed rate λ.
-<a href="../rand/rand_distr/struct.Poisson.html"><code>Poisson</code></a> distribution sampling generates <code>Float</code> values because <code>Float</code>s
+<a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Poisson.html"><code>Poisson</code></a> distribution sampling generates <code>Float</code> values because <code>Float</code>s
 are used in the sampling calculations, and we prefer to defer to the user on
 integer types and the potentially lossy and panicking associated conversions.
 For example, <code>u64</code> values can be attained with <code>rng.sample(Poisson) as u64</code>.</p>
@@ -322,20 +322,20 @@ behavior for Rust &lt;1.45 and a saturating conversion for Rust &gt;=1.45.</p>
 some cases a point from a higher dimension (ℝ², ℝ³, etc.). We provide
 implementations for <code>f64</code> and for <code>f32</code> output in most cases, although currently
 the <code>f32</code> implementations simply reduce the precision of an <code>f64</code> sample.</p>
-<p>The exponential distribution, <a href="../rand/rand_distr/struct.Exp.html"><code>Exp</code></a>, simulates time until decay, assuming a
+<p>The exponential distribution, <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Exp.html"><code>Exp</code></a>, simulates time until decay, assuming a
 fixed rate of decay (i.e. exponential decay).</p>
-<p>The <a href="../rand/rand_distr/struct.Normal.html"><code>Normal</code></a> distribution (also known as Gaussian) simulates sampling from
+<p>The <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Normal.html"><code>Normal</code></a> distribution (also known as Gaussian) simulates sampling from
 the Normal distribution (&quot;Bell curve&quot;) with the given mean and standard
-deviation. The <a href="../rand/rand_distr/struct.LogNormal.html"><code>LogNormal</code></a> is related: for sample <code>X</code> from the log-normal
+deviation. The <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.LogNormal.html"><code>LogNormal</code></a> is related: for sample <code>X</code> from the log-normal
 distribution, <code>log(X)</code> is normally distributed; this &quot;skews&quot; the normal
 distribution to avoid negative values and to have a long positive tail.</p>
-<p>The <a href="../rand/rand_distr/struct.UnitCircle.html"><code>UnitCircle</code></a> and <a href="../rand/rand_distr/struct.UnitSphere.html"><code>UnitSphere</code></a> distributions simulate uniform
+<p>The <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.UnitCircle.html"><code>UnitCircle</code></a> and <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.UnitSphere.html"><code>UnitSphere</code></a> distributions simulate uniform
 sampling from the edge of a circle or surface of a sphere.</p>
-<p>The <a href="../rand/rand_distr/struct.Cauchy.html"><code>Cauchy</code></a> distribution (also known as the Lorentz distribution) is the
+<p>The <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Cauchy.html"><code>Cauchy</code></a> distribution (also known as the Lorentz distribution) is the
 distribution of the x-intercept of a ray from point <code>(x0, γ)</code> with uniformly
 distributed angle.</p>
-<p>The <a href="../rand/rand_distr/struct.Beta.html"><code>Beta</code></a> distribution is a two-parameter probability distribution, whose
-output values lie between 0 and 1. The <a href="../rand/rand_distr/struct.Dirichlet.html"><code>Dirichlet</code></a> distribution is a
+<p>The <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Beta.html"><code>Beta</code></a> distribution is a two-parameter probability distribution, whose
+output values lie between 0 and 1. The <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Dirichlet.html"><code>Dirichlet</code></a> distribution is a
 generalisation to any positive number of parameters.</p>
 
                     </main>

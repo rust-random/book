@@ -173,20 +173,20 @@ However, external RNGs can fail, and being able to handle this is important.</p>
 <p>It has therefore been decided that <em>most</em> methods should not return a
 <code>Result</code> type, but with a few important exceptions, namely:</p>
 <ul>
-<li><a href="../rand/rand/trait.Rng.html#method.try_fill"><code>Rng::try_fill</code></a></li>
-<li><a href="../rand/rand_core/trait.RngCore.html#tymethod.try_fill_bytes"><code>RngCore::try_fill_bytes</code></a></li>
-<li><a href="../rand/rand_core/trait.SeedableRng.html#method.from_rng"><code>SeedableRng::from_rng</code></a></li>
+<li><a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.try_fill"><code>Rng::try_fill</code></a></li>
+<li><a href="https://docs.rs/rand_core/latest/rand_core/trait.RngCore.html#tymethod.try_fill_bytes"><code>RngCore::try_fill_bytes</code></a></li>
+<li><a href="https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#method.from_rng"><code>SeedableRng::from_rng</code></a></li>
 </ul>
 <p>Most functions consuming random values will not attempt any error handling, and
-reduce to calls to <a href="../rand/rand_core/trait.RngCore.html"><code>RngCore</code></a>'s &quot;infallible&quot; methods. Since most RNGs cannot
+reduce to calls to <a href="https://docs.rs/rand_core/latest/rand_core/trait.RngCore.html"><code>RngCore</code></a>'s &quot;infallible&quot; methods. Since most RNGs cannot
 fail anyway this is usually not a problem, but the few generators which can may
 be forced to fail in this case:</p>
 <ul>
-<li><a href="../rand/rand/rngs/struct.OsRng.html"><code>OsRng</code></a> is a wrapper over <a href="https://docs.rs/getrandom/latest/getrandom/"><code>getrandom</code></a>. From the latter's documentation:
+<li><a href="https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html"><code>OsRng</code></a> is a wrapper over <a href="https://docs.rs/getrandom/latest/getrandom/"><code>getrandom</code></a>. From the latter's documentation:
 &quot;In general, on supported platforms, failure is highly unlikely, though not
-impossible.&quot; <a href="../rand/rand/rngs/struct.OsRng.html"><code>OsRng</code></a> will forward errors through
-<a href="../rand/rand_core/trait.RngCore.html#tymethod.try_fill_bytes"><code>RngCore::try_fill_bytes</code></a> while other methods panic on error.</li>
-<li><a href="../rand/rand/fn.thread_rng.html"><code>thread_rng</code></a> seeds itself via <a href="../rand/rand/rngs/struct.OsRng.html"><code>OsRng</code></a> on first use and periodically
+impossible.&quot; <a href="https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html"><code>OsRng</code></a> will forward errors through
+<a href="https://docs.rs/rand_core/latest/rand_core/trait.RngCore.html#tymethod.try_fill_bytes"><code>RngCore::try_fill_bytes</code></a> while other methods panic on error.</li>
+<li><a href="https://docs.rs/rand/latest/rand/fn.thread_rng.html"><code>thread_rng</code></a> seeds itself via <a href="https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html"><code>OsRng</code></a> on first use and periodically
 thereafter, thus can potentially fail, though unlikely. If initial seeding
 fails, a panic will result. If a failure happens during reseeding (less
 likely) then the RNG continues without reseeding; a log message (warning)

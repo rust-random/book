@@ -165,31 +165,31 @@
                     <main>
                         <h1><a class="header" href="#sequences" id="sequences">Sequences</a></h1>
 <p>Rand implements a few common random operations on sequences via the
-<a href="../rand/rand/seq/trait.IteratorRandom.html"><code>IteratorRandom</code></a> and <a href="../rand/rand/seq/trait.SliceRandom.html"><code>SliceRandom</code></a> traits.</p>
+<a href="https://docs.rs/rand/latest/rand/seq/trait.IteratorRandom.html"><code>IteratorRandom</code></a> and <a href="https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html"><code>SliceRandom</code></a> traits.</p>
 <h2><a class="header" href="#generating-indices" id="generating-indices">Generating indices</a></h2>
 <p>To sample:</p>
 <ul>
-<li>a single index within a given range, use <a href="../rand/rand/trait.Rng.html#method.gen_range"><code>Rng::gen_range</code></a></li>
-<li>multiple distinct indices from <code>0..length</code>, use <a href="../rand/rand/seq/index/fn.sample.html"><code>index::sample</code></a></li>
-<li>multiple distinct indices from <code>0..length</code> with weights, use <a href="../rand/rand/seq/index/fn.sample_weighted.html"><code>index::sample_weighted</code></a></li>
+<li>a single index within a given range, use <a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.gen_range"><code>Rng::gen_range</code></a></li>
+<li>multiple distinct indices from <code>0..length</code>, use <a href="https://docs.rs/rand/latest/rand/seq/index/fn.sample.html"><code>index::sample</code></a></li>
+<li>multiple distinct indices from <code>0..length</code> with weights, use <a href="https://docs.rs/rand/latest/rand/seq/index/fn.sample_weighted.html"><code>index::sample_weighted</code></a></li>
 </ul>
 <h2><a class="header" href="#shuffling" id="shuffling">Shuffling</a></h2>
 <p>To shuffle a slice:</p>
 <ul>
-<li><a href="../rand/rand/seq/trait.SliceRandom.html#tymethod.shuffle"><code>SliceRandom::shuffle</code></a>: fully shuffle a slice</li>
-<li><a href="../rand/rand/seq/trait.SliceRandom.html#tymethod.partial_shuffle"><code>SliceRandom::partial_shuffle</code></a>: partial shuffle; useful to extract
+<li><a href="https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.shuffle"><code>SliceRandom::shuffle</code></a>: fully shuffle a slice</li>
+<li><a href="https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.partial_shuffle"><code>SliceRandom::partial_shuffle</code></a>: partial shuffle; useful to extract
 <code>amount</code> random elements in random order</li>
 </ul>
 <h2><a class="header" href="#sampling" id="sampling">Sampling</a></h2>
 <p>The following provide a convenient way of sampling a value from a slice or iterator:</p>
 <ul>
-<li><a href="../rand/rand/seq/trait.SliceRandom.html#tymethod.choose"><code>SliceRandom::choose</code></a>: sample one element from a slice (by ref)</li>
-<li><a href="../rand/rand/seq/trait.SliceRandom.html#tymethod.choose_mut"><code>SliceRandom::choose_mut</code></a>: sample one element from a slice (by ref mut)</li>
-<li><a href="../rand/rand/seq/trait.SliceRandom.html#tymethod.choose_multiple"><code>SliceRandom::choose_multiple</code></a>: sample multiple distinct elements from a slice (returns iterator of references to elements)</li>
-<li><a href="../rand/rand/seq/trait.IteratorRandom.html#method.choose"><code>IteratorRandom::choose</code></a>: sample one element from an iterator (by value)</li>
-<li><a href="../rand/rand/seq/trait.IteratorRandom.html#method.choose_stable"><code>IteratorRandom::choose_stable</code></a>: sample one element from an iterator (by value), where RNG calls are unaffected by the iterator's <a href="https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.size_hint"><code>size_hint</code></a></li>
-<li><a href="../rand/rand/seq/trait.IteratorRandom.html#method.choose_multiple_fill"><code>IteratorRandom::choose_multiple_fill</code></a>: sample multiple elements, placing into a buffer</li>
-<li><a href="../rand/rand/seq/trait.IteratorRandom.html#method.choose_multiple"><code>IteratorRandom::choose_multiple</code></a>: sample multiple elements, returning a <a href="https://doc.rust-lang.org/stable/std/vec/struct.Vec.html"><code>Vec</code></a></li>
+<li><a href="https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.choose"><code>SliceRandom::choose</code></a>: sample one element from a slice (by ref)</li>
+<li><a href="https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.choose_mut"><code>SliceRandom::choose_mut</code></a>: sample one element from a slice (by ref mut)</li>
+<li><a href="https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.choose_multiple"><code>SliceRandom::choose_multiple</code></a>: sample multiple distinct elements from a slice (returns iterator of references to elements)</li>
+<li><a href="https://docs.rs/rand/latest/rand/seq/trait.IteratorRandom.html#method.choose"><code>IteratorRandom::choose</code></a>: sample one element from an iterator (by value)</li>
+<li><a href="https://docs.rs/rand/latest/rand/seq/trait.IteratorRandom.html#method.choose_stable"><code>IteratorRandom::choose_stable</code></a>: sample one element from an iterator (by value), where RNG calls are unaffected by the iterator's <a href="https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.size_hint"><code>size_hint</code></a></li>
+<li><a href="https://docs.rs/rand/latest/rand/seq/trait.IteratorRandom.html#method.choose_multiple_fill"><code>IteratorRandom::choose_multiple_fill</code></a>: sample multiple elements, placing into a buffer</li>
+<li><a href="https://docs.rs/rand/latest/rand/seq/trait.IteratorRandom.html#method.choose_multiple"><code>IteratorRandom::choose_multiple</code></a>: sample multiple elements, returning a <a href="https://doc.rust-lang.org/stable/std/vec/struct.Vec.html"><code>Vec</code></a></li>
 </ul>
 <p>Note that operating on an iterator is often less efficient than operating on a
 slice.</p>
@@ -202,23 +202,23 @@ replaced (thus, the probability of sampling each variant is not affected by the
 action of sampling).</p>
 <p>This is implemented by the following distributions:</p>
 <ul>
-<li><a href="../rand/rand/distributions/struct.WeightedIndex.html"><code>WeightedIndex</code></a> has fast setup and <code>O(log N)</code> sampling</li>
-<li><a href="../rand/rand_distr/weighted_alias/struct.WeightedAliasIndex.html"><code>WeightedAliasIndex</code></a> has slow setup and <code>O(1)</code> sampling, thus <em>may</em> be
+<li><a href="https://docs.rs/rand/latest/rand/distributions/struct.WeightedIndex.html"><code>WeightedIndex</code></a> has fast setup and <code>O(log N)</code> sampling</li>
+<li><a href="https://docs.rs/rand_distr/latest/rand_distr/weighted_alias/struct.WeightedAliasIndex.html"><code>WeightedAliasIndex</code></a> has slow setup and <code>O(1)</code> sampling, thus <em>may</em> be
 faster with a large number of samples</li>
 </ul>
 <p>For convenience, you may use:</p>
 <ul>
-<li><a href="../rand/rand/seq/trait.SliceRandom.html#tymethod.choose_weighted"><code>SliceRandom::choose_weighted</code></a></li>
-<li><a href="../rand/rand/seq/trait.SliceRandom.html#tymethod.choose_weighted_mut"><code>SliceRandom::choose_weighted_mut</code></a></li>
+<li><a href="https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.choose_weighted"><code>SliceRandom::choose_weighted</code></a></li>
+<li><a href="https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.choose_weighted_mut"><code>SliceRandom::choose_weighted_mut</code></a></li>
 </ul>
 <h3><a class="header" href="#without-replacement" id="without-replacement">Without replacement</a></h3>
 <p>Sampling <em>without replacement</em> implies that the action of sampling modifies the
-distribution. Since the <a href="../rand/rand/distributions/trait.Distribution.html"><code>Distribution</code></a> trait is built around the idea of
+distribution. Since the <a href="https://docs.rs/rand/latest/rand/distributions/trait.Distribution.html"><code>Distribution</code></a> trait is built around the idea of
 immutable distributions, we offer the following:</p>
 <ul>
-<li><a href="../rand/rand/seq/trait.SliceRandom.html#tymethod.choose_multiple_weighted"><code>SliceRandom::choose_multiple_weighted</code></a>: sample <code>amount</code> distinct values
+<li><a href="https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.choose_multiple_weighted"><code>SliceRandom::choose_multiple_weighted</code></a>: sample <code>amount</code> distinct values
 from a slice with weights</li>
-<li><a href="../rand/rand/seq/index/fn.sample_weighted.html"><code>index::sample_weighted</code></a>: sample <code>amount</code> distinct indices from a range with
+<li><a href="https://docs.rs/rand/latest/rand/seq/index/fn.sample_weighted.html"><code>index::sample_weighted</code></a>: sample <code>amount</code> distinct indices from a range with
 weights</li>
 <li>Implement yourself: see the section in <a href="guide-process.html#sampling-without-replacement">Random processes</a></li>
 </ul>

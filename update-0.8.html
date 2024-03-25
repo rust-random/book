@@ -221,7 +221,7 @@ let b: u32 = Standard.sample_iter(&amp;mut rng).next().unwrap();
 <span class="boring">}
 </span></code></pre></pre>
 <h4><a class="header" href="#gen_range" id="gen_range"><code>gen_range</code></a></h4>
-<p><a href="../rand/rand/trait.Rng.html#method.gen_range"><code>Rng::gen_range</code></a> now takes a <code>Range</code> instead of two numbers. Thus, replace
+<p><a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.gen_range"><code>Rng::gen_range</code></a> now takes a <code>Range</code> instead of two numbers. Thus, replace
 <code>gen_range(a, b)</code> with <code>gen_range(a..b)</code>. We suggest using the following regular
 expression to search-replace in all files:</p>
 <ul>
@@ -238,15 +238,15 @@ external tool such as Regexxer may be used.</p>
 <li>SIMD types are no longer supported (<code>Uniform</code> types may still be used directly)</li>
 </ul>
 <h4><a class="header" href="#fill" id="fill"><code>fill</code></a></h4>
-<p>The <code>AsByteSliceMut</code> trait was replaced with the <a href="../rand/rand/trait.Fill.html"><code>Fill</code></a> trait. This should
+<p>The <code>AsByteSliceMut</code> trait was replaced with the <a href="https://docs.rs/rand/latest/rand/trait.Fill.html"><code>Fill</code></a> trait. This should
 only affect code implementing <code>AsByteSliceMut</code> on user-defined types, since the
-<a href="../rand/rand/trait.Rng.html#method.fill"><code>Rng::fill</code></a> and <a href="../rand/rand/trait.Rng.html#method.try_fill"><code>Rng::try_fill</code></a> retain support for previously-supported types.</p>
+<a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.fill"><code>Rng::fill</code></a> and <a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.try_fill"><code>Rng::try_fill</code></a> retain support for previously-supported types.</p>
 <p><code>Fill</code> supports some additional slice types which could not be supported with
 <code>AsByteSliceMut</code>: <code>[bool], [char], [f32], [f64]</code>.</p>
 <h4><a class="header" href="#adapter" id="adapter"><code>adapter</code></a></h4>
-<p>The entire <a href="../rand/rand/rngs/adapter/index.html"><code>rand::rngs::adapter</code></a> module is now restricted to the <code>std</code> feature.
+<p>The entire <a href="https://docs.rs/rand/latest/rand/rngs/adapter/"><code>rand::rngs::adapter</code></a> module is now restricted to the <code>std</code> feature.
 While this is technically a breaking change, it should only affect <code>no_std</code> code
-using <a href="../rand/rand/rngs/adapter/struct.ReseedingRng.html"><code>ReseedingRng</code></a>, which is unlikely to exist in the wild.</p>
+using <a href="https://docs.rs/rand/latest/rand/rngs/adapter/struct.ReseedingRng.html"><code>ReseedingRng</code></a>, which is unlikely to exist in the wild.</p>
 <h2><a class="header" href="#generators" id="generators">Generators</a></h2>
 <p><strong>StdRng</strong> has switched from the 20-round ChaCha20 to ChaCha12 for improved
 performance. This is a reduction in complexity but the 12-round variant is still
@@ -255,14 +255,14 @@ considered secure: see <a href="https://github.com/rust-random/rand/issues/932">
 and 64-bit platforms respectively. This reduces correlations of random data
 generated from similar seeds and improves performance. It is a value-breaking
 change.</p>
-<p>We now implement <code>PartialEq</code> and <code>Eq</code> for <a href="../rand/rand/rngs/struct.StdRng.html"><code>StdRng</code></a>, <a href="../rand/rand/rngs/struct.SmallRng.html"><code>SmallRng</code></a>, and <a href="../rand/rand/rngs/mock/struct.StepRng.html"><code>StepRng</code></a>.</p>
+<p>We now implement <code>PartialEq</code> and <code>Eq</code> for <a href="https://docs.rs/rand/latest/rand/rngs/struct.StdRng.html"><code>StdRng</code></a>, <a href="https://docs.rs/rand/latest/rand/rngs/struct.SmallRng.html"><code>SmallRng</code></a>, and <a href="https://docs.rs/rand/latest/rand/rngs/mock/struct.StepRng.html"><code>StepRng</code></a>.</p>
 <h2><a class="header" href="#distributions" id="distributions">Distributions</a></h2>
 <p>Several smaller changes occurred to rand distributions:</p>
 <ul>
-<li>The <a href="../rand/rand/distributions/struct.Uniform.html"><code>Uniform</code></a> distribution now additionally supports the <code>char</code> type, so
+<li>The <a href="https://docs.rs/rand/latest/rand/distributions/struct.Uniform.html"><code>Uniform</code></a> distribution now additionally supports the <code>char</code> type, so
 for example <code>rng.gen_range('a'..='f')</code> is now supported.</li>
-<li><a href="../rand/rand/distributions/uniform/trait.UniformSampler.html#method.sample_single_inclusive"><code>UniformSampler::sample_single_inclusive</code></a> was added.</li>
-<li>The <a href="../rand/rand/distributions/struct.Alphanumeric.html"><code>Alphanumeric</code></a> distribution now samples bytes instead of chars. This
+<li><a href="https://docs.rs/rand/latest/rand/distributions/uniform/trait.UniformSampler.html#method.sample_single_inclusive"><code>UniformSampler::sample_single_inclusive</code></a> was added.</li>
+<li>The <a href="https://docs.rs/rand/latest/rand/distributions/struct.Alphanumeric.html"><code>Alphanumeric</code></a> distribution now samples bytes instead of chars. This
 more closely reflects the internally used type, but old code likely has to
 be adapted to perform the conversion from <code>u8</code> to <code>char</code>. For example, with
 Rand 0.7 you could write:
@@ -287,22 +287,22 @@ println!(&quot;chars = \&quot;{chars}\&quot;&quot;);
 <span class="boring">}
 </span></code></pre></pre>
 </li>
-<li>The alternative implementation of <a href="../rand/rand/distributions/struct.WeightedIndex.html"><code>WeightedIndex</code></a> employing the alias
-method was moved from <code>rand</code> to <a href="../rand/rand_distr/weighted_alias/struct.WeightedAliasIndex.html"><code>rand_distr::weighted_alias::WeightedAliasIndex</code></a>. The
+<li>The alternative implementation of <a href="https://docs.rs/rand/latest/rand/distributions/struct.WeightedIndex.html"><code>WeightedIndex</code></a> employing the alias
+method was moved from <code>rand</code> to <a href="https://docs.rs/rand_distr/latest/rand_distr/weighted_alias/struct.WeightedAliasIndex.html"><code>rand_distr::weighted_alias::WeightedAliasIndex</code></a>. The
 alias method is faster for large sizes, but it suffers from a slow
 initialization, making it less generally useful.</li>
 </ul>
 <p>In <code>rand_distr</code> v0.4, more changes occurred (since v0.2):</p>
 <ul>
-<li><a href="../rand/rand_distr/weighted_alias/struct.WeightedAliasIndex.html"><code>rand_distr::weighted_alias::WeightedAliasIndex</code></a> was added (moved from the <code>rand</code> crate)</li>
-<li><a href="../rand/rand_distr/struct.InverseGaussian.html"><code>rand_distr::InverseGaussian</code></a> and <a href="../rand/rand_distr/struct.NormalInverseGaussian.html"><code>rand_distr::NormalInverseGaussian</code></a>
+<li><a href="https://docs.rs/rand_distr/latest/rand_distr/weighted_alias/struct.WeightedAliasIndex.html"><code>rand_distr::weighted_alias::WeightedAliasIndex</code></a> was added (moved from the <code>rand</code> crate)</li>
+<li><a href="https://docs.rs/rand_distr/latest/rand_distr/struct.InverseGaussian.html"><code>rand_distr::InverseGaussian</code></a> and <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.NormalInverseGaussian.html"><code>rand_distr::NormalInverseGaussian</code></a>
 were added</li>
-<li>The <a href="../rand/rand_distr/struct.Geometric.html"><code>Geometric</code></a> and <a href="../rand/rand_distr/struct.Hypergeometric.html"><code>Hypergeometric</code></a> distributions are now supported.</li>
-<li>A different algorithm is used for the <a href="../rand/rand_distr/struct.Beta.html"><code>Beta</code></a> distribution, improving both
+<li>The <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Geometric.html"><code>Geometric</code></a> and <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Hypergeometric.html"><code>Hypergeometric</code></a> distributions are now supported.</li>
+<li>A different algorithm is used for the <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Beta.html"><code>Beta</code></a> distribution, improving both
 performance and accuracy. This is a value-breaking change.</li>
-<li>The <a href="../rand/rand_distr/struct.Normal.html"><code>Normal</code></a> and <a href="../rand/rand_distr/struct.LogNormal.html"><code>LogNormal</code></a> distributions now support a <code>from_mean_cv</code>
+<li>The <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Normal.html"><code>Normal</code></a> and <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.LogNormal.html"><code>LogNormal</code></a> distributions now support a <code>from_mean_cv</code>
 constructor method and <code>from_zscore</code> sampler method.</li>
-<li><a href="../rand/rand_distr/struct.Dirichlet.html"><code>rand_distr::Dirichlet</code></a> now uses boxed slices internally instead of <code>Vec</code>.
+<li><a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Dirichlet.html"><code>rand_distr::Dirichlet</code></a> now uses boxed slices internally instead of <code>Vec</code>.
 Therefore, the weights are taken as a slice instead of a <code>Vec</code> as input.
 For example, the following <code>rand_distr 0.2</code> code
 <pre><code class="language-rust noplayground"><span class="boring">use rand_distr_0_2::Dirichlet;
@@ -313,7 +313,7 @@ can be replaced with the following <code>rand_distr 0.3</code> code:
 </span>Dirichlet::new(&amp;[1.0, 2.0, 3.0]).unwrap();
 </code></pre>
 </li>
-<li><a href="../rand/rand_distr/struct.Poisson.html"><code>rand_distr::Poisson</code></a> does no longer support sampling <code>u64</code> values directly.
+<li><a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Poisson.html"><code>rand_distr::Poisson</code></a> does no longer support sampling <code>u64</code> values directly.
 Old code may have to be updated to perform the conversion from <code>f64</code>
 explicitly.</li>
 <li>The custom <code>Float</code> trait in <code>rand_distr</code> was replaced with
@@ -324,17 +324,17 @@ have to be migrated. Thanks to the math functions from <code>num_traits::Float</
 <p>Additionally, there were some minor improvements:</p>
 <ul>
 <li>The treatment of rounding errors and NaN was improved for the
-<a href="../rand/rand/distributions/struct.WeightedIndex.html"><code>WeightedIndex</code></a> distribution.</li>
-<li>The <a href="../rand/rand_distr/struct.Exp.html"><code>rand_distr::Exp</code></a> distribution now supports the <code>lambda = 0</code> parametrization.</li>
+<a href="https://docs.rs/rand/latest/rand/distributions/struct.WeightedIndex.html"><code>WeightedIndex</code></a> distribution.</li>
+<li>The <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Exp.html"><code>rand_distr::Exp</code></a> distribution now supports the <code>lambda = 0</code> parametrization.</li>
 </ul>
 <h2><a class="header" href="#sequences" id="sequences">Sequences</a></h2>
 <p>Weighted sampling without replacement is now supported, see
-<a href="../rand/rand/seq/index/fn.sample_weighted.html"><code>rand::seq::index::sample_weighted</code></a> and
-<a href="../rand/rand/seq/trait.SliceRandom.html#method.choose_multiple_weighted"><code>SliceRandom::choose_multiple_weighted</code></a>.</p>
+<a href="https://docs.rs/rand/latest/rand/seq/index/fn.sample_weighted.html"><code>rand::seq::index::sample_weighted</code></a> and
+<a href="https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#method.choose_multiple_weighted"><code>SliceRandom::choose_multiple_weighted</code></a>.</p>
 <p>There have been <a href="https://github.com/rust-random/rand/pull/1059">value-breaking
 changes</a> to
-<a href="../rand/rand/seq/trait.IteratorRandom.html#method.choose"><code>IteratorRandom::choose</code></a>, improving accuracy and performance. Furthermore,
-<a href="../rand/rand/seq/trait.IteratorRandom.html#method.choose_stable"><code>IteratorRandom::choose_stable</code></a> was added to provide an alternative that
+<a href="https://docs.rs/rand/latest/rand/seq/trait.IteratorRandom.html#method.choose"><code>IteratorRandom::choose</code></a>, improving accuracy and performance. Furthermore,
+<a href="https://docs.rs/rand/latest/rand/seq/trait.IteratorRandom.html#method.choose_stable"><code>IteratorRandom::choose_stable</code></a> was added to provide an alternative that
 sacrifices performance for independence of iterator size hints.</p>
 <h2><a class="header" href="#feature-flags" id="feature-flags">Feature flags</a></h2>
 <p><code>StdRng</code> is now gated behind a new feature flag, <code>std_rng</code>. This is enabled by
