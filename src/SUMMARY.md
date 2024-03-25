@@ -2,7 +2,7 @@
 
 [Introduction](intro.md)
 
-- [Getting Started](guide-start.md)
+- [Quick start](quick-start.md)
 
 - [Crates](crates.md)
     - [Features](crate-features.md)

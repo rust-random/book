@@ -1,4 +1,4 @@
-# Getting Started
+# Quick start
 
 Below we list a short example. For more, please refer to the [API documentation]
 or the [guide].
