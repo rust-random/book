@@ -55,29 +55,6 @@ number distributions: uniform and weighted sampling. For everything else,
     the *error*, *beta*, *gamma* and *logistic* special functions, plus a few
     utilities. (For clarity, [`statrs`] is not part of the Rand library.)
 
-## Feature flags
-
-Rand crates allow some configuration via feature flags. Check the READMEs of
-individual crates for details.
-
-No-std support is available across most Rand crates by disabling default
-features: `rand = { version = "0.7", default-features = false }`.
-This is affected by the following flags:
-
--   `std` opts-in to functionality dependent on the `std` lib
--   `alloc` (implied by `std`) enables functionality requiring an allocator
-    (when using this feature in `no_std`, Rand requires Rustc version 1.36 or greater)
-
-Some Rand crates can be built with support for the following third-party crates:
-
--   `log` enables a few log messages via [`log`]
--   `serde1` enables serialization via [`serde`], version 1.0
-
-Note that cryptographic RNGs *do not* support serialisation since this could be
-a security risk. If you need state-restore functionality on a cryptographic RNG,
-the ChaCha generator supports [getting and setting the stream position](https://docs.rs/rand_chacha/latest/rand_chacha/struct.ChaCha20Rng.html#method.get_word_pos),
-which, together with the seed, can be used to reconstruct the generator's state.
-
 ## WASM support
 
 Almost all Rand crates support WASM out of the box. However, when using the

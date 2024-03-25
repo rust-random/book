@@ -4,8 +4,8 @@
 
 - [Getting Started](guide-start.md)
 
-- [Crates and features](crates.md)
-    - [Rand and co](crates-rand.md)
+- [Crates](crates.md)
+    - [Features](crate-features.md)
 
 - [Guide](guide.md)
     - [Cargo and features](guide-cargo.md)
