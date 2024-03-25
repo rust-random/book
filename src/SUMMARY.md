@@ -6,7 +6,6 @@
 
 - [Crates and features](crates.md)
     - [Rand and co](crates-rand.md)
-    - [Random generators](crates-gen.md)
 
 - [Guide](guide.md)
     - [Cargo and features](guide-cargo.md)
