@@ -1,4 +1,4 @@
-# Portability
+# Reproducibility
 
 ## Definitions
 
@@ -61,7 +61,7 @@ upper bound exceeds `u32::MAX`.
 ### Portability of floats
 
 The results of floating point arithmetic depend on rounding modes and
-implementation details. Especially the results of transcendental functions vary
-from platform to platform. Due to this, the distributions in `rand_distr` are
-not always portable for `f32` and `f64`. However, we strive to make them as
-portable as possible.
+implementation details. In particular, the results of transcendental functions vary
+from platform to platform. Due to this, results of distributions in `rand_distr` using `f32` or `f64` may not be portable.
+
+To aleviate (or further complicate) this concern, we prefer to use `libm` over `std` implementations of these transcendental functions. See [rand_distr features](crate-features.html#rand_distr-features).

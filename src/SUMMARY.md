@@ -7,6 +7,7 @@
 - [Crates](crates.md)
     - [Features](crate-features.md)
     - [Platform support](crate-platforms.md)
+    - [Reproducibility](crate-reprod.md)
 
 - [Guide](guide.md)
     - [Cargo and features](guide-cargo.md)
@@ -20,8 +21,6 @@
     - [Random processess](guide-process.md)
     - [Sequences](guide-seq.md)
     - [Error handling](guide-err.md)
-
-- [Portability](portability.md)
 
 - [Updating](update.md)
     - [Updating to 0.5](update-0.5.md)
