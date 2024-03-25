@@ -29,10 +29,10 @@ be forced to fail in this case:
     likely) then the RNG continues without reseeding; a log message (warning)
     is emitted if logging is enabled.
 
-[`Rng::try_fill`]: ../rand/rand/trait.Rng.html#method.try_fill
-[`RngCore::try_fill_bytes`]: ../rand/rand_core/trait.RngCore.html#tymethod.try_fill_bytes
-[`SeedableRng::from_rng`]: ../rand/rand_core/trait.SeedableRng.html#method.from_rng
-[`RngCore`]: ../rand/rand_core/trait.RngCore.html
-[`thread_rng`]: ../rand/rand/fn.thread_rng.html
-[`OsRng`]: ../rand/rand/rngs/struct.OsRng.html
+[`Rng::try_fill`]: https://docs.rs/rand/latest/rand/trait.Rng.html#method.try_fill
+[`RngCore::try_fill_bytes`]: https://docs.rs/rand_core/latest/rand_core/trait.RngCore.html#tymethod.try_fill_bytes
+[`SeedableRng::from_rng`]: https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#method.from_rng
+[`RngCore`]: https://docs.rs/rand_core/latest/rand_core/trait.RngCore.html
+[`thread_rng`]: https://docs.rs/rand/latest/rand/fn.thread_rng.html
+[`OsRng`]: https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html
 [`getrandom`]: https://docs.rs/getrandom/latest/getrandom/

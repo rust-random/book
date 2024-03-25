@@ -40,10 +40,10 @@ The following crates implement pseudo-random number generators
 -   [`rand_xorshift`] implements the basic Xorshift generator
 
 
-[`rand_chacha`]: https://rust-random.github.io/rand/rand_chacha/index.html
+[`rand_chacha`]: https://docs.rs/rand_chacha/
 [`rand_hc`]: https://docs.rs/rand_hc/
 [`rand_isaac`]: https://docs.rs/rand_isaac/
-[`rand_pcg`]: https://rust-random.github.io/rand/rand_pcg/index.html
+[`rand_pcg`]: https://docs.rs/rand_pcg/
 [`rand_xoshiro`]: https://docs.rs/rand_xoshiro/
 [`rand_xorshift`]: https://docs.rs/rand_xorshift/
 [`rand_jitter`]: https://docs.rs/rand_jitter/

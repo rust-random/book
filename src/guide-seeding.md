@@ -141,12 +141,12 @@ It is **not a password hasher**, for such applications a key-derivation
 function such as Argon2 must be used.
 
 
-[`SeedableRng`]: ../rand/rand_core/trait.SeedableRng.html
-[`Seed`]: ../rand/rand_core/trait.SeedableRng.html#type.Seed
-[`SeedableRng::from_seed`]: ../rand/rand_core/trait.SeedableRng.html#tymethod.from_seed
-[`SeedableRng::from_rng`]: ../rand/rand_core/trait.SeedableRng.html#method.from_rng
-[`SeedableRng::seed_from_u64`]: ../rand/rand_core/trait.SeedableRng.html#method.seed_from_u64
-[`SeedableRng::from_entropy`]: ../rand/rand_core/trait.SeedableRng.html#method.from_entropy
+[`SeedableRng`]: https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html
+[`Seed`]: https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#type.Seed
+[`SeedableRng::from_seed`]: https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#tymethod.from_seed
+[`SeedableRng::from_rng`]: https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#method.from_rng
+[`SeedableRng::seed_from_u64`]: https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#method.seed_from_u64
+[`SeedableRng::from_entropy`]: https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#method.from_entropy
 [`XorShiftRng`]: https://docs.rs/rand_xorshift/latest/rand_xorshift/struct.XorShiftRng.html
-[`ChaCha8Rng`]: ../rand/rand_chacha/struct.ChaCha8Rng.html
+[`ChaCha8Rng`]: https://docs.rs/rand_chacha/latest/rand_chacha/struct.ChaCha8Rng.html
 [`rand_seeder`]: https://github.com/rust-random/seeder/

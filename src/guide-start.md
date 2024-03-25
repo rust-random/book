@@ -51,7 +51,7 @@ fn main() {
 
 The first thing you may have noticed is that we imported everything from the
 [prelude]. This is the lazy way to `use` rand, and like the
-[standard library's prelude](https://doc.rust-lang.org/std/prelude/index.html),
+[standard library's prelude](https://doc.rust-lang.org/std/prelude/),
 only imports the most common items. If you don't wish to use the prelude,
 remember to import the [`Rng`] trait!
 
@@ -92,18 +92,18 @@ fn main() {
 }
 ```
 
-[API documentation]: https://rust-random.github.io/rand/rand/index.html
+[API documentation]: https://docs.rs/rand/
 [guide]: guide.md
 [RNGs]: guide-rngs.md
-[prelude]: https://rust-random.github.io/rand/rand/prelude/index.html
-[`Rng`]: https://rust-random.github.io/rand/rand/trait.Rng.html
-[`gen`]: https://rust-random.github.io/rand/rand/trait.Rng.html#method.gen
-[`gen_range`]: https://rust-random.github.io/rand/rand/trait.Rng.html#method.gen_range
-[`sample`]: https://rust-random.github.io/rand/rand/trait.Rng.html#method.sample
-[`thread_rng`]: https://rust-random.github.io/rand/rand/fn.thread_rng.html
-[`random`]: https://rust-random.github.io/rand/rand/fn.random.html
-[`Standard`]: https://rust-random.github.io/rand/rand/distributions/struct.Standard.html
-[`IteratorRandom`]: https://rust-random.github.io/rand/rand/seq/trait.IteratorRandom.html
-[`SliceRandom`]: https://rust-random.github.io/rand/rand/seq/trait.SliceRandom.html
-[`seed_from_u64`]: https://rust-random.github.io/rand/rand/trait.SeedableRng.html#method.seed_from_u64
-[`from_seed`]: https://rust-random.github.io/rand/rand/trait.SeedableRng.html#tymethod.from_seed
+[prelude]: https://docs.rs/rand/latest/rand/prelude/
+[`Rng`]: https://docs.rs/rand/latest/rand/trait.Rng.html
+[`gen`]: https://docs.rs/rand/latest/rand/trait.Rng.html#method.gen
+[`gen_range`]: https://docs.rs/rand/latest/rand/trait.Rng.html#method.gen_range
+[`sample`]: https://docs.rs/rand/latest/rand/trait.Rng.html#method.sample
+[`thread_rng`]: https://docs.rs/rand/latest/rand/fn.thread_rng.html
+[`random`]: https://docs.rs/rand/latest/rand/fn.random.html
+[`Standard`]: https://docs.rs/rand/latest/rand/distributions/struct.Standard.html
+[`IteratorRandom`]: https://docs.rs/rand/latest/rand/seq/trait.IteratorRandom.html
+[`SliceRandom`]: https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html
+[`seed_from_u64`]: https://docs.rs/rand/latest/rand/trait.SeedableRng.html#method.seed_from_u64
+[`from_seed`]: https://docs.rs/rand/latest/rand/trait.SeedableRng.html#tymethod.from_seed

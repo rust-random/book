@@ -82,26 +82,26 @@ that after upgrading to 0.7 results should be consistent across CPU
 architectures.
 
 
-[`from_entropy`]: https://rust-random.github.io/rand/rand/trait.SeedableRng.html#method.from_entropy
-[`SeedableRng::from_rng`]: https://rust-random.github.io/rand/rand/trait.SeedableRng.html#method.from_rng
-[`SmallRng`]: ../rand/rand/rngs/struct.SmallRng.html
-[`StdRng`]: ../rand/rand/rngs/struct.StdRng.html
-[`ThreadRng`]: ../rand/rand/rngs/struct.ThreadRng.html
-[`Pcg64`]: ../rand/rand_pcg/type.Pcg64.html
+[`from_entropy`]: https://docs.rs/rand/latest/rand/trait.SeedableRng.html#method.from_entropy
+[`SeedableRng::from_rng`]: https://docs.rs/rand/latest/rand/trait.SeedableRng.html#method.from_rng
+[`SmallRng`]: https://docs.rs/rand/latest/rand/rngs/struct.SmallRng.html
+[`StdRng`]: https://docs.rs/rand/latest/rand/rngs/struct.StdRng.html
+[`ThreadRng`]: https://docs.rs/rand/latest/rand/rngs/struct.ThreadRng.html
+[`Pcg64`]: https://docs.rs/rand_pcg/latest/rand_pcg/type.Pcg64.html
 [`rand::distributions::weighted::alias_method::WeightedIndex`]: https://docs.rs/rand/0.7/rand/distributions/weighted/alias_method/struct.WeightedIndex.html
 [getrandom]: https://github.com/rust-random/getrandom
 [`FromEntropy`]: https://docs.rs/rand/0.6.0/rand/trait.FromEntropy.html
-[`SeedableRng`]: https://rust-random.github.io/rand/rand/trait.SeedableRng.html
-[`Error`]: https://rust-random.github.io/rand/rand_core/struct.Error.html
-[`Standard`]: ../rand/rand/distributions/struct.Standard.html
-[`Uniform`]: ../rand/rand/distributions/struct.Uniform.html
-[`rand::distributions`]: ../rand/rand/distributions/index.html
-[`rand_distr`]: ../rand/rand_distr/index.html
-[`rand_distr::Normal`]: ../rand/rand_distr/struct.Normal.html
-[`NonZeroU*`]: https://doc.rust-lang.org/std/num/index.html
-[`rand_distr::Pert`]: ../rand/rand_distr/struct.Pert.html
-[`rand_distr::Triangular`]: ../rand/rand_distr/struct.Triangular.html
-[`rand_distr::UnitBall`]: ../rand/rand_distr/struct.UnitBall.html
-[`rand_distr::UnitDisc`]: ../rand/rand_distr/struct.UnitDisc.html
-[`rand_distr::UnitSphere`]: ../rand/rand_distr/struct.UnitSphere.html
-[`OsRng`]: ../rand/rand_core/struct.OsRng.html
+[`SeedableRng`]: https://docs.rs/rand/latest/rand/trait.SeedableRng.html
+[`Error`]: https://docs.rs/rand_core/latest/rand_core/struct.Error.html
+[`Standard`]: https://docs.rs/rand/latest/rand/distributions/struct.Standard.html
+[`Uniform`]: https://docs.rs/rand/latest/rand/distributions/struct.Uniform.html
+[`rand::distributions`]: https://docs.rs/rand/latest/rand/distributions/
+[`rand_distr`]: https://docs.rs/rand_distr/
+[`rand_distr::Normal`]: https://docs.rs/rand_distr/latest/rand_distr/struct.Normal.html
+[`NonZeroU*`]: https://doc.rust-lang.org/std/num/https://docs.rs/rand_chacha/latest/rand_chacha/
+[`rand_distr::Pert`]: https://docs.rs/rand_distr/latest/rand_distr/struct.Pert.html
+[`rand_distr::Triangular`]: https://docs.rs/rand_distr/latest/rand_distr/struct.Triangular.html
+[`rand_distr::UnitBall`]: https://docs.rs/rand_distr/latest/rand_distr/struct.UnitBall.html
+[`rand_distr::UnitDisc`]: https://docs.rs/rand_distr/latest/rand_distr/struct.UnitDisc.html
+[`rand_distr::UnitSphere`]: https://docs.rs/rand_distr/latest/rand_distr/struct.UnitSphere.html
+[`OsRng`]: https://docs.rs/rand_core/latest/rand_core/struct.OsRng.html
