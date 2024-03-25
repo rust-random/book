@@ -10,7 +10,7 @@
     - [Reproducibility](crate-reprod.md)
 
 - [Guide](guide.md)
-    - [Cargo and features](guide-cargo.md)
+    - [Getting started](guide-start.md)
     - [Random data](guide-data.md)
     - [Types of generators](guide-gen.md)
     - [Our RNGs](guide-rngs.md)
