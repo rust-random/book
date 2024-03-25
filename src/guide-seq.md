@@ -68,25 +68,25 @@ immutable distributions, we offer the following:
     weights
 -   Implement yourself: see the section in [Random processes](guide-process.html#sampling-without-replacement)
 
-[`Distribution`]: ../rand/rand/distributions/trait.Distribution.html
-[`IteratorRandom`]: ../rand/rand/seq/trait.IteratorRandom.html
-[`SliceRandom`]: ../rand/rand/seq/trait.SliceRandom.html
-[`WeightedIndex`]: ../rand/rand/distributions/struct.WeightedIndex.html
-[`WeightedAliasIndex`]: ../rand/rand_distr/weighted_alias/struct.WeightedAliasIndex.html
-[`SliceRandom::choose`]: ../rand/rand/seq/trait.SliceRandom.html#tymethod.choose
-[`SliceRandom::choose_mut`]: ../rand/rand/seq/trait.SliceRandom.html#tymethod.choose_mut
-[`SliceRandom::choose_multiple`]: ../rand/rand/seq/trait.SliceRandom.html#tymethod.choose_multiple
-[`IteratorRandom::choose`]: ../rand/rand/seq/trait.IteratorRandom.html#method.choose
-[`IteratorRandom::choose_stable`]: ../rand/rand/seq/trait.IteratorRandom.html#method.choose_stable
-[`IteratorRandom::choose_multiple`]: ../rand/rand/seq/trait.IteratorRandom.html#method.choose_multiple
-[`IteratorRandom::choose_multiple_fill`]: ../rand/rand/seq/trait.IteratorRandom.html#method.choose_multiple_fill
-[`SliceRandom::choose_weighted`]: ../rand/rand/seq/trait.SliceRandom.html#tymethod.choose_weighted
-[`SliceRandom::choose_weighted_mut`]: ../rand/rand/seq/trait.SliceRandom.html#tymethod.choose_weighted_mut
-[`SliceRandom::choose_multiple_weighted`]: ../rand/rand/seq/trait.SliceRandom.html#tymethod.choose_multiple_weighted
-[`SliceRandom::shuffle`]: ../rand/rand/seq/trait.SliceRandom.html#tymethod.shuffle
-[`SliceRandom::partial_shuffle`]: ../rand/rand/seq/trait.SliceRandom.html#tymethod.partial_shuffle
-[`Rng::gen_range`]: ../rand/rand/trait.Rng.html#method.gen_range
-[`index::sample`]: ../rand/rand/seq/index/fn.sample.html
-[`index::sample_weighted`]: ../rand/rand/seq/index/fn.sample_weighted.html
+[`Distribution`]: https://docs.rs/rand/latest/rand/distributions/trait.Distribution.html
+[`IteratorRandom`]: https://docs.rs/rand/latest/rand/seq/trait.IteratorRandom.html
+[`SliceRandom`]: https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html
+[`WeightedIndex`]: https://docs.rs/rand/latest/rand/distributions/struct.WeightedIndex.html
+[`WeightedAliasIndex`]: https://docs.rs/rand_distr/latest/rand_distr/weighted_alias/struct.WeightedAliasIndex.html
+[`SliceRandom::choose`]: https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.choose
+[`SliceRandom::choose_mut`]: https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.choose_mut
+[`SliceRandom::choose_multiple`]: https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.choose_multiple
+[`IteratorRandom::choose`]: https://docs.rs/rand/latest/rand/seq/trait.IteratorRandom.html#method.choose
+[`IteratorRandom::choose_stable`]: https://docs.rs/rand/latest/rand/seq/trait.IteratorRandom.html#method.choose_stable
+[`IteratorRandom::choose_multiple`]: https://docs.rs/rand/latest/rand/seq/trait.IteratorRandom.html#method.choose_multiple
+[`IteratorRandom::choose_multiple_fill`]: https://docs.rs/rand/latest/rand/seq/trait.IteratorRandom.html#method.choose_multiple_fill
+[`SliceRandom::choose_weighted`]: https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.choose_weighted
+[`SliceRandom::choose_weighted_mut`]: https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.choose_weighted_mut
+[`SliceRandom::choose_multiple_weighted`]: https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.choose_multiple_weighted
+[`SliceRandom::shuffle`]: https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.shuffle
+[`SliceRandom::partial_shuffle`]: https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.partial_shuffle
+[`Rng::gen_range`]: https://docs.rs/rand/latest/rand/trait.Rng.html#method.gen_range
+[`index::sample`]: https://docs.rs/rand/latest/rand/seq/index/fn.sample.html
+[`index::sample_weighted`]: https://docs.rs/rand/latest/rand/seq/index/fn.sample_weighted.html
 [`size_hint`]: https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.size_hint
 [`Vec`]: https://doc.rust-lang.org/stable/std/vec/struct.Vec.html

@@ -32,4 +32,4 @@ For some inspiration, see the example applications:
 - [Monty Hall Problem](
    https://github.com/rust-random/rand/blob/master/examples/monty-hall.rs)
 
-[`prelude`]: ../rand/rand/prelude/index.html
+[`prelude`]: https://docs.rs/rand/latest/rand/prelude/

@@ -50,20 +50,20 @@ number distributions: uniform and weighted sampling. For everything else,
 
 [common feature flags]: crates.md#feature-flags
 
-[`rand_core`]: https://rust-random.github.io/rand/rand_core/index.html
-[`rand`]: https://rust-random.github.io/rand/rand/index.html
-[`rand_distr`]: https://rust-random.github.io/rand/rand_distr/index.html
-[`statrs`]: https://github.com/boxtown/statrs
+[`rand_core`]: https://docs.rs/rand_core/
+[`rand`]: https://docs.rs/rand/
+[`rand_distr`]: https://docs.rs/rand_distr/
+[`statrs`]: https://docs.rs/statrs/
 
-[`RngCore`]: https://rust-random.github.io/rand/rand_core/trait.RngCore.html
-[`SeedableRng`]: https://rust-random.github.io/rand/rand_core/trait.SeedableRng.html
-[`CryptoRng`]: https://rust-random.github.io/rand/rand_core/trait.CryptoRng.html
-[`Error`]: https://rust-random.github.io/rand/rand_core/struct.Error.html
+[`RngCore`]: https://docs.rs/rand_core/latest/rand_core/trait.RngCore.html
+[`SeedableRng`]: https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html
+[`CryptoRng`]: https://docs.rs/rand_core/latest/rand_core/trait.CryptoRng.html
+[`Error`]: https://docs.rs/rand_core/latest/rand_core/struct.Error.html
 
-[`rngs`]: https://rust-random.github.io/rand/rand/rngs/index.html
-[`distributions`]: https://rust-random.github.io/rand/rand/distributions/index.html
-[`seq`]: https://rust-random.github.io/rand/rand/seq/index.html
-[`Rng`]: https://rust-random.github.io/rand/rand/trait.Rng.html
-[`random`]: https://rust-random.github.io/rand/rand/fn.random.html
+[`rngs`]: https://docs.rs/rand/latest/rand/rngs/
+[`distributions`]: https://docs.rs/rand/latest/rand/distributions/
+[`seq`]: https://docs.rs/rand/latest/rand/seq/
+[`Rng`]: https://docs.rs/rand/latest/rand/trait.Rng.html
+[`random`]: https://docs.rs/rand/latest/rand/fn.random.html
 
-[`SmallRng`]: https://rust-random.github.io/rand/rand/rngs/struct.SmallRng.html
+[`SmallRng`]: https://docs.rs/rand/latest/rand/rngs/struct.SmallRng.html

@@ -40,7 +40,7 @@ Some Rand crates can be built with support for the following third-party crates:
 
 Note that cryptographic RNGs *do not* support serialisation since this could be
 a security risk. If you need state-restore functionality on a cryptographic RNG,
-the ChaCha generator supports [getting and setting the stream position](https://rust-random.github.io/rand/rand_chacha/struct.ChaCha20Rng.html#method.get_word_pos),
+the ChaCha generator supports [getting and setting the stream position](https://docs.rs/rand_chacha/latest/rand_chacha/struct.ChaCha20Rng.html#method.get_word_pos),
 which, together with the seed, can be used to reconstruct the generator's state.
 
 ## WASM support
@@ -58,12 +58,12 @@ to disable the `rand` crate's `getrandom` feature and seed the generator
 manually.
 
 
-[`rand_core`]: https://rust-random.github.io/rand/rand_core/index.html
-[`rand`]: https://rust-random.github.io/rand/rand/index.html
-[`rand_distr`]: https://rust-random.github.io/rand/rand_distr/index.html
-[`statrs`]: https://github.com/boxtown/statrs
+[`rand_core`]: https://docs.rs/rand_core/
+[`rand`]: https://docs.rs/rand/
+[`rand_distr`]: https://docs.rs/rand_distr/
+[`statrs`]: https://docs.rs/statrs/
 [`getrandom`]: https://docs.rs/getrandom/
-[`rand_chacha`]: https://rust-random.github.io/rand/rand_chacha/index.html
+[`rand_chacha`]: https://docs.rs/rand_chacha/
 [`rand_xoshiro`]: https://docs.rs/rand_xoshiro/
 [`log`]: https://docs.rs/log/
 [`serde`]: https://serde.rs/

@@ -40,7 +40,7 @@ If you wish to implement step-wise sampling yourself, here are a few ideas:
     may be adjusted to this application.
 
 
-[`Distribution`]: ../rand/rand/distributions/trait.Distribution.html
-[`IteratorRandom::choose_multiple`]: ../rand/rand/seq/trait.IteratorRandom.html#method.choose_multiple
-[`SliceRandom::choose_multiple`]: ../rand/rand/seq/trait.SliceRandom.html#tymethod.choose_multiple
+[`Distribution`]: https://docs.rs/rand/latest/rand/distributions/trait.Distribution.html
+[`IteratorRandom::choose_multiple`]: https://docs.rs/rand/latest/rand/seq/trait.IteratorRandom.html#method.choose_multiple
+[`SliceRandom::choose_multiple`]: https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.choose_multiple
 [`src/seq/index.rs`]: https://github.com/rust-random/rand/blob/master/src/seq/index.rs

@@ -129,5 +129,5 @@ HRNG (but using nanosecond resolution timers and conservatively assuming only a
 couple of bits entropy is available per time-stamp, after running several tests
 on the timer's quality).
 
-[`RngCore`]: ../rand/rand_core/trait.RngCore.html
+[`RngCore`]: https://docs.rs/rand_core/latest/rand_core/trait.RngCore.html
 [`JitterRng`]: https://docs.rs/rand_jitter/latest/rand_jitter/struct.JitterRng.html

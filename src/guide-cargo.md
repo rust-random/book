@@ -22,7 +22,7 @@ Cargo will normally install the latest matching version when the dependency is
 first added. Dependencies may be updated later via `cargo update`, and in some
 cases running `cargo update` can solve dependency problems.
 
-For more on Cargo, see [The Cargo Book](https://doc.rust-lang.org/cargo/index.html).
+For more on Cargo, see [The Cargo Book](https://doc.rust-lang.org/cargo/).
 
 ## Other crates
 

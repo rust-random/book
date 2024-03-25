@@ -87,6 +87,6 @@ often the other way around — algorithmic generators usually work with integers
 internally, which are then converted to whichever form of random data is
 required.)
 
-[`RngCore::fill_bytes`]: ../rand/rand_core/trait.RngCore.html#tymethod.fill_bytes
-[`RngCore::next_u32`]: ../rand/rand_core/trait.RngCore.html#tymethod.next_u32
-[`RngCore::next_u64`]: ../rand/rand_core/trait.RngCore.html#tymethod.next_u64
+[`RngCore::fill_bytes`]: https://docs.rs/rand_core/latest/rand_core/trait.RngCore.html#tymethod.fill_bytes
+[`RngCore::next_u32`]: https://docs.rs/rand_core/latest/rand_core/trait.RngCore.html#tymethod.next_u32
+[`RngCore::next_u64`]: https://docs.rs/rand_core/latest/rand_core/trait.RngCore.html#tymethod.next_u64

@@ -291,29 +291,29 @@ https://web.archive.org/web/20160801142711/http://random.mat.sbg.ac.at/results/p
 by P. Hellekalek.
 
 
-[`rngs` module]: ../rand/rand/rngs/index.html
-[`SmallRng`]: ../rand/rand/rngs/struct.SmallRng.html
-[`StdRng`]: ../rand/rand/rngs/struct.StdRng.html
-[`StepRng`]: ../rand/rand/rngs/mock/struct.StepRng.html
-[`thread_rng`]: ../rand/rand/fn.thread_rng.html
+[`rngs` module]: https://docs.rs/rand/latest/rand/rngs/
+[`SmallRng`]: https://docs.rs/rand/latest/rand/rngs/struct.SmallRng.html
+[`StdRng`]: https://docs.rs/rand/latest/rand/rngs/struct.StdRng.html
+[`StepRng`]: https://docs.rs/rand/latest/rand/rngs/mock/struct.StepRng.html
+[`thread_rng`]: https://docs.rs/rand/latest/rand/fn.thread_rng.html
 [basic PRNGs]: #basic-pseudo-random-number-generators-prngs
 [CSPRNGs]: #cryptographically-secure-pseudo-random-number-generators-csprngs
-[`Pcg32`]: ../rand/rand_pcg/type.Pcg32.html
-[`Pcg64`]: ../rand/rand_pcg/type.Pcg64.html
-[`Pcg64Mcg`]: ../rand/rand_pcg/type.Pcg64Mcg.html
+[`Pcg32`]: https://docs.rs/rand_pcg/latest/rand_pcg/type.Pcg32.html
+[`Pcg64`]: https://docs.rs/rand_pcg/latest/rand_pcg/type.Pcg64.html
+[`Pcg64Mcg`]: https://docs.rs/rand_pcg/latest/rand_pcg/type.Pcg64Mcg.html
 [`XorShiftRng`]: https://docs.rs/rand_xorshift/latest/rand_xorshift/struct.XorShiftRng.html
 [`Xoshiro256PlusPlus`]: https://docs.rs/rand_xoshiro/latest/rand_xoshiro/struct.Xoshiro256PlusPlus.html
 [`Xoshiro256Plus`]: https://docs.rs/rand_xoshiro/latest/rand_xoshiro/struct.Xoshiro256Plus.html
 [`SplitMix64`]: https://docs.rs/rand_xoshiro/latest/rand_xoshiro/struct.SplitMix64.html
-[`ChaChaRng`]: ../rand/rand_chacha/type.ChaChaRng.html
-[`ChaCha20Rng`]: ../rand/rand_chacha/struct.ChaCha20Rng.html
-[`ChaCha8Rng`]: ../rand/rand_chacha/struct.ChaCha8Rng.html
+[`ChaChaRng`]: https://docs.rs/rand_chacha/latest/rand_chacha/type.ChaChaRng.html
+[`ChaCha20Rng`]: https://docs.rs/rand_chacha/latest/rand_chacha/struct.ChaCha20Rng.html
+[`ChaCha8Rng`]: https://docs.rs/rand_chacha/latest/rand_chacha/struct.ChaCha8Rng.html
 [`Hc128Rng`]: https://docs.rs/rand_hc/latest/rand_hc/struct.Hc128Rng.html
 [`IsaacRng`]: https://docs.rs/rand_isaac/latest/rand_isaac/isaac/struct.IsaacRng.html
 [`Isaac64Rng`]: https://docs.rs/rand_isaac/latest/rand_isaac/isaac64/struct.Isaac64Rng.html
-[`ThreadRng`]: ../rand/rand/rngs/struct.ThreadRng.html
-[`FromEntropy`]: ../rand/rand/trait.FromEntropy.html
-[`EntropyRng`]: ../rand/rand/rngs/struct.EntropyRng.html
+[`ThreadRng`]: https://docs.rs/rand/latest/rand/rngs/struct.ThreadRng.html
+[`FromEntropy`]: https://docs.rs/rand/latest/rand/trait.FromEntropy.html
+[`EntropyRng`]: https://docs.rs/rand/latest/rand/rngs/struct.EntropyRng.html
 [TestU01]: http://simul.iro.umontreal.ca/testu01/tu01.html
 [PractRand]: http://pracrand.sourceforge.net/
 [pcg-random]: http://www.pcg-random.org/
@@ -326,4 +326,4 @@ by P. Hellekalek.
 [NIST]: https://www.nist.gov/
 [ECRYPT]: http://www.ecrypt.eu.org/
 [`getrandom`]: https://docs.rs/getrandom/
-[`SeedableRng::from_entropy`]: ../rand/rand/trait.SeedableRng.html#method.from_entropy
+[`SeedableRng::from_entropy`]: https://docs.rs/rand/latest/rand/trait.SeedableRng.html#method.from_entropy

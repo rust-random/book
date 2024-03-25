@@ -123,14 +123,14 @@ fn main() {
 }
 ```
 
-[`Rng`]: ../rand/rand/trait.Rng.html
-[`Rng::gen`]: ../rand/rand/trait.Rng.html#method.gen
-[`Rng::gen_range`]: ../rand/rand/trait.Rng.html#method.gen_range
-[`Rng::sample`]: ../rand/rand/trait.Rng.html#method.sample
-[`Rng::gen_bool`]: ../rand/rand/trait.Rng.html#method.gen_bool
-[`Rng::gen_ratio`]: ../rand/rand/trait.Rng.html#method.gen_ratio
-[`Rng::fill`]: ../rand/rand/trait.Rng.html#method.fill
-[`Rng::try_fill`]: ../rand/rand/trait.Rng.html#method.try_fill
-[`random`]: ../rand/rand/fn.random.html
-[`thread_rng`]: ../rand/rand/fn.thread_rng.html
-[`Standard`]: ../rand/rand/distributions/struct.Standard.html
+[`Rng`]: https://docs.rs/rand/latest/rand/trait.Rng.html
+[`Rng::gen`]: https://docs.rs/rand/latest/rand/trait.Rng.html#method.gen
+[`Rng::gen_range`]: https://docs.rs/rand/latest/rand/trait.Rng.html#method.gen_range
+[`Rng::sample`]: https://docs.rs/rand/latest/rand/trait.Rng.html#method.sample
+[`Rng::gen_bool`]: https://docs.rs/rand/latest/rand/trait.Rng.html#method.gen_bool
+[`Rng::gen_ratio`]: https://docs.rs/rand/latest/rand/trait.Rng.html#method.gen_ratio
+[`Rng::fill`]: https://docs.rs/rand/latest/rand/trait.Rng.html#method.fill
+[`Rng::try_fill`]: https://docs.rs/rand/latest/rand/trait.Rng.html#method.try_fill
+[`random`]: https://docs.rs/rand/latest/rand/fn.random.html
+[`thread_rng`]: https://docs.rs/rand/latest/rand/fn.thread_rng.html
+[`Standard`]: https://docs.rs/rand/latest/rand/distributions/struct.Standard.html
