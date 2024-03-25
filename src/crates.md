@@ -13,9 +13,7 @@
 [`rand_core`] defines [`RngCore`] and other core traits, as well as several helpers for implementing RNGs.
 
 The [`getrandom`] crate provides a low-level API around platform-specific
-random-number sources, and is an important building block of `rand` and
-`rand_core` as well as a number of cryptography libraries.
-It is not intended for usage outside of low-level libraries.
+random-number sources.
 
 ## Pseudo-random generators
 
@@ -54,20 +52,6 @@ number distributions: uniform and weighted sampling. For everything else,
     same distributions (plus/minus a few), along with PDF and CDF functions,
     the *error*, *beta*, *gamma* and *logistic* special functions, plus a few
     utilities. (For clarity, [`statrs`] is not part of the Rand library.)
-
-## WASM support
-
-Almost all Rand crates support WASM out of the box. However, when using the
-`wasm32-unknown-unknown` target, which doesn't make any assumptions about its
-operating environment by default, the `getrandom` crate may require enabling
-features for seeding entropy via the platform-provided APIs.
-Consequently, if you are using `rand` (or another Rand project crate)
-depending on `getrandom`, you may have to explicitly [enable `getrandom`
-features](https://github.com/rust-random/getrandom#features) for seeding to
-work. Alternatively, in case you are developing for a sandboxed or unknown
-WASM platform that can't depend on environment provided APIs, you might want
-to disable the `rand` crate's `getrandom` feature and seed the generator
-manually.
 
 
 [`rand_core`]: https://docs.rs/rand_core/

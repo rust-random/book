@@ -6,6 +6,7 @@
 
 - [Crates](crates.md)
     - [Features](crate-features.md)
+    - [Platform support](crate-platforms.md)
 
 - [Guide](guide.md)
     - [Cargo and features](guide-cargo.md)
