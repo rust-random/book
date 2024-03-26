@@ -209,7 +209,7 @@ directly.
 ## Tests
 
 Value-stability tests were added for all distributions ([rand#786]), helping
-enforce our rules regarding value-breaking changes (see [Portability] section).
+enforce our rules regarding value-breaking changes (see [Reproducibility] section).
 
 
 [`Fill`]: https://docs.rs/rand/latest/rand/trait.Fill.html
@@ -245,5 +245,5 @@ enforce our rules regarding value-breaking changes (see [Portability] section).
 [`LogNormal`]: https://docs.rs/rand_distr/latest/rand_distr/struct.LogNormal.html
 [rand#932]: https://github.com/rust-random/rand/issues/932
 [rand#786]: https://github.com/rust-random/rand/issues/786
-[Portability]: ./portability.html
+[Reproducibility]: ./crate-reprod.html
 [Serde]: https://serde.rs/

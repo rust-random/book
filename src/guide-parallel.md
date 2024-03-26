@@ -58,7 +58,7 @@ period).
 
 ## Practice: non-deterministic multi-threaded
 
-We use [Rayon]'s parallel iterators, using [`map_init`] to initialize an RNG in
+We use Rayon's [parallel iterators](https://docs.rs/rayon/latest/rayon/iter/index.html), using [`map_init`] to initialize an RNG in
 each worker thread. Note: this RNG may be re-used across multiple work units,
 which may be split between worker threads in non-deterministic fashion.
 
@@ -142,3 +142,7 @@ fn main() {
     );
 }
 ```
+
+[`thread_rng`]: https://docs.rs/rand/latest/rand/fn.thread_rng.html
+[`map_init`]: https://docs.rs/rayon/latest/rayon/iter/trait.ParallelIterator.html#method.map_init
+[`ChaCha8Rng::set_stream`]: https://docs.rs/rand_chacha/latest/rand_chacha/struct.ChaCha8Rng.html#method.set_stream

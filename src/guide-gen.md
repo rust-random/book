@@ -48,7 +48,7 @@ number generators are deterministic and can be defined by just:
 The fact that these are deterministic can sometimes be very useful: it allows a
 simulation, randomised art work or game to be repeated exactly, producing a
 result which is a function of the seed. For more on this see the
-[portability](portability.md) chapter (note that determinism alone isn't
+[reproducibility](crate-reprod.md) chapter (note that determinism alone isn't
 enough to guarantee reproducibility).
 
 The other big attraction of PRNGs is their speed: some of these algorithms
