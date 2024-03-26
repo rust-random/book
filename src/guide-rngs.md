@@ -55,8 +55,8 @@ RNGs do better with byte sequence output). Quality ratings are
 based on theory and observable defects, roughly as follows:
 
 -   ★☆☆☆☆ = suitable for simple applications but with significant flaws
--   ★★☆☆☆ = good performance in most tests, some issues
--   ★★★☆☆ = good performance and theory, no major issues
+-   ★★☆☆☆ = no major issues in qualitative testing
+-   ★★★☆☆ = good theory, no major issues in qualitative testing
 -   ★★★★★ = cryptographic quality
 
 ## Cryptographically secure pseudo-random number generators (CSPRNGs)
@@ -260,16 +260,25 @@ serialisation of CSPRNGs for convenience). Further, a running process may be
 forked by the operating system, which may leave both processes with a copy
 of the same generator.
 
-### Not a crypto library
+### Not a cryptography library
 
-It should be emphasised that this is not a cryptography library; although
-Rand does take some measures to provide secure random numbers, it does not
-necessarily take all recommended measures. Further, cryptographic processes
+Cryptographic processes
 such as encryption and authentication are complex and must be implemented
 very carefully to avoid flaws and resist known attacks. It is therefore
 recommended to use specialized libraries where possible, for example
 [openssl], [ring] and the [RustCrypto libraries].
 
+The Rand crates attempt to provide unpredictable data sources, with limitations.
+First, the software is provided "as is", without any form of guarantee.
+Second, it is generally assumed that program memory is private; if there are
+concerns in this regard it may be preferred to use an external generator such
+as [`getrandom`] instead. Note that even privacy of freed memory is important,
+and that while we may integrate some mitigations such as [zeroize] in the
+future, such measures are incomplete. Note that Rand does not protect against
+process forks (past versions of Rand up to 0.8.x have a limited mitigation but
+not full protection). Finally, note that there are many possible ways that the
+security of unpredictability could be broken, from complex hardware bugs like
+Spectre to stupid mistakes like printing generator state in log messages.
 
 ## Extra features
 
@@ -327,3 +336,4 @@ by P. Hellekalek.
 [ECRYPT]: http://www.ecrypt.eu.org/
 [`getrandom`]: https://docs.rs/getrandom/
 [`SeedableRng::from_entropy`]: https://docs.rs/rand/latest/rand/trait.SeedableRng.html#method.from_entropy
+[zeroize]: https://crates.io/crates/zeroize
