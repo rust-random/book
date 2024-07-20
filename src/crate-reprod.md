@@ -4,13 +4,13 @@
 
 Given fixed inputs, all items (should) fall into one of three categories:
 
--   Output is non-deterministic, thus never reproducible
--   Output is deterministic, but not considered portable
--   Output is deterministic and portable
+-   Output is non-deterministic, thus never reproducible (example: `rand::thread_rng`)
+-   Output is deterministic, but not considered portable (`SmallRng`, `StdRng`; limitations below)
+-   Output is deterministic and portable (named RNGs; most distributions, sampling and shuffling algorithms)
 
 In general, functionality is considered deterministic and portable *unless*
 it is clearly non-deterministic (e.g. `getrandom`, `ThreadRng`) *or* it is
-documented as being unportable (e.g. `StdRng`, `SmallRng`).
+documented as being nonportable (e.g. `StdRng`, `SmallRng`).
 
 ## Crate versions
 
@@ -26,10 +26,11 @@ Additionally, we must also consider *value-breaking changes* and *portability*.
 When given fixed inputs,
 
 -   For non-deterministic items, implementations may change in any release
--   For deterministic unportable items, output should be preserved in patch
+-   For deterministic nonportable items, output should be preserved in patch
     releases, but may change in any minor release (including after 1.0)
--   For portable items, any change of output across versions is considered
-    equivalent to an API breaking change.
+-   For portable items, output should be preserved by patch releases.
+    Minor releases (including after 1.0) may include such value-breaking
+    changes, though these must be documented in the CHANGELOG.
 
 ### Testing
 
