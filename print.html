@@ -354,13 +354,13 @@ It is not intended for usage outside of low-level libraries.</p>
 <h2><a class="header" href="#definitions" id="definitions">Definitions</a></h2>
 <p>Given fixed inputs, all items (should) fall into one of three categories:</p>
 <ul>
-<li>Output is non-deterministic, thus never reproducible</li>
-<li>Output is deterministic, but not considered portable</li>
-<li>Output is deterministic and portable</li>
+<li>Output is non-deterministic, thus never reproducible (example: <code>rand::thread_rng</code>)</li>
+<li>Output is deterministic, but not considered portable (<code>SmallRng</code>, <code>StdRng</code>; limitations below)</li>
+<li>Output is deterministic and portable (named RNGs; most distributions, sampling and shuffling algorithms)</li>
 </ul>
 <p>In general, functionality is considered deterministic and portable <em>unless</em>
 it is clearly non-deterministic (e.g. <code>getrandom</code>, <code>ThreadRng</code>) <em>or</em> it is
-documented as being unportable (e.g. <code>StdRng</code>, <code>SmallRng</code>).</p>
+documented as being nonportable (e.g. <code>StdRng</code>, <code>SmallRng</code>).</p>
 <h2><a class="header" href="#crate-versions" id="crate-versions">Crate versions</a></h2>
 <p>We try to follow <a href="https://semver.org/">semver rules</a> regarding
 API-breaking changes and <code>MAJOR.MINOR.PATCH</code> versions:</p>
@@ -374,10 +374,11 @@ they should not.</li>
 When given fixed inputs,</p>
 <ul>
 <li>For non-deterministic items, implementations may change in any release</li>
-<li>For deterministic unportable items, output should be preserved in patch
+<li>For deterministic nonportable items, output should be preserved in patch
 releases, but may change in any minor release (including after 1.0)</li>
-<li>For portable items, any change of output across versions is considered
-equivalent to an API breaking change.</li>
+<li>For portable items, output should be preserved by patch releases.
+Minor releases (including after 1.0) may include such value-breaking
+changes, though these must be documented in the CHANGELOG.</li>
 </ul>
 <h3><a class="header" href="#testing" id="testing">Testing</a></h3>
 <p>We expect all pseudo-random algorithms to test the value-stability of their
