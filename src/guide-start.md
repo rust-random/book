@@ -11,6 +11,7 @@ cargo add rand --features small_rng
 
 Now, paste the following into `src/main.rs`:
 ```rust
+# extern crate rand;
 use rand::prelude::*;
 
 fn main() {
