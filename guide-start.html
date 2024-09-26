@@ -171,7 +171,8 @@ cd randomly
 cargo add rand --features small_rng
 </code></pre>
 <p>Now, paste the following into <code>src/main.rs</code>:</p>
-<pre><pre class="playground"><code class="language-rust">use rand::prelude::*;
+<pre><pre class="playground"><code class="language-rust"><span class="boring">extern crate rand;
+</span>use rand::prelude::*;
 
 fn main() {
     let mut rng = rand::thread_rng();
