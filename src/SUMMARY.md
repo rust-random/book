@@ -21,6 +21,7 @@
     - [Random processess](guide-process.md)
     - [Sequences](guide-seq.md)
     - [Error handling](guide-err.md)
+    - [Testing functions that use RNGs](guide-test-fn-rng.md)
 
 - [Updating](update.md)
     - [Updating to 0.5](update-0.5.md)
