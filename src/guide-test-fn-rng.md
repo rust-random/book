@@ -40,54 +40,50 @@ fn main() {
 }
 ```
 
-And as for tests, we can create a MockRng that implements RngCore and CryptoRng and provide a Default implementation with the value we want to return. Notice that the MocRng struct is marked with `#[cfg(test)]` as to not allow tainting the valid usages of the `xor_with_random_bytes` function:
+And as for tests, we can create a MockRng that implements RngCore and CryptoRng and provide a Default implementation with the value we want to return:
 
 ```rust
 #[cfg(test)]
-#[derive(Clone, Copy, Debug)]
-struct MockRng {
-    data: [u8; 8],
-    index: usize,
-}
-
-#[cfg(test)]
-impl Default for MockRng {
-    fn default() -> MockRng {
-        MockRng {
-            data: *b"\x57\x88\x1e\xed\x1c\x72\x01\xd8",
-            index: 0,
-        }
-    }
-}
-
-#[cfg(test)]
-impl CryptoRng for MockRng {}
-
-#[cfg(test)]
-impl RngCore for MockRng {
-    fn next_u32(&mut self) -> u32 {
-        unimplemented!()
-    }
-
-    fn next_u64(&mut self) -> u64 {
-        unimplemented!()
-    }
-
-    fn fill_bytes(&mut self, dest: &mut [u8]) {
-        for byte in dest.iter_mut() {
-            *byte = self.data[self.index];
-            self.index = (self.index + 1) % self.data.len();
-        }
-    }
-
-    fn try_fill_bytes(&mut self, dest: &mut [u8]) -> Result<(), rand::Error> {
-        unimplemented!()
-    }
-}
-
-#[cfg(test)]
 mod tests {
     use super::*;
+
+    #[derive(Clone, Copy, Debug)]
+    struct MockRng {
+        data: [u8; 8],
+        index: usize,
+    }
+
+    impl Default for MockRng {
+        fn default() -> MockRng {
+            MockRng {
+                data: *b"\x57\x88\x1e\xed\x1c\x72\x01\xd8",
+                index: 0,
+            }
+        }
+    }
+
+    impl CryptoRng for MockRng {}
+
+    impl RngCore for MockRng {
+        fn next_u32(&mut self) -> u32 {
+            unimplemented!()
+        }
+
+        fn next_u64(&mut self) -> u64 {
+            unimplemented!()
+        }
+
+        fn fill_bytes(&mut self, dest: &mut [u8]) {
+            for byte in dest.iter_mut() {
+                *byte = self.data[self.index];
+                self.index = (self.index + 1) % self.data.len();
+            }
+        }
+
+        fn try_fill_bytes(&mut self, dest: &mut [u8]) -> Result<(), rand::Error> {
+            unimplemented!()
+        }
+    }
 
     #[test]
     fn test_xor_with_mock_rng() {
