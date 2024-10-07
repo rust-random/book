@@ -5,20 +5,20 @@ Occasionally a function that uses random number generators might need to be test
 ```rust
 use rand::{RngCore, CryptoRng, rngs::OsRng};
 
-pub struct CryptoOperations<R: RngCore + CryptoRng + Default = OsRng> {
+pub struct CryptoOperations<R: RngCore + CryptoRng = OsRng> {
     rng: R
 }
 
-impl<R: RngCore + CryptoRng + Default> CryptoOperations<R> {
+impl<R: RngCore + CryptoRng> CryptoOperations<R> {
     #[must_use]
-    pub fn new() -> Self {
+    pub fn new(rng: R) -> Self {
         Self {
-            rng: R::default()
+            rng
         }
     }
 
     pub fn xor_with_random_bytes(&mut self, secret: &mut [u8; 8]) -> [u8; 8] {
-        let mut mask: [u8; 8] = [0; 8];
+        let mut mask = [0u8; 8];
         self.rng.fill_bytes(&mut mask);
 
         for (byte, mask_byte) in secret.iter_mut().zip(mask.iter()) {
@@ -30,7 +30,8 @@ impl<R: RngCore + CryptoRng + Default> CryptoOperations<R> {
 }
 
 fn main() {
-    let mut crypto_ops = <CryptoOperations>::new();
+    let rng = OsRng;
+    let mut crypto_ops = <CryptoOperations>::new(rng);
 
     let mut secret: [u8; 8] = *b"\x00\x01\x02\x03\x04\x05\x06\x07";
     let mask = crypto_ops.xor_with_random_bytes(&mut secret);
@@ -40,7 +41,7 @@ fn main() {
 }
 ```
 
-And as for tests, we can create a MockRng that implements RngCore and CryptoRng and provide a Default implementation with the value we want to return:
+To test this, we can create a `MockCryptoRng` implementing `RngCore` and `CryptoRng` in our testing module. Note that `MockCryptoRng` is private and `#[cfg(test)] mod tests` is cfg-gated to our test environment, thus ensuring that `MockCryptoRng` cannot accidentally be used in production.
 
 ```rust
 #[cfg(test)]
@@ -48,23 +49,23 @@ mod tests {
     use super::*;
 
     #[derive(Clone, Copy, Debug)]
-    struct MockRng {
+    struct MockCryptoRng {
         data: [u8; 8],
         index: usize,
     }
 
-    impl Default for MockRng {
-        fn default() -> MockRng {
-            MockRng {
-                data: *b"\x57\x88\x1e\xed\x1c\x72\x01\xd8",
+    impl MockCryptoRng {
+        fn new(data: [u8; 8]) -> MockCryptoRng {
+            MockCryptoRng {
+                data,
                 index: 0,
             }
         }
     }
 
-    impl CryptoRng for MockRng {}
+    impl CryptoRng for MockCryptoRng {}
 
-    impl RngCore for MockRng {
+    impl RngCore for MockCryptoRng {
         fn next_u32(&mut self) -> u32 {
             unimplemented!()
         }
@@ -87,9 +88,10 @@ mod tests {
 
     #[test]
     fn test_xor_with_mock_rng() {
-        let mut crypto_ops = CryptoOperations::<MockRng>::new();
-        let mut secret: [u8; 8] = *b"\x01\x01\x02\x03\x04\x05\x06\x07";
+        let mock_crypto_rng = MockCryptoRng::new(*b"\x57\x88\x1e\xed\x1c\x72\x01\xd8");
+        let mut crypto_ops = CryptoOperations::new(mock_crypto_rng);
 
+        let mut secret: [u8; 8] = *b"\x00\x01\x02\x03\x04\x05\x06\x07";
         let mask = crypto_ops.xor_with_random_bytes(&mut secret);
         let expected_mask = *b"\x57\x88\x1e\xed\x1c\x72\x01\xd8";
         let expected_xored_secret = *b"\x57\x89\x1c\xee\x18\x77\x07\xdf";
