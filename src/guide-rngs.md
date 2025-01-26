@@ -247,7 +247,7 @@ seeded with a secure random key. Should the key be known or guessable, all
 output of the CSPRNG is easy to guess. This implies that the seed should
 come from a trusted source; usually either the OS or another CSPRNG. For this
 purpose, we recommend using the [`getrandom`] crate which interfaces the OS's
-secure random interface. [`SeedableRng::from_entropy`] is a wrapper around
+secure random interface. [`SeedableRng::from_os_rng`] is a wrapper around
 [`getrandom`] for convenience. Alternatively, using a user-space CSPRNG such as
 [`ThreadRng`] for seeding should be sufficient.
 
@@ -304,7 +304,7 @@ by P. Hellekalek.
 [`SmallRng`]: https://docs.rs/rand/latest/rand/rngs/struct.SmallRng.html
 [`StdRng`]: https://docs.rs/rand/latest/rand/rngs/struct.StdRng.html
 [`StepRng`]: https://docs.rs/rand/latest/rand/rngs/mock/struct.StepRng.html
-[`thread_rng`]: https://docs.rs/rand/latest/rand/fn.thread_rng.html
+[`rng()`]: https://docs.rs/rand/latest/rand/fn.rng.html
 [basic PRNGs]: #basic-pseudo-random-number-generators-prngs
 [CSPRNGs]: #cryptographically-secure-pseudo-random-number-generators-csprngs
 [`Pcg32`]: https://docs.rs/rand_pcg/latest/rand_pcg/type.Pcg32.html
@@ -335,5 +335,5 @@ by P. Hellekalek.
 [NIST]: https://www.nist.gov/
 [ECRYPT]: http://www.ecrypt.eu.org/
 [`getrandom`]: https://docs.rs/getrandom/
-[`SeedableRng::from_entropy`]: https://docs.rs/rand/latest/rand/trait.SeedableRng.html#method.from_entropy
+[`SeedableRng::from_os_rng`]: https://docs.rs/rand/latest/rand/trait.SeedableRng.html#method.from_os_rng
 [zeroize]: https://crates.io/crates/zeroize

@@ -4,7 +4,7 @@
 
 Given fixed inputs, all items (should) fall into one of three categories:
 
--   Output is non-deterministic, thus never reproducible (example: `rand::thread_rng`)
+-   Output is non-deterministic, thus never reproducible (example: `rand::rng`)
 -   Output is deterministic, but not considered portable (`SmallRng`, `StdRng`; limitations below)
 -   Output is deterministic and portable (named RNGs; most distributions, sampling and shuffling algorithms)
 
@@ -37,9 +37,9 @@ When given fixed inputs,
 We expect all pseudo-random algorithms to test the value-stability of their
 output, where possible:
 
--   PRNGs should be compared with a reference vector ([example](https://github.com/rust-random/rngs/blob/master/rand_xoshiro/src/xoshiro256starstar.rs#L115))
+-   PRNGs should be compared with a reference vector ([example](https://github.com/rust-random/rngs/blob/master/rand_xoshiro/src/xoshiro256starstar.rs#L124))
 -   Other algorithms should include their own test vectors within a
-    `value_stability` test or similar ([example](https://github.com/rust-random/rand/blob/master/src/distributions/bernoulli.rs#L203))
+    `value_stability` test or similar ([example](https://github.com/rust-random/rand/blob/master/src/distr/bernoulli.rs#L226))
 
 ## Limitations
 

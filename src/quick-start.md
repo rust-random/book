@@ -12,28 +12,28 @@ use rand::prelude::*;
 
 fn main() {
     // We can use random() immediately. It can produce values of many common types:
-    let x: u8 = random();
+    let x: u8 = rand::random();
     println!("{}", x);
 
-    if random() { // generates a boolean
+    if rand::random() { // generates a boolean
         println!("Heads!");
     }
 
     // If we want to be a bit more explicit (and a little more efficient) we can
     // make a handle to the thread-local generator:
-    let mut rng = thread_rng();
-    if rng.gen() { // random bool
-        let x: f64 = rng.gen(); // random number in range [0, 1)
-        let y = rng.gen_range(-10.0..10.0);
+    let mut rng = rand::rng();
+    if rng.random() { // random bool
+        let x: f64 = rng.random(); // random number in range [0, 1)
+        let y = rng.random_range(-10.0..10.0);
         println!("x is: {}", x);
         println!("y is: {}", y);
     }
 
-    println!("Dice roll: {}", rng.gen_range(1..=6));
-    println!("Number from 0 to 9: {}", rng.gen_range(0..10));
+    println!("Dice roll: {}", rng.random_range(1..=6));
+    println!("Number from 0 to 9: {}", rng.random_range(0..10));
     
     // Sometimes it's useful to use distributions directly:
-    let distr = rand::distributions::Uniform::new_inclusive(1, 100);
+    let distr = rand::distr::Uniform::new_inclusive(1, 100).unwrap();
     let mut nums = [0i32; 3];
     for x in &mut nums {
         *x = rng.sample(distr);
@@ -56,20 +56,20 @@ only imports the most common items. If you don't wish to use the prelude,
 remember to import the [`Rng`] trait!
 
 The Rand library automatically initialises a secure, thread-local generator
-on demand. This can be accessed via the [`thread_rng`] and [`random`] functions.
+on demand. This can be accessed via the [`rng()`] and [`random`] functions.
 For more on this topic, see [Random generators](guide-gen.md).
 
-While the [`random`] function can only sample values in a [`Standard`]
-(type-dependent) manner, [`thread_rng`] gives you a handle to a generator.
-All generators implement the [`Rng`] trait, which provides the [`gen`],
-[`gen_range`] and [`sample`] methods used above.
+While the [`random`] function can only sample values in a [`StandardUniform`]
+(type-dependent) manner, [`rng()`] gives you a handle to a generator.
+All generators implement the [`Rng`] trait, which provides the [`random`],
+[`random_range`] and [`sample`] methods used above.
 
 Rand provides functionality on iterators and slices via two more traits,
 [`IteratorRandom`] and [`SliceRandom`].
 
 ## Fixed seed RNGs
 
-You may have noticed the use of `thread_rng()` above and wondered how to
+You may have noticed the use of `rand::rng()` above and wondered how to
 specify a fixed seed. To do so, you need to specify an RNG then use a method
 like [`seed_from_u64`] or [`from_seed`].
 
@@ -88,7 +88,7 @@ use rand::{Rng, SeedableRng};
 
 fn main() {
     let mut rng = rand_chacha::ChaCha8Rng::seed_from_u64(10);
-    println!("Random f32: {}", rng.gen::<f32>());
+    println!("Random f32: {}", rng.random::<f32>());
 }
 ```
 
@@ -97,12 +97,12 @@ fn main() {
 [RNGs]: guide-rngs.md
 [prelude]: https://docs.rs/rand/latest/rand/prelude/
 [`Rng`]: https://docs.rs/rand/latest/rand/trait.Rng.html
-[`gen`]: https://docs.rs/rand/latest/rand/trait.Rng.html#method.gen
-[`gen_range`]: https://docs.rs/rand/latest/rand/trait.Rng.html#method.gen_range
+[`random`]: https://docs.rs/rand/latest/rand/trait.Rng.html#method.random
+[`random_range`]: https://docs.rs/rand/latest/rand/trait.Rng.html#method.random_range
 [`sample`]: https://docs.rs/rand/latest/rand/trait.Rng.html#method.sample
-[`thread_rng`]: https://docs.rs/rand/latest/rand/fn.thread_rng.html
+[`rng()`]: https://docs.rs/rand/latest/rand/fn.rng.html
 [`random`]: https://docs.rs/rand/latest/rand/fn.random.html
-[`Standard`]: https://docs.rs/rand/latest/rand/distributions/struct.Standard.html
+[`StandardUniform`]: https://docs.rs/rand/latest/rand/distr/struct.StandardUniform.html
 [`IteratorRandom`]: https://docs.rs/rand/latest/rand/seq/trait.IteratorRandom.html
 [`SliceRandom`]: https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html
 [`seed_from_u64`]: https://docs.rs/rand/latest/rand/trait.SeedableRng.html#method.seed_from_u64

@@ -35,7 +35,7 @@ The [`rand`] crate is designed for easy usage of common random-number
 functionality. This has several aspects:
 
 -   the [`rngs`] module provides a few convenient generators
--   the [`distributions`] module concerns sampling of random values
+-   the [`distr`] module concerns sampling of random values
 -   the [`seq`] module concerns sampling from and shuffling sequences
 -   the [`Rng`] trait provides a few convenience methods for generating
     random values
@@ -71,7 +71,7 @@ number distributions: uniform and weighted sampling. For everything else,
 [`RngCore`]: https://docs.rs/rand_core/latest/rand_core/trait.RngCore.html
 
 [`rngs`]: https://docs.rs/rand/latest/rand/rngs/
-[`distributions`]: https://docs.rs/rand/latest/rand/distributions/
+[`distr`]: https://docs.rs/rand/latest/rand/distr/
 [`seq`]: https://docs.rs/rand/latest/rand/seq/
 [`Rng`]: https://docs.rs/rand/latest/rand/trait.Rng.html
 [`random`]: https://docs.rs/rand/latest/rand/fn.random.html

@@ -21,7 +21,7 @@ PRNGs may be seeded directly from such a value with [`SeedableRng::from_seed`].
 
 ### Fresh entropy
 
-Using a fresh seed (direct from the OS) is easy using [`SeedableRng::from_entropy`]:
+Using a fresh seed (direct from the OS) is easy using [`SeedableRng::from_os_rng`]:
 
 ```rust,editable
 # extern crate rand;
@@ -30,8 +30,8 @@ use rand::prelude::*;
 use rand_chacha::ChaCha20Rng;
 
 fn main() {
-    let mut rng = ChaCha20Rng::from_entropy();
-    println!("{}", rng.gen_range(0..100));
+    let mut rng = ChaCha20Rng::from_os_rng();
+    println!("{}", rng.random_range(0..100));
 }
 ```
 
@@ -47,8 +47,8 @@ convenience method for this:
 use rand::prelude::*;
 
 fn main() {
-    let mut rng = SmallRng::from_rng(thread_rng()).unwrap();
-    println!("{}", rng.gen_range(0..100));
+    let mut rng = SmallRng::from_rng(&mut rand::rng());
+    println!("{}", rng.random_range(0..100));
 }
 ```
 
@@ -63,9 +63,9 @@ use rand_chacha::ChaCha8Rng;
 
 fn main() {
     let mut seed: <ChaCha8Rng as SeedableRng>::Seed = Default::default();
-    thread_rng().fill(&mut seed);
+    rand::rng().fill(&mut seed);
     let mut rng = ChaCha8Rng::from_seed(seed);
-    println!("{}", rng.gen_range(0..100));
+    println!("{}", rng.random_range(0..100));
 }
 ```
 
@@ -94,7 +94,7 @@ use rand_chacha::ChaCha8Rng;
 
 fn main() {
     let mut rng = ChaCha8Rng::seed_from_u64(2);
-    println!("{}", rng.gen_range(0..100));
+    println!("{}", rng.random_range(0..100));
 }
 ```
 
@@ -118,8 +118,8 @@ use rand_pcg::Pcg64;
 
 fn main() {
     // In one line:
-    let mut rng: Pcg64 = Seeder::from("stripy zebra").make_rng();
-    println!("{}", rng.gen::<char>());
+    let mut rng: Pcg64 = Seeder::from("stripy zebra").into_rng();
+    println!("{}", rng.random::<char>());
 
     // If we want to be more explicit, first we create a SipRng:
     let hasher = SipHasher::from("a sailboat");
@@ -132,7 +132,7 @@ fn main() {
 
     // And create our RNG from that seed:
     let mut rng = Pcg64::from_seed(seed);
-    println!("{}", rng.gen::<char>());
+    println!("{}", rng.random::<char>());
 }
 ```
 
@@ -146,7 +146,7 @@ function such as Argon2 must be used.
 [`SeedableRng::from_seed`]: https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#tymethod.from_seed
 [`SeedableRng::from_rng`]: https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#method.from_rng
 [`SeedableRng::seed_from_u64`]: https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#method.seed_from_u64
-[`SeedableRng::from_entropy`]: https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#method.from_entropy
+[`SeedableRng::from_os_rng`]: https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#method.from_os_rng
 [`XorShiftRng`]: https://docs.rs/rand_xorshift/latest/rand_xorshift/struct.XorShiftRng.html
 [`ChaCha8Rng`]: https://docs.rs/rand_chacha/latest/rand_chacha/struct.ChaCha8Rng.html
 [`rand_seeder`]: https://github.com/rust-random/seeder/

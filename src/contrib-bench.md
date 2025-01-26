@@ -15,7 +15,7 @@ benchmarks (including all our RNGs) live in the main `rand` crate
 
 A lot of code in Rand is performance sensitive, most of it is expected to be
 used in hot loops in some libraries/applications. If you change code in
-`rand_core`, in PRNG crates, or in the `rngs` or `distributions` modules
+`rand_core`, in PRNG crates, or in the `rngs` or `distr` modules
 (especially when an 'obvious cleanup'), make sure the benchmarks do not regress.
 
 Please report before-and-after results for any affected benchmarks. If you are

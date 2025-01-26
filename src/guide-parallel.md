@@ -5,9 +5,9 @@
 If you want to use random generators in multiple worker threads simultaneously,
 then you will want to use multiple RNGs. A few suggested approaches:
 
-1.  Use [`thread_rng`] in each worker thread. This is seeded automatically
+1.  Use [`rng()`] in each worker thread. This is seeded automatically
     (lazily and uniquely) on each thread where it is used.
-2.  Use [`thread_rng`] (or another master RNG) to seed a custom RNG on each
+2.  Use [`rng()`] (or another master RNG) to seed a custom RNG on each
     worker thread. The main advantage here is flexibility over the RNG used.
 3.  Use a custom RNG per *work unit*, not per *worker thread*. If these RNGs
     are seeded in a deterministic fashion, then deterministic results are
@@ -63,17 +63,17 @@ each worker thread. Note: this RNG may be re-used across multiple work units,
 which may be split between worker threads in non-deterministic fashion.
 
 ```rust
-use rand::distributions::{Distribution, Uniform};
+use rand::distr::{Distribution, Uniform};
 use rayon::prelude::*;
 
 static SAMPLES: u64 = 1_000_000;
 
 fn main() {
-    let range = Uniform::new(-1.0f64, 1.0);
+    let range = Uniform::new(-1.0f64, 1.0).unwrap();
 
     let in_circle = (0..SAMPLES)
         .into_par_iter()
-        .map_init(|| rand::thread_rng(), |rng, _| {
+        .map_init(|| rand::rng(), |rng, _| {
             let a = range.sample(rng);
             let b = range.sample(rng);
             if a * a + b * b <= 1.0 {
@@ -107,7 +107,7 @@ non-deterministic simulation too.
 (Note: this example is <https://github.com/rust-random/rand/blob/master/examples/rayon-monte-carlo.rs>.)
 
 ```rust
-use rand::distributions::{Distribution, Uniform};
+use rand::distr::{Distribution, Uniform};
 use rand_chacha::{rand_core::SeedableRng, ChaCha8Rng};
 use rayon::prelude::*;
 
@@ -116,7 +116,7 @@ static BATCH_SIZE: u64 = 10_000;
 static BATCHES: u64 = 1000;
 
 fn main() {
-    let range = Uniform::new(-1.0f64, 1.0);
+    let range = Uniform::new(-1.0f64, 1.0).unwrap();
 
     let in_circle = (0..BATCHES)
         .into_par_iter()
@@ -143,6 +143,6 @@ fn main() {
 }
 ```
 
-[`thread_rng`]: https://docs.rs/rand/latest/rand/fn.thread_rng.html
+[`rng()`]: https://docs.rs/rand/latest/rand/fn.rng.html
 [`map_init`]: https://docs.rs/rayon/latest/rayon/iter/trait.ParallelIterator.html#method.map_init
 [`ChaCha8Rng::set_stream`]: https://docs.rs/rand_chacha/latest/rand_chacha/struct.ChaCha8Rng.html#method.set_stream
