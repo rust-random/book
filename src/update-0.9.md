@@ -3,8 +3,6 @@
 In the following, instructions are provided for porting your code from
 `rand 0.8` and `rand_distr 0.4` to `rand 0.9` and `rand_distr 0.5`.
 
-**In progress: rand_distr v0.5 is not published yet!**
-
 The following is a migration guide focussing on potentially-breaking changes. For a full list of changes, see the relevant changelogs:
 
 -   [CHANGELOG.md](https://github.com/rust-random/rand/blob/master/CHANGELOG.md).
@@ -46,7 +44,7 @@ Feature flags:
 
 -   `serde1` was renamed to `serde`
 -   `getrandom` was renamed to `os_rng`
--   `thread_rng` is a new feature (enabled by default), required to enable `rand::rng()` (`ThreadRng`)
+-   `thread_rng` is a new feature (enabled by default), required by [`rng()`] ([`ThreadRng`])
 -   `small_rng` is now enabled by default
 -   `rand_chacha` is no longer an (implicit) feature; use `std_rng` instead
 
@@ -93,7 +91,7 @@ The old trait `SliceRandom` has been split into three traits: [`IndexedRandom`],
 
 ## Distributions
 
-The module `rand::distributions` was renamed to `rand::distr` for brevity and to match `rand_distr`.
+The module `rand::distributions` was renamed to [`rand::distr`] for brevity and to match `rand_distr`.
 
 Several items in `distr` were also renamed or moved:
 
@@ -122,7 +120,7 @@ The constructors `fn new`, `fn new_inclusive` for [`Uniform`] and [`UniformSampl
 
 ### SIMD
 
-SIMD support now targets `std::simd`.
+SIMD support now targets [`std::simd`].
 
 
 ## Reproducibility
@@ -132,7 +130,8 @@ See the `CHANGELOG.md` files for details of reproducibility-breaking changes aff
 
 [`Fill`]: https://docs.rs/rand/latest/rand/trait.Fill.html
 [`ThreadRng`]: https://docs.rs/rand/latest/rand/rngs/struct.ThreadRng.html
-[`ReseedingRng`]: https://docs.rs/rand/latest/rand/rngs/adapter/struct.ReseedingRng.html
+[`ReseedingRng`]: https://docs.rs/rand/lates
+t/rand/rngs/adapter/struct.ReseedingRng.html
 [`Uniform`]: https://docs.rs/rand/latest/rand/distr/struct.Uniform.html
 [`WeightedAliasIndex`]: https://docs.rs/rand_distr/latest/rand_distr/weighted_alias/struct.WeightedAliasIndex.html
 [`rand_core`]: https://docs.rs/rand_core/
@@ -150,3 +149,6 @@ See the `CHANGELOG.md` files for details of reproducibility-breaking changes aff
 [`UniformSampler`]: https://docs.rs/rand/latest/rand/distr/uniform/trait.UniformSampler.html
 [`Result`]: https://doc.rust-lang.org/stable/std/result/enum.Result.html
 [`TryFrom`]: https://doc.rust-lang.org/stable/std/convert/trait.TryFrom.html
+[`SeedableRng`]: https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html
+[`rand::distr`]: https://docs.rs/rand/latest/rand/distr/index.html
+[`std::simd`]: https://doc.rust-lang.org/stable/std/simd/index.html
