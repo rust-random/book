@@ -1,6 +1,6 @@
 # The Rust Rand Book
 
-[![Build Status](https://travis-ci.org/rust-random/book.svg?branch=master)](https://travis-ci.org/rust-random/rand)
+[![Build Status](https://github.com/rust-random/book/actions/workflows/test.yml/badge.svg)](https://github.com/rust-random/book/actions)
 [![License](https://img.shields.io/crates/l/rand.svg)](https://github.com/rust-random/rand#license)
 
 The source to [The Rust Rand Book](https://rust-random.github.io/book/).
@@ -11,7 +11,7 @@ This book is published under the same licence as the Rand lib itself.
 Contributing should be as simple as forking, editing the contents of the `src/`
 directory, and making a PR.
 
-The book is built using [mdBook](https://rust-lang-nursery.github.io/mdBook/index.html).
+The book is built using [mdBook](https://rust-lang.github.io/mdBook/index.html).
 To preview your changes locally:
 
 ```
