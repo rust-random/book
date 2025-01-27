@@ -6,14 +6,14 @@ publish = false
 
 [dependencies]
 doc-comment = "0.3.3"
-rand = { version = "0.9", path = "../../rand" }
+rand = { version = "0.9" }
 rand_0_8 = { package = "rand", version = "0.8", features = ["small_rng"] }
 rand_0_7 = { package = "rand", version = "0.7" }
 rand_0_5 = { package = "rand", version = "0.5" }
-rand_pcg = { version = "0.9", path = "../../rand/rand_pcg" }
-rand_chacha = { version = "0.9", path = "../../rand/rand_chacha" }
-rand_distr = { version = "0.5", path = "../../rand/rand_distr" }
+rand_pcg = { version = "0.9" }
+rand_chacha = { version = "0.9" }
+rand_distr = { version = "0.5", git = "https://github.com/rust-random/rand.git", tag = "0.9.0" }
 rand_distr_0_4 = { package = "rand_distr", version = "0.4" }
 rand_distr_0_2 = { package = "rand_distr", version = "0.2" }
-rand_seeder = { version = "0.4", path = "../../seeder" }
+rand_seeder = { version = "0.4" }
 rayon = "1.5.3"

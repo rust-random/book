@@ -3,6 +3,8 @@
 In the following, instructions are provided for porting your code from
 `rand 0.8` and `rand_distr 0.4` to `rand 0.9` and `rand_distr 0.5`.
 
+**In progress: rand_distr v0.5 is not published yet!**
+
 The following is a migration guide focussing on potentially-breaking changes. For a full list of changes, see the relevant changelogs:
 
 -   [CHANGELOG.md](https://github.com/rust-random/rand/blob/master/CHANGELOG.md).
