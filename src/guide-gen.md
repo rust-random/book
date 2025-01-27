@@ -13,12 +13,12 @@ use rand::{Rng, SeedableRng};
 
 # fn main() {
 // prepare a non-deterministic random number generator:
-let mut rng = rand::thread_rng();
-println!("{}", rng.gen::<i32>()); // prints an unknown value
+let mut rng = rand::rng();
+println!("{}", rng.random::<i32>()); // prints an unknown value
 
 // prepare a deterministic generator:
 let mut rng = rand_chacha::ChaCha8Rng::seed_from_u64(123);
-println!("{}", rng.gen::<i32>()); // prints -416273517
+println!("{}", rng.random::<i32>()); // prints -416273517
 # }
 ```
 

@@ -4,14 +4,14 @@ For maximum flexibility when producing random values, we define the
 [`Distribution`] trait:
 
 ```rust,noplayground
-# use rand::{Rng, distributions::DistIter};
+# use rand::Rng;
 // a producer of data of type T:
 pub trait Distribution<T> {
     // the key function:
     fn sample<R: Rng + ?Sized>(&self, rng: &mut R) -> T;
 
     // a convenience function defined using sample:
-    fn sample_iter<R>(self, rng: R) -> DistIter<Self, R, T>
+    fn sample_iter<R>(self, rng: R) -> rand::distr::Iter<Self, R, T>
     where
         Self: Sized,
         R: Rng,
@@ -32,7 +32,7 @@ Density Function, here we only concern ourselves with *sampling random values*.
 If you require use of such properties you may prefer to use the [`statrs`] crate.
 
 Rand provides implementations of many different distributions; we cover the most
-common of these here, but for full details refer to the [`distributions`] module
+common of these here, but for full details refer to the [`distr`] module
 and the [`rand_distr`] crate.
 
 # Uniform distributions
@@ -43,12 +43,12 @@ sample. This is known as *uniform*.
 
 Rand actually has several variants of this, representing different ranges:
 
--   [`Standard`] requires no parameters and samples values uniformly according
-    to the type. [`Rng::gen`] provides a short-cut to this distribution.
+-   [`StandardUniform`] requires no parameters and samples values uniformly according
+    to the type. [`Rng::random`] provides a short-cut to this distribution.
 -   [`Uniform`] is parametrised by `Uniform::new(low, high)` (including `low`,
     excluding `high`) or `Uniform::new_inclusive(low, high)` (including both),
     and samples values uniformly within this range.
-    [`Rng::gen_range`] is a convenience method defined over
+    [`Rng::random_range`] is a convenience method defined over
     [`Uniform::sample_single`], optimised for single-sample usage.
 -   [`Alphanumeric`] is uniform over the `char` values `0-9A-Za-z`.
 -   [`Open01`] and [`OpenClosed01`] are provide alternate sampling ranges for
@@ -58,52 +58,52 @@ Rand actually has several variants of this, representing different ranges:
 
 Lets go over the distributions by type:
 
--   For `bool`, [`Standard`] samples each value with probability 50%.
--   For `Option<T>`, the [`Standard`] distribution samples `None` with
+-   For `bool`, [`StandardUniform`] samples each value with probability 50%.
+-   For `Option<T>`, the [`StandardUniform`] distribution samples `None` with
     probability 50%, otherwise `Some(value)` is sampled, according to its type.
 -   For integers (`u8` through to `u128`, `usize`, and `i*` variants),
-    [`Standard`] samples from all possible values while
+    [`StandardUniform`] samples from all possible values while
     [`Uniform`] samples from the parameterised range.
--   For `NonZeroU8` and other "non-zero" types, [`Standard`] samples uniformly
+-   For `NonZeroU8` and other "non-zero" types, [`StandardUniform`] samples uniformly
     from all non-zero values (rejection method).
 -   `Wrapping<T>` integer types are sampled as for the corresponding integer
-    type by the [`Standard`] distribution.
+    type by the [`StandardUniform`] distribution.
 -   For floats (`f32`, `f64`),
 
-    -   [`Standard`] samples from the half-open range `[0, 1)` with 24 or 53
+    -   [`StandardUniform`] samples from the half-open range `[0, 1)` with 24 or 53
         bits of precision (for `f32` and `f64` respectively)
     -   [`OpenClosed01`] samples from the half-open range `(0, 1]` with 24 or
         53 bits of precision
     -   [`Open01`] samples from the open range `(0, 1)` with 23 or 52 bits of
         precision
     -   [`Uniform`] samples from a given range with 23 or 52 bits of precision
--   For the `char` type, the [`Standard`] distribution samples from all
+-   For the `char` type, the [`StandardUniform`] distribution samples from all
     available Unicode code points, uniformly; many of these values may not be
     printable (depending on font support). The [`Alphanumeric`] samples from
     only a-z, A-Z and 0-9 uniformly.
 -   For tuples and arrays, each element is sampled as above, where supported.
-    The [`Standard`] and [`Uniform`] distributions each support a selection of
+    The [`StandardUniform`] and [`Uniform`] distributions each support a selection of
     these types (up to 12-tuples and 32-element arrays).
     This includes the empty tuple `()` and array.
     When using `rustc` ≥ 1.51, enable the `min_const_gen` feature to support
     arrays larger than 32 elements.
--   For SIMD types, each element is sampled as above, for [`Standard`] and
+-   For SIMD types, each element is sampled as above, for [`StandardUniform`] and
     [`Uniform`] (for the latter, `low` and `high` parameters are *also* SIMD
     types, effectively sampling from multiple ranges simultaneously). SIMD
     support requires using the `simd_support` feature flag and nightly `rustc`.
 -   For enums, you have to implement uniform sampling yourself. For example, you
     could use the following approach:
     ```rust
-    # use rand::{Rng, distributions::{Distribution, Standard}};
+    # use rand::{Rng, distr::{Distribution, StandardUniform}};
     pub enum Food {
         Burger,
         Pizza,
         Kebab,
     }
 
-    impl Distribution<Food> for Standard {
+    impl Distribution<Food> for StandardUniform {
         fn sample<R: Rng + ?Sized>(&self, rng: &mut R) -> Food {
-            let index: u8 = rng.gen_range(0..3);
+            let index: u8 = rng.random_range(0..3);
             match index {
                 0 => Food::Burger,
                 1 => Food::Pizza,
@@ -173,23 +173,23 @@ output values lie between 0 and 1. The [`Dirichlet`] distribution is a
 generalisation to any positive number of parameters.
 
 [Sequences]: guide-seq.html
-[`Distribution`]: https://docs.rs/rand/latest/rand/distributions/trait.Distribution.html
-[`distributions`]: https://docs.rs/rand/latest/rand/distributions/
+[`Distribution`]: https://docs.rs/rand/latest/rand/distr/trait.Distribution.html
+[`distr`]: https://docs.rs/rand/latest/rand/distr/
 [`rand`]: https://docs.rs/rand/
 [`rand_distr`]: https://docs.rs/rand_distr/
-[`Rng::gen_range`]: https://docs.rs/rand/latest/rand/trait.Rng.html#method.gen_range
+[`Rng::random_range`]: https://docs.rs/rand/latest/rand/trait.Rng.html#method.random_range
 [`random`]: https://docs.rs/rand/latest/rand/fn.random.html
-[`Rng::gen_bool`]: https://docs.rs/rand/latest/rand/trait.Rng.html#method.gen_bool
-[`Rng::gen_ratio`]: https://docs.rs/rand/latest/rand/trait.Rng.html#method.gen_ratio
-[`Rng::gen`]: https://docs.rs/rand/latest/rand/trait.Rng.html#method.gen
+[`Rng::random_bool`]: https://docs.rs/rand/latest/rand/trait.Rng.html#method.random_bool
+[`Rng::random_ratio`]: https://docs.rs/rand/latest/rand/trait.Rng.html#method.random_ratio
+[`Rng::random`]: https://docs.rs/rand/latest/rand/trait.Rng.html#method.random
 [`Rng`]: https://docs.rs/rand/latest/rand/trait.Rng.html
-[`Standard`]: https://docs.rs/rand/latest/rand/distributions/struct.Standard.html
-[`Uniform`]: https://docs.rs/rand/latest/rand/distributions/struct.Uniform.html
-[`Uniform::sample_single`]: https://docs.rs/rand/latest/rand/distributions/struct.Uniform.html#method.sample_single
-[`Alphanumeric`]: https://docs.rs/rand/latest/rand/distributions/struct.Alphanumeric.html
-[`Open01`]: https://docs.rs/rand/latest/rand/distributions/struct.Open01.html
-[`OpenClosed01`]: https://docs.rs/rand/latest/rand/distributions/struct.OpenClosed01.html
-[`Bernoulli`]: https://docs.rs/rand/latest/rand/distributions/struct.Bernoulli.html
+[`StandardUniform`]: https://docs.rs/rand/latest/rand/distr/struct.StandardUniform.html
+[`Uniform`]: https://docs.rs/rand/latest/rand/distr/struct.Uniform.html
+[`Uniform::sample_single`]: https://docs.rs/rand/latest/rand/distr/struct.Uniform.html#method.sample_single
+[`Alphanumeric`]: https://docs.rs/rand/latest/rand/distr/struct.Alphanumeric.html
+[`Open01`]: https://docs.rs/rand/latest/rand/distr/struct.Open01.html
+[`OpenClosed01`]: https://docs.rs/rand/latest/rand/distr/struct.OpenClosed01.html
+[`Bernoulli`]: https://docs.rs/rand/latest/rand/distr/struct.Bernoulli.html
 [`Binomial`]: https://docs.rs/rand_distr/latest/rand_distr/struct.Binomial.html
 [`Exp`]: https://docs.rs/rand_distr/latest/rand_distr/struct.Exp.html
 [`Normal`]: https://docs.rs/rand_distr/latest/rand_distr/struct.Normal.html
@@ -201,4 +201,4 @@ generalisation to any positive number of parameters.
 [`Beta`]: https://docs.rs/rand_distr/latest/rand_distr/struct.Beta.html
 [`Dirichlet`]: https://docs.rs/rand_distr/latest/rand_distr/struct.Dirichlet.html
 [`statrs`]: https://github.com/statrs-dev/statrs/
-[`WeightedIndex`]: https://docs.rs/rand/latest/rand/distributions/struct.WeightedIndex.html
+[`WeightedIndex`]: https://docs.rs/rand/latest/rand/distr/struct.WeightedIndex.html

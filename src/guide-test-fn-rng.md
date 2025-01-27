@@ -3,13 +3,13 @@
 Occasionally a function that uses random number generators might need to be tested. For functions that need to be tested with test vectors, the following approach might be adapted:
 
 ```rust
-use rand::{RngCore, CryptoRng, rngs::OsRng};
+use rand::{TryCryptoRng, rngs::OsRng};
 
-pub struct CryptoOperations<R: RngCore + CryptoRng = OsRng> {
+pub struct CryptoOperations<R: TryCryptoRng = OsRng> {
     rng: R
 }
 
-impl<R: RngCore + CryptoRng> CryptoOperations<R> {
+impl<R: TryCryptoRng> CryptoOperations<R> {
     #[must_use]
     pub fn new(rng: R) -> Self {
         Self {
@@ -19,7 +19,7 @@ impl<R: RngCore + CryptoRng> CryptoOperations<R> {
 
     pub fn xor_with_random_bytes(&mut self, secret: &mut [u8; 8]) -> [u8; 8] {
         let mut mask = [0u8; 8];
-        self.rng.fill_bytes(&mut mask);
+        self.rng.try_fill_bytes(&mut mask).unwrap();
 
         for (byte, mask_byte) in secret.iter_mut().zip(mask.iter()) {
             *byte ^= mask_byte;
@@ -41,7 +41,7 @@ fn main() {
 }
 ```
 
-To test this, we can create a `MockCryptoRng` implementing `RngCore` and `CryptoRng` in our testing module. Note that `MockCryptoRng` is private and `#[cfg(test)] mod tests` is cfg-gated to our test environment, thus ensuring that `MockCryptoRng` cannot accidentally be used in production.
+To test this, we can create a `MockCryptoRng` implementing `TryRngCore` and `TryCryptoRng` in our testing module. Note that `MockCryptoRng` is private and `#[cfg(test)] mod tests` is cfg-gated to our test environment, thus ensuring that `MockCryptoRng` cannot accidentally be used in production.
 
 ```rust
 #[cfg(test)]

@@ -7,7 +7,7 @@ Rand implements a few common random operations on sequences via the
 
 To sample:
 
--   a single index within a given range, use [`Rng::gen_range`]
+-   a single index within a given range, use [`Rng::random_range`]
 -   multiple distinct indices from `0..length`, use [`index::sample`]
 -   multiple distinct indices from `0..length` with weights, use [`index::sample_weighted`]
 
@@ -68,10 +68,10 @@ immutable distributions, we offer the following:
     weights
 -   Implement yourself: see the section in [Random processes](guide-process.html#sampling-without-replacement)
 
-[`Distribution`]: https://docs.rs/rand/latest/rand/distributions/trait.Distribution.html
+[`Distribution`]: https://docs.rs/rand/latest/rand/distr/trait.Distribution.html
 [`IteratorRandom`]: https://docs.rs/rand/latest/rand/seq/trait.IteratorRandom.html
 [`SliceRandom`]: https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html
-[`WeightedIndex`]: https://docs.rs/rand/latest/rand/distributions/struct.WeightedIndex.html
+[`WeightedIndex`]: https://docs.rs/rand/latest/rand/distr/struct.WeightedIndex.html
 [`WeightedAliasIndex`]: https://docs.rs/rand_distr/latest/rand_distr/weighted_alias/struct.WeightedAliasIndex.html
 [`SliceRandom::choose`]: https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.choose
 [`SliceRandom::choose_mut`]: https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.choose_mut
@@ -85,7 +85,7 @@ immutable distributions, we offer the following:
 [`SliceRandom::choose_multiple_weighted`]: https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.choose_multiple_weighted
 [`SliceRandom::shuffle`]: https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.shuffle
 [`SliceRandom::partial_shuffle`]: https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.partial_shuffle
-[`Rng::gen_range`]: https://docs.rs/rand/latest/rand/trait.Rng.html#method.gen_range
+[`Rng::random_range`]: https://docs.rs/rand/latest/rand/trait.Rng.html#method.random_range
 [`index::sample`]: https://docs.rs/rand/latest/rand/seq/index/fn.sample.html
 [`index::sample_weighted`]: https://docs.rs/rand/latest/rand/seq/index/fn.sample_weighted.html
 [`size_hint`]: https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.size_hint
