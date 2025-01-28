@@ -112,7 +112,7 @@ The source to this book is contained in the
 It is built using mdbook, which makes building and testing easy:
 
 ```sh
-cargo install mdbook --version "^0.2"
+cargo install mdbook --version "^0.4"
 
 mdbook build --open
 mdbook test

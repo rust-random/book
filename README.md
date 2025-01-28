@@ -15,7 +15,7 @@ The book is built using [mdBook](https://rust-lang.github.io/mdBook/index.html).
 To preview your changes locally:
 
 ```
-cargo install mdbook --version "^0.2" --force
+cargo install mdbook --version "^0.4" --force
 mdbook build --open
 mdbook test
 ```
