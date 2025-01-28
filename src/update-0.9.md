@@ -130,8 +130,7 @@ See the `CHANGELOG.md` files for details of reproducibility-breaking changes aff
 
 [`Fill`]: https://docs.rs/rand/latest/rand/trait.Fill.html
 [`ThreadRng`]: https://docs.rs/rand/latest/rand/rngs/struct.ThreadRng.html
-[`ReseedingRng`]: https://docs.rs/rand/lates
-t/rand/rngs/adapter/struct.ReseedingRng.html
+[`ReseedingRng`]: https://docs.rs/rand/latest/rand/rngs/struct.ReseedingRng.html
 [`Uniform`]: https://docs.rs/rand/latest/rand/distr/struct.Uniform.html
 [`WeightedAliasIndex`]: https://docs.rs/rand_distr/latest/rand_distr/weighted_alias/struct.WeightedAliasIndex.html
 [`rand_core`]: https://docs.rs/rand_core/
