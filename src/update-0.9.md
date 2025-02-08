@@ -9,6 +9,20 @@ The following is a migration guide focussing on potentially-breaking changes. Fo
 -   [rand_core/CHANGELOG.md](https://github.com/rust-random/rand/blob/master/rand_core/CHANGELOG.md).
 -   [rand_distr/CHANGELOG.md](https://github.com/rust-random/rand/blob/master/rand_distr/CHANGELOG.md).
 
+## Renamed functions and methods
+
+In the 2024 edition, [`gen` is a reserved keyword][gen-keyword]. The raw syntax `r#gen()` is awkward, so some methods in `rand::Rng` have been renamed:
+- `gen` -> `random`
+- `gen_range` -> `random_range`
+- `gen_bool` -> `random_bool`
+- `gen_ratio` -> `random_ratio`
+
+Additionally, `rand::thread_rng()` has been renamed to the simpler `rng()`.
+
+The previous names still exist but are deprecated.
+
+[gen-keyword]: https://doc.rust-lang.org/edition-guide/rust-2024/gen-keyword.html
+
 ## Security
 
 It was determined in [#1514](https://github.com/rust-random/rand/pull/1514) that
