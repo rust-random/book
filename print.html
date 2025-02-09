@@ -2200,6 +2200,16 @@ enforce our rules regarding value-breaking changes (see <a href="./crate-reprod.
 <li><a href="https://github.com/rust-random/rand/blob/master/rand_core/CHANGELOG.md">rand_core/CHANGELOG.md</a>.</li>
 <li><a href="https://github.com/rust-random/rand/blob/master/rand_distr/CHANGELOG.md">rand_distr/CHANGELOG.md</a>.</li>
 </ul>
+<h2><a class="header" href="#renamed-functions-and-methods" id="renamed-functions-and-methods">Renamed functions and methods</a></h2>
+<p>In the 2024 edition, <a href="https://doc.rust-lang.org/edition-guide/rust-2024/gen-keyword.html"><code>gen</code> is a reserved keyword</a>. The raw syntax <code>r#gen()</code> is awkward, so some methods in <code>rand::Rng</code> have been renamed:</p>
+<ul>
+<li><code>gen</code> -&gt; <code>random</code></li>
+<li><code>gen_range</code> -&gt; <code>random_range</code></li>
+<li><code>gen_bool</code> -&gt; <code>random_bool</code></li>
+<li><code>gen_ratio</code> -&gt; <code>random_ratio</code></li>
+</ul>
+<p>Additionally, <code>rand::thread_rng()</code> has been renamed to the simpler <code>rng()</code>.</p>
+<p>The previous names still exist but are deprecated.</p>
 <h2><a class="header" href="#security-1" id="security-1">Security</a></h2>
 <p>It was determined in <a href="https://github.com/rust-random/rand/pull/1514">#1514</a> that
 &quot;rand is not a crypto library&quot;. This change clarifies that:</p>
