@@ -125,7 +125,7 @@ Some additional items were renamed in `rand_distr`:
 
 The [`StandardUniform`] distribution no longer supports sampling `Option<T>` types (for any `T`).
 
-`isize` and `usize` types are no longer supported by [`Fill`] or [`WeightedAliasIndex`]. `isize` is also no longer supported by [`Uniform`] or [`StandardUniform`]. `usize` remains supported by [`Uniform`] and [`StandardUniform`] and now has portable results across 32- and 64-bit platforms.
+`isize` and `usize` types are no longer supported by [`Fill`], [`WeightedAliasIndex`] or [`StandardUniform`]. `isize` is also no longer supported by [`Uniform`]. `usize` remains supported by [`Uniform`] through [`UniformUsize`] and now has portable results across 32- and 64-bit platforms.
 
 The constructors `fn new`, `fn new_inclusive` for [`Uniform`] and [`UniformSampler`] now return a [`Result`] instead of panicking on invalid inputs. Additionally, [`Uniform`] now supports [`TryFrom`] (instead of `From`) for range types.
 
@@ -146,6 +146,7 @@ See the `CHANGELOG.md` files for details of reproducibility-breaking changes aff
 [`ThreadRng`]: https://docs.rs/rand/latest/rand/rngs/struct.ThreadRng.html
 [`ReseedingRng`]: https://docs.rs/rand/latest/rand/rngs/struct.ReseedingRng.html
 [`Uniform`]: https://docs.rs/rand/latest/rand/distr/struct.Uniform.html
+[`UniformUsize`]: https://docs.rs/rand/latest/rand/distr/uniform/struct.UniformUsize.html
 [`WeightedAliasIndex`]: https://docs.rs/rand_distr/latest/rand_distr/weighted_alias/struct.WeightedAliasIndex.html
 [`rand_core`]: https://docs.rs/rand_core/
 [`rand_distr`]: https://docs.rs/rand_distr/
