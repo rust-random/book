@@ -17,7 +17,16 @@ To preview your changes locally:
 ```
 cargo install mdbook --version "^0.4" --force
 mdbook build --open
-mdbook test
+```
+
+`mdbook test` does not currently work, see: https://github.com/rust-random/book/issues/79
+
+As a workaround, please run:
+
+```
+cd tests
+./generate.sh
+cargo test
 ```
 
 ## License
