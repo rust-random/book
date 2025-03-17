@@ -1,4 +1,4 @@
-book
-tests/src/*
-tests/target/*
+/book
+/tests/src/*
+/tests/target
 Cargo.lock

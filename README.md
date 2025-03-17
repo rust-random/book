@@ -19,7 +19,7 @@ cargo install mdbook --version "^0.4" --force
 mdbook build --open
 ```
 
-`mdbook test` does not currently work, see: https://github.com/rust-lang/mdBook/issues/394
+`mdbook test` does not currently work, see: https://github.com/rust-random/book/issues/79
 
 As a workaround, please run:
 
