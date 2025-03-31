@@ -7,3 +7,6 @@ description = "Extended documentation for Rust's Rand lib"
 
 [output.html.playgen]
 editable = true
+
+[output.linkcheck]
+# NOTE: this requires https://github.com/Michael-F-Bryan/mdbook-linkcheck
