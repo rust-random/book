@@ -132,4 +132,5 @@ fn main() {
 [`Rng::try_fill`]: https://docs.rs/rand/latest/rand/trait.Rng.html#method.try_fill
 [`random`]: https://docs.rs/rand/latest/rand/fn.random.html
 [`rng()`]: https://docs.rs/rand/latest/rand/fn.rng.html
+[`Distribution`]: https://docs.rs/rand/latest/rand/distr/trait.Distribution.html
 [`StandardUniform`]: https://docs.rs/rand/latest/rand/distr/struct.StandardUniform.html

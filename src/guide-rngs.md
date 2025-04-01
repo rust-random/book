@@ -2,7 +2,7 @@
 
 There are many kinds of RNGs, with different trade-offs. Rand provides some
 convenient generators in the [`rngs` module]. Often you can just use
-[`thread_rng`], a function which automatically initializes an RNG in
+[`rand::rng`], a function which automatically initializes an RNG in
 thread-local memory and returns a reference to it. It is fast, good quality,
 and (to the best of our knowledge) cryptographically secure.
 
@@ -304,7 +304,7 @@ by P. Hellekalek.
 [`SmallRng`]: https://docs.rs/rand/latest/rand/rngs/struct.SmallRng.html
 [`StdRng`]: https://docs.rs/rand/latest/rand/rngs/struct.StdRng.html
 [`StepRng`]: https://docs.rs/rand/latest/rand/rngs/mock/struct.StepRng.html
-[`rng()`]: https://docs.rs/rand/latest/rand/fn.rng.html
+[`rand::rng`]: https://docs.rs/rand/latest/rand/fn.rng.html
 [basic PRNGs]: #basic-pseudo-random-number-generators-prngs
 [CSPRNGs]: #cryptographically-secure-pseudo-random-number-generators-csprngs
 [`Pcg32`]: https://docs.rs/rand_pcg/latest/rand_pcg/type.Pcg32.html
