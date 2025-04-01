@@ -1,0 +1,380 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Random distributions - The Rust Rand Book</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Extended documentation for Rust&#x27;s Rand lib">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        <button id="search-toggle" class="icon-button" type="button" title="Search. (Shortkey: s)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="S" aria-controls="searchbar">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Rust Rand Book</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="search-wrapper" class="hidden">
+                    <form id="searchbar-outer" class="searchbar-outer">
+                        <input type="search" id="searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="searchresults-outer" aria-describedby="searchresults-header">
+                    </form>
+                    <div id="searchresults-outer" class="searchresults-outer hidden">
+                        <div id="searchresults-header" class="searchresults-header"></div>
+                        <ul id="searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h1 id="random-distributions"><a class="header" href="#random-distributions">Random distributions</a></h1>
+<p>For maximum flexibility when producing random values, we define the
+<a href="https://docs.rs/rand/latest/rand/distr/trait.Distribution.html"><code>Distribution</code></a> trait:</p>
+<pre><code class="language-rust noplayground"><span class="boring">use rand::Rng;
+</span>// a producer of data of type T:
+pub trait Distribution&lt;T&gt; {
+    // the key function:
+    fn sample&lt;R: Rng + ?Sized&gt;(&amp;self, rng: &amp;mut R) -&gt; T;
+
+    // a convenience function defined using sample:
+    fn sample_iter&lt;R&gt;(self, rng: R) -&gt; rand::distr::Iter&lt;Self, R, T&gt;
+    where
+        Self: Sized,
+        R: Rng,
+    {
+        // [has a default implementation]
+<span class="boring">        todo!()
+</span>    }
+}</code></pre>
+<p>Implementations of <a href="https://docs.rs/rand/latest/rand/distr/trait.Distribution.html"><code>Distribution</code></a> are <em>probability distribution</em>: mappings
+from events to probabilities (e.g. for a die roll <code>P(x = i) = ⅙</code> or for a Normal
+distribution with mean <code>μ=0</code>, <code>P(x &gt; 0) = ½</code>).</p>
+<p>Note that although probability distributions all have properties such as a mean,
+a Probability Density Function, and can be sampled by inverting the Cumulative
+Density Function, here we only concern ourselves with <em>sampling random values</em>.
+If you require use of such properties you may prefer to use the <a href="https://github.com/statrs-dev/statrs/"><code>statrs</code></a> crate.</p>
+<p>Rand provides implementations of many different distributions; we cover the most
+common of these here, but for full details refer to the <a href="https://docs.rs/rand/latest/rand/distr/"><code>distr</code></a> module
+and the <a href="https://docs.rs/rand_distr/"><code>rand_distr</code></a> crate.</p>
+<h1 id="uniform-distributions"><a class="header" href="#uniform-distributions">Uniform distributions</a></h1>
+<p>The most obvious type of distribution is the one we already discussed: one
+where each equally-sized sub-range has equal chance of containing the next
+sample. This is known as <em>uniform</em>.</p>
+<p>Rand actually has several variants of this, representing different ranges:</p>
+<ul>
+<li><a href="https://docs.rs/rand/latest/rand/distr/struct.StandardUniform.html"><code>StandardUniform</code></a> requires no parameters and samples values uniformly according
+to the type. <a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.random"><code>Rng::random</code></a> provides a short-cut to this distribution.</li>
+<li><a href="https://docs.rs/rand/latest/rand/distr/struct.Uniform.html"><code>Uniform</code></a> is parametrised by <code>Uniform::new(low, high)</code> (including <code>low</code>,
+excluding <code>high</code>) or <code>Uniform::new_inclusive(low, high)</code> (including both),
+and samples values uniformly within this range.
+<a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.random_range"><code>Rng::random_range</code></a> is a convenience method defined over
+<a href="https://docs.rs/rand/latest/rand/distr/struct.Uniform.html#method.sample_single"><code>Uniform::sample_single</code></a>, optimised for single-sample usage.</li>
+<li><a href="https://docs.rs/rand/latest/rand/distr/struct.Alphanumeric.html"><code>Alphanumeric</code></a> is uniform over the <code>char</code> values <code>0-9A-Za-z</code>.</li>
+<li><a href="https://docs.rs/rand/latest/rand/distr/struct.Open01.html"><code>Open01</code></a> and <a href="https://docs.rs/rand/latest/rand/distr/struct.OpenClosed01.html"><code>OpenClosed01</code></a> are provide alternate sampling ranges for
+floating-point types (see below).</li>
+</ul>
+<h2 id="uniform-sampling-by-type"><a class="header" href="#uniform-sampling-by-type">Uniform sampling by type</a></h2>
+<p>Lets go over the distributions by type:</p>
+<ul>
+<li>
+<p>For <code>bool</code>, <a href="https://docs.rs/rand/latest/rand/distr/struct.StandardUniform.html"><code>StandardUniform</code></a> samples each value with probability 50%.</p>
+</li>
+<li>
+<p>For <code>Option&lt;T&gt;</code>, the <a href="https://docs.rs/rand/latest/rand/distr/struct.StandardUniform.html"><code>StandardUniform</code></a> distribution samples <code>None</code> with
+probability 50%, otherwise <code>Some(value)</code> is sampled, according to its type.</p>
+</li>
+<li>
+<p>For integers (<code>u8</code> through to <code>u128</code>, <code>usize</code>, and <code>i*</code> variants),
+<a href="https://docs.rs/rand/latest/rand/distr/struct.StandardUniform.html"><code>StandardUniform</code></a> samples from all possible values while
+<a href="https://docs.rs/rand/latest/rand/distr/struct.Uniform.html"><code>Uniform</code></a> samples from the parameterised range.</p>
+</li>
+<li>
+<p>For <code>NonZeroU8</code> and other "non-zero" types, <a href="https://docs.rs/rand/latest/rand/distr/struct.StandardUniform.html"><code>StandardUniform</code></a> samples uniformly
+from all non-zero values (rejection method).</p>
+</li>
+<li>
+<p><code>Wrapping&lt;T&gt;</code> integer types are sampled as for the corresponding integer
+type by the <a href="https://docs.rs/rand/latest/rand/distr/struct.StandardUniform.html"><code>StandardUniform</code></a> distribution.</p>
+</li>
+<li>
+<p>For floats (<code>f32</code>, <code>f64</code>),</p>
+<ul>
+<li><a href="https://docs.rs/rand/latest/rand/distr/struct.StandardUniform.html"><code>StandardUniform</code></a> samples from the half-open range <code>[0, 1)</code> with 24 or 53
+bits of precision (for <code>f32</code> and <code>f64</code> respectively)</li>
+<li><a href="https://docs.rs/rand/latest/rand/distr/struct.OpenClosed01.html"><code>OpenClosed01</code></a> samples from the half-open range <code>(0, 1]</code> with 24 or
+53 bits of precision</li>
+<li><a href="https://docs.rs/rand/latest/rand/distr/struct.Open01.html"><code>Open01</code></a> samples from the open range <code>(0, 1)</code> with 23 or 52 bits of
+precision</li>
+<li><a href="https://docs.rs/rand/latest/rand/distr/struct.Uniform.html"><code>Uniform</code></a> samples from a given range with 23 or 52 bits of precision</li>
+</ul>
+</li>
+<li>
+<p>For the <code>char</code> type, the <a href="https://docs.rs/rand/latest/rand/distr/struct.StandardUniform.html"><code>StandardUniform</code></a> distribution samples from all
+available Unicode code points, uniformly; many of these values may not be
+printable (depending on font support). The <a href="https://docs.rs/rand/latest/rand/distr/struct.Alphanumeric.html"><code>Alphanumeric</code></a> samples from
+only a-z, A-Z and 0-9 uniformly.</p>
+</li>
+<li>
+<p>For tuples and arrays, each element is sampled as above, where supported.
+The <a href="https://docs.rs/rand/latest/rand/distr/struct.StandardUniform.html"><code>StandardUniform</code></a> and <a href="https://docs.rs/rand/latest/rand/distr/struct.Uniform.html"><code>Uniform</code></a> distributions each support a selection of
+these types (up to 12-tuples and 32-element arrays).
+This includes the empty tuple <code>()</code> and array.
+When using <code>rustc</code> ≥ 1.51, enable the <code>min_const_gen</code> feature to support
+arrays larger than 32 elements.</p>
+</li>
+<li>
+<p>For SIMD types, each element is sampled as above, for <a href="https://docs.rs/rand/latest/rand/distr/struct.StandardUniform.html"><code>StandardUniform</code></a> and
+<a href="https://docs.rs/rand/latest/rand/distr/struct.Uniform.html"><code>Uniform</code></a> (for the latter, <code>low</code> and <code>high</code> parameters are <em>also</em> SIMD
+types, effectively sampling from multiple ranges simultaneously). SIMD
+support requires using the <code>simd_support</code> feature flag and nightly <code>rustc</code>.</p>
+</li>
+<li>
+<p>For enums, you have to implement uniform sampling yourself. For example, you
+could use the following approach:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">use rand::{Rng, distr::{Distribution, StandardUniform}};
+</span>pub enum Food {
+    Burger,
+    Pizza,
+    Kebab,
+}
+
+impl Distribution&lt;Food&gt; for StandardUniform {
+    fn sample&lt;R: Rng + ?Sized&gt;(&amp;self, rng: &amp;mut R) -&gt; Food {
+        let index: u8 = rng.random_range(0..3);
+        match index {
+            0 =&gt; Food::Burger,
+            1 =&gt; Food::Pizza,
+            2 =&gt; Food::Kebab,
+            _ =&gt; unreachable!(),
+        }
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+</li>
+</ul>
+<h1 id="non-uniform-distributions"><a class="header" href="#non-uniform-distributions">Non-uniform distributions</a></h1>
+<p>The <a href="https://docs.rs/rand/"><code>rand</code></a> crate provides only two non-uniform distributions:</p>
+<ul>
+<li>The <a href="https://docs.rs/rand/latest/rand/distr/struct.Bernoulli.html"><code>Bernoulli</code></a> distribution simply generates a boolean where the
+probability of sampling <code>true</code> is some constant (<code>Bernoulli::new(0.5)</code>) or
+ratio (<code>Bernoulli::from_ratio(1, 6)</code>).</li>
+<li>The <a href="https://docs.rs/rand/latest/rand/distr/struct.WeightedIndex.html"><code>WeightedIndex</code></a> distribution may be used to sample from a sequence of
+weighted values. See the <a href="guide-seq.html">Sequences</a> section.</li>
+</ul>
+<p>Many more non-uniform distributions are provided by the <a href="https://docs.rs/rand_distr/"><code>rand_distr</code></a> crate.</p>
+<h3 id="integers"><a class="header" href="#integers">Integers</a></h3>
+<p>The <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Binomial.html"><code>Binomial</code></a> distribution is related to the <a href="https://docs.rs/rand/latest/rand/distr/struct.Bernoulli.html"><code>Bernoulli</code></a> in that it
+models running <code>n</code> independent trials each with probability <code>p</code> of success,
+then counts the number of successes.</p>
+<p>Note that for large <code>n</code> the <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Binomial.html"><code>Binomial</code></a> distribution's implementation is
+much faster than sampling <code>n</code> trials individually.</p>
+<p>The <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Poisson.html"><code>Poisson</code></a> distribution expresses the expected number of events
+occurring within a fixed interval, given that events occur with fixed rate λ.
+<a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Poisson.html"><code>Poisson</code></a> distribution sampling generates <code>Float</code> values because <code>Float</code>s
+are used in the sampling calculations, and we prefer to defer to the user on
+integer types and the potentially lossy and panicking associated conversions.
+For example, <code>u64</code> values can be attained with <code>rng.sample(Poisson) as u64</code>.</p>
+<p>Note that out of range float to int conversions with <code>as</code> result in undefined
+behavior for Rust &lt;1.45 and a saturating conversion for Rust &gt;=1.45.</p>
+<h2 id="continuous-non-uniform-distributions"><a class="header" href="#continuous-non-uniform-distributions">Continuous non-uniform distributions</a></h2>
+<p>Continuous distributions model samples drawn from the real number line ℝ, or in
+some cases a point from a higher dimension (ℝ², ℝ³, etc.). We provide
+implementations for <code>f64</code> and for <code>f32</code> output in most cases, although currently
+the <code>f32</code> implementations simply reduce the precision of an <code>f64</code> sample.</p>
+<p>The exponential distribution, <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Exp.html"><code>Exp</code></a>, simulates time until decay, assuming a
+fixed rate of decay (i.e. exponential decay).</p>
+<p>The <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Normal.html"><code>Normal</code></a> distribution (also known as Gaussian) simulates sampling from
+the Normal distribution ("Bell curve") with the given mean and standard
+deviation. The <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.LogNormal.html"><code>LogNormal</code></a> is related: for sample <code>X</code> from the log-normal
+distribution, <code>log(X)</code> is normally distributed; this "skews" the normal
+distribution to avoid negative values and to have a long positive tail.</p>
+<p>The <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.UnitCircle.html"><code>UnitCircle</code></a> and <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.UnitSphere.html"><code>UnitSphere</code></a> distributions simulate uniform
+sampling from the edge of a circle or surface of a sphere.</p>
+<p>The <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Cauchy.html"><code>Cauchy</code></a> distribution (also known as the Lorentz distribution) is the
+distribution of the x-intercept of a ray from point <code>(x0, γ)</code> with uniformly
+distributed angle.</p>
+<p>The <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Beta.html"><code>Beta</code></a> distribution is a two-parameter probability distribution, whose
+output values lie between 0 and 1. The <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Dirichlet.html"><code>Dirichlet</code></a> distribution is a
+generalisation to any positive number of parameters.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="guide-values.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="guide-process.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="guide-values.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="guide-process.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+        <script src="elasticlunr.min.js"></script>
+        <script src="mark.min.js"></script>
+        <script src="searcher.js"></script>
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+
+
+    </div>
+    </body>
+</html>
