@@ -2,14 +2,18 @@
 
 This section attempts to explain some of the concepts used in this library.
 
-1.  [Getting started with a new crate](guide-cargo.md)
+1.  [Getting started with a new crate](guide-start.md)
 1.  [What is random data and what is randomness anyway?](guide-data.md)
 1.  [What kind of random generators are there?](guide-gen.md)
 1.  [What random number generators does Rand provide?](guide-rngs.md)
+1.  [Seeding PRNGs and reproducibility](guide-seeding.md)
+1.  [Parallel RNGs](guide-parallel.md)
 1.  [Turning random data into useful values](guide-values.md)
 1.  [Distributions: more control over random values](guide-dist.md)
+1.  [Random processes: sampling without replacement](guide-process.md)
 1.  [Sequences](guide-seq.md)
 1.  [Error handling](guide-err.md)
+1.  [Testing functions which use RNGs](guide-test-fn-rng.md)
 
 ## Importing items (prelude)
 

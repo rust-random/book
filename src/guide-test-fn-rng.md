@@ -1,4 +1,4 @@
-# Testing functions that use RNGs
+# Testing functions which use RNGs
 
 Occasionally a function that uses random number generators might need to be tested. For functions that need to be tested with test vectors, the following approach might be adapted:
 

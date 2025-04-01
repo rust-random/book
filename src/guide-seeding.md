@@ -8,6 +8,10 @@ key, usually specified as a byte-sequence for cryptographic generators or,
 for small PRNGs, often just a word. We formalise this for all our generators
 with the [`SeedableRng`] trait.
 
+Note: seeding does not imply reproducibility of results. For that you need to
+use a named RNG with a fixed algorithm (e.g. `ChaCha12Rng` not `StdRng`). See
+also [Reproducibility](https://rust-random.github.io/book/crate-reprod.html).
+
 ## The Seed type
 
 We require all seedable RNGs to define a [`Seed`] type satisfying
