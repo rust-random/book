@@ -7,6 +7,17 @@ on:
     branches: [ master, '0.[0-9]+' ]
 
 jobs:
+  build:
+    name: Test building of docs
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: jontze/action-mdbook@6c0be56d14c4bf16861b00af61f50ff7400ce502 # v4
+        with:
+          token: ${{secrets.GITHUB_TOKEN}}
+          use-linkcheck: true
+      - run: mdbook build
+
   code-samples:
     name: Test code samples
     runs-on: ubuntu-latest
