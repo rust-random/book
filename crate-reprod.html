@@ -156,42 +156,41 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="reproducibility"><a class="header" href="#reproducibility">Reproducibility</a></h1>
-<h2 id="definitions"><a class="header" href="#definitions">Definitions</a></h2>
-<p>Given fixed inputs, all items (should) fall into one of three categories:</p>
+<p>The <code>rust-random</code> libraries make limited commitments to reproducibility of seedable PRNGs and stochastic algorithms.</p>
+<p>This chapter concerns value-stability of deterministic processes using the <code>rust-random</code> libraries.</p>
+<h2 id="api-breaking-value-breaking-and-semver"><a class="header" href="#api-breaking-value-breaking-and-semver">API-breaking, value-breaking and SemVer</a></h2>
+<p>A change (to a library) is considered <strong>API-breaking</strong> if it may cause a compilation failure of code which was compatible with a prior version of the API, or is otherwise an incompatible change.</p>
+<p>We aim to follow <a href="https://semver.org/">SemVer rules</a> regarding API-breaking changes and <code>MAJOR.MINOR.PATCH</code> versions. That is, post 1.0, new minor versions should not introduce API-breaking changes.</p>
+<p>A change is considered <strong>value-breaking</strong> if it is not API-breaking yet would result in changed output values of a deterministic stochastic process using only unchanged parts of the <code>rust-random</code> API.</p>
+<p>Value-breaking changes are permitted in minor versions.</p>
+<h2 id="non-portable-deterministic-items"><a class="header" href="#non-portable-deterministic-items">Non-portable deterministic items</a></h2>
+<p>An item in a <code>rust-random</code> API (such as a struct or function) may be declared to be <strong>non-portable</strong>, meaning that it opts out of all reproducibility guarantees. Non-portable items may be deterministic, yet yield different results on different platforms and library versions (they may make value-breaking changes in any release).</p>
+<p>This is a change in policy affecting <code>rand</code> from version <code>0.10</code> or <code>1.0</code> (whichever release is next); up to version <code>0.9</code> non-portable items were not permitted to make value-breaking changes in patch releases.</p>
+<p>This non-portable declaration must be clearly mentioned in documentation. The following items make such a declaration:</p>
 <ul>
-<li>Output is non-deterministic, thus never reproducible (example: <code>rand::rng</code>)</li>
-<li>Output is deterministic, but not considered portable (<code>SmallRng</code>, <code>StdRng</code>; limitations below)</li>
-<li>Output is deterministic and portable (named RNGs; most distributions, sampling and shuffling algorithms)</li>
+<li><a href="https://docs.rs/rand/latest/rand/rngs/struct.SmallRng.html"><code>rand::rngs::SmallRng</code></a></li>
+<li><a href="https://docs.rs/rand/latest/rand/rngs/struct.StdRng.html"><code>rand::rngs::StdRng</code></a></li>
 </ul>
-<p>In general, functionality is considered deterministic and portable <em>unless</em>
-it is clearly non-deterministic (e.g. <code>getrandom</code>, <code>ThreadRng</code>) <em>or</em> it is
-documented as being nonportable (e.g. <code>StdRng</code>, <code>SmallRng</code>).</p>
-<h2 id="crate-versions"><a class="header" href="#crate-versions">Crate versions</a></h2>
-<p>We try to follow <a href="https://semver.org/">semver rules</a> regarding
-API-breaking changes and <code>MAJOR.MINOR.PATCH</code> versions:</p>
+<h2 id="portable-items"><a class="header" href="#portable-items">Portable items</a></h2>
+<p>Some items are clearly non-deterministic (e.g. <a href="https://docs.rs/rand/latest/rand/fn.rng.html"><code>rand::rng</code></a>). Some items are deterministic but non-portable (above). All other parts of the public API of <code>rust-random</code> crates (including PRNGs, distributions and other stochastic algorithms) are expected to be portable:</p>
 <ul>
-<li>New <em>patch</em> versions should not include API-breaking changes or major new
-features</li>
-<li>Before 1.0, <em>minor</em> versions may include API breaking changes. After 1.0
-they should not.</li>
-</ul>
-<p>Additionally, we must also consider <em>value-breaking changes</em> and <em>portability</em>.
-When given fixed inputs,</p>
-<ul>
-<li>For non-deterministic items, implementations may change in any release</li>
-<li>For deterministic nonportable items, output should be preserved in patch
-releases, but may change in any minor release (including after 1.0)</li>
-<li>For portable items, output should be preserved by patch releases.
-Minor releases (including after 1.0) may include such value-breaking
-changes, though these must be documented in the CHANGELOG.</li>
+<li>Results should be reproducible across platforms</li>
+<li>Results should be reproducible across patch releases</li>
+<li>Minor releases, including after 1.0, may make value-breaking changes to portable items. Such changes must be well motivated and should be clearly mentioned in the CHANGELOG.</li>
 </ul>
 <h3 id="testing"><a class="header" href="#testing">Testing</a></h3>
-<p>We expect all pseudo-random algorithms to test the value-stability of their
-output, where possible:</p>
+<p>We expect all portable stochastic algorithms to test the value-stability of their output with some form of test vector.</p>
 <ul>
-<li>PRNGs should be compared with a reference vector (<a href="https://github.com/rust-random/rngs/blob/master/rand_xoshiro/src/xoshiro256starstar.rs#L124">example</a>)</li>
+<li>PRNGs should test against a reference vector where available (<a href="https://github.com/rust-random/rngs/blob/master/rand_xoshiro/src/xoshiro256starstar.rs#L122">example</a>)</li>
 <li>Other algorithms should include their own test vectors within a
 <code>value_stability</code> test or similar (<a href="https://github.com/rust-random/rand/blob/master/src/distr/bernoulli.rs#L226">example</a>)</li>
+</ul>
+<h2 id="support-for-prior-versions"><a class="header" href="#support-for-prior-versions">Support for prior versions</a></h2>
+<p>We aim to support users of <code>rust-random</code> crates using a prior <code>MAJOR.MINOR</code> version for the purposes of reproducibility by:</p>
+<ul>
+<li>Providing security fixes as patch versions where appropriate</li>
+<li>Facilitating the back-porting of compatible additions from future crate versions <em>on request</em></li>
+<li>Other fixes may be considered for back-porting, but are often not possible without API-breaking or value-breaking changes</li>
 </ul>
 <h2 id="limitations"><a class="header" href="#limitations">Limitations</a></h2>
 <h3 id="portability-of-usize"><a class="header" href="#portability-of-usize">Portability of usize</a></h3>
@@ -202,10 +201,7 @@ issue, but when it comes to generating random numbers in a portable manner
 it does matter.</p>
 <p>A simple rule follows: if portability is required, <em>never</em> sample a <code>usize</code> or
 <code>isize</code> value directly.</p>
-<p>Within Rand we adhere to this rule whenever possible. All sequence-related
-code requiring a bounded <code>usize</code> value will sample a <code>u32</code> value unless the
-upper bound exceeds <code>u32::MAX</code>.
-(Note that this actually improves benchmark performance in many cases.)</p>
+<p>From <code>rand v0.9</code>, <code>isize</code> and <code>usize</code> types are no longer supported in many parts of the public API, including <a href="https://docs.rs/rand/latest/rand/distr/struct.StandardUniform.html"><code>StandardUniform</code></a>. <code>usize</code> is supported by <a href="https://docs.rs/rand/latest/rand/distr/uniform/trait.SampleUniform.html"><code>SampleUniform</code></a> and thus <a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.random_range"><code>Rng::random_range</code></a>, using <code>u32</code> sampling whenever possible to maximise portability.</p>
 <h3 id="portability-of-floats"><a class="header" href="#portability-of-floats">Portability of floats</a></h3>
 <p>The results of floating point arithmetic depend on rounding modes and
 implementation details. In particular, the results of transcendental functions vary
