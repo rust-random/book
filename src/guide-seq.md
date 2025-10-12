@@ -71,8 +71,8 @@ immutable distributions, we offer the following:
 [`Distribution`]: https://docs.rs/rand/latest/rand/distr/trait.Distribution.html
 [`IteratorRandom`]: https://docs.rs/rand/latest/rand/seq/trait.IteratorRandom.html
 [`SliceRandom`]: https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html
-[`WeightedIndex`]: https://docs.rs/rand/latest/rand/distr/struct.WeightedIndex.html
-[`WeightedAliasIndex`]: https://docs.rs/rand_distr/latest/rand_distr/weighted_alias/struct.WeightedAliasIndex.html
+[`WeightedIndex`]: https://docs.rs/rand_distr/latest/rand_distr/weighted/struct.WeightedIndex.html
+[`WeightedAliasIndex`]: https://docs.rs/rand_distr/latest/rand_distr/weighted/struct.WeightedAliasIndex.html
 [`SliceRandom::choose`]: https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.choose
 [`SliceRandom::choose_mut`]: https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.choose_mut
 [`SliceRandom::choose_multiple`]: https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.choose_multiple

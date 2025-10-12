@@ -201,4 +201,4 @@ generalisation to any positive number of parameters.
 [`Beta`]: https://docs.rs/rand_distr/latest/rand_distr/struct.Beta.html
 [`Dirichlet`]: https://docs.rs/rand_distr/latest/rand_distr/struct.Dirichlet.html
 [`statrs`]: https://github.com/statrs-dev/statrs/
-[`WeightedIndex`]: https://docs.rs/rand/latest/rand/distr/struct.WeightedIndex.html
+[`WeightedIndex`]: https://docs.rs/rand/latest/rand/distr/weighted/struct.WeightedIndex.html
