@@ -23,7 +23,7 @@ The [`FromEntropy`] trait has now been removed. Fear not though, its
 [`from_entropy`] method continues to provide easy initialisation from its new
 home in the [`SeedableRng`] trait (this requires that `rand_core` has the `std`
 or `getrandom` feature enabled):
-```rust
+```rust,noplayground
 # extern crate rand_0_7 as rand;
 use rand::{SeedableRng, rngs::StdRng};
 let mut rng = StdRng::from_entropy();

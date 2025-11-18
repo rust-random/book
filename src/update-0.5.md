@@ -74,7 +74,7 @@ A new trait has been added: `FromEntropy`. This is automatically implemented for
 any type supporting `SeedableRng`, and provides construction from fresh, strong
 entropy:
 
-```rust
+```rust,noplayground
 use rand_0_5::{ChaChaRng, FromEntropy};
 
 let mut rng = ChaChaRng::from_entropy();
@@ -120,7 +120,8 @@ use cannot be guaranteed.*
 A new `Error` type has been added, designed explicitly for no-std compatibility,
 simplicity, and enough flexibility for our uses (carrying a `cause` when
 possible):
-```ignore
+```rust,noplayground
+# use rand_0_5::ErrorKind;
 pub struct Error {
     pub kind: ErrorKind,
     pub msg: &'static str,
@@ -181,7 +182,7 @@ The method `ChaChaRng::set_counter` has been replaced by two new methods,
 `set_word_pos` and `set_stream`. Where necessary, the behaviour of the old
 method may be emulated as follows:
 
-```rust
+```rust,noplayground
 # extern crate rand;
 # extern crate rand_chacha;
 # use rand::prelude::*;

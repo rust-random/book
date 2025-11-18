@@ -52,7 +52,7 @@ let a: u32 = Standard.sample_iter(rng).next().unwrap();
 let b: u32 = Standard.sample_iter(rng).next().unwrap();
 ```
 can be replaced with the following code:
-```rust
+```rust,noplayground
 # extern crate rand;
 # use rand_0_8::prelude::*;
 # use rand_0_8::distributions::Standard;
@@ -130,7 +130,7 @@ Several smaller changes occurred to rand distributions:
         .collect();
     ```
     With Rand 0.8, this is equivalent to the following:
-    ```rust
+    ```rust,noplayground
     # extern crate rand;
     # use rand_0_8::{distributions::Alphanumeric, Rng};
     # fn main() {
