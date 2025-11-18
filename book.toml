@@ -1,11 +1,14 @@
 [book]
 authors = ["The Rand Project Developers"]
-src = "src"
 title = "The Rust Rand Book"
 description = "Extended documentation for Rust's Rand lib"
+language = "en"
 
-[output.html.playgen]
+[rust]
+edition = "2024"
+
+[output.html.playground]
 editable = true
 
-[output.linkcheck]
+# [output.linkcheck]
 # NOTE: this requires https://github.com/Michael-F-Bryan/mdbook-linkcheck
