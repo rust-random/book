@@ -93,7 +93,7 @@ Lets go over the distributions by type:
     support requires using the `simd_support` feature flag and nightly `rustc`.
 -   For enums, you have to implement uniform sampling yourself. For example, you
     could use the following approach:
-    ```rust
+    ```rust,noplayground
     # use rand::{Rng, distr::{Distribution, StandardUniform}};
     pub enum Food {
         Burger,

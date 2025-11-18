@@ -43,7 +43,7 @@ fn main() {
 
 To test this, we can create a `MockCryptoRng` implementing `TryRngCore` and `TryCryptoRng` in our testing module. Note that `MockCryptoRng` is private and `#[cfg(test)] mod tests` is cfg-gated to our test environment, thus ensuring that `MockCryptoRng` cannot accidentally be used in production.
 
-```rust
+```rust,noplayground
 #[cfg(test)]
 mod tests {
     use super::*;
