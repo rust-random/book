@@ -1,0 +1,2644 @@
+<!DOCTYPE HTML>
+<html lang="en" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>The Rust Rand Book</title>
+        <meta name="robots" content="noindex">
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Extended documentation for Rust&#x27;s Rand lib">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon-de23e50b.svg">
+        <link rel="shortcut icon" href="favicon-8114d1fc.png">
+        <link rel="stylesheet" href="css/variables-8adf115d.css">
+        <link rel="stylesheet" href="css/general-2459343d.css">
+        <link rel="stylesheet" href="css/chrome-9dfbd86b.css">
+        <link rel="stylesheet" href="css/print-9e4910d8.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="fonts/fonts-9644e21d.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" id="mdbook-highlight-css" href="highlight-493f70e1.css">
+        <link rel="stylesheet" id="mdbook-tomorrow-night-css" href="tomorrow-night-4c0ae647.css">
+        <link rel="stylesheet" id="mdbook-ayu-highlight-css" href="ayu-highlight-3fdfc3ac.css">
+
+        <!-- Custom theme stylesheets -->
+
+
+        <!-- Provide site root and default themes to javascript -->
+        <script>
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
+            window.path_to_searchindex_js = "searchindex-9a27f250.js";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc-59a566e4.js"></script>
+    </head>
+    <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>S</kbd> or <kbd>/</kbd> to search in the book</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
+    <div id="mdbook-body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="mdbook-sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("mdbook-sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+                sidebar_toggle.checked = false;
+            }
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
+        </script>
+
+        <nav id="mdbook-sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="mdbook-sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="mdbook-page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="mdbook-menu-bar-hover-placeholder"></div>
+                <div id="mdbook-menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="mdbook-sidebar-toggle" class="icon-button" for="mdbook-sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="mdbook-sidebar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M0 96C0 78.3 14.3 64 32 64H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32C14.3 128 0 113.7 0 96zM0 256c0-17.7 14.3-32 32-32H416c17.7 0 32 14.3 32 32s-14.3 32-32 32H32c-17.7 0-32-14.3-32-32zM448 416c0 17.7-14.3 32-32 32H32c-17.7 0-32-14.3-32-32s14.3-32 32-32H416c17.7 0 32 14.3 32 32z"/></svg></span>
+                        </label>
+                        <button id="mdbook-theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="mdbook-theme-list">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M371.3 367.1c27.3-3.9 51.9-19.4 67.2-42.9L600.2 74.1c12.6-19.5 9.4-45.3-7.6-61.2S549.7-4.4 531.1 9.6L294.4 187.2c-24 18-38.2 46.1-38.4 76.1L371.3 367.1zm-19.6 25.4l-116-104.4C175.9 290.3 128 339.6 128 400c0 3.9 .2 7.8 .6 11.6c1.8 17.5-10.2 36.4-27.8 36.4H96c-17.7 0-32 14.3-32 32s14.3 32 32 32H240c61.9 0 112-50.1 112-112c0-2.5-.1-5-.2-7.5z"/></svg></span>
+                        </button>
+                        <ul id="mdbook-theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-default_theme">Auto</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="mdbook-theme-ayu">Ayu</button></li>
+                        </ul>
+                        <button id="mdbook-search-toggle" class="icon-button" type="button" title="Search (`/`)" aria-label="Toggle Searchbar" aria-expanded="false" aria-keyshortcuts="/ s" aria-controls="mdbook-searchbar">
+                            <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M416 208c0 45.9-14.9 88.3-40 122.7L502.6 457.4c12.5 12.5 12.5 32.8 0 45.3s-32.8 12.5-45.3 0L330.7 376c-34.4 25.2-76.8 40-122.7 40C93.1 416 0 322.9 0 208S93.1 0 208 0S416 93.1 416 208zM208 352c79.5 0 144-64.5 144-144s-64.5-144-144-144S64 128.5 64 208s64.5 144 144 144z"/></svg></span>
+                        </button>
+                    </div>
+
+                    <h1 class="menu-title">The Rust Rand Book</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <span class=fa-svg id="print-button"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M128 0C92.7 0 64 28.7 64 64v96h64V64H354.7L384 93.3V160h64V93.3c0-17-6.7-33.3-18.7-45.3L400 18.7C388 6.7 371.7 0 354.7 0H128zM384 352v32 64H128V384 368 352H384zm64 32h32c17.7 0 32-14.3 32-32V256c0-35.3-28.7-64-64-64H64c-35.3 0-64 28.7-64 64v96c0 17.7 14.3 32 32 32H64v64c0 35.3 28.7 64 64 64H384c35.3 0 64-28.7 64-64V384zm-16-88c-13.3 0-24-10.7-24-24s10.7-24 24-24s24 10.7 24 24s-10.7 24-24 24z"/></svg></span>
+                        </a>
+
+                    </div>
+                </div>
+
+                <div id="mdbook-search-wrapper" class="hidden">
+                    <form id="mdbook-searchbar-outer" class="searchbar-outer">
+                        <div class="search-wrapper">
+                            <input type="search" id="mdbook-searchbar" name="searchbar" placeholder="Search this book ..." aria-controls="mdbook-searchresults-outer" aria-describedby="searchresults-header">
+                            <div class="spinner-wrapper">
+                                <span class=fa-svg id="fa-spin"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M304 48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zm0 416c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM48 304c26.5 0 48-21.5 48-48s-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48zm464-48c0-26.5-21.5-48-48-48s-48 21.5-48 48s21.5 48 48 48s48-21.5 48-48zM142.9 437c18.7-18.7 18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zm0-294.2c18.7-18.7 18.7-49.1 0-67.9S93.7 56.2 75 75s-18.7 49.1 0 67.9s49.1 18.7 67.9 0zM369.1 437c18.7 18.7 49.1 18.7 67.9 0s18.7-49.1 0-67.9s-49.1-18.7-67.9 0s-18.7 49.1 0 67.9z"/></svg></span>
+                            </div>
+                        </div>
+                    </form>
+                    <div id="mdbook-searchresults-outer" class="searchresults-outer hidden">
+                        <div id="mdbook-searchresults-header" class="searchresults-header"></div>
+                        <ul id="mdbook-searchresults">
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('mdbook-sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('mdbook-sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#mdbook-sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="mdbook-content" class="content">
+                    <main>
+                        <h1 id="the-rust-rand-book"><a class="header" href="#the-rust-rand-book">The Rust Rand Book</a></h1>
+<p>This is the extended documentation for Rust’s <strong>Rand</strong>om number library.</p>
+<p>This book contains:</p>
+<ol>
+<li><a href="#quick-start">Quick start</a></li>
+<li>An overview of <a href="#the-crate-family">crates, features and portability</a></li>
+<li>The <a href="#guide">Users’ Guide</a></li>
+<li><a href="#updating">Updating guides</a></li>
+<li><a href="#contributing">Contributor’s guide</a></li>
+</ol>
+<p>Outside this book, you may want:</p>
+<ul>
+<li><a href="https://docs.rs/rand/">API reference for the latest release</a></li>
+<li><a href="https://rust-random.github.io/rand/">API reference for the master branch</a></li>
+<li><a href="https://github.com/rust-random/rand/">The Rand repository</a></li>
+<li><a href="https://github.com/rust-random/book/">The Book source</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="quick-start"><a class="header" href="#quick-start">Quick start</a></h1>
+<p>Below we list a short example. For more, please refer to the <a href="https://docs.rs/rand/">API documentation</a>
+or the <a href="#guide">guide</a>.</p>
+<p>Lets kick things off with an example (<a href="https://play.rust-lang.org/?version=stable&amp;mode=debug&amp;edition=2018&amp;gist=7792ed032694bc558ca229be71a7783a">playground link</a>):</p>
+<pre class="playground"><code class="language-rust editable edition2024"><span class="boring">extern crate rand;
+</span>// import commonly used items from the prelude:
+use rand::prelude::*;
+
+fn main() {
+    // We can use random() immediately. It can produce values of many common types:
+    let x: u8 = rand::random();
+    println!("{}", x);
+
+    if rand::random() { // generates a boolean
+        println!("Heads!");
+    }
+
+    // If we want to be a bit more explicit (and a little more efficient) we can
+    // make a handle to the thread-local generator:
+    let mut rng = rand::rng();
+    if rng.random() { // random bool
+        let x: f64 = rng.random(); // random number in range [0, 1)
+        let y = rng.random_range(-10.0..10.0);
+        println!("x is: {}", x);
+        println!("y is: {}", y);
+    }
+
+    println!("Dice roll: {}", rng.random_range(1..=6));
+    println!("Number from 0 to 9: {}", rng.random_range(0..10));
+    
+    // Sometimes it's useful to use distributions directly:
+    let distr = rand::distr::Uniform::new_inclusive(1, 100).unwrap();
+    let mut nums = [0i32; 3];
+    for x in &amp;mut nums {
+        *x = rng.sample(distr);
+    }
+    println!("Some numbers: {:?}", nums);
+
+    // We can also interact with iterators and slices:
+    let arrows_iter = "➡⬈⬆⬉⬅⬋⬇⬊".chars();
+    println!("Lets go in this direction: {}", arrows_iter.choose(&amp;mut rng).unwrap());
+    let mut nums = [1, 2, 3, 4, 5];
+    nums.shuffle(&amp;mut rng);
+    println!("I shuffled my {:?}", nums);
+}</code></pre>
+<p>The first thing you may have noticed is that we imported everything from the
+<a href="https://docs.rs/rand/latest/rand/prelude/">prelude</a>. This is the lazy way to <code>use</code> rand, and like the
+<a href="https://doc.rust-lang.org/std/prelude/">standard library’s prelude</a>,
+only imports the most common items. If you don’t wish to use the prelude,
+remember to import the <a href="https://docs.rs/rand/latest/rand/trait.Rng.html"><code>Rng</code></a> trait!</p>
+<p>The Rand library automatically initialises a secure, thread-local generator
+on demand. This can be accessed via the <a href="https://docs.rs/rand/latest/rand/fn.rng.html"><code>rng()</code></a> and <a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.random"><code>random</code></a> functions.
+For more on this topic, see <a href="#types-of-generators">Random generators</a>.</p>
+<p>While the <a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.random"><code>random</code></a> function can only sample values in a <a href="https://docs.rs/rand/latest/rand/distr/struct.StandardUniform.html"><code>StandardUniform</code></a>
+(type-dependent) manner, <a href="https://docs.rs/rand/latest/rand/fn.rng.html"><code>rng()</code></a> gives you a handle to a generator.
+All generators implement the <a href="https://docs.rs/rand/latest/rand/trait.Rng.html"><code>Rng</code></a> trait, which provides the <a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.random"><code>random</code></a>,
+<a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.random_range"><code>random_range</code></a> and <a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.sample"><code>sample</code></a> methods used above.</p>
+<p>Rand provides functionality on iterators and slices via two more traits,
+<a href="https://docs.rs/rand/latest/rand/seq/trait.IteratorRandom.html"><code>IteratorRandom</code></a> and <a href="https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html"><code>SliceRandom</code></a>.</p>
+<h2 id="fixed-seed-rngs"><a class="header" href="#fixed-seed-rngs">Fixed seed RNGs</a></h2>
+<p>You may have noticed the use of <code>rand::rng()</code> above and wondered how to
+specify a fixed seed. To do so, you need to specify an RNG then use a method
+like <a href="https://docs.rs/rand/latest/rand/trait.SeedableRng.html#method.seed_from_u64"><code>seed_from_u64</code></a> or <a href="https://docs.rs/rand/latest/rand/trait.SeedableRng.html#tymethod.from_seed"><code>from_seed</code></a>.</p>
+<p>Note that <a href="https://docs.rs/rand/latest/rand/trait.SeedableRng.html#method.seed_from_u64"><code>seed_from_u64</code></a> is <strong>not suitable for cryptographic uses</strong> since a
+single <code>u64</code> cannot provide sufficient entropy to securely seed an RNG.
+All cryptographic RNGs accept a more appropriate seed via <a href="https://docs.rs/rand/latest/rand/trait.SeedableRng.html#tymethod.from_seed"><code>from_seed</code></a>.</p>
+<p>We use <code>ChaCha8Rng</code> below because it is fast and portable with good quality.
+See the <a href="#our-rngs">RNGs</a> section for more RNGs, but avoid <code>SmallRng</code> and <code>StdRng</code> if you
+care about reproducible results.</p>
+<pre class="playground"><code class="language-rust editable edition2024"><span class="boring">extern crate rand;
+</span><span class="boring">extern crate rand_chacha;
+</span>use rand::{Rng, SeedableRng};
+
+fn main() {
+    let mut rng = rand_chacha::ChaCha8Rng::seed_from_u64(10);
+    println!("Random f32: {}", rng.random::&lt;f32&gt;());
+}</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="the-crate-family"><a class="header" href="#the-crate-family">The crate family</a></h1>
+<pre><code class="language-plain">                                           ┌ <a href="https://docs.rs/statrs/">statrs</a>
+<a href="https://docs.rs/getrandom/">getrandom</a> ┐                                ├ <a href="https://docs.rs/rand_distr/">rand_distr</a>
+          └ <a href="https://docs.rs/rand_core/">rand_core</a> ┬─────────────┬ <a href="https://docs.rs/rand/">rand</a> ┘
+                      ├ <a href="https://docs.rs/rand_chacha/">rand_chacha</a> ┘
+                      ├ <a href="https://docs.rs/rand_pcg/">rand_pcg</a>
+                      └ [other RNG crates]
+</code></pre>
+
+<h2 id="interfaces"><a class="header" href="#interfaces">Interfaces</a></h2>
+<p><a href="https://docs.rs/rand_core/"><code>rand_core</code></a> defines <a href="https://docs.rs/rand_core/latest/rand_core/trait.RngCore.html"><code>RngCore</code></a> and other core traits, as well as several helpers for implementing RNGs.</p>
+<p>The <a href="https://docs.rs/getrandom/"><code>getrandom</code></a> crate provides a low-level API around platform-specific
+random-number sources.</p>
+<h2 id="pseudo-random-generators"><a class="header" href="#pseudo-random-generators">Pseudo-random generators</a></h2>
+<p>The following crates implement pseudo-random number generators
+(see <a href="#our-rngs">Our RNGs</a>):</p>
+<ul>
+<li><a href="https://docs.rs/rand_chacha/"><code>rand_chacha</code></a> provides generators using the ChaCha cipher</li>
+<li><a href="https://docs.rs/rand_hc/"><code>rand_hc</code></a> implements a generator using the HC-128 cipher</li>
+<li><a href="https://docs.rs/rand_isaac/"><code>rand_isaac</code></a> implements the ISAAC generators</li>
+<li><a href="https://docs.rs/rand_pcg/"><code>rand_pcg</code></a> implements a small selection of PCG generators</li>
+<li><a href="https://docs.rs/rand_xoshiro/"><code>rand_xoshiro</code></a> implements the SplitMix and Xoshiro generators</li>
+<li><a href="https://docs.rs/rand_xorshift/"><code>rand_xorshift</code></a> implements the basic Xorshift generator</li>
+</ul>
+<p>Exceptionally, <a href="https://docs.rs/rand/latest/rand/rngs/struct.SmallRng.html"><code>SmallRng</code></a> is implemented directly in <a href="https://docs.rs/rand/"><code>rand</code></a>.</p>
+<h2 id="rand-main-crate"><a class="header" href="#rand-main-crate">rand (main crate)</a></h2>
+<p>The <a href="https://docs.rs/rand/"><code>rand</code></a> crate is designed for easy usage of common random-number
+functionality. This has several aspects:</p>
+<ul>
+<li>the <a href="https://docs.rs/rand/latest/rand/rngs/"><code>rngs</code></a> module provides a few convenient generators</li>
+<li>the <a href="https://docs.rs/rand/latest/rand/distr/"><code>distr</code></a> module concerns sampling of random values</li>
+<li>the <a href="https://docs.rs/rand/latest/rand/seq/"><code>seq</code></a> module concerns sampling from and shuffling sequences</li>
+<li>the <a href="https://docs.rs/rand/latest/rand/trait.Rng.html"><code>Rng</code></a> trait provides a few convenience methods for generating
+random values</li>
+<li>the <a href="https://docs.rs/rand/latest/rand/fn.random.html"><code>random</code></a> function provides convenient generation in a single call</li>
+</ul>
+<h2 id="distributions"><a class="header" href="#distributions">Distributions</a></h2>
+<p>The <a href="https://docs.rs/rand/"><code>rand</code></a> crate only implements sampling from the most common random
+number distributions: uniform and weighted sampling. For everything else,</p>
+<ul>
+<li><a href="https://docs.rs/rand_distr/"><code>rand_distr</code></a> provides fast sampling from a variety of other distributions,
+including Normal (Gauss), Binomial, Poisson, UnitCircle, and many more</li>
+<li><a href="https://docs.rs/statrs/"><code>statrs</code></a> is a port of the C# Math.NET library, implementing many of the
+same distributions (plus/minus a few), along with PDF and CDF functions,
+the <em>error</em>, <em>beta</em>, <em>gamma</em> and <em>logistic</em> special functions, plus a few
+utilities. (For clarity, <a href="https://docs.rs/statrs/"><code>statrs</code></a> is not part of the Rand library.)</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="crate-features"><a class="header" href="#crate-features">Crate features</a></h1>
+<p>It is recommended to check the crate’s <code>Cargo.toml</code> or <code>README.md</code> for features.
+Since <code>rand v0.9</code>, <code>rust-random</code> crates only use explicit features (i.e. all
+features are listed under <code>[features]</code>).</p>
+<p>Release versions of <code>Cargo.toml</code> can be viewed on <code>docs.rs</code>:</p>
+<ul>
+<li><a href="https://docs.rs/crate/rand/latest/source/Cargo.toml.orig">https://docs.rs/crate/rand/latest/source/Cargo.toml.orig</a></li>
+<li><a href="https://docs.rs/crate/rand_core/latest/source/Cargo.toml.orig">https://docs.rs/crate/rand_core/latest/source/Cargo.toml.orig</a></li>
+<li><a href="https://docs.rs/crate/rand_distr/latest/source/Cargo.toml.orig">https://docs.rs/crate/rand_distr/latest/source/Cargo.toml.orig</a></li>
+<li><a href="https://docs.rs/crate/rand_chacha/latest/source/Cargo.toml.orig">https://docs.rs/crate/rand_chacha/latest/source/Cargo.toml.orig</a></li>
+<li><a href="https://docs.rs/crate/rand_xoshiro/latest/source/Cargo.toml.orig">https://docs.rs/crate/rand_xoshiro/latest/source/Cargo.toml.orig</a></li>
+<li><a href="https://docs.rs/crate/rand_pcg/latest/source/Cargo.toml.orig">https://docs.rs/crate/rand_pcg/latest/source/Cargo.toml.orig</a></li>
+</ul>
+<h2 id="common-features"><a class="header" href="#common-features">Common features</a></h2>
+<p>The following features are common to <code>rand_core</code>, <code>rand</code>, <code>rand_distr</code> and potentially some RNG crates:</p>
+<ul>
+<li><code>std</code>: opt into functionality dependent on the <code>std</code> lib. This is default-enabled except in <code>rand_core</code>; for <code>no_std</code> usage, use <code>default-features = false</code>.</li>
+<li><code>alloc</code>: enables functionality requiring an allocator (for usage with <code>no_std</code>). This is implied by <code>std</code>.</li>
+<li><code>serde</code>: enables serialization via <a href="https://serde.rs/"><code>serde</code></a>, version 1.0.</li>
+</ul>
+<h2 id="rand_distr-features"><a class="header" href="#rand_distr-features">rand_distr features</a></h2>
+<p>The floating point functions from <code>num_traits</code> and <code>libm</code> are used to support
+<code>no_std</code> environments and ensure reproducibility. If the floating point
+functions from <code>std</code> are preferred, which may provide better accuracy and
+performance but may produce different random values, the <code>std_math</code> feature
+can be enabled. (Note that any other crate depending on <code>num-traits</code>’s <code>std</code> feature (default-enabled) will have the same effect.)</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="platform-support"><a class="header" href="#platform-support">Platform support</a></h1>
+<p>Thanks to many community contributions, Rand crates support a wide variety of platforms.</p>
+<h2 id="no_std"><a class="header" href="#no_std">no_std</a></h2>
+<p>With <code>default-features = false</code>, both <code>rand</code> and <code>rand_distr</code> support <code>no_std</code> builds. See <a href="#common-features">Common features</a>.</p>
+<h2 id="getrandom"><a class="header" href="#getrandom">getrandom</a></h2>
+<p>The <a href="https://docs.rs/getrandom/"><code>getrandom</code></a> crate provides a low-level API around platform-specific
+random-number sources, and is an important building block of <code>rand</code> and
+<code>rand_core</code> as well as a number of cryptography libraries.
+It is not intended for usage outside of low-level libraries.</p>
+<h3 id="webassembly"><a class="header" href="#webassembly">WebAssembly</a></h3>
+<p>The <code>wasm32-unknown-unknown</code> target does not make any assumptions about which JavaScript interface is available, thus the <code>getrandom</code> crate requires configuration. See <a href="https://docs.rs/getrandom/latest/getrandom/#webassembly-support">WebAssembly support</a>.</p>
+<p>Note that the <code>wasm32-wasi</code> and <code>wasm32-unknown-emscripten</code> targets do not have this limitation.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="reproducibility"><a class="header" href="#reproducibility">Reproducibility</a></h1>
+<p>The <code>rust-random</code> libraries make limited commitments to reproducibility of seedable PRNGs and stochastic algorithms.</p>
+<p>This chapter concerns value-stability of deterministic processes using the <code>rust-random</code> libraries.</p>
+<h2 id="api-breaking-value-breaking-and-semver"><a class="header" href="#api-breaking-value-breaking-and-semver">API-breaking, value-breaking and SemVer</a></h2>
+<p>A change (to a library) is considered <strong>API-breaking</strong> if it may cause a compilation failure of code which was compatible with a prior version of the API, or is otherwise an incompatible change.</p>
+<p>We aim to follow <a href="https://semver.org/">SemVer rules</a> regarding API-breaking changes and <code>MAJOR.MINOR.PATCH</code> versions. That is, post 1.0, new minor versions should not introduce API-breaking changes.</p>
+<p>A change is considered <strong>value-breaking</strong> if it is not API-breaking yet would result in changed output values of a deterministic stochastic process using only unchanged parts of the <code>rust-random</code> API.</p>
+<p>Value-breaking changes are permitted in minor versions.</p>
+<h2 id="non-portable-deterministic-items"><a class="header" href="#non-portable-deterministic-items">Non-portable deterministic items</a></h2>
+<p>An item in a <code>rust-random</code> API (such as a struct or function) may be declared to be <strong>non-portable</strong>, meaning that it opts out of all reproducibility guarantees. Non-portable items may be deterministic, yet yield different results on different platforms and library versions (they may make value-breaking changes in any release).</p>
+<p>This is a change in policy affecting <code>rand</code> from version <code>0.10</code> or <code>1.0</code> (whichever release is next); up to version <code>0.9</code> non-portable items were not permitted to make value-breaking changes in patch releases.</p>
+<p>This non-portable declaration must be clearly mentioned in documentation. The following items make such a declaration:</p>
+<ul>
+<li><a href="https://docs.rs/rand/latest/rand/rngs/struct.SmallRng.html"><code>rand::rngs::SmallRng</code></a></li>
+<li><a href="https://docs.rs/rand/latest/rand/rngs/struct.StdRng.html"><code>rand::rngs::StdRng</code></a></li>
+</ul>
+<h2 id="portable-items"><a class="header" href="#portable-items">Portable items</a></h2>
+<p>Some items are clearly non-deterministic (e.g. <a href="https://docs.rs/rand/latest/rand/fn.rng.html"><code>rand::rng</code></a>). Some items are deterministic but non-portable (above). All other parts of the public API of <code>rust-random</code> crates (including PRNGs, distributions and other stochastic algorithms) are expected to be portable:</p>
+<ul>
+<li>Results should be reproducible across platforms</li>
+<li>Results should be reproducible across patch releases</li>
+<li>Minor releases, including after 1.0, may make value-breaking changes to portable items. Such changes must be well motivated and should be clearly mentioned in the CHANGELOG.</li>
+</ul>
+<h3 id="testing"><a class="header" href="#testing">Testing</a></h3>
+<p>We expect all portable stochastic algorithms to test the value-stability of their output with some form of test vector.</p>
+<ul>
+<li>PRNGs should test against a reference vector where available (<a href="https://github.com/rust-random/rngs/blob/master/rand_xoshiro/src/xoshiro256starstar.rs#L122">example</a>)</li>
+<li>Other algorithms should include their own test vectors within a
+<code>value_stability</code> test or similar (<a href="https://github.com/rust-random/rand/blob/master/src/distr/bernoulli.rs#L226">example</a>)</li>
+</ul>
+<h2 id="support-for-prior-versions"><a class="header" href="#support-for-prior-versions">Support for prior versions</a></h2>
+<p>We aim to support users of <code>rust-random</code> crates using a prior <code>MAJOR.MINOR</code> version for the purposes of reproducibility by:</p>
+<ul>
+<li>Providing security fixes as patch versions where appropriate</li>
+<li>Facilitating the back-porting of compatible additions from future crate versions <em>on request</em></li>
+<li>Other fixes may be considered for back-porting, but are often not possible without API-breaking or value-breaking changes</li>
+</ul>
+<h2 id="limitations"><a class="header" href="#limitations">Limitations</a></h2>
+<h3 id="portability-of-usize"><a class="header" href="#portability-of-usize">Portability of usize</a></h3>
+<p>There is unfortunately one non-portable item baked into the heart of the Rust
+language: <code>usize</code> (and <code>isize</code>). For example, the size of an empty
+<code>Vec</code> will differ on 32-bit and 64-bit targets. For most purposes this is not an
+issue, but when it comes to generating random numbers in a portable manner
+it does matter.</p>
+<p>A simple rule follows: if portability is required, <em>never</em> sample a <code>usize</code> or
+<code>isize</code> value directly.</p>
+<p>From <code>rand v0.9</code>, <code>isize</code> and <code>usize</code> types are no longer supported in many parts of the public API, including <a href="https://docs.rs/rand/latest/rand/distr/struct.StandardUniform.html"><code>StandardUniform</code></a>. <code>usize</code> is supported by <a href="https://docs.rs/rand/latest/rand/distr/uniform/trait.SampleUniform.html"><code>SampleUniform</code></a> and thus <a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.random_range"><code>Rng::random_range</code></a>, using <code>u32</code> sampling whenever possible to maximise portability.</p>
+<h3 id="portability-of-floats"><a class="header" href="#portability-of-floats">Portability of floats</a></h3>
+<p>The results of floating point arithmetic depend on rounding modes and
+implementation details. In particular, the results of transcendental functions vary
+from platform to platform. Due to this, results of distributions in <code>rand_distr</code> using <code>f32</code> or <code>f64</code> may not be portable.</p>
+<p>To alleviate (or further complicate) this concern, we prefer to use <code>libm</code> over <code>std</code> implementations of these transcendental functions. See <a href="#rand_distr-features">rand_distr features</a>.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="guide"><a class="header" href="#guide">Guide</a></h1>
+<p>This section attempts to explain some of the concepts used in this library.</p>
+<ol>
+<li><a href="#getting-started">Getting started with a new crate</a></li>
+<li><a href="#random-data">What is random data and what is randomness anyway?</a></li>
+<li><a href="#types-of-generators">What kind of random generators are there?</a></li>
+<li><a href="#our-rngs">What random number generators does Rand provide?</a></li>
+<li><a href="#seeding-rngs">Seeding PRNGs and reproducibility</a></li>
+<li><a href="#parallel-rngs">Parallel RNGs</a></li>
+<li><a href="#random-values">Turning random data into useful values</a></li>
+<li><a href="#random-distributions">Distributions: more control over random values</a></li>
+<li><a href="#random-processes">Random processes: sampling without replacement</a></li>
+<li><a href="#sequences">Sequences</a></li>
+<li><a href="#error-handling">Error handling</a></li>
+<li><a href="#testing-functions-which-use-rngs">Testing functions which use RNGs</a></li>
+</ol>
+<h2 id="importing-items-prelude"><a class="header" href="#importing-items-prelude">Importing items (prelude)</a></h2>
+<p>The most convenient way to import items from Rand is to use the <a href="https://docs.rs/rand/latest/rand/prelude/"><code>prelude</code></a>.
+This includes the most important parts of Rand, but only those unlikely to
+cause name conflicts.</p>
+<p>Note that Rand 0.5 has significantly changed the module organization and
+contents relative to previous versions. Where possible old names have been
+kept (but are hidden in the documentation), however these will be removed
+in the future. We therefore recommend migrating to use the prelude or the
+new module organization in your imports.</p>
+<h2 id="further-examples"><a class="header" href="#further-examples">Further examples</a></h2>
+<p>For some inspiration, see the example applications:</p>
+<ul>
+<li><a href="https://github.com/rust-random/rand/blob/master/examples/monte-carlo.rs">Monte Carlo estimation of π</a></li>
+<li><a href="https://github.com/rust-random/rand/blob/master/examples/monty-hall.rs">Monty Hall Problem</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="getting-started"><a class="header" href="#getting-started">Getting started</a></h1>
+<p>If you haven’t already, <a href="https://www.rust-lang.org/learn/get-started">install Rust</a>.</p>
+<p>Next, lets make a new crate and add rand as a dependency:</p>
+<pre><code class="language-sh">cargo new randomly
+cd randomly
+cargo add rand --features small_rng
+</code></pre>
+<p>Now, paste the following into <code>src/main.rs</code>:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate rand;
+</span>use rand::prelude::*;
+
+fn main() {
+    let mut rng = rand::rng();
+
+    println!("Random die roll: {}", rng.random_range(1..=6));
+    println!("Random UUID: 0x{:X}", rng.random::&lt;u128&gt;());
+
+    if rng.random() {
+        println!("You got lucky!");
+    }
+}</code></pre>
+<p>Now lets go!</p>
+<pre><code class="language-sh">$ cargo run
+   Compiling [..]
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.99s
+     Running `target/debug/randomly`
+Random die roll: 4
+Random UUID: 0xEC3936A465339F8295EE11AB853CCDBF
+You got lucky!
+</code></pre>
+<h2 id="other-crates"><a class="header" href="#other-crates">Other crates</a></h2>
+<p>Some other <a href="#the-crate-family">crates</a> are used by this guide. When needed, you can either edit the <code>[dependencies]</code> section of your <code>Cargo.toml</code> or use <code>cargo add</code>:</p>
+<pre><code class="language-sh">$ cargo add rand_distr
+    Updating crates.io index
+      Adding rand_distr v0.4.3 to dependencies
+             Features:
+             + alloc
+             + std
+             - serde
+             - serde1
+             - std_math
+    Updating crates.io index
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="random-data"><a class="header" href="#random-data">Random data</a></h1>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate rand;
+</span><span class="boring">use rand::RngCore;
+</span><span class="boring">fn main() {
+</span>// get some random data:
+let mut data = [0u8; 8];
+rand::rng().fill_bytes(&amp;mut data);
+println!("{:?}", data)
+<span class="boring">}</span></code></pre>
+<h2 id="what-is-randomness"><a class="header" href="#what-is-randomness">What is randomness?</a></h2>
+<p>What does <strong>random</strong> mean? Colloquially the word can mean simply <em>unexpected</em>
+or <em>unknown</em>, but we need to be a bit more precise than that. Wikipedia gives us
+a more specific definition:</p>
+<blockquote>
+<p><strong>Randomness</strong> is the lack of pattern or predictability in events.</p>
+</blockquote>
+<p>We can take this further: <em>lack of pattern</em> implies there is no <em>bias</em>; in
+other words, all possible values are equally likely.</p>
+<p>To understand what a <em>random value</em> is, we still need a context: what pool of
+numbers can our random value come from?</p>
+<ul>
+<li>To give a simple example, consider dice: they have values 1, 2, 3, 4, 5 and
+6, and an unbiased (fair) die will make each number equally likely, with
+probability ⅙th.</li>
+<li>Now lets take a silly example: the natural numbers (1, 2, 3, etc.). These
+numbers have no limit. So if you were to ask for an unbiased random
+natural number, 1, 5, 1000, 1 million, 1 trillion — all would be equally
+likely. In fact, for <em>any</em> natural number <code>k</code>, the numbers <code>1, 2, ..., k</code>
+are an infinitely small fraction of all the natural numbers, which means the
+chance of picking a unbiased number from this range is effectively <code>1/∞ = 0</code>.
+Put another way: for <em>any</em> natural number, we expect an unbiased random
+value to be bigger. This is impossible, so there cannot be any such thing as
+an unbiased random natural number.</li>
+<li>Another example: real numbers between 0 and 1. Real numbers include all the
+fractions, irrational numbers like π and √2, and all multiples of those…
+there are infinitely many possibilities, even in a small range like <code>(0, 1)</code>,
+so simply saying “all possibilities are equally likely” is not enough.
+Instead we interpret <em>lack of pattern</em> in a different way: every interval
+of equal size is equally likely; for example we could subdivide the interval
+<code>0,1</code> into <code>0,½</code> and <code>½,1</code> and toss a coin to decide which interval our
+random sample comes from. Say we pick <code>½,1</code> we can then toss another coin to
+decide between <code>½,¾</code> and <code>¾,1</code>, restricting our random value to an interval
+of size <code>¼</code>. We can repeat this as many times as necessary to pick a random
+value between <code>0</code> and <code>1</code> with as much precision as we want — although we
+should realise that we are not choosing an <em>exact</em> value but rather just a
+small interval.</li>
+</ul>
+<p>What we have defined (or failed to define) above are uniform random number
+distributions, or simply <strong>uniform distributions</strong>. There are also non-uniform
+distributions, as we shall see later. It’s also worth noting here that a
+uniform distribution does not imply that its samples will be <em>evenly</em> spread
+(try rolling six dice: you probably won’t get 1, 2, 3, 4, 5, 6).</p>
+<p>To bring us back to computing, we can now define what a uniformly distributed
+random value (an unbiased random value) is in several contexts:</p>
+<ul>
+<li><code>u32</code>: a random number between 0 and <code>u32::MAX</code> where each value is equally
+likely</li>
+<li><code>BigInt</code>: since this type has no upper bound, we cannot produce an unbiased
+random value (it would be infinitely large, and use infinite amounts of memory)</li>
+<li><code>f64</code>: we treat this as an approximation of the real numbers, and,
+<em>by convention</em>, restrict to the range 0 to 1 (if not otherwise specified).
+We will come back to the conversions used later;
+for now note that these produce 52-53 bits of precision (depending on which
+conversion is used, output will be in steps of <code>ε</code> or <code>ε/2</code>, where <code>1+ε</code> is
+the smallest representable value greater than <code>1</code>).</li>
+</ul>
+<h2 id="random-data-1"><a class="header" href="#random-data-1">Random data</a></h2>
+<p>As seen above, the term “random number” is meaningless without context. “Random
+data” typically means a sequence of random <em>bytes</em>, where for each byte, each of
+the 256 possible values are equally likely.</p>
+<p><a href="https://docs.rs/rand_core/latest/rand_core/trait.RngCore.html#tymethod.fill_bytes"><code>RngCore::fill_bytes</code></a> produces exactly this: a sequence of random bytes.</p>
+<p>If a sequence of unbiased random bytes of the correct length is instead
+interpreted as an integer — say a <code>u32</code> or <code>u64</code> — the result is an unbiased
+integer. Since this conversion is trivial, <a href="https://docs.rs/rand_core/latest/rand_core/trait.RngCore.html#tymethod.next_u32"><code>RngCore::next_u32</code></a> and
+<a href="https://docs.rs/rand_core/latest/rand_core/trait.RngCore.html#tymethod.next_u64"><code>RngCore::next_u64</code></a> are part of the same trait. (In fact the conversion is
+often the other way around — algorithmic generators usually work with integers
+internally, which are then converted to whichever form of random data is
+required.)</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="types-of-generators"><a class="header" href="#types-of-generators">Types of generators</a></h1>
+<p>The previous section introduced <a href="https://docs.rs/rand_core/latest/rand_core/trait.RngCore.html"><code>RngCore</code></a>, the trait which all <em>random data
+sources</em> must implement. But what exactly is a random data source?</p>
+<p>This section concerns theory; see also the chapter on
+<a href="#our-rngs">random number generators</a>.</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate rand;
+</span><span class="boring">extern crate rand_chacha;
+</span>use rand::{Rng, SeedableRng};
+
+<span class="boring">fn main() {
+</span>// prepare a non-deterministic random number generator:
+let mut rng = rand::rng();
+println!("{}", rng.random::&lt;i32&gt;()); // prints an unknown value
+
+// prepare a deterministic generator:
+let mut rng = rand_chacha::ChaCha8Rng::seed_from_u64(123);
+println!("{}", rng.random::&lt;i32&gt;()); // prints -416273517
+<span class="boring">}</span></code></pre>
+<h2 id="true-random-number-generators"><a class="header" href="#true-random-number-generators">True random number generators</a></h2>
+<p>A <strong>true</strong> random number generator (TRNG) is something which produces random
+numbers by observing some natural process, such as atomic decay or thermal noise.
+(Whether or not these things are <em>truly</em> random or are in fact deterministic —
+for example if the universe itself is a simulation — is besides the point here.
+For our purposes, it is sufficient that they are not distinguishable from true
+randomness.)</p>
+<p>Note that these processes are often biased, thus some type of <em>debiasing</em> must
+be used to yield the unbiased random data we desire.</p>
+<h2 id="pseudo-random-number-generators"><a class="header" href="#pseudo-random-number-generators">Pseudo-random number generators</a></h2>
+<p>CPUs are of course supposed to compute deterministically, yet it turns out they
+can do a pretty good job of emulating random processes. Most pseudo-random
+number generators are deterministic and can be defined by just:</p>
+<ul>
+<li>some initial <em>state</em></li>
+<li>a function to compute a random value from the state</li>
+<li>a function to advance to the next state</li>
+<li>(optionally) a function to derive the initial state from a <em>seed</em> or <em>key</em></li>
+</ul>
+<p>The fact that these are deterministic can sometimes be very useful: it allows a
+simulation, randomised art work or game to be repeated exactly, producing a
+result which is a function of the seed. For more on this see the
+<a href="#reproducibility">reproducibility</a> chapter (note that determinism alone isn’t
+enough to guarantee reproducibility).</p>
+<p>The other big attraction of PRNGs is their speed: some of these algorithms
+require only a few CPU operations per random value, and thus can produce
+random data on demand much more quickly than most TRNGs.</p>
+<p>Note however that PRNGs have several limitations:</p>
+<ul>
+<li>They are no stronger than their seed: if the seed is known or guessable,
+and the algorithm is known (or guessed), then only a small number of output
+sequences are likely.</li>
+<li>Since the state size is usually fixed, only a finite number of output values
+are possible before the generator loops and repeats itself.</li>
+<li>Several algorithms are easily predictable after seeing a few values, and
+with many other algorithms it is not clear whether they could be “cracked”.</li>
+</ul>
+<h2 id="cryptographically-secure-pseudo-random-number-generator"><a class="header" href="#cryptographically-secure-pseudo-random-number-generator">Cryptographically secure pseudo-random number generator</a></h2>
+<p>Cryptographically secure pseudo-random number generators (CSPRNGs) are the
+subset of PRNGs which are considered secure. That is:</p>
+<ul>
+<li>their state is sufficiently large that a brute-force approach simply trying
+all initial values is not a feasible method of finding the initial state
+used to produce an observed sequence of output values,</li>
+<li>and there is no other algorithm which is sufficiently better than the
+brute-force method which would make it feasible to predict the next output
+value.</li>
+</ul>
+<p>Achieving secure generation requires not only a secure algorithm (CSPRNG), but
+also a secure and sufficiently large seed value (typically 256 bits), and
+protection against side-channel attacks (i.e. preventing attackers from reading
+the internal state).</p>
+<p>Some CSPRNGs additionally satisfy a third property:</p>
+<ul>
+<li>a CSPRNG is backtracking resistant if it is impossible for an attacker to
+calculate prior output values of the PRNG despite having discovered the
+value of the current internal state (implying that all future output is
+compromised).</li>
+</ul>
+<h2 id="hardware-random-number-generator"><a class="header" href="#hardware-random-number-generator">Hardware random number generator</a></h2>
+<p>A <strong>hardware</strong> random number generator (HRNG) is theoretically an adaptor from
+some TRNG to digital information. In practice, these may use a PRNG to debias
+the TRNG. Even though an HRNG has some underlying TRNG, it is not guaranteed to
+be secure: the TRNG itself may produce insufficient entropy (i.e. be too
+predictable), or the signal amplification and debiasing process may be flawed.</p>
+<p>An HRNG may be used to provide the seed for a PRNG, although usually this is not
+the only way to obtain a secure seed (see the next section). An HRNG might
+replace a PRNG altogether, although since we now have very fast and very strong
+software PRNGs, and since software implementations are easier to verify than
+hardware ones, this is often not the preferred solution.</p>
+<p>Since a PRNG needs a random seed value to be secure, an HRNG may be used to
+provide that seed, or even replace the need for a PRNG. However, since the goal
+is usually “only” to produce unpredictable random values, there are acceptable
+alternatives to <em>true</em> random number generators (see next section).</p>
+<h2 id="entropy"><a class="header" href="#entropy">Entropy</a></h2>
+<p>As noted above, for a CSPRNG to be secure, its seed value must also be secure.
+The word <em>entropy</em> can be used in two ways:</p>
+<ul>
+<li>as a measure of the amount of unknown information in some piece of data</li>
+<li>as a piece of unknown data</li>
+</ul>
+<p>Ideally, a random boolean or a coin flip has 1 bit of entropy, although if the
+value is biased, there will be less. Shannon Entropy attempts to measure this.</p>
+<p>For example, a Unix time-stamp (seconds since the start of 1970) contains both
+high- and low-resolution data. This is typically a 32-bit number, but the amount
+of <em>entropy</em> will depend on how precisely a hypothetical attacker can guess the
+number. If an attacker can guess the number to the nearest minute, this may be
+approximately 6 bits (2^6 = 64); if an attacker can guess this to the second,
+this is 0 bits. <a href="https://docs.rs/rand_jitter/latest/rand_jitter/struct.JitterRng.html"><code>JitterRng</code></a> uses this concept to scavenge entropy without an
+HRNG (but using nanosecond resolution timers and conservatively assuming only a
+couple of bits entropy is available per time-stamp, after running several tests
+on the timer’s quality).</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="our-rngs"><a class="header" href="#our-rngs">Our RNGs</a></h1>
+<p>There are many kinds of RNGs, with different trade-offs. Rand provides some
+convenient generators in the <a href="https://docs.rs/rand/latest/rand/rngs/"><code>rngs</code> module</a>. Often you can just use
+<a href="https://docs.rs/rand/latest/rand/fn.rng.html"><code>rand::rng</code></a>, a function which automatically initializes an RNG in
+thread-local memory and returns a reference to it. It is fast, good quality,
+and (to the best of our knowledge) cryptographically secure.</p>
+<p>Contents of this documentation:</p>
+<ol>
+<li><a href="#the-generators">The generators</a></li>
+<li><a href="#performance">Performance and size</a></li>
+<li><a href="#quality">Quality and cycle length</a></li>
+<li><a href="#security">Security</a></li>
+<li><a href="#extra-features">Extra features</a></li>
+<li><a href="#further-reading">Further reading</a></li>
+</ol>
+<h1 id="the-generators"><a class="header" href="#the-generators">The generators</a></h1>
+<h2 id="basic-pseudo-random-number-generators-prngs"><a class="header" href="#basic-pseudo-random-number-generators-prngs">Basic pseudo-random number generators (PRNGs)</a></h2>
+<p>The goal of “standard” non-cryptographic PRNGs is usually to find a good
+balance between simplicity, quality, memory usage and performance.
+Non-cryptographic generators pre-date cryptographic ones and are in some ways
+obsoleted by them, however non-cryptographic generators do have some advantages:
+a small state size, fast initialisation, simplicity, lower energy usage for
+embedded CPUs. (However, not all non-crypto PRNGs provide these benefits,
+e.g. the Mersenne Twister has a very large state despite being easy to predict).</p>
+<p>These algorithms are very important to Monte Carlo simulations, and also
+suitable for several other problems such as randomized algorithms and games,
+where predictability is not an issue. (Note however that for gambling games
+predictability may be an issue and a cryptographic PRNG is recommended.)</p>
+<p>The Rand project provides several non-cryptographic PRNGs. A sub-set of these
+are summarised below.
+You may wish to refer to the <a href="http://www.pcg-random.org/">pcg-random</a> and <a href="http://xoshiro.di.unimi.it/">xoshiro</a> websites.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>name</th><th>full name</th><th>performance</th><th>memory</th><th>quality</th><th>period</th><th>features</th></tr>
+</thead>
+<tbody>
+<tr><td><a href="https://docs.rs/rand/latest/rand/rngs/struct.SmallRng.html"><code>SmallRng</code></a></td><td>(unspecified)</td><td>7 GB/s</td><td>16 bytes</td><td>★★★☆☆</td><td>≥ <code>u32</code> * 2<sup>64</sup></td><td>not portable</td></tr>
+<tr><td><a href="https://docs.rs/rand_pcg/latest/rand_pcg/type.Pcg32.html"><code>Pcg32</code></a></td><td>PCG XSH RR 64/32 (LCG)</td><td>3 GB/s</td><td>16 bytes</td><td>★★★☆☆</td><td><code>u32</code> * 2<sup>64</sup></td><td>—</td></tr>
+<tr><td><a href="https://docs.rs/rand_pcg/latest/rand_pcg/type.Pcg64.html"><code>Pcg64</code></a></td><td>PCG XSL 128/64 (LCG)</td><td>4 GB/s</td><td>32 bytes</td><td>★★★☆☆</td><td><code>u64</code> * 2<sup>128</sup></td><td>—</td></tr>
+<tr><td><a href="https://docs.rs/rand_pcg/latest/rand_pcg/type.Pcg64Mcg.html"><code>Pcg64Mcg</code></a></td><td>PCG XSL 128/64 (MCG)</td><td>7 GB/s</td><td>16 bytes</td><td>★★★☆☆</td><td><code>u64</code> * 2<sup>126</sup></td><td>—</td></tr>
+<tr><td><a href="https://docs.rs/rand_xorshift/latest/rand_xorshift/struct.XorShiftRng.html"><code>XorShiftRng</code></a></td><td>Xorshift 32/128</td><td>5 GB/s</td><td>16 bytes</td><td>★☆☆☆☆</td><td><code>u32</code> * 2<sup>128</sup> - 1</td><td>—</td></tr>
+<tr><td><a href="https://docs.rs/rand_xoshiro/latest/rand_xoshiro/struct.Xoshiro256PlusPlus.html"><code>Xoshiro256PlusPlus</code></a></td><td>Xoshiro256++</td><td>7 GB/s</td><td>32 bytes</td><td>★★★☆☆</td><td><code>u64</code> * 2<sup>256</sup> - 1</td><td>jump-ahead</td></tr>
+<tr><td><a href="https://docs.rs/rand_xoshiro/latest/rand_xoshiro/struct.Xoshiro256Plus.html"><code>Xoshiro256Plus</code></a></td><td>Xoshiro256+</td><td>8 GB/s</td><td>32 bytes</td><td>★★☆☆☆</td><td><code>u64</code> * 2<sup>256</sup> - 1</td><td>jump-ahead</td></tr>
+<tr><td><a href="https://docs.rs/rand_xoshiro/latest/rand_xoshiro/struct.SplitMix64.html"><code>SplitMix64</code></a></td><td>splitmix64</td><td>8 GB/s</td><td>8 bytes</td><td>★☆☆☆☆</td><td><code>u64</code> * 2<sup>64</sup></td><td>—</td></tr>
+<tr><td><a href="https://docs.rs/rand/latest/rand/rngs/mock/struct.StepRng.html"><code>StepRng</code></a></td><td>counter</td><td>51 GB/s</td><td>16 bytes</td><td>☆☆☆☆☆</td><td><code>u64</code> * 2<sup>64</sup></td><td>—</td></tr>
+</tbody>
+</table>
+</div>
+<p>Here, performance is measured roughly for <code>u64</code> outputs on a 3.4GHz Haswell CPU
+(note that this will vary significantly by application; in general cryptographic
+RNGs do better with byte sequence output). Quality ratings are
+based on theory and observable defects, roughly as follows:</p>
+<ul>
+<li>★☆☆☆☆ = suitable for simple applications but with significant flaws</li>
+<li>★★☆☆☆ = no major issues in qualitative testing</li>
+<li>★★★☆☆ = good theory, no major issues in qualitative testing</li>
+<li>★★★★★ = cryptographic quality</li>
+</ul>
+<h2 id="cryptographically-secure-pseudo-random-number-generators-csprngs"><a class="header" href="#cryptographically-secure-pseudo-random-number-generators-csprngs">Cryptographically secure pseudo-random number generators (CSPRNGs)</a></h2>
+<p>CSPRNGs have much higher requirements than basic PRNGs. The primary
+consideration is security. Performance and simplicity are also important,
+but in general CSPRNGs are more complex and slower than regular PRNGs.
+Quality is no longer a concern, as it is a requirement for a
+CSPRNG that the output is basically indistinguishable from true randomness
+since any bias or correlation makes the output more predictable.</p>
+<p>There is a close relationship between CSPRNGs and cryptographic ciphers.
+Any block cipher can be turned into a CSPRNG by encrypting a counter. Stream
+ciphers are basically a CSPRNG and a combining operation, usually XOR. This
+means that we can easily use any stream cipher as a CSPRNG.</p>
+<p>This library provides the following CSPRNGs. We can make no guarantees
+of any security claims. This table omits the “quality” column from the previous
+table since CSPRNGs may not have observable defects.</p>
+<div class="table-wrapper">
+<table>
+<thead>
+<tr><th>name</th><th>full name</th><th>performance</th><th>initialization</th><th>memory</th><th>security (predictability)</th><th>forward secrecy</th></tr>
+</thead>
+<tbody>
+<tr><td><a href="https://docs.rs/rand/latest/rand/rngs/struct.StdRng.html"><code>StdRng</code></a></td><td>(unspecified)</td><td>1.5 GB/s</td><td>fast</td><td>136 bytes</td><td>widely trusted</td><td>no</td></tr>
+<tr><td><a href="https://docs.rs/rand_chacha/latest/rand_chacha/struct.ChaCha20Rng.html"><code>ChaCha20Rng</code></a></td><td>ChaCha20</td><td>1.8 GB/s</td><td>fast</td><td>136 bytes</td><td><a href="https://tools.ietf.org/html/rfc7539#section-1">rigorously analysed</a></td><td>no</td></tr>
+<tr><td><a href="https://docs.rs/rand_chacha/latest/rand_chacha/struct.ChaCha8Rng.html"><code>ChaCha8Rng</code></a></td><td>ChaCha8</td><td>2.2 GB/s</td><td>fast</td><td>136 bytes</td><td>small security margin</td><td>no</td></tr>
+<tr><td><a href="https://docs.rs/rand_hc/latest/rand_hc/struct.Hc128Rng.html"><code>Hc128Rng</code></a></td><td>HC-128</td><td>2.1 GB/s</td><td>slow</td><td>4176 bytes</td><td><a href="http://www.ecrypt.eu.org/stream/">recommended by eSTREAM</a></td><td>no</td></tr>
+<tr><td><a href="https://docs.rs/rand_isaac/latest/rand_isaac/isaac/struct.IsaacRng.html"><code>IsaacRng</code></a></td><td>ISAAC</td><td>1.1 GB/s</td><td>slow</td><td>2072 bytes</td><td><a href="https://burtleburtle.net/bob/rand/isaacafa.html">unknown</a></td><td>unknown</td></tr>
+<tr><td><a href="https://docs.rs/rand_isaac/latest/rand_isaac/isaac64/struct.Isaac64Rng.html"><code>Isaac64Rng</code></a></td><td>ISAAC-64</td><td>2.2 GB/s</td><td>slow</td><td>4136 bytes</td><td>unknown</td><td>unknown</td></tr>
+</tbody>
+</table>
+</div>
+<p>It should be noted that the ISAAC generators are only included for
+historical reasons: they have been with the Rust language since the very
+beginning. They have good quality output and no attacks are known, but have
+received little attention from cryptography experts.</p>
+<h1 id="notes-on-generators"><a class="header" href="#notes-on-generators">Notes on generators</a></h1>
+<h2 id="performance"><a class="header" href="#performance">Performance</a></h2>
+<p>First it has to be said most PRNGs are very fast, and will rarely be a
+performance bottleneck.</p>
+<p>Performance of basic PRNGs is a bit of a subtle thing. It depends a lot on
+the CPU architecture (32 vs. 64 bits), inlining, and also on the number of
+available registers. This often causes the performance to be affected by
+surrounding code due to inlining and other usage of registers.</p>
+<p>When choosing a PRNG for performance it is important to benchmark your own
+application due to interactions between PRNGs and surrounding code and
+dependence on the CPU architecture as well as the impact of the size of
+data requested. Because of all this, we do not include performance numbers
+here but merely a qualitative rating.</p>
+<p>CSPRNGs are a little different in that they typically generate a block of
+output in a cache, and pull outputs from the cache. This allows them to have
+good amortised performance, and reduces or completely removes the influence
+of surrounding code on the CSPRNG performance.</p>
+<h3 id="worst-case-performance"><a class="header" href="#worst-case-performance">Worst-case performance</a></h3>
+<p>Simple PRNGs typically produce each random value on demand. In contrast, CSPRNGs
+usually produce a whole block at once, then read from this cache until it is
+exhausted, giving them much less consistent performance when drawing small
+quantities of random data.</p>
+<h3 id="memory-usage"><a class="header" href="#memory-usage">Memory usage</a></h3>
+<p>Simple PRNGs often use very little memory, commonly only a few words, where
+a <em>word</em> is usually either <code>u32</code> or <code>u64</code>. This is not true for all
+non-cryptographic PRNGs however, for example the historically popular
+Mersenne Twister MT19937 algorithm requires 2.5 kB of state.</p>
+<p>CSPRNGs typically require more memory; since the seed size is recommended
+to be at least 192 bits and some more may be required for the algorithm,
+256 bits would be approximately the minimum secure size. In practice,
+CSPRNGs tend to use quite a bit more, <a href="https://docs.rs/rand_chacha/latest/rand_chacha/type.ChaChaRng.html"><code>ChaChaRng</code></a> is relatively small with
+136 bytes of state.</p>
+<h3 id="initialization-time"><a class="header" href="#initialization-time">Initialization time</a></h3>
+<p>The time required to initialize new generators varies significantly. Many
+simple PRNGs and even some cryptographic ones (including <a href="https://docs.rs/rand_chacha/latest/rand_chacha/type.ChaChaRng.html"><code>ChaChaRng</code></a>)
+only need to copy the seed value and some constants into their state, and
+thus can be constructed very quickly. In contrast, CSPRNGs with large state
+require an expensive key-expansion.</p>
+<h2 id="quality"><a class="header" href="#quality">Quality</a></h2>
+<p>Many basic PRNGs are not much more than a couple of bitwise and arithmetic
+operations. Their simplicity gives good performance, but also means there
+are small regularities hidden in the generated random number stream.</p>
+<p>How much do those hidden regularities matter? That is hard to say, and
+depends on how the RNG gets used. If there happen to be correlations between
+the random numbers and the algorithm they are used in, the results can be
+wrong or misleading.</p>
+<p>A random number generator can be considered good if it gives the correct
+results in as many applications as possible. The quality of PRNG
+algorithms can be evaluated to some extent analytically, to determine the
+cycle length and to rule out some correlations. Then there are empirical
+test suites designed to test how well a PRNG performs on a wide range of
+possible uses, the latest and most complete of which are <a href="http://simul.iro.umontreal.ca/testu01/tu01.html">TestU01</a> and
+<a href="http://pracrand.sourceforge.net/">PractRand</a>.</p>
+<p>CSPRNGs tend to be more complex, and have an explicit requirement to be
+unpredictable. This implies there must be no obvious correlations between
+output values.</p>
+<h3 id="quality-stars"><a class="header" href="#quality-stars">Quality stars:</a></h3>
+<p>PRNGs with 3 stars or more should be good enough for most non-crypto
+applications. 1 or 2 stars may be good enough for typical apps and games, but do
+not work well with all algorithms.</p>
+<h3 id="period"><a class="header" href="#period">Period</a></h3>
+<p>The <em>period</em> or <em>cycle length</em> of a PRNG is the number of values that can be
+generated after which it starts repeating the same random number stream.
+Many PRNGs have a fixed-size period, while for others (“chaotic RNGs”) the
+cycle length may depend on the seed and short cycles may exist.</p>
+<p>Note that a long period does not imply high quality (e.g. a counter through
+<code>u128</code> values provides a decently long period). Conversely, a short period may
+be a problem, especially when multiple RNGs are used simultaneously.
+In general, we recommend a period of at least 2<sup>128</sup>.
+(Alternatively, a PRNG with shorter period of at least 2<sup>64</sup> and
+support for multiple streams may be sufficient. Note however that in the case
+of PCG, its streams are closely correlated.)</p>
+<p><em>Avoid reusing values!</em>
+On today’s hardware, a fast RNG with a cycle length of <em>only</em>
+2<sup>64</sup> can be used sequentially for centuries before cycling. However,
+when multiple RNGs are used in parallel (each with a unique seed), there is a
+significant chance of overlap between the sequences generated.
+For a generator with a <em>large</em> period <code>P</code>, <code>n</code> independent generators, and
+a sequence of length <code>L</code> generated by each generator, the chance of any overlap
+between sequences can be approximated by <code>Ln² / P</code> when <code>nL / P</code> is close to
+zero. For more on this topic, please see these
+<a href="http://prng.di.unimi.it/#remarks">remarks by the Xoshiro authors</a>.</p>
+<p><em>Collisions and the birthday paradox!</em>
+For a generator with outputs of equal size to its state, it is recommended not
+to use more than <code>√P</code> outputs. A generalisation for <code>kw</code>-bit state and <code>w</code>-bit
+generators is to ensure <code>kL² &lt; P</code>. This requirement stems from the
+<em>generalised birthday problem</em>, asking how many unbiased samples from a set of
+size <code>d = 2^w</code> can be taken before the probability of a repeat is at least half.
+Note that for <code>kL² &gt; P</code> a generator with <code>kw</code>-dimensional equidistribution
+<em>cannot</em> generate the expected number of repeated samples, however generators
+without this property are <em>also</em> not guaranteed to generate the expected number
+of repeats.</p>
+<h2 id="security"><a class="header" href="#security">Security</a></h2>
+<h3 id="predictability"><a class="header" href="#predictability">Predictability</a></h3>
+<p>From the context of any PRNG, one can ask the question <em>given some previous
+output from the PRNG, is it possible to predict the next output value?</em>
+This is an important property in any situation where there might be an
+adversary.</p>
+<p>Regular PRNGs tend to be predictable, although with varying difficulty. In
+some cases prediction is trivial, for example plain Xorshift outputs part of
+its state without mutation, and prediction is as simple as seeding a new
+Xorshift generator from four <code>u32</code> outputs. Other generators, like
+<a href="http://www.pcg-random.org/predictability.html">PCG</a> and truncated Xorshift*
+are harder to predict, but not outside the realm of common mathematics and a
+desktop PC.</p>
+<p>The basic security that CSPRNGs must provide is the infeasibility to predict
+output. This requirement is formalized as the <a href="https://en.wikipedia.org/wiki/Next-bit_test">next-bit test</a>; this is
+roughly stated as: given the first <em>k</em> bits of a random sequence, the
+sequence satisfies the next-bit test if there is no algorithm able to
+predict the next bit using reasonable computing power.</p>
+<p>A further security that <em>some</em> CSPRNGs provide is forward secrecy:
+in the event that the CSPRNGs state is revealed at some point, it must be
+infeasible to reconstruct previous states or output. Note that many CSPRNGs
+<em>do not</em> have forward secrecy in their usual formulations.</p>
+<p>Verifying security claims of an algorithm is a <em>hard problem</em>, and we are not
+able to provide any guarantees of the security of algorithms used or recommended
+by this project. We refer you to the <a href="https://www.nist.gov/">NIST</a> institute and <a href="http://www.ecrypt.eu.org/">ECRYPT</a> network
+for recommendations.</p>
+<h3 id="state-and-seeding"><a class="header" href="#state-and-seeding">State and seeding</a></h3>
+<p>It is worth noting that a CSPRNG’s security relies absolutely on being
+seeded with a secure random key. Should the key be known or guessable, all
+output of the CSPRNG is easy to guess. This implies that the seed should
+come from a trusted source; usually either the OS or another CSPRNG. For this
+purpose, we recommend using the <a href="https://docs.rs/getrandom/"><code>getrandom</code></a> crate which interfaces the OS’s
+secure random interface. <a href="https://docs.rs/rand/latest/rand/trait.SeedableRng.html#method.from_os_rng"><code>SeedableRng::from_os_rng</code></a> is a wrapper around
+<a href="https://docs.rs/getrandom/"><code>getrandom</code></a> for convenience. Alternatively, using a user-space CSPRNG such as
+<a href="https://docs.rs/rand/latest/rand/rngs/struct.ThreadRng.html"><code>ThreadRng</code></a> for seeding should be sufficient.</p>
+<p>Further, it should be obvious that the internal state of a CSPRNG must be
+kept secret. With that in mind, our implementations do not provide direct
+access to most of their internal state, and <code>Debug</code> implementations do not
+print any internal state. This does not fully protect CSPRNG state; code
+within the same process may read this memory (and we allow cloning and
+serialisation of CSPRNGs for convenience). Further, a running process may be
+forked by the operating system, which may leave both processes with a copy
+of the same generator.</p>
+<h3 id="not-a-cryptography-library"><a class="header" href="#not-a-cryptography-library">Not a cryptography library</a></h3>
+<p>Cryptographic processes
+such as encryption and authentication are complex and must be implemented
+very carefully to avoid flaws and resist known attacks. It is therefore
+recommended to use specialized libraries where possible, for example
+<a href="https://crates.io/crates/openssl">openssl</a>, <a href="https://crates.io/crates/ring">ring</a> and the <a href="https://github.com/RustCrypto">RustCrypto libraries</a>.</p>
+<p>The Rand crates attempt to provide unpredictable data sources, with limitations.
+First, the software is provided “as is”, without any form of guarantee.
+Second, it is generally assumed that program memory is private; if there are
+concerns in this regard it may be preferred to use an external generator such
+as <a href="https://docs.rs/getrandom/"><code>getrandom</code></a> instead. Note that even privacy of freed memory is important,
+and that while we may integrate some mitigations such as <a href="https://crates.io/crates/zeroize">zeroize</a> in the
+future, such measures are incomplete. Note that Rand does not protect against
+process forks (past versions of Rand up to 0.8.x have a limited mitigation but
+not full protection). Finally, note that there are many possible ways that the
+security of unpredictability could be broken, from complex hardware bugs like
+Spectre to stupid mistakes like printing generator state in log messages.</p>
+<h2 id="extra-features"><a class="header" href="#extra-features">Extra features</a></h2>
+<p>Some PRNGs may provide extra features, like:</p>
+<ul>
+<li>Support for multiple streams, which can help with parallel tasks.</li>
+<li>The ability to jump or seek around in the random number stream;
+with a large period this can be used as an alternative to streams.</li>
+</ul>
+<h2 id="further-reading"><a class="header" href="#further-reading">Further reading</a></h2>
+<p>There is quite a lot that can be said about PRNGs. The <a href="http://www.pcg-random.org/pdf/hmc-cs-2014-0905.pdf">PCG paper</a> is very
+approachable and explains more concepts.</p>
+<p>Another good paper about RNG quality is
+<a href="https://web.archive.org/web/20160801142711/http://random.mat.sbg.ac.at/results/peter/A19final.pdf">“Good random number generators are (not so) easy to find”</a>
+by P. Hellekalek.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="seeding-rngs"><a class="header" href="#seeding-rngs">Seeding RNGs</a></h1>
+<p>As we have seen, the output of pseudo-random number generators (PRNGs) is
+determined by their initial state.</p>
+<p>Some PRNG definitions specify how the initial state should be generated from a
+key, usually specified as a byte-sequence for cryptographic generators or,
+for small PRNGs, often just a word. We formalise this for all our generators
+with the <a href="https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html"><code>SeedableRng</code></a> trait.</p>
+<p>Note: seeding does not imply reproducibility of results. For that you need to
+use a named RNG with a fixed algorithm (e.g. <code>ChaCha12Rng</code> not <code>StdRng</code>). See
+also <a href="https://rust-random.github.io/book/crate-reprod.html">Reproducibility</a>.</p>
+<h2 id="the-seed-type"><a class="header" href="#the-seed-type">The Seed type</a></h2>
+<p>We require all seedable RNGs to define a <a href="https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#type.Seed"><code>Seed</code></a> type satisfying
+<code>AsMut&lt;[u8]&gt; + Default + Sized</code> (usually <code>[u8; N]</code> for a fixed <code>N</code>).
+We recommend using <code>[u8; 12]</code> or larger for non-cryptographic PRNGs and
+<code>[u8; 32]</code> for cryptographic PRNGs.</p>
+<p>PRNGs may be seeded directly from such a value with <a href="https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#tymethod.from_seed"><code>SeedableRng::from_seed</code></a>.</p>
+<h2 id="seeding-from-"><a class="header" href="#seeding-from-">Seeding from …</a></h2>
+<h3 id="fresh-entropy"><a class="header" href="#fresh-entropy">Fresh entropy</a></h3>
+<p>Using a fresh seed (direct from the OS) is easy using <a href="https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#method.from_os_rng"><code>SeedableRng::from_os_rng</code></a>:</p>
+<pre class="playground"><code class="language-rust editable edition2024"><span class="boring">extern crate rand;
+</span><span class="boring">extern crate rand_chacha;
+</span>use rand::prelude::*;
+use rand_chacha::ChaCha20Rng;
+
+fn main() {
+    let mut rng = ChaCha20Rng::from_os_rng();
+    println!("{}", rng.random_range(0..100));
+}</code></pre>
+<p>Note that this requires <code>rand_core</code> has the feature <code>getrandom</code> enabled.</p>
+<h3 id="another-rng"><a class="header" href="#another-rng">Another RNG</a></h3>
+<p>Quite obviously, another RNG may be used to fill a seed. We provide a
+convenience method for this:</p>
+<pre class="playground"><code class="language-rust editable edition2024"><span class="boring">extern crate rand;
+</span>use rand::prelude::*;
+
+fn main() {
+    let mut rng = SmallRng::from_rng(&amp;mut rand::rng());
+    println!("{}", rng.random_range(0..100));
+}</code></pre>
+<p>But, say you want to save a key and use it later. For that you need to be a
+little bit more explicit:</p>
+<pre class="playground"><code class="language-rust editable edition2024"><span class="boring">extern crate rand;
+</span><span class="boring">extern crate rand_chacha;
+</span>use rand::prelude::*;
+use rand_chacha::ChaCha8Rng;
+
+fn main() {
+    let mut seed: &lt;ChaCha8Rng as SeedableRng&gt;::Seed = Default::default();
+    rand::rng().fill(&amp;mut seed);
+    let mut rng = ChaCha8Rng::from_seed(seed);
+    println!("{}", rng.random_range(0..100));
+}</code></pre>
+<p><strong>Obligatory warning</strong>: a few simple PRNGs, notably <a href="https://docs.rs/rand_xorshift/latest/rand_xorshift/struct.XorShiftRng.html"><code>XorShiftRng</code></a>,
+behave badly when seeded from the same type of generator (in this case, Xorshift
+generates a clone). For cryptographic PRNGs this is not a problem;
+for others it is recommended to seed from a different type of generator.
+<a href="https://docs.rs/rand_chacha/latest/rand_chacha/struct.ChaCha8Rng.html"><code>ChaCha8Rng</code></a> is an excellent choice for a deterministic master generator
+(but for cryptographic uses, prefer the 12-round variant or higher).</p>
+<h3 id="a-simple-number"><a class="header" href="#a-simple-number">A simple number</a></h3>
+<p>For some applications, especially simulations, all you want are a sequence of
+distinct, fixed random number seeds, e.g. 1, 2, 3, etc.</p>
+<p><a href="https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#method.seed_from_u64"><code>SeedableRng::seed_from_u64</code></a> is designed exactly for this use-case.
+Internally, it uses a simple PRNG to fill the bits of the seed from the input
+number while providing good bit-avalanche (so that two similar numbers such as
+0 and 1 translate to very different seeds and independent RNG sequences).</p>
+<pre class="playground"><code class="language-rust editable edition2024"><span class="boring">extern crate rand;
+</span><span class="boring">extern crate rand_chacha;
+</span>use rand::prelude::*;
+use rand_chacha::ChaCha8Rng;
+
+fn main() {
+    let mut rng = ChaCha8Rng::seed_from_u64(2);
+    println!("{}", rng.random_range(0..100));
+}</code></pre>
+<p>Note that a number with 64-bits or less <strong>cannot be secure</strong>, so this should
+not be used for applications such as cryptography or gambling games.</p>
+<h3 id="a-string-or-any-hashable-data"><a class="header" href="#a-string-or-any-hashable-data">A string, or any hashable data</a></h3>
+<p>Say you let users enter a string to seed the random number generator. Ideally,
+all parts of the string should influence the generator and making only a small
+change to the string should result in a fully independent generator sequence.</p>
+<p>This can be achieved via use of a hash function to compress all input data down
+to a hash result, then using that result to seed a generator. The
+<a href="https://github.com/rust-random/seeder/"><code>rand_seeder</code></a> crate is designed for just this purpose.</p>
+<pre><code class="language-rust noplayground">use rand::prelude::*;
+use rand_seeder::{Seeder, SipHasher};
+use rand_pcg::Pcg64;
+
+fn main() {
+    // In one line:
+    let mut rng: Pcg64 = Seeder::from("stripy zebra").into_rng();
+    println!("{}", rng.random::&lt;char&gt;());
+
+    // If we want to be more explicit, first we create a SipRng:
+    let hasher = SipHasher::from("a sailboat");
+    let mut hasher_rng = hasher.into_rng();
+    // (Note: hasher_rng is a full RNG and can be used directly.)
+
+    // Now, we use hasher_rng to create a seed:
+    let mut seed: &lt;Pcg64 as SeedableRng&gt;::Seed = Default::default();
+    hasher_rng.fill(&amp;mut seed);
+
+    // And create our RNG from that seed:
+    let mut rng = Pcg64::from_seed(seed);
+    println!("{}", rng.random::&lt;char&gt;());
+}</code></pre>
+<p>Note that <code>rand_seeder</code> is <strong>not suitable</strong> for cryptographic usage.
+It is <strong>not a password hasher</strong>, for such applications a key-derivation
+function such as Argon2 must be used.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="parallel-rngs"><a class="header" href="#parallel-rngs">Parallel RNGs</a></h1>
+<h2 id="theory-multiple-rngs"><a class="header" href="#theory-multiple-rngs">Theory: multiple RNGs</a></h2>
+<p>If you want to use random generators in multiple worker threads simultaneously,
+then you will want to use multiple RNGs. A few suggested approaches:</p>
+<ol>
+<li>Use <a href="https://docs.rs/rand/latest/rand/fn.rng.html"><code>rng()</code></a> in each worker thread. This is seeded automatically
+(lazily and uniquely) on each thread where it is used.</li>
+<li>Use <a href="https://docs.rs/rand/latest/rand/fn.rng.html"><code>rng()</code></a> (or another master RNG) to seed a custom RNG on each
+worker thread. The main advantage here is flexibility over the RNG used.</li>
+<li>Use a custom RNG per <em>work unit</em>, not per <em>worker thread</em>. If these RNGs
+are seeded in a deterministic fashion, then deterministic results are
+possible. Unfortunately, seeding a new RNG for each work unit from a master
+generator cannot be done in parallel, thus may be slow.</li>
+<li>Use a single master seed. For each work unit, seed an RNG using the master
+seed and set the RNG’s stream to the work unit number. This is potentially a
+faster than (3) while still deterministic, but not supported by all RNGs.</li>
+</ol>
+<p>Note: do not simply clone RNGs for worker threads/units. Clones return the same
+sequence of output as the original. You may however use clones if you then set
+a unique stream on each.</p>
+<h3 id="streams"><a class="header" href="#streams">Streams</a></h3>
+<p>Which RNG families support multiple streams?</p>
+<ul>
+<li><a href="https://docs.rs/rand_chacha/latest/rand_chacha/">ChaCha</a>: the ChaCha RNGs
+support 256-bit seed, 64-bit stream and 64-bit counter (per 16-word block),
+thus supporting 2<sup>64</sup> streams of 2<sup>68</sup> words each.</li>
+<li><a href="https://docs.rs/rand_hc/latest/rand_hc/">Hc128</a> is a cryptographic RNG
+supporting a 256-bit seed; one could construct this seed from (e.g.) a
+smaller 192-bit key plus a 64-bit stream.</li>
+</ul>
+<p>Note that the above approach of constructing the seed from a smaller key plus a
+stream counter can only be recommended with cryptographic PRNGs since simpler
+RNGs often have correlations in the RNG’s output using two similar keys, and
+may also require “random looking” seeds to produce high quality output.</p>
+<p>Non-cryptographic PRNGs may still support multiple streams, but likely with
+significant limitations (especially noting that a common recommendation with
+such PRNGs is not to consume more than the square root of the generator’s
+period).</p>
+<ul>
+<li>
+<p><a href="https://docs.rs/rand_xoshiro/latest/rand_xoshiro/">Xoshiro</a>: the Xoshiro
+family of RNGs support <code>jump</code> and <code>long_jump</code> methods which may effectively
+be used to divide the output of a single RNG into multiple streams. In
+practice this is only useful with a small number of streams, since <code>jump</code>
+must be called <code>n</code> times to select the nth “stream”.</p>
+</li>
+<li>
+<p><a href="https://docs.rs/rand_pcg/latest/rand_pcg/">Pcg</a>: these RNGs support
+construction with <code>state</code> and <code>stream</code> parameters. Note, however, that the
+RNGs have been critiqued in that multiple streams using the same key are
+often strongly correlated. See the <a href="https://www.pcg-random.org/posts/critiquing-pcg-streams.html">author’s own comments</a>.</p>
+<p>The PCG RNGs <em>also</em> support an <code>fn advance(delta)</code> method, which might be
+used to divide a single stream into multiple sub-streams as with Xoshiro’s
+<code>jump</code> (but better since the offset can be specified).</p>
+</li>
+</ul>
+<h2 id="practice-non-deterministic-multi-threaded"><a class="header" href="#practice-non-deterministic-multi-threaded">Practice: non-deterministic multi-threaded</a></h2>
+<p>We use Rayon’s <a href="https://docs.rs/rayon/latest/rayon/iter/index.html">parallel iterators</a>, using <a href="https://docs.rs/rayon/latest/rayon/iter/trait.ParallelIterator.html#method.map_init"><code>map_init</code></a> to initialize an RNG in
+each worker thread. Note: this RNG may be re-used across multiple work units,
+which may be split between worker threads in non-deterministic fashion.</p>
+<pre class="playground"><code class="language-rust edition2024">use rand::distr::{Distribution, Uniform};
+use rayon::prelude::*;
+
+static SAMPLES: u64 = 1_000_000;
+
+fn main() {
+    let range = Uniform::new(-1.0f64, 1.0).unwrap();
+
+    let in_circle = (0..SAMPLES)
+        .into_par_iter()
+        .map_init(|| rand::rng(), |rng, _| {
+            let a = range.sample(rng);
+            let b = range.sample(rng);
+            if a * a + b * b &lt;= 1.0 {
+                1
+            } else {
+                0
+            }
+        })
+        .reduce(|| 0usize, |a, b| a + b);
+
+    // prints something close to 3.14159...
+    println!(
+        "π is approximately {}",
+        4. * (in_circle as f64) / (SAMPLES as f64)
+    );
+}</code></pre>
+<h2 id="practice-deterministic-multi-threaded"><a class="header" href="#practice-deterministic-multi-threaded">Practice: deterministic multi-threaded</a></h2>
+<p>We use approach (4) above to achieve a deterministic result: initialize all RNGs
+from a single seed, but using multiple streams.
+We use <a href="https://docs.rs/rand_chacha/latest/rand_chacha/struct.ChaCha8Rng.html#method.set_stream"><code>ChaCha8Rng::set_stream</code></a> to achieve this.</p>
+<p>Note further that we manually batch multiple work-units according to
+<code>BATCH_SIZE</code>. This is important since the cost of initializing an RNG is large
+compared to the cost of our work unit (generating two random samples plus some
+trivial calculations). Manual batching could improve performance of the above
+non-deterministic simulation too.</p>
+<p>(Note: this example is <a href="https://github.com/rust-random/rand/blob/master/examples/rayon-monte-carlo.rs">https://github.com/rust-random/rand/blob/master/examples/rayon-monte-carlo.rs</a>.)</p>
+<pre class="playground"><code class="language-rust edition2024">use rand::distr::{Distribution, Uniform};
+use rand_chacha::{rand_core::SeedableRng, ChaCha8Rng};
+use rayon::prelude::*;
+
+static SEED: u64 = 0;
+static BATCH_SIZE: u64 = 10_000;
+static BATCHES: u64 = 1000;
+
+fn main() {
+    let range = Uniform::new(-1.0f64, 1.0).unwrap();
+
+    let in_circle = (0..BATCHES)
+        .into_par_iter()
+        .map(|i| {
+            let mut rng = ChaCha8Rng::seed_from_u64(SEED);
+            rng.set_stream(i);
+            let mut count = 0;
+            for _ in 0..BATCH_SIZE {
+                let a = range.sample(&amp;mut rng);
+                let b = range.sample(&amp;mut rng);
+                if a * a + b * b &lt;= 1.0 {
+                    count += 1;
+                }
+            }
+            count
+        })
+        .reduce(|| 0usize, |a, b| a + b);
+
+    // prints 3.1409052 (determinstic and reproducible result)
+    println!(
+        "π is approximately {}",
+        4. * (in_circle as f64) / ((BATCH_SIZE * BATCHES) as f64)
+    );
+}</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="random-values"><a class="header" href="#random-values">Random values</a></h1>
+<p>Now that we have a way of producing random data, how can we convert it to the
+type of value we want?</p>
+<p>This is a trick question: we need to know both the <em>range</em> we want and the type
+of <em>distribution</em> of this value (which is what the <a href="#random-distributions"><code>next</code></a> section
+is all about).</p>
+<h2 id="the-rng-trait"><a class="header" href="#the-rng-trait">The <code>Rng</code> trait</a></h2>
+<p>For convenience, all generators automatically implement the <a href="https://docs.rs/rand/latest/rand/trait.Rng.html"><code>Rng</code></a> trait,
+which provides short-cuts to a few ways of generating values. This has several
+convenience functions for producing uniformly distributed values:</p>
+<ul>
+<li>
+<p><a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.random"><code>Rng::random</code></a> generates an unbiased (uniform) random value from a range
+appropriate for the
+type. For integers this is normally the full representable range
+(e.g. from <code>0u32</code> to <code>std::u32::MAX</code>), for floats this is between 0 and 1,
+and some other types are supported, including arrays and tuples.</p>
+<p>This method is a convenience wrapper around the <a href="https://docs.rs/rand/latest/rand/distr/struct.StandardUniform.html"><code>StandardUniform</code></a> distribution,
+as documented in the <a href="#uniform-distributions">next section</a>.</p>
+</li>
+<li>
+<p><a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.random_range"><code>Rng::random_range</code></a> generates an unbiased random value in the given range</p>
+</li>
+<li>
+<p><a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.fill"><code>Rng::fill</code></a> and <a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.try_fill"><code>Rng::try_fill</code></a> are optimised functions for filling any byte or
+integer slice with random values</p>
+</li>
+</ul>
+<p>It also has convenience functions for producing non-uniform boolean values:</p>
+<ul>
+<li><a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.random_bool"><code>Rng::random_bool</code></a> generates a boolean with the given probability</li>
+<li><a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.random_ratio"><code>Rng::random_ratio</code></a> also generates a boolean, where the probability is defined
+via a fraction</li>
+</ul>
+<p>Finally, it has a function to sample from arbitrary distributions:</p>
+<ul>
+<li><a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.sample"><code>Rng::sample</code></a> samples directly from some <a href="#random-distributions">distribution</a></li>
+</ul>
+<p>Examples:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate rand;
+</span>use rand::Rng;
+<span class="boring">fn main() {
+</span>let mut rng = rand::rng();
+
+// an unbiased integer over the entire range:
+let i: i32 = rng.random();
+println!("i = {i}");
+
+// a uniformly distributed value between 0 and 1:
+let x: f64 = rng.random();
+println!("x = {x}");
+
+// simulate rolling a die:
+println!("roll = {}", rng.random_range(1..=6));
+<span class="boring">}</span></code></pre>
+<p>Additionally, the <a href="https://docs.rs/rand/latest/rand/fn.random.html"><code>random</code></a> function is a short-cut to <a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.random"><code>Rng::random</code></a> on the <a href="https://docs.rs/rand/latest/rand/fn.rng.html"><code>rng()</code></a>:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate rand;
+</span><span class="boring">use rand::Rng;
+</span><span class="boring">fn main() {
+</span>println!("Tossing a coin...");
+if rand::random() {
+    println!("We got lucky!");
+}
+<span class="boring">}</span></code></pre>
+<h2 id="custom-random-types"><a class="header" href="#custom-random-types">Custom random types</a></h2>
+<p>Notice from the above that <code>rng.random()</code> yields a different distribution of values
+depending on the type:</p>
+<ul>
+<li><code>i32</code> values are sampled from <code>i32::MIN ..= i32::MAX</code> uniformly</li>
+<li><code>f32</code> values are sampled from <code>0.0 .. 1.0</code> uniformly</li>
+</ul>
+<p>This is the <a href="https://docs.rs/rand/latest/rand/distr/struct.StandardUniform.html"><code>StandardUniform</code></a> distribution. <a href="https://docs.rs/rand/latest/rand/distr/trait.Distribution.html"><code>Distribution</code></a>s are the topic of the
+next chapter, but given the importance of the <a href="https://docs.rs/rand/latest/rand/distr/struct.StandardUniform.html"><code>StandardUniform</code></a> distribution we
+introduce it here. As usual, standards are somewhat arbitrary, but chosen
+according to reasonable logic:</p>
+<ul>
+<li>Values are sampled uniformly: given any two sub-ranges of equal size, each
+has an equal chance of containing the next sampled value</li>
+<li>Usually, the whole range of the target type is used</li>
+<li>For <code>f32</code> and <code>f64</code> the range <code>0.0 .. 1.0</code> is used (exclusive of <code>1.0</code>), for
+two reasons: (a) this is common practice for random-number generators and
+(b) because for many purposes having a uniform distribution of samples
+(along the Real number line) is important, and this is only possible for
+floating-point representations by restricting the range.</li>
+</ul>
+<p>Given that, we can implement the <a href="https://docs.rs/rand/latest/rand/distr/struct.StandardUniform.html"><code>StandardUniform</code></a> distribution for our own types:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate rand;
+</span>use rand::Rng;
+use rand::distr::{Distribution, StandardUniform, Uniform};
+use std::f64::consts::TAU; // = 2π
+
+/// Represents an angle, in radians
+#[derive(Debug)]
+pub struct Angle(f64);
+impl Angle {
+    pub fn from_degrees(degrees: f64) -&gt; Self {
+        Angle(degrees * (std::f64::consts::TAU / 360.0))
+    }
+}
+
+impl Distribution&lt;Angle&gt; for StandardUniform {
+    fn sample&lt;R: Rng + ?Sized&gt;(&amp;self, rng: &amp;mut R) -&gt; Angle {
+        // It would be correct to write:
+        // Angle(rng.random::&lt;f64&gt;() * TAU)
+
+        // However, the following is preferred:
+        Angle(Uniform::new(0.0, TAU).unwrap().sample(rng))
+    }
+}
+
+fn main() {
+    let angle: Angle = rand::rng().random();
+    println!("Random angle: {angle:?}");
+}</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="random-distributions"><a class="header" href="#random-distributions">Random distributions</a></h1>
+<p>For maximum flexibility when producing random values, we define the
+<a href="https://docs.rs/rand/latest/rand/distr/trait.Distribution.html"><code>Distribution</code></a> trait:</p>
+<pre><code class="language-rust noplayground"><span class="boring">use rand::Rng;
+</span>// a producer of data of type T:
+pub trait Distribution&lt;T&gt; {
+    // the key function:
+    fn sample&lt;R: Rng + ?Sized&gt;(&amp;self, rng: &amp;mut R) -&gt; T;
+
+    // a convenience function defined using sample:
+    fn sample_iter&lt;R&gt;(self, rng: R) -&gt; rand::distr::Iter&lt;Self, R, T&gt;
+    where
+        Self: Sized,
+        R: Rng,
+    {
+        // [has a default implementation]
+<span class="boring">        todo!()
+</span>    }
+}</code></pre>
+<p>Implementations of <a href="https://docs.rs/rand/latest/rand/distr/trait.Distribution.html"><code>Distribution</code></a> are <em>probability distribution</em>: mappings
+from events to probabilities (e.g. for a die roll <code>P(x = i) = ⅙</code> or for a Normal
+distribution with mean <code>μ=0</code>, <code>P(x &gt; 0) = ½</code>).</p>
+<p>Note that although probability distributions all have properties such as a mean,
+a Probability Density Function, and can be sampled by inverting the Cumulative
+Density Function, here we only concern ourselves with <em>sampling random values</em>.
+If you require use of such properties you may prefer to use the <a href="https://github.com/statrs-dev/statrs/"><code>statrs</code></a> crate.</p>
+<p>Rand provides implementations of many different distributions; we cover the most
+common of these here, but for full details refer to the <a href="https://docs.rs/rand/latest/rand/distr/"><code>distr</code></a> module
+and the <a href="https://docs.rs/rand_distr/"><code>rand_distr</code></a> crate.</p>
+<h1 id="uniform-distributions"><a class="header" href="#uniform-distributions">Uniform distributions</a></h1>
+<p>The most obvious type of distribution is the one we already discussed: one
+where each equally-sized sub-range has equal chance of containing the next
+sample. This is known as <em>uniform</em>.</p>
+<p>Rand actually has several variants of this, representing different ranges:</p>
+<ul>
+<li><a href="https://docs.rs/rand/latest/rand/distr/struct.StandardUniform.html"><code>StandardUniform</code></a> requires no parameters and samples values uniformly according
+to the type. <a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.random"><code>Rng::random</code></a> provides a short-cut to this distribution.</li>
+<li><a href="https://docs.rs/rand/latest/rand/distr/struct.Uniform.html"><code>Uniform</code></a> is parametrised by <code>Uniform::new(low, high)</code> (including <code>low</code>,
+excluding <code>high</code>) or <code>Uniform::new_inclusive(low, high)</code> (including both),
+and samples values uniformly within this range.
+<a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.random_range"><code>Rng::random_range</code></a> is a convenience method defined over
+<a href="https://docs.rs/rand/latest/rand/distr/struct.Uniform.html#method.sample_single"><code>Uniform::sample_single</code></a>, optimised for single-sample usage.</li>
+<li><a href="https://docs.rs/rand/latest/rand/distr/struct.Alphanumeric.html"><code>Alphanumeric</code></a> is uniform over the <code>char</code> values <code>0-9A-Za-z</code>.</li>
+<li><a href="https://docs.rs/rand/latest/rand/distr/struct.Open01.html"><code>Open01</code></a> and <a href="https://docs.rs/rand/latest/rand/distr/struct.OpenClosed01.html"><code>OpenClosed01</code></a> are provide alternate sampling ranges for
+floating-point types (see below).</li>
+</ul>
+<h2 id="uniform-sampling-by-type"><a class="header" href="#uniform-sampling-by-type">Uniform sampling by type</a></h2>
+<p>Lets go over the distributions by type:</p>
+<ul>
+<li>
+<p>For <code>bool</code>, <a href="https://docs.rs/rand/latest/rand/distr/struct.StandardUniform.html"><code>StandardUniform</code></a> samples each value with probability 50%.</p>
+</li>
+<li>
+<p>For <code>Option&lt;T&gt;</code>, the <a href="https://docs.rs/rand/latest/rand/distr/struct.StandardUniform.html"><code>StandardUniform</code></a> distribution samples <code>None</code> with
+probability 50%, otherwise <code>Some(value)</code> is sampled, according to its type.</p>
+</li>
+<li>
+<p>For integers (<code>u8</code> through to <code>u128</code>, <code>usize</code>, and <code>i*</code> variants),
+<a href="https://docs.rs/rand/latest/rand/distr/struct.StandardUniform.html"><code>StandardUniform</code></a> samples from all possible values while
+<a href="https://docs.rs/rand/latest/rand/distr/struct.Uniform.html"><code>Uniform</code></a> samples from the parameterised range.</p>
+</li>
+<li>
+<p>For <code>NonZeroU8</code> and other “non-zero” types, <a href="https://docs.rs/rand/latest/rand/distr/struct.StandardUniform.html"><code>StandardUniform</code></a> samples uniformly
+from all non-zero values (rejection method).</p>
+</li>
+<li>
+<p><code>Wrapping&lt;T&gt;</code> integer types are sampled as for the corresponding integer
+type by the <a href="https://docs.rs/rand/latest/rand/distr/struct.StandardUniform.html"><code>StandardUniform</code></a> distribution.</p>
+</li>
+<li>
+<p>For floats (<code>f32</code>, <code>f64</code>),</p>
+<ul>
+<li><a href="https://docs.rs/rand/latest/rand/distr/struct.StandardUniform.html"><code>StandardUniform</code></a> samples from the half-open range <code>[0, 1)</code> with 24 or 53
+bits of precision (for <code>f32</code> and <code>f64</code> respectively)</li>
+<li><a href="https://docs.rs/rand/latest/rand/distr/struct.OpenClosed01.html"><code>OpenClosed01</code></a> samples from the half-open range <code>(0, 1]</code> with 24 or
+53 bits of precision</li>
+<li><a href="https://docs.rs/rand/latest/rand/distr/struct.Open01.html"><code>Open01</code></a> samples from the open range <code>(0, 1)</code> with 23 or 52 bits of
+precision</li>
+<li><a href="https://docs.rs/rand/latest/rand/distr/struct.Uniform.html"><code>Uniform</code></a> samples from a given range with 23 or 52 bits of precision</li>
+</ul>
+</li>
+<li>
+<p>For the <code>char</code> type, the <a href="https://docs.rs/rand/latest/rand/distr/struct.StandardUniform.html"><code>StandardUniform</code></a> distribution samples from all
+available Unicode code points, uniformly; many of these values may not be
+printable (depending on font support). The <a href="https://docs.rs/rand/latest/rand/distr/struct.Alphanumeric.html"><code>Alphanumeric</code></a> samples from
+only a-z, A-Z and 0-9 uniformly.</p>
+</li>
+<li>
+<p>For tuples and arrays, each element is sampled as above, where supported.
+The <a href="https://docs.rs/rand/latest/rand/distr/struct.StandardUniform.html"><code>StandardUniform</code></a> and <a href="https://docs.rs/rand/latest/rand/distr/struct.Uniform.html"><code>Uniform</code></a> distributions each support a selection of
+these types (up to 12-tuples and 32-element arrays).
+This includes the empty tuple <code>()</code> and array.
+When using <code>rustc</code> ≥ 1.51, enable the <code>min_const_gen</code> feature to support
+arrays larger than 32 elements.</p>
+</li>
+<li>
+<p>For SIMD types, each element is sampled as above, for <a href="https://docs.rs/rand/latest/rand/distr/struct.StandardUniform.html"><code>StandardUniform</code></a> and
+<a href="https://docs.rs/rand/latest/rand/distr/struct.Uniform.html"><code>Uniform</code></a> (for the latter, <code>low</code> and <code>high</code> parameters are <em>also</em> SIMD
+types, effectively sampling from multiple ranges simultaneously). SIMD
+support requires using the <code>simd_support</code> feature flag and nightly <code>rustc</code>.</p>
+</li>
+<li>
+<p>For enums, you have to implement uniform sampling yourself. For example, you
+could use the following approach:</p>
+<pre><code class="language-rust noplayground"><span class="boring">use rand::{Rng, distr::{Distribution, StandardUniform}};
+</span>pub enum Food {
+    Burger,
+    Pizza,
+    Kebab,
+}
+
+impl Distribution&lt;Food&gt; for StandardUniform {
+    fn sample&lt;R: Rng + ?Sized&gt;(&amp;self, rng: &amp;mut R) -&gt; Food {
+        let index: u8 = rng.random_range(0..3);
+        match index {
+            0 =&gt; Food::Burger,
+            1 =&gt; Food::Pizza,
+            2 =&gt; Food::Kebab,
+            _ =&gt; unreachable!(),
+        }
+    }
+}</code></pre>
+</li>
+</ul>
+<h1 id="non-uniform-distributions"><a class="header" href="#non-uniform-distributions">Non-uniform distributions</a></h1>
+<p>The <a href="https://docs.rs/rand/"><code>rand</code></a> crate provides only two non-uniform distributions:</p>
+<ul>
+<li>The <a href="https://docs.rs/rand/latest/rand/distr/struct.Bernoulli.html"><code>Bernoulli</code></a> distribution simply generates a boolean where the
+probability of sampling <code>true</code> is some constant (<code>Bernoulli::new(0.5)</code>) or
+ratio (<code>Bernoulli::from_ratio(1, 6)</code>).</li>
+<li>The <a href="https://docs.rs/rand/latest/rand/distr/weighted/struct.WeightedIndex.html"><code>WeightedIndex</code></a> distribution may be used to sample from a sequence of
+weighted values. See the <a href="#sequences">Sequences</a> section.</li>
+</ul>
+<p>Many more non-uniform distributions are provided by the <a href="https://docs.rs/rand_distr/"><code>rand_distr</code></a> crate.</p>
+<h3 id="integers"><a class="header" href="#integers">Integers</a></h3>
+<p>The <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Binomial.html"><code>Binomial</code></a> distribution is related to the <a href="https://docs.rs/rand/latest/rand/distr/struct.Bernoulli.html"><code>Bernoulli</code></a> in that it
+models running <code>n</code> independent trials each with probability <code>p</code> of success,
+then counts the number of successes.</p>
+<p>Note that for large <code>n</code> the <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Binomial.html"><code>Binomial</code></a> distribution’s implementation is
+much faster than sampling <code>n</code> trials individually.</p>
+<p>The <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Poisson.html"><code>Poisson</code></a> distribution expresses the expected number of events
+occurring within a fixed interval, given that events occur with fixed rate λ.
+<a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Poisson.html"><code>Poisson</code></a> distribution sampling generates <code>Float</code> values because <code>Float</code>s
+are used in the sampling calculations, and we prefer to defer to the user on
+integer types and the potentially lossy and panicking associated conversions.
+For example, <code>u64</code> values can be attained with <code>rng.sample(Poisson) as u64</code>.</p>
+<p>Note that out of range float to int conversions with <code>as</code> result in undefined
+behavior for Rust &lt;1.45 and a saturating conversion for Rust &gt;=1.45.</p>
+<h2 id="continuous-non-uniform-distributions"><a class="header" href="#continuous-non-uniform-distributions">Continuous non-uniform distributions</a></h2>
+<p>Continuous distributions model samples drawn from the real number line ℝ, or in
+some cases a point from a higher dimension (ℝ², ℝ³, etc.). We provide
+implementations for <code>f64</code> and for <code>f32</code> output in most cases, although currently
+the <code>f32</code> implementations simply reduce the precision of an <code>f64</code> sample.</p>
+<p>The exponential distribution, <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Exp.html"><code>Exp</code></a>, simulates time until decay, assuming a
+fixed rate of decay (i.e. exponential decay).</p>
+<p>The <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Normal.html"><code>Normal</code></a> distribution (also known as Gaussian) simulates sampling from
+the Normal distribution (“Bell curve”) with the given mean and standard
+deviation. The <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.LogNormal.html"><code>LogNormal</code></a> is related: for sample <code>X</code> from the log-normal
+distribution, <code>log(X)</code> is normally distributed; this “skews” the normal
+distribution to avoid negative values and to have a long positive tail.</p>
+<p>The <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.UnitCircle.html"><code>UnitCircle</code></a> and <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.UnitSphere.html"><code>UnitSphere</code></a> distributions simulate uniform
+sampling from the edge of a circle or surface of a sphere.</p>
+<p>The <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Cauchy.html"><code>Cauchy</code></a> distribution (also known as the Lorentz distribution) is the
+distribution of the x-intercept of a ray from point <code>(x0, γ)</code> with uniformly
+distributed angle.</p>
+<p>The <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Beta.html"><code>Beta</code></a> distribution is a two-parameter probability distribution, whose
+output values lie between 0 and 1. The <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Dirichlet.html"><code>Dirichlet</code></a> distribution is a
+generalisation to any positive number of parameters.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="random-processes"><a class="header" href="#random-processes">Random processes</a></h1>
+<p>You may have noticed that the <a href="https://docs.rs/rand/latest/rand/distr/trait.Distribution.html"><code>Distribution</code></a> trait does not allow mutation of
+self (no <code>&amp;mut self</code> methods). This is by design: a probability distribution is
+defined as a mapping from events to probabilities.</p>
+<p>In contrast, a <a href="https://en.wikipedia.org/wiki/Stochastic_process">Stochastic Process</a>
+concerns a family of variables (or state) which mutate in a random manner.</p>
+<p>We do not attempt to define a general API covering random processes or to
+provide direct support for modelling them. Here we merely discuss some.</p>
+<h2 id="sampling-without-replacement"><a class="header" href="#sampling-without-replacement">Sampling without replacement</a></h2>
+<p>Given, for example, a bag of 10 red marbles and 30 green marbles, the initial
+probability that a marble sampled from the bag is red is <code>10/(10 + 30) = ¼ = 0.25</code>.
+If the first marble <em>is</em> red and <em>is not replaced</em>, then the probability that
+the second marble sampled from the bag is red is <code>9/(9 + 30) = 3/13 ≅ 0.23</code>.</p>
+<p>The <code>rand</code> crate does not provide any system supporting step-wise sampling
+without replacement. What it does provide is support for sampling multiple
+distinct values from a sequence in a single step:
+<a href="https://docs.rs/rand/latest/rand/seq/trait.IteratorRandom.html#method.choose_multiple"><code>IteratorRandom::choose_multiple</code></a> and <a href="https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.choose_multiple"><code>SliceRandom::choose_multiple</code></a>.</p>
+<p>If you wish to implement step-wise sampling yourself, here are a few ideas:</p>
+<ul>
+<li>Place all elements in a <code>Vec</code>. Each step sample and remove one value. Note
+that if the set of all possible elements is large this is inefficient since
+<code>Vec::remove</code> is <code>O(n)</code> and since all elements must be constructed.</li>
+<li>Place all elements in a <code>Vec</code> and shuffle. Each step simply take the next
+element.</li>
+<li>Construct a method of sampling values from the initial distribution plus an
+empty <code>HashSet</code> representing “taken” values. Each step, sample a value; if
+it is in the <code>HashSet</code> then reject the value and sample again, otherwise
+place a copy in a <code>HashSet</code> and return. Note that this method is inefficient
+unless the number of samples taken is much smaller than the number of
+available elements.</li>
+<li>Investigate <a href="https://github.com/rust-random/rand/blob/master/src/seq/index.rs"><code>src/seq/index.rs</code></a>: several sampling algorithms are used which
+may be adjusted to this application.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="sequences"><a class="header" href="#sequences">Sequences</a></h1>
+<p>Rand implements a few common random operations on sequences via the
+<a href="https://docs.rs/rand/latest/rand/seq/trait.IteratorRandom.html"><code>IteratorRandom</code></a> and <a href="https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html"><code>SliceRandom</code></a> traits.</p>
+<h2 id="generating-indices"><a class="header" href="#generating-indices">Generating indices</a></h2>
+<p>To sample:</p>
+<ul>
+<li>a single index within a given range, use <a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.random_range"><code>Rng::random_range</code></a></li>
+<li>multiple distinct indices from <code>0..length</code>, use <a href="https://docs.rs/rand/latest/rand/seq/index/fn.sample.html"><code>index::sample</code></a></li>
+<li>multiple distinct indices from <code>0..length</code> with weights, use <a href="https://docs.rs/rand/latest/rand/seq/index/fn.sample_weighted.html"><code>index::sample_weighted</code></a></li>
+</ul>
+<h2 id="shuffling"><a class="header" href="#shuffling">Shuffling</a></h2>
+<p>To shuffle a slice:</p>
+<ul>
+<li><a href="https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.shuffle"><code>SliceRandom::shuffle</code></a>: fully shuffle a slice</li>
+<li><a href="https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.partial_shuffle"><code>SliceRandom::partial_shuffle</code></a>: partial shuffle; useful to extract
+<code>amount</code> random elements in random order</li>
+</ul>
+<h2 id="sampling"><a class="header" href="#sampling">Sampling</a></h2>
+<p>The following provide a convenient way of sampling a value from a slice or iterator:</p>
+<ul>
+<li><a href="https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.choose"><code>SliceRandom::choose</code></a>: sample one element from a slice (by ref)</li>
+<li><a href="https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.choose_mut"><code>SliceRandom::choose_mut</code></a>: sample one element from a slice (by ref mut)</li>
+<li><a href="https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.choose_multiple"><code>SliceRandom::choose_multiple</code></a>: sample multiple distinct elements from a slice (returns iterator of references to elements)</li>
+<li><a href="https://docs.rs/rand/latest/rand/seq/trait.IteratorRandom.html#method.choose"><code>IteratorRandom::choose</code></a>: sample one element from an iterator (by value)</li>
+<li><a href="https://docs.rs/rand/latest/rand/seq/trait.IteratorRandom.html#method.choose_stable"><code>IteratorRandom::choose_stable</code></a>: sample one element from an iterator (by value), where RNG calls are unaffected by the iterator’s <a href="https://doc.rust-lang.org/stable/std/iter/trait.Iterator.html#method.size_hint"><code>size_hint</code></a></li>
+<li><a href="https://docs.rs/rand/latest/rand/seq/trait.IteratorRandom.html#method.choose_multiple_fill"><code>IteratorRandom::choose_multiple_fill</code></a>: sample multiple elements, placing into a buffer</li>
+<li><a href="https://docs.rs/rand/latest/rand/seq/trait.IteratorRandom.html#method.choose_multiple"><code>IteratorRandom::choose_multiple</code></a>: sample multiple elements, returning a <a href="https://doc.rust-lang.org/stable/std/vec/struct.Vec.html"><code>Vec</code></a></li>
+</ul>
+<p>Note that operating on an iterator is often less efficient than operating on a
+slice.</p>
+<h2 id="weighted-sampling"><a class="header" href="#weighted-sampling">Weighted sampling</a></h2>
+<p>For example, weighted sampling could be used to model the colour of a marble
+sampled from a bucket containing 5 green, 15 red and 80 blue marbles.</p>
+<h3 id="with-replacement"><a class="header" href="#with-replacement">With replacement</a></h3>
+<p>Sampling <em>with replacement</em> implies that any sampled values (marbles) are
+replaced (thus, the probability of sampling each variant is not affected by the
+action of sampling).</p>
+<p>This is implemented by the following distributions:</p>
+<ul>
+<li><a href="https://docs.rs/rand_distr/latest/rand_distr/weighted/struct.WeightedIndex.html"><code>WeightedIndex</code></a> has fast setup and <code>O(log N)</code> sampling</li>
+<li><a href="https://docs.rs/rand_distr/latest/rand_distr/weighted/struct.WeightedAliasIndex.html"><code>WeightedAliasIndex</code></a> has slow setup and <code>O(1)</code> sampling, thus <em>may</em> be
+faster with a large number of samples</li>
+</ul>
+<p>For convenience, you may use:</p>
+<ul>
+<li><a href="https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.choose_weighted"><code>SliceRandom::choose_weighted</code></a></li>
+<li><a href="https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.choose_weighted_mut"><code>SliceRandom::choose_weighted_mut</code></a></li>
+</ul>
+<h3 id="without-replacement"><a class="header" href="#without-replacement">Without replacement</a></h3>
+<p>Sampling <em>without replacement</em> implies that the action of sampling modifies the
+distribution. Since the <a href="https://docs.rs/rand/latest/rand/distr/trait.Distribution.html"><code>Distribution</code></a> trait is built around the idea of
+immutable distributions, we offer the following:</p>
+<ul>
+<li><a href="https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.choose_multiple_weighted"><code>SliceRandom::choose_multiple_weighted</code></a>: sample <code>amount</code> distinct values
+from a slice with weights</li>
+<li><a href="https://docs.rs/rand/latest/rand/seq/index/fn.sample_weighted.html"><code>index::sample_weighted</code></a>: sample <code>amount</code> distinct indices from a range with
+weights</li>
+<li>Implement yourself: see the section in <a href="#sampling-without-replacement">Random processes</a></li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="error-handling"><a class="header" href="#error-handling">Error handling</a></h1>
+<p>Error handling in Rand is a compromise between simplicity and necessity.
+Most RNGs and sampling functions will never produce errors, and making these
+able to handle errors would add significant overhead (to code complexity
+and ergonomics of usage at least, and potentially also performance,
+depending on the approach).
+However, external RNGs can fail, and being able to handle this is important.</p>
+<p>It has therefore been decided that <em>most</em> methods should not return a
+<code>Result</code> type, but with a few important exceptions, namely:</p>
+<ul>
+<li><a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.try_fill"><code>Rng::try_fill</code></a></li>
+<li><a href="https://docs.rs/rand_core/latest/rand_core/trait.RngCore.html#tymethod.try_fill_bytes"><code>RngCore::try_fill_bytes</code></a></li>
+<li><a href="https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#method.from_rng"><code>SeedableRng::from_rng</code></a></li>
+</ul>
+<p>Most functions consuming random values will not attempt any error handling, and
+reduce to calls to <a href="https://docs.rs/rand_core/latest/rand_core/trait.RngCore.html"><code>RngCore</code></a>’s “infallible” methods. Since most RNGs cannot
+fail anyway this is usually not a problem, but the few generators which can may
+be forced to fail in this case:</p>
+<ul>
+<li><a href="https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html"><code>OsRng</code></a> is a wrapper over <a href="https://docs.rs/getrandom/latest/getrandom/"><code>getrandom</code></a>. From the latter’s documentation:
+“In general, on supported platforms, failure is highly unlikely, though not
+impossible.” <a href="https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html"><code>OsRng</code></a> will forward errors through
+<a href="https://docs.rs/rand_core/latest/rand_core/trait.RngCore.html#tymethod.try_fill_bytes"><code>RngCore::try_fill_bytes</code></a> while other methods panic on error.</li>
+<li><a href="https://docs.rs/rand/latest/rand/fn.rng.html"><code>rng</code></a> seeds itself via <a href="https://docs.rs/rand/latest/rand/rngs/struct.OsRng.html"><code>OsRng</code></a> on first use and periodically
+thereafter, thus can potentially fail, though unlikely. If initial seeding
+fails, a panic will result. If a failure happens during reseeding (less
+likely) then the RNG continues without reseeding; a log message (warning)
+is emitted if logging is enabled.</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="testing-functions-which-use-rngs"><a class="header" href="#testing-functions-which-use-rngs">Testing functions which use RNGs</a></h1>
+<p>Occasionally a function that uses random number generators might need to be tested. For functions that need to be tested with test vectors, the following approach might be adapted:</p>
+<pre class="playground"><code class="language-rust edition2024">use rand::{TryCryptoRng, rngs::OsRng};
+
+pub struct CryptoOperations&lt;R: TryCryptoRng = OsRng&gt; {
+    rng: R
+}
+
+impl&lt;R: TryCryptoRng&gt; CryptoOperations&lt;R&gt; {
+    #[must_use]
+    pub fn new(rng: R) -&gt; Self {
+        Self {
+            rng
+        }
+    }
+
+    pub fn xor_with_random_bytes(&amp;mut self, secret: &amp;mut [u8; 8]) -&gt; [u8; 8] {
+        let mut mask = [0u8; 8];
+        self.rng.try_fill_bytes(&amp;mut mask).unwrap();
+
+        for (byte, mask_byte) in secret.iter_mut().zip(mask.iter()) {
+            *byte ^= mask_byte;
+        }
+
+        mask
+    }
+}
+
+fn main() {
+    let rng = OsRng;
+    let mut crypto_ops = &lt;CryptoOperations&gt;::new(rng);
+
+    let mut secret: [u8; 8] = *b"\x00\x01\x02\x03\x04\x05\x06\x07";
+    let mask = crypto_ops.xor_with_random_bytes(&amp;mut secret);
+    
+    println!("Modified Secret (XORed): {:?}", secret);
+    println!("Mask: {:?}", mask);
+}</code></pre>
+<p>To test this, we can create a <code>MockCryptoRng</code> implementing <code>TryRngCore</code> and <code>TryCryptoRng</code> in our testing module. Note that <code>MockCryptoRng</code> is private and <code>#[cfg(test)] mod tests</code> is cfg-gated to our test environment, thus ensuring that <code>MockCryptoRng</code> cannot accidentally be used in production.</p>
+<pre><code class="language-rust noplayground">#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[derive(Clone, Copy, Debug)]
+    struct MockCryptoRng {
+        data: [u8; 8],
+        index: usize,
+    }
+
+    impl MockCryptoRng {
+        fn new(data: [u8; 8]) -&gt; MockCryptoRng {
+            MockCryptoRng {
+                data,
+                index: 0,
+            }
+        }
+    }
+
+    impl CryptoRng for MockCryptoRng {}
+
+    impl RngCore for MockCryptoRng {
+        fn next_u32(&amp;mut self) -&gt; u32 {
+            unimplemented!()
+        }
+
+        fn next_u64(&amp;mut self) -&gt; u64 {
+            unimplemented!()
+        }
+
+        fn fill_bytes(&amp;mut self, dest: &amp;mut [u8]) {
+            for byte in dest.iter_mut() {
+                *byte = self.data[self.index];
+                self.index = (self.index + 1) % self.data.len();
+            }
+        }
+
+        fn try_fill_bytes(&amp;mut self, dest: &amp;mut [u8]) -&gt; Result&lt;(), rand::Error&gt; {
+            unimplemented!()
+        }
+    }
+
+    #[test]
+    fn test_xor_with_mock_rng() {
+        let mock_crypto_rng = MockCryptoRng::new(*b"\x57\x88\x1e\xed\x1c\x72\x01\xd8");
+        let mut crypto_ops = CryptoOperations::new(mock_crypto_rng);
+
+        let mut secret: [u8; 8] = *b"\x00\x01\x02\x03\x04\x05\x06\x07";
+        let mask = crypto_ops.xor_with_random_bytes(&amp;mut secret);
+        let expected_mask = *b"\x57\x88\x1e\xed\x1c\x72\x01\xd8";
+        let expected_xored_secret = *b"\x57\x89\x1c\xee\x18\x77\x07\xdf";
+
+        assert_eq!(secret, expected_xored_secret);
+        assert_eq!(mask, expected_mask);
+    }
+}</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="updating"><a class="header" href="#updating">Updating</a></h1>
+<p>This guide is intended to facilitate upgrading to the next minor or major
+version of Rand. Note that updating to the next patch version (e.g. 0.5.1 to
+0.5.2) should never require code changes.</p>
+<p>This guide gives a few more details than the <a href="https://github.com/rust-random/rand/blob/master/CHANGELOG.md">changelog</a>, in particular giving
+guidance on how to use new features and migrate away from old ones.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="updating-to-05"><a class="header" href="#updating-to-05">Updating to 0.5</a></h1>
+<p>The 0.5 release has quite significant changes over the 0.4 release; as such,
+it may be worth reading through the following coverage of breaking changes.
+This release also contains many optimisations, which are not detailed below.</p>
+<h2 id="crates"><a class="header" href="#crates">Crates</a></h2>
+<p>We have a new crate: <code>rand_core</code>! This crate houses some important traits,
+<code>RngCore</code>, <code>BlockRngCore</code>, <code>SeedableRng</code> and <code>CryptoRng</code>, the error types, as
+well as two modules with helpers for implementations: <code>le</code> and <code>impls</code>. It is
+recommended that implementations of generators use the <code>rand_core</code> crate while
+other users use only the <code>rand</code> crate, which re-exports most parts of <code>rand_core</code>.</p>
+<p>The <code>rand_derive</code> crate has been deprecated due to very low usage and
+deprecation of <code>Rand</code>.</p>
+<h2 id="features"><a class="header" href="#features">Features</a></h2>
+<p>Several new Cargo feature flags have been added:</p>
+<ul>
+<li><code>alloc</code>, used without <code>std</code>, allows use of <code>Box</code> and <code>Vec</code></li>
+<li><code>serde1</code> adds serialization support to some PRNGs</li>
+<li><code>log</code> adds logging in a few places (primarily to <code>OsRng</code> and <code>JitterRng</code>)</li>
+</ul>
+<h2 id="rng-and-friends-core-traits"><a class="header" href="#rng-and-friends-core-traits"><code>Rng</code> and friends (core traits)</a></h2>
+<p><code>Rng</code> trait has been split into two traits, a “back end” <code>RngCore</code> (implemented
+by generators) and a “front end” <code>Rng</code> implementing all the convenient extension
+methods.</p>
+<p>Implementations of generators must <code>impl RngCore</code> instead. Usage of <code>rand_core</code>
+for implementations is encouraged; the <code>rand_core::{le, impls}</code> modules may
+prove useful.</p>
+<p>Users of <code>Rng</code> <em>who don’t need to implement it</em> won’t need to make so many
+changes; often users can forget about <code>RngCore</code> and only import <code>Rng</code>. Instead
+of <code>RngCore::next_u32()</code> / <code>next_u64()</code> users should prefer <code>Rng::gen()</code>, and
+instead of <code>RngCore::fill_bytes(dest)</code>, <code>Rng::fill(dest)</code> can be used.</p>
+<h3 id="rng--rngcore-methods"><a class="header" href="#rng--rngcore-methods"><code>Rng</code> / <code>RngCore</code> methods</a></h3>
+<p>To allow error handling from fallible sources (e.g. <code>OsRng</code>), a new
+<code>RngCore::try_fill_bytes</code> method has been added; for example <code>EntropyRng</code> uses
+this mechanism to fall back to <code>JitterRng</code> if <code>OsRng</code> fails, and various
+handlers produce better error messages.
+As before, the other methods will panic on failure, but since these are usually
+used with algorithmic generators which are usually infallible, this is
+considered an appropriate compromise.</p>
+<p>A few methods from the old <code>Rng</code> have been removed or deprecated:</p>
+<ul>
+<li><code>next_f32</code> and <code>next_f64</code>; these are no longer implementable by generators;
+use <code>gen</code> instead</li>
+<li><code>gen_iter</code>; users may instead use standard iterators with closures:
+<code>::std::iter::repeat(()).map(|()| rng.gen())</code></li>
+<li><code>gen_ascii_chars</code>; use <code>repeat</code> as above and <code>rng.sample(Alphanumeric)</code></li>
+<li><code>gen_weighted_bool(n)</code>; use <code>gen_bool(1.0 / n)</code> instead</li>
+</ul>
+<p><code>Rng</code> has a few new methods:</p>
+<ul>
+<li><code>sample(distr)</code> is a shortcut for <code>distr.sample(rng)</code> for any <code>Distribution</code></li>
+<li><code>gen_bool(p)</code> generates a boolean with probability <code>p</code> of being true</li>
+<li><code>fill</code> and <code>try_fill</code>, corresponding to <code>fill_bytes</code> and <code>try_fill_bytes</code>
+respectively (i.e. the only difference is error handling); these can fill
+and integer slice / array directly, and provide better performance
+than <code>gen()</code></li>
+</ul>
+<h3 id="constructing-prngs"><a class="header" href="#constructing-prngs">Constructing PRNGs</a></h3>
+<h4 id="new-randomly-initialised-prngs"><a class="header" href="#new-randomly-initialised-prngs">New randomly-initialised PRNGs</a></h4>
+<p>A new trait has been added: <code>FromEntropy</code>. This is automatically implemented for
+any type supporting <code>SeedableRng</code>, and provides construction from fresh, strong
+entropy:</p>
+<pre><code class="language-rust noplayground">use rand_0_5::{ChaChaRng, FromEntropy};
+
+let mut rng = ChaChaRng::from_entropy();</code></pre>
+<h4 id="seeding-prngs"><a class="header" href="#seeding-prngs">Seeding PRNGs</a></h4>
+<p>The <code>SeedableRng</code> trait has been modified to include the seed type via an
+associated type (<code>SeedableRng::Seed</code>) instead of a template parameter
+(<code>SeedableRng&lt;Seed&gt;</code>). Additionally, all PRNGs now seed from a byte-array
+(<code>[u8; N]</code> for some fixed N). This allows generic handling of PRNG seeding
+which was not previously possible.</p>
+<p>PRNGs are no longer constructed from other PRNGs via <code>Rand</code> support / <code>gen()</code>,
+but through <code>SeedableRng::from_rng</code>, which allows error handling and is
+intentionally explicit.</p>
+<p><code>SeedableRng::reseed</code> has been removed since it has no utility over <code>from_seed</code>
+and its performance advantage is questionable.</p>
+<p>Implementations of <code>SeedableRng</code> may need to change their <code>Seed</code> type to a
+byte-array; this restriction has been made to ensure portable handling of
+Endianness. Helper functions are available in <code>rand_core::le</code> to read <code>u32</code> and
+<code>u64</code> values from byte arrays.</p>
+<h3 id="block-based-prngs"><a class="header" href="#block-based-prngs">Block-based PRNGs</a></h3>
+<p>rand_core has a new helper trait, <code>BlockRngCore</code>, and implementation,
+<code>BlockRng</code>. These are for use by generators which generate a block of random
+data at a time instead of word-sized values. Using this trait and implementation
+has two advantages: optimised <code>RngCore</code> methods are provided, and the PRNG can
+be used with <code>ReseedingRng</code> with very low overhead.</p>
+<h3 id="cryptographic-rngs"><a class="header" href="#cryptographic-rngs">Cryptographic RNGs</a></h3>
+<p>A new trait has been added: <code>CryptoRng</code>. This is purely a marker trait to
+indicate which generators should be suitable for cryptography, e.g.
+<code>fn foo&lt;R: Rng + CryptoRng&gt;(rng: &amp;mut R)</code>. <em>Suitability for cryptographic
+use cannot be guaranteed.</em></p>
+<h2 id="error-handling-1"><a class="header" href="#error-handling-1">Error handling</a></h2>
+<p>A new <code>Error</code> type has been added, designed explicitly for no-std compatibility,
+simplicity, and enough flexibility for our uses (carrying a <code>cause</code> when
+possible):</p>
+<pre><code class="language-rust noplayground"><span class="boring">use rand_0_5::ErrorKind;
+</span>pub struct Error {
+    pub kind: ErrorKind,
+    pub msg: &amp;'static str,
+    // some fields omitted
+}</code></pre>
+<p>The associated <code>ErrorKind</code> allows broad classification of errors into permanent,
+unexpected, transient and not-yet-ready kinds.</p>
+<p>The following use the new error type:</p>
+<ul>
+<li><code>RngCore::try_fill_bytes</code></li>
+<li><code>Rng::try_fill</code></li>
+<li><code>OsRng::new</code></li>
+<li><code>JitterRng::new</code></li>
+</ul>
+<h2 id="external-generators"><a class="header" href="#external-generators">External generators</a></h2>
+<p>We have a new generator, <code>EntropyRng</code>, which wraps <code>OsRng</code> and <code>JitterRng</code>
+(preferring to use the former, but falling back to the latter if necessary).
+This allows easy construction with fallback via <code>SeedableRng::from_rng</code>,
+e.g. <code>IsaacRng::from_rng(EntropyRng::new())?</code>. This is equivalent to using
+<code>FromEntropy</code> except for error handling.</p>
+<p>It is recommended to use <code>EntropyRng</code> over <code>OsRng</code> to avoid errors on platforms
+with broken system generator, but it should be noted that the <code>JitterRng</code>
+fallback is very slow.</p>
+<h2 id="prngs"><a class="header" href="#prngs">PRNGs</a></h2>
+<p><em>Pseudo-Random Number Generators</em> (i.e. deterministic algorithmic generators)
+have had a few changes since 0.4, and are now housed in the <code>prng</code> module
+(old names remain temporarily available for compatibility; eventually these
+generators will likely be housed outside the <code>rand</code> crate).</p>
+<p>All PRNGs now do not implement <code>Copy</code> to prevent accidental copying of the
+generator’s state (and thus repetitions of generated values). Explicit cloning
+via <code>Clone</code> is still available. All PRNGs now have a custom implementation of
+<code>Debug</code> which does not print any internal state; this helps avoid accidentally
+leaking cryptographic generator state in log files. External PRNG
+implementations are advised to follow this pattern (see also doc on <code>RngCore</code>).</p>
+<p><code>SmallRng</code> has been added as a wrapper, currently around <code>XorShiftRng</code> (but
+likely another algorithm soon). This is for uses where small state and fast
+initialisation are important but cryptographic strength is not required.
+(Actual performance of generation varies by benchmark; depending on usage
+this may or may not be the fastest algorithm, but will always be fast.)</p>
+<h3 id="reseedingrng"><a class="header" href="#reseedingrng"><code>ReseedingRng</code></a></h3>
+<p>The <code>ReseedingRng</code> wrapper has been significantly altered to reduce overhead.
+Unfortunately the new <code>ReseedingRng</code> is not compatible with all RNGs, but only
+those using <code>BlockRngCore</code>.</p>
+<h3 id="chacha"><a class="header" href="#chacha">ChaCha</a></h3>
+<p>The method <code>ChaChaRng::set_counter</code> has been replaced by two new methods,
+<code>set_word_pos</code> and <code>set_stream</code>. Where necessary, the behaviour of the old
+method may be emulated as follows:</p>
+<pre><code class="language-rust noplayground"><span class="boring">extern crate rand;
+</span><span class="boring">extern crate rand_chacha;
+</span><span class="boring">use rand::prelude::*;
+</span><span class="boring">use rand_chacha::ChaChaRng;
+</span><span class="boring">fn main() {
+</span>let lower = 88293;
+let higher = 9300932;
+
+// previously:
+// let mut rng = rand::ChaChaRng::new_unseeded();
+// rng.set_counter(lower, higher);
+
+// now:
+let mut rng = ChaChaRng::from_seed([0u8; 32]);
+rng.set_word_pos(lower &lt;&lt; 4);
+rng.set_stream(higher);
+
+assert_eq!(4060232610, rng.next_u32());
+assert_eq!(2786236710, rng.next_u32());
+<span class="boring">}</span></code></pre>
+<h3 id="isaac-prngs"><a class="header" href="#isaac-prngs">ISAAC PRNGs</a></h3>
+<p>The <code>IsaacRng</code> and <code>Isaac64Rng</code> PRNGs now have an additional construction
+method: <code>new_from_u64(seed)</code>. 64 bits of state is insufficient for cryptography
+but may be of use in simulations and games. This will likely be superseded by
+a method to construct any PRNG from any hashable object in the future.</p>
+<h3 id="hc-128"><a class="header" href="#hc-128">HC-128</a></h3>
+<p>This is a new cryptographic generator, selected as one of the “stream ciphers
+suitable for widespread adoption” by eSTREAM. This is now the default
+cryptographic generator, used by <code>StdRng</code> and <code>thread_rng()</code>.</p>
+<h2 id="helper-functionstraits"><a class="header" href="#helper-functionstraits">Helper functions/traits</a></h2>
+<p>The <code>Rand</code> trait has been deprecated. Instead, users are encouraged to use
+<code>Standard</code> which is a real distribution and supports the same sampling as
+<code>Rand</code>. <code>Rng::gen()</code> now uses <code>Standard</code> and should work exactly as before.
+See the documentation of the <code>distributions</code> module on how to implement
+<code>Distribution&lt;T&gt;</code> for <code>Standard</code> for user types <code>T</code></p>
+<p><code>weak_rng()</code> has been deprecated; use <code>SmallRng::from_entropy()</code> instead.</p>
+<h2 id="distributions-1"><a class="header" href="#distributions-1">Distributions</a></h2>
+<p>The <code>Sample</code> and <code>IndependentSample</code> traits have been replaced by a single
+trait, <code>Distribution</code>. This is largely equivalent to <code>IndependentSample</code>, but
+with <code>ind_sample</code> replaced by just <code>sample</code>. Support for mutable distributions
+has been dropped; although it appears there may be a few genuine uses, these
+are not used widely enough to justify the existence of two independent traits
+or of having to provide mutable access to a distribution object. Both <code>Sample</code>
+and <code>IndependentSample</code> are still available, but deprecated; they will be
+removed in a future release.</p>
+<p><code>Distribution::sample</code> (as well as several other functions) can now be called
+directly on type-erased (unsized) RNGs.</p>
+<p><code>RandSample</code> has been removed (see <code>Rand</code> deprecation and new <code>Standard</code>
+distribution).</p>
+<p>The <code>Closed01</code> wrapper has been removed, but <code>OpenClosed01</code> has been added.</p>
+<h3 id="uniform-distributions-1"><a class="header" href="#uniform-distributions-1">Uniform distributions</a></h3>
+<p>Two new distributions are available:</p>
+<ul>
+<li><code>Standard</code> produces uniformly-distributed samples for many different types,
+and acts as a replacement for <code>Rand</code></li>
+<li><code>Alphanumeric</code> samples <code>char</code>s from the ranges <code>a-z A-Z 0-9</code></li>
+</ul>
+<h4 id="ranges"><a class="header" href="#ranges">Ranges</a></h4>
+<p>The <code>Range</code> distribution has been heavily adapted, and renamed to <code>Uniform</code>:</p>
+<ul>
+<li><code>Uniform::new(low, high)</code> remains (half open <code>[low, high)</code>)</li>
+<li><code>Uniform::new_inclusive(low, high)</code> has been added, including <code>high</code> in the sample range</li>
+<li><code>Uniform::sample_single(low, high, rng)</code> is a faster variant for single usage sampling from <code>[low, high)</code></li>
+</ul>
+<p><code>Uniform</code> can now be implemented for user-defined types; see the <code>uniform</code> module.</p>
+<h3 id="non-uniform-distributions-1"><a class="header" href="#non-uniform-distributions-1">Non-uniform distributions</a></h3>
+<p>Two distributions have been added:</p>
+<ul>
+<li>Poisson, modeling the number of events expected from a constant-rate
+source within a fixed time interval (e.g. nuclear decay)</li>
+<li>Binomial, modeling the outcome of a fixed number of yes-no trials</li>
+</ul>
+<p>The sampling methods are based on those in “Numerical Recipes in C”.</p>
+<h4 id="exponential-and-normal-distributions"><a class="header" href="#exponential-and-normal-distributions">Exponential and Normal distributions</a></h4>
+<p>The main <code>Exp</code> and <code>Normal</code> distributions are unchanged, however the
+“standard” versions, <code>Exp1</code> and <code>StandardNormal</code> are no longer wrapper types,
+but full distributions. Instead of writing <code>let Exp1(x) = rng.gen();</code> you now
+write <code>let x = rng.sample(Exp1);</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="updating-to-06"><a class="header" href="#updating-to-06">Updating to 0.6</a></h1>
+<p>During the 0.6 cycle, Rand found a new home under the
+<a href="https://github.com/rust-random">rust-random</a> project. We already feel at home,
+but if you’d like to help us decorate, a <a href="https://github.com/rust-random/rand/issues/278">new logo</a> would be appreciated!</p>
+<p>We also found a new home for user-centric documentation — this book!</p>
+<h2 id="prngs-1"><a class="header" href="#prngs-1">PRNGs</a></h2>
+<p>All PRNGs in our <a href="https://docs.rs/rand/0.5/rand/prng/">old PRNG module</a>
+have been moved to new crates. We also added an additional crate with the PCG
+algorithms, and an external crate with Xoshiro / Xoroshiro algorithms:</p>
+<ul>
+<li><a href="https://crates.io/crates/rand_chacha"><code>rand_chacha</code></a></li>
+<li><a href="https://crates.io/crates/rand_hc"><code>rand_hc</code></a></li>
+<li><a href="https://crates.io/crates/rand_isaac"><code>rand_isaac</code></a></li>
+<li><a href="https://crates.io/crates/rand_xorshift"><code>rand_xorshift</code></a></li>
+<li><a href="https://crates.io/crates/rand_pcg"><code>rand_pcg</code></a></li>
+<li><a href="https://crates.io/crates/xoshiro"><code>xoshiro</code></a></li>
+</ul>
+<h3 id="smallrng"><a class="header" href="#smallrng">SmallRng</a></h3>
+<p>This update, we switched the algorithm behind <a href="https://docs.rs/rand/latest/rand/rngs/struct.SmallRng.html"><code>SmallRng</code></a> from Xorshift to a
+PCG algorithm (either <a href="https://docs.rs/rand_pcg/latest/rand_pcg/type.Pcg64Mcg.html"><code>Pcg64Mcg</code></a> aka XSL 128/64 MCG, or <a href="https://docs.rs/rand_pcg/latest/rand_pcg/type.Pcg32.html"><code>Pcg32</code></a> aka
+XSH RR 64/32 LCG aka the standard PCG algorithm).</p>
+<h2 id="sequences-1"><a class="header" href="#sequences-1">Sequences</a></h2>
+<p>The <a href="https://docs.rs/rand/latest/rand/seq/"><code>seq</code> module</a> has been completely re-written,
+and the <code>choose</code> and <code>shuffle</code> methods have been removed from the <a href="https://docs.rs/rand/latest/rand/trait.Rng.html"><code>Rng</code></a> trait.
+Most functionality can now be found in the <a href="https://docs.rs/rand/latest/rand/seq/trait.IteratorRandom.html"><code>IteratorRandom</code></a> and
+<a href="https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html"><code>SliceRandom</code></a> traits.</p>
+<h3 id="weighted-choices"><a class="header" href="#weighted-choices">Weighted choices</a></h3>
+<p>The <a href="https://docs.rs/rand/0.5/rand/distributions/struct.WeightedChoice.html"><code>WeightedChoice</code></a> distribution has now been replaced with
+<a href="https://docs.rs/rand/latest/rand/distributions/struct.WeightedIndex.html"><code>WeightedIndex</code></a>, solving a few issues by making the functionality more
+generic.</p>
+<p>For convenience, the <a href="https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#tymethod.choose_weighted"><code>SliceRandom::choose_weighted</code></a> method (and <code>_mut</code>
+variant) allow a <a href="https://docs.rs/rand/latest/rand/distributions/struct.WeightedIndex.html"><code>WeightedIndex</code></a> sample to be applied directly to a slice.</p>
+<h2 id="other-features"><a class="header" href="#other-features">Other features</a></h2>
+<h3 id="simd-types"><a class="header" href="#simd-types">SIMD types</a></h3>
+<p>Rand now has rudimentary support for generating SIMD types, gated behind the
+<code>simd_support</code> feature flag.</p>
+<h3 id="i128--u128-types"><a class="header" href="#i128--u128-types"><code>i128</code> / <code>u128</code> types</a></h3>
+<p>Since these types are now available on stable compilers, these types are
+supported automatically (with recent enough Rust version). The <code>i128_support</code>
+feature flag still exists to avoid breakage, but no longer does anything.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="updating-to-07"><a class="header" href="#updating-to-07">Updating to 0.7</a></h1>
+<p>Since the 0.6 release, <a href="https://github.com/rust-random">rust-random</a>
+gained a logo and a new crate: <a href="https://github.com/rust-random/getrandom">getrandom</a>!</p>
+<h2 id="dependencies"><a class="header" href="#dependencies">Dependencies</a></h2>
+<p>Rand crates now require <code>rustc</code> version 1.32.0 or later.
+This allowed us to remove all <code>build.rs</code> files for faster compilation.</p>
+<p>The Rand crate now has fewer dependencies overall, though
+with some new ones.</p>
+<h2 id="getrandom-1"><a class="header" href="#getrandom-1">Getrandom</a></h2>
+<p>As mentioned above, we have a new crate: <a href="https://github.com/rust-random/getrandom">getrandom</a>, delivering a minimal API
+around platform-independent access to fresh entropy. This replaces the previous
+implementation in <a href="https://docs.rs/rand_core/latest/rand_core/struct.OsRng.html"><code>OsRng</code></a>, which is now merely a wrapper.</p>
+<h2 id="core-features"><a class="header" href="#core-features">Core features</a></h2>
+<p>The <a href="https://docs.rs/rand/0.6.0/rand/trait.FromEntropy.html"><code>FromEntropy</code></a> trait has now been removed. Fear not though, its
+<a href="https://docs.rs/rand/latest/rand/trait.SeedableRng.html#method.from_entropy"><code>from_entropy</code></a> method continues to provide easy initialisation from its new
+home in the <a href="https://docs.rs/rand/latest/rand/trait.SeedableRng.html"><code>SeedableRng</code></a> trait (this requires that <code>rand_core</code> has the <code>std</code>
+or <code>getrandom</code> feature enabled):</p>
+<pre><code class="language-rust noplayground"><span class="boring">extern crate rand_0_7 as rand;
+</span>use rand::{SeedableRng, rngs::StdRng};
+let mut rng = StdRng::from_entropy();</code></pre>
+<p>The <a href="https://docs.rs/rand/latest/rand/trait.SeedableRng.html#method.from_rng"><code>SeedableRng::from_rng</code></a> method is now considered value-stable:
+implementations should have portable results.</p>
+<p>The <a href="https://docs.rs/rand_core/latest/rand_core/struct.Error.html"><code>Error</code></a> type of <code>rand_core</code> and <code>rand</code> has seen a major redesign; direct
+usage of this type is likely to need adjustment.</p>
+<h2 id="prngs-2"><a class="header" href="#prngs-2">PRNGs</a></h2>
+<p>These have seen less change than in the previous release, but noteworthy is:</p>
+<ul>
+<li><a href="https://crates.io/crates/rand_chacha"><code>rand_chacha</code></a> has been rewritten
+for much better performance (via SIMD instructions)</li>
+<li><a href="https://docs.rs/rand/latest/rand/rngs/struct.StdRng.html"><code>StdRng</code></a> and <a href="https://docs.rs/rand/latest/rand/rngs/struct.ThreadRng.html"><code>ThreadRng</code></a> now use the ChaCha algorithm. This is a
+value-breaking change for <a href="https://docs.rs/rand/latest/rand/rngs/struct.StdRng.html"><code>StdRng</code></a>.</li>
+<li><a href="https://docs.rs/rand/latest/rand/rngs/struct.SmallRng.html"><code>SmallRng</code></a> is now gated behind the <code>small_rng</code> feature flag.</li>
+<li>The <code>xoshiro</code> crate is now <a href="https://crates.io/crates/rand_xoshiro"><code>rand_xoshiro</code></a>.</li>
+<li><code>rand_pcg</code> now includes <a href="https://docs.rs/rand_pcg/latest/rand_pcg/type.Pcg64.html"><code>Pcg64</code></a>.</li>
+</ul>
+<h2 id="distributions-2"><a class="header" href="#distributions-2">Distributions</a></h2>
+<p>For the most widely used distributions (<a href="https://docs.rs/rand/latest/rand/distributions/struct.Standard.html"><code>Standard</code></a> and <a href="https://docs.rs/rand/latest/rand/distributions/struct.Uniform.html"><code>Uniform</code></a>), there have
+been no significant changes. But for <em>most</em> of the rest…</p>
+<ul>
+<li>We added a new crate, <a href="https://docs.rs/rand_distr/"><code>rand_distr</code></a>, to house the all distributions
+(including re-exporting those still within <a href="https://docs.rs/rand/latest/rand/distributions/"><code>rand::distributions</code></a>). If you
+previously used <code>rand::distributions::Normal</code>, now you use
+<a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Normal.html"><code>rand_distr::Normal</code></a>.</li>
+<li>Constructors for many distributions changed in order to return a <code>Result</code>
+instead of panicking on error.</li>
+<li>Many distributions are now generic over their parameter type (in most cases
+supporting <code>f32</code> and <code>f64</code>). This aids usage with generic code, and allows
+reduced size of parameterised distributions. Currently the more complex
+algorithms always use <code>f64</code> internally.</li>
+<li><a href="https://docs.rs/rand/latest/rand/distributions/struct.Standard.html"><code>Standard</code></a> can now sample <a href="https://doc.rust-lang.org/std/num/https://docs.rs/rand_chacha/latest/rand_chacha/"><code>NonZeroU*</code></a> values</li>
+</ul>
+<p>We also added several distributions:</p>
+<ul>
+<li><a href="https://docs.rs/rand/0.7/rand/distributions/weighted/alias_method/struct.WeightedIndex.html"><code>rand::distributions::weighted::alias_method::WeightedIndex</code></a></li>
+<li><a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Pert.html"><code>rand_distr::Pert</code></a></li>
+<li><a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Triangular.html"><code>rand_distr::Triangular</code></a></li>
+<li><a href="https://docs.rs/rand_distr/latest/rand_distr/struct.UnitBall.html"><code>rand_distr::UnitBall</code></a></li>
+<li><a href="https://docs.rs/rand_distr/latest/rand_distr/struct.UnitDisc.html"><code>rand_distr::UnitDisc</code></a></li>
+<li><a href="https://docs.rs/rand_distr/latest/rand_distr/struct.UnitSphere.html"><code>rand_distr::UnitSphere</code></a> (previously named <code>rand::distributions::UnitSphereSurface</code>)</li>
+</ul>
+<h2 id="sequences-2"><a class="header" href="#sequences-2">Sequences</a></h2>
+<p>To aid portability, all random samples of type <code>usize</code> now instead sample a
+<code>u32</code> value when the upper-bound is less than <code>u32::MAX</code>. This means that
+upgrading to 0.7 is a value-breaking change for use of <code>seq</code> functionality, but
+that after upgrading to 0.7 results should be consistent across CPU
+architectures.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="updating-to-08"><a class="header" href="#updating-to-08">Updating to 0.8</a></h1>
+<p>In the following, instructions are provided for porting your code from
+<code>rand 0.7</code> and <code>rand_distr 0.2</code> to <code>rand 0.8</code> and <code>rand_distr 0.3</code>.</p>
+<h2 id="dependencies-1"><a class="header" href="#dependencies-1">Dependencies</a></h2>
+<p>Rand crates now require <strong><code>rustc</code></strong> version 1.36.0 or later.
+This allowed us to remove some unsafe code and simplify the internal <code>cfg</code> logic.</p>
+<p>The dependency on <strong><code>getrandom</code></strong> was bumped to version 0.2. While this does not
+affect Rand’s API, you may be affected by some of the breaking changes even if
+you use <code>getrandom</code> only as a dependency:</p>
+<ul>
+<li>You may have to update the <code>getrandom</code> features you are using. The
+following features are now available:
+<ul>
+<li><code>"rdrand"</code>: Use the RDRAND instruction on <code>no_std</code> <code>x86/x86_64</code>
+targets.</li>
+<li><code>"js"</code>: Use JavaScript calls on <code>wasm32-unknown-unknown</code>. This
+replaces the <code>stdweb</code> and <code>wasm-bindgen</code> features, which are
+removed.</li>
+<li><code>"custom"</code>: Allows you to specify a custom implementation.</li>
+</ul>
+</li>
+<li>Unsupported targets no longer compile. If you require the previous behavior
+(panicking at runtime instead of failing to compile), you can use the
+<code>custom</code> feature to provide a panicking implementation.</li>
+<li>Windows XP and stdweb are, as of <code>getrandom</code> version 0.2.1, no longer
+supported. If you require support for either of these platforms you may add
+a dependency on <code>getrandom = "=0.2.0"</code> to pin this version.</li>
+<li>Hermit, L4Re and UEFI are no longer officially supported. You can use the
+<code>rdrand</code> feature on these platforms.</li>
+<li>The minimum supported Linux kernel version is now 2.6.32.</li>
+</ul>
+<p>If you are using <code>getrandom</code>’s API directly, there are further breaking changes
+that may affect you. See its
+<a href="https://github.com/rust-random/getrandom/blob/master/CHANGELOG.md#020---2020-09-10">changelog</a>.</p>
+<p><a href="https://serde.rs/">Serde</a> has been re-added as an optional dependency (use the <code>serde1</code> feature
+flag), supporting many types (where appropriate). <code>StdRng</code> and <code>SmallRng</code> are
+deliberately excluded since these types are not portable.</p>
+<h2 id="core-features-1"><a class="header" href="#core-features-1">Core features</a></h2>
+<h4 id="threadrng"><a class="header" href="#threadrng"><code>ThreadRng</code></a></h4>
+<p><code>ThreadRng</code> no longer implements <code>Copy</code>. This was necessary to fix a possible
+use-after-free in its thread-local destructor. Any code relying on <code>ThreadRng</code>
+being copied must be updated to use a mutable reference instead. For example,</p>
+<pre><code class="language-rust noplayground"><span class="boring">use rand_0_7::distributions::{Distribution, Standard};
+</span>let rng = rand_0_7::thread_rng();
+let a: u32 = Standard.sample_iter(rng).next().unwrap();
+let b: u32 = Standard.sample_iter(rng).next().unwrap();</code></pre>
+<p>can be replaced with the following code:</p>
+<pre><code class="language-rust noplayground"><span class="boring">extern crate rand;
+</span><span class="boring">use rand_0_8::prelude::*;
+</span><span class="boring">use rand_0_8::distributions::Standard;
+</span><span class="boring">fn main () {
+</span>let mut rng = thread_rng();
+let a: u32 = Standard.sample_iter(&amp;mut rng).next().unwrap();
+let b: u32 = Standard.sample_iter(&amp;mut rng).next().unwrap();
+<span class="boring">}</span></code></pre>
+<h4 id="gen_range"><a class="header" href="#gen_range"><code>gen_range</code></a></h4>
+<p><a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.gen_range"><code>Rng::gen_range</code></a> now takes a <code>Range</code> instead of two numbers. Thus, replace
+<code>gen_range(a, b)</code> with <code>gen_range(a..b)</code>. We suggest using the following regular
+expression to search-replace in all files:</p>
+<ul>
+<li>replace <code>gen_range\(([^,]*),\s*([^)]*)\)</code></li>
+<li>with <code>gen_range(\1..\2)</code></li>
+<li>or with <code>gen_range($1..$2)</code> (if your tool does not support backreferences)</li>
+</ul>
+<p>Most IDEs support search-replace-across-files or similar; alternatively an
+external tool such as Regexxer may be used.</p>
+<p>This change has a couple of other implications:</p>
+<ul>
+<li>inclusive ranges are now supported, e.g. <code>gen_range(1..=6)</code> or <code>gen_range('A'..='Z')</code></li>
+<li>it may be necessary to explicitly dereference some parameters</li>
+<li>SIMD types are no longer supported (<code>Uniform</code> types may still be used directly)</li>
+</ul>
+<h4 id="fill"><a class="header" href="#fill"><code>fill</code></a></h4>
+<p>The <code>AsByteSliceMut</code> trait was replaced with the <a href="https://docs.rs/rand/latest/rand/trait.Fill.html"><code>Fill</code></a> trait. This should
+only affect code implementing <code>AsByteSliceMut</code> on user-defined types, since the
+<a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.fill"><code>Rng::fill</code></a> and <a href="https://docs.rs/rand/latest/rand/trait.Rng.html#method.try_fill"><code>Rng::try_fill</code></a> retain support for previously-supported types.</p>
+<p><code>Fill</code> supports some additional slice types which could not be supported with
+<code>AsByteSliceMut</code>: <code>[bool], [char], [f32], [f64]</code>.</p>
+<h4 id="adapter"><a class="header" href="#adapter"><code>adapter</code></a></h4>
+<p>The entire <a href="https://docs.rs/rand/latest/rand/rngs/adapter/"><code>rand::rngs::adapter</code></a> module is now restricted to the <code>std</code> feature.
+While this is technically a breaking change, it should only affect <code>no_std</code> code
+using <a href="https://docs.rs/rand/latest/rand/rngs/adapter/struct.ReseedingRng.html"><code>ReseedingRng</code></a>, which is unlikely to exist in the wild.</p>
+<h2 id="generators"><a class="header" href="#generators">Generators</a></h2>
+<p><strong>StdRng</strong> has switched from the 20-round ChaCha20 to ChaCha12 for improved
+performance. This is a reduction in complexity but the 12-round variant is still
+considered secure: see <a href="https://github.com/rust-random/rand/issues/932">rand#932</a>. This is a value-breaking change for <code>StdRng</code>.</p>
+<p><strong>SmallRng</strong> now uses the Xoshiro128++ and Xoshiro256++ algorithm on 32-bit
+and 64-bit platforms respectively. This reduces correlations of random data
+generated from similar seeds and improves performance. It is a value-breaking
+change.</p>
+<p>We now implement <code>PartialEq</code> and <code>Eq</code> for <a href="https://docs.rs/rand/latest/rand/rngs/struct.StdRng.html"><code>StdRng</code></a>, <a href="https://docs.rs/rand/latest/rand/rngs/struct.SmallRng.html"><code>SmallRng</code></a>, and <a href="https://docs.rs/rand/latest/rand/rngs/mock/struct.StepRng.html"><code>StepRng</code></a>.</p>
+<h2 id="distributions-3"><a class="header" href="#distributions-3">Distributions</a></h2>
+<p>Several smaller changes occurred to rand distributions:</p>
+<ul>
+<li>The <a href="https://docs.rs/rand/latest/rand/distributions/struct.Uniform.html"><code>Uniform</code></a> distribution now additionally supports the <code>char</code> type, so
+for example <code>rng.gen_range('a'..='f')</code> is now supported.</li>
+<li><a href="https://docs.rs/rand/latest/rand/distributions/uniform/trait.UniformSampler.html#method.sample_single_inclusive"><code>UniformSampler::sample_single_inclusive</code></a> was added.</li>
+<li>The <a href="https://docs.rs/rand/latest/rand/distributions/struct.Alphanumeric.html"><code>Alphanumeric</code></a> distribution now samples bytes instead of chars. This
+more closely reflects the internally used type, but old code likely has to
+be adapted to perform the conversion from <code>u8</code> to <code>char</code>. For example, with
+Rand 0.7 you could write:
+<pre><code class="language-rust noplayground"><span class="boring">use rand_0_7::{distributions::Alphanumeric, Rng};
+</span><span class="boring">let mut rng = rand_0_7::thread_rng();
+</span>let chars: String = std::iter::repeat(())
+    .map(|()| rng.sample(Alphanumeric))
+    .take(7)
+    .collect();</code></pre>
+With Rand 0.8, this is equivalent to the following:
+<pre><code class="language-rust noplayground"><span class="boring">extern crate rand;
+</span><span class="boring">use rand_0_8::{distributions::Alphanumeric, Rng};
+</span><span class="boring">fn main() {
+</span><span class="boring">let mut rng = rand_0_8::thread_rng();
+</span>let chars: String = std::iter::repeat(())
+    .map(|()| rng.sample(Alphanumeric))
+    .map(char::from)
+    .take(7)
+    .collect();
+println!("chars = \"{chars}\"");
+<span class="boring">}</span></code></pre>
+</li>
+<li>The alternative implementation of <a href="https://docs.rs/rand/latest/rand/distributions/struct.WeightedIndex.html"><code>WeightedIndex</code></a> employing the alias
+method was moved from <code>rand</code> to <a href="https://docs.rs/rand_distr/latest/rand_distr/weighted_alias/struct.WeightedAliasIndex.html"><code>rand_distr::weighted_alias::WeightedAliasIndex</code></a>. The
+alias method is faster for large sizes, but it suffers from a slow
+initialization, making it less generally useful.</li>
+</ul>
+<p>In <code>rand_distr</code> v0.4, more changes occurred (since v0.2):</p>
+<ul>
+<li><a href="https://docs.rs/rand_distr/latest/rand_distr/weighted_alias/struct.WeightedAliasIndex.html"><code>rand_distr::weighted_alias::WeightedAliasIndex</code></a> was added (moved from the <code>rand</code> crate)</li>
+<li><a href="https://docs.rs/rand_distr/latest/rand_distr/struct.InverseGaussian.html"><code>rand_distr::InverseGaussian</code></a> and <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.NormalInverseGaussian.html"><code>rand_distr::NormalInverseGaussian</code></a>
+were added</li>
+<li>The <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Geometric.html"><code>Geometric</code></a> and <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Hypergeometric.html"><code>Hypergeometric</code></a> distributions are now supported.</li>
+<li>A different algorithm is used for the <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Beta.html"><code>Beta</code></a> distribution, improving both
+performance and accuracy. This is a value-breaking change.</li>
+<li>The <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Normal.html"><code>Normal</code></a> and <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.LogNormal.html"><code>LogNormal</code></a> distributions now support a <code>from_mean_cv</code>
+constructor method and <code>from_zscore</code> sampler method.</li>
+<li><a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Dirichlet.html"><code>rand_distr::Dirichlet</code></a> now uses boxed slices internally instead of <code>Vec</code>.
+Therefore, the weights are taken as a slice instead of a <code>Vec</code> as input.
+For example, the following <code>rand_distr 0.2</code> code
+<pre><code class="language-rust noplayground"><span class="boring">use rand_distr_0_2::Dirichlet;
+</span>Dirichlet::new(vec![1.0, 2.0, 3.0]).unwrap();</code></pre>
+can be replaced with the following <code>rand_distr 0.3</code> code:
+<pre><code class="language-rust noplayground"><span class="boring">use rand_distr_0_4::Dirichlet;
+</span>Dirichlet::new(&amp;[1.0, 2.0, 3.0]).unwrap();</code></pre>
+</li>
+<li><a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Poisson.html"><code>rand_distr::Poisson</code></a> does no longer support sampling <code>u64</code> values directly.
+Old code may have to be updated to perform the conversion from <code>f64</code>
+explicitly.</li>
+<li>The custom <code>Float</code> trait in <code>rand_distr</code> was replaced with
+<code>num_traits::Float</code>. Any implementations of <code>Float</code> for user-defined types
+have to be migrated. Thanks to the math functions from <code>num_traits::Float</code>,
+<code>rand_distr</code> now supports <code>no_std</code>.</li>
+</ul>
+<p>Additionally, there were some minor improvements:</p>
+<ul>
+<li>The treatment of rounding errors and NaN was improved for the
+<a href="https://docs.rs/rand/latest/rand/distributions/struct.WeightedIndex.html"><code>WeightedIndex</code></a> distribution.</li>
+<li>The <a href="https://docs.rs/rand_distr/latest/rand_distr/struct.Exp.html"><code>rand_distr::Exp</code></a> distribution now supports the <code>lambda = 0</code> parametrization.</li>
+</ul>
+<h2 id="sequences-3"><a class="header" href="#sequences-3">Sequences</a></h2>
+<p>Weighted sampling without replacement is now supported, see
+<a href="https://docs.rs/rand/latest/rand/seq/index/fn.sample_weighted.html"><code>rand::seq::index::sample_weighted</code></a> and
+<a href="https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html#method.choose_multiple_weighted"><code>SliceRandom::choose_multiple_weighted</code></a>.</p>
+<p>There have been <a href="https://github.com/rust-random/rand/pull/1059">value-breaking
+changes</a> to
+<a href="https://docs.rs/rand/latest/rand/seq/trait.IteratorRandom.html#method.choose"><code>IteratorRandom::choose</code></a>, improving accuracy and performance. Furthermore,
+<a href="https://docs.rs/rand/latest/rand/seq/trait.IteratorRandom.html#method.choose_stable"><code>IteratorRandom::choose_stable</code></a> was added to provide an alternative that
+sacrifices performance for independence of iterator size hints.</p>
+<h2 id="feature-flags"><a class="header" href="#feature-flags">Feature flags</a></h2>
+<p><code>StdRng</code> is now gated behind a new feature flag, <code>std_rng</code>. This is enabled by
+default.</p>
+<p>The <code>nightly</code> feature no longer implies the <code>simd_support</code> feature. If you were
+relying on this for SIMD support, you will have to use <code>simd_support</code> feature
+directly.</p>
+<h2 id="tests"><a class="header" href="#tests">Tests</a></h2>
+<p>Value-stability tests were added for all distributions (<a href="https://github.com/rust-random/rand/issues/786">rand#786</a>), helping
+enforce our rules regarding value-breaking changes (see <a href="#reproducibility">Reproducibility</a> section).</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="updating-to-09"><a class="header" href="#updating-to-09">Updating to 0.9</a></h1>
+<p>In the following, instructions are provided for porting your code from
+<code>rand 0.8</code> and <code>rand_distr 0.4</code> to <code>rand 0.9</code> and <code>rand_distr 0.5</code>.</p>
+<p>The following is a migration guide focussing on potentially-breaking changes. For a full list of changes, see the relevant changelogs:</p>
+<ul>
+<li><a href="https://github.com/rust-random/rand/blob/master/CHANGELOG.md">CHANGELOG.md</a>.</li>
+<li><a href="https://github.com/rust-random/rand/blob/master/rand_core/CHANGELOG.md">rand_core/CHANGELOG.md</a>.</li>
+<li><a href="https://github.com/rust-random/rand/blob/master/rand_distr/CHANGELOG.md">rand_distr/CHANGELOG.md</a>.</li>
+</ul>
+<h2 id="renamed-functions-and-methods"><a class="header" href="#renamed-functions-and-methods">Renamed functions and methods</a></h2>
+<p>In the 2024 edition, <a href="https://doc.rust-lang.org/edition-guide/rust-2024/gen-keyword.html"><code>gen</code> is a reserved keyword</a>. The raw syntax <code>r#gen()</code> is awkward, so some methods in <code>rand::Rng</code> have been renamed:</p>
+<ul>
+<li><code>gen</code> -&gt; <code>random</code></li>
+<li><code>gen_range</code> -&gt; <code>random_range</code></li>
+<li><code>gen_bool</code> -&gt; <code>random_bool</code></li>
+<li><code>gen_ratio</code> -&gt; <code>random_ratio</code></li>
+</ul>
+<p>Additionally, <code>rand::thread_rng()</code> has been renamed to the simpler <code>rng()</code>.</p>
+<p>The previous names still exist but are deprecated.</p>
+<h2 id="security-1"><a class="header" href="#security-1">Security</a></h2>
+<p>It was determined in <a href="https://github.com/rust-random/rand/pull/1514">#1514</a> that
+“rand is not a crypto library”. This change clarifies that:</p>
+<ol>
+<li>The rand library is a community project without any legally-binding guarantees</li>
+<li>The rand library provides functionality for generating unpredictable random numbers but does not provide any high-level cryptographic functionality</li>
+<li><code>rand::rngs::OsRng</code> is a stateless generator, thus has no state to leak or need for (re)seeding</li>
+<li><code>rand::rngs::ThreadRng</code> is an automatically seeded generator with periodic reseeding using a cryptographically-strong pseudo-random algorithm, but which does not have protection of its in-memory state, in particular it does not automatically zero its memory when destructed. Further, its design is a compromise: it is designed to be a “fast, reasonably secure generator”.</li>
+</ol>
+<p>Further, the former very limited fork-protection for <a href="https://docs.rs/rand/latest/rand/rngs/struct.ReseedingRng.html"><code>ReseedingRng</code></a> and <a href="https://docs.rs/rand/latest/rand/rngs/struct.ThreadRng.html"><code>ThreadRng</code></a> were removed in <a href="https://github.com/rust-random/rand/pull/1379">#1379</a>. It is recommended instead that reseeding be the responsibility of the code causing the fork (see <a href="https://docs.rs/rand/latest/rand/rngs/struct.ThreadRng.html"><code>ThreadRng</code></a> docs for more details):</p>
+<pre><code class="language-rust ignore">fn do_fork() {
+    let pid = unsafe { libc::fork() };
+    if pid == 0 {
+        // Reseed ThreadRng in child processes:
+        rand::rng().reseed();
+    }
+}</code></pre>
+<h2 id="dependencies-2"><a class="header" href="#dependencies-2">Dependencies</a></h2>
+<p>Rand crates now require <strong><code>rustc</code></strong> version 1.63.0 or later.</p>
+<p>The dependency on <strong><code>getrandom</code></strong> was bumped to version 0.3.
+<a href="https://github.com/rust-random/getrandom/blob/master/CHANGELOG.md#030---2025-01-25">This release</a>
+includes breaking changes for some platforms (WASM is particularly affected).</p>
+<h3 id="features-1"><a class="header" href="#features-1">Features</a></h3>
+<p>Feature flags:</p>
+<ul>
+<li><code>serde1</code> was renamed to <code>serde</code></li>
+<li><code>getrandom</code> was renamed to <code>os_rng</code></li>
+<li><code>thread_rng</code> is a new feature (enabled by default), required by <a href="https://docs.rs/rand/latest/rand/fn.rng.html"><code>rng()</code></a> (<a href="https://docs.rs/rand/latest/rand/rngs/struct.ThreadRng.html"><code>ThreadRng</code></a>)</li>
+<li><code>small_rng</code> is now enabled by default</li>
+<li><code>rand_chacha</code> is no longer an (implicit) feature; use <code>std_rng</code> instead</li>
+</ul>
+<h2 id="core-traits"><a class="header" href="#core-traits">Core traits</a></h2>
+<p>In <a href="https://github.com/rust-random/rand/pull/1424">#1424</a>, a new trait, <a href="https://docs.rs/rand_core/latest/rand_core/trait.TryRngCore.html"><code>TryRngCore</code></a>, was added to <a href="https://docs.rs/rand_core/"><code>rand_core</code></a>:</p>
+<pre><code class="language-rust ignore">pub trait TryRngCore {
+    /// The type returned in the event of a RNG error.
+    type Error: fmt::Debug + fmt::Display;
+
+    /// Return the next random `u32`.
+    fn try_next_u32(&amp;mut self) -&gt; Result&lt;u32, Self::Error&gt;;
+    /// Return the next random `u64`.
+    fn try_next_u64(&amp;mut self) -&gt; Result&lt;u64, Self::Error&gt;;
+    /// Fill `dest` entirely with random data.
+    fn try_fill_bytes(&amp;mut self, dst: &amp;mut [u8]) -&gt; Result&lt;(), Self::Error&gt;;
+
+    // [Provided methods hidden]
+}</code></pre>
+<p>This trait is generic over both fallible and infallible RNGs (the latter use <code>Error</code> type <a href="https://doc.rust-lang.org/std/convert/enum.Infallible.html"><code>Infallible</code></a>), while <a href="https://docs.rs/rand_core/latest/rand_core/trait.RngCore.html"><code>RngCore</code></a> now only represents infallible RNGs.</p>
+<p>The trait <a href="https://docs.rs/rand/latest/rand/trait.CryptoRng.html"><code>CryptoRng</code></a> is now a sub-trait of <a href="https://docs.rs/rand_core/latest/rand_core/trait.RngCore.html"><code>RngCore</code></a>. A matching trait, <a href="https://docs.rs/rand/latest/rand/trait.TryCryptoRng.html"><code>TryCryptoRng</code></a>, is available to mark implementors of <a href="https://docs.rs/rand_core/latest/rand_core/trait.TryRngCore.html"><code>TryRngCore</code></a> which are cryptographically strong.</p>
+<h3 id="seeding-rngs-1"><a class="header" href="#seeding-rngs-1">Seeding RNGs</a></h3>
+<p>The trait <a href="https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html"><code>SeedableRng</code></a> had a few changes:</p>
+<ul>
+<li><code>type Seed</code> now has additional bounds: <code>Clone</code> and <code>AsRef&lt;[u8]&gt;</code></li>
+<li><code>fn from_rng</code> was renamed to <code>try_from_rng</code> while an infallible variant was added as the new <code>from_rng</code></li>
+<li><code>fn from_entropy</code> was renamed to <code>from_os_rng</code> along with a new fallible variant, <code>fn try_from_os_rng</code></li>
+</ul>
+<h2 id="generators-1"><a class="header" href="#generators-1">Generators</a></h2>
+<p><a href="https://docs.rs/rand/latest/rand/rngs/struct.ThreadRng.html"><code>ThreadRng</code></a> is now accessed via <a href="https://docs.rs/rand/latest/rand/fn.rng.html"><code>rng()</code></a> (previously <code>thread_rng()</code>).</p>
+<h2 id="sequences-4"><a class="header" href="#sequences-4">Sequences</a></h2>
+<p>The old trait <code>SliceRandom</code> has been split into three traits: <a href="https://docs.rs/rand/latest/rand/seq/trait.IndexedRandom.html"><code>IndexedRandom</code></a>, <a href="https://docs.rs/rand/latest/rand/seq/trait.IndexedMutRandom.html"><code>IndexedMutRandom</code></a> and <a href="https://docs.rs/rand/latest/rand/seq/trait.SliceRandom.html"><code>SliceRandom</code></a>. This allows <code>choose</code> functionality to be made available to <code>Vec</code>-like containers with non-contiguous storage, though <code>shuffle</code> functionality remains limited to slices.</p>
+<h2 id="distributions-4"><a class="header" href="#distributions-4">Distributions</a></h2>
+<p>The module <code>rand::distributions</code> was renamed to <a href="https://docs.rs/rand/latest/rand/distr/index.html"><code>rand::distr</code></a> for brevity and to match <code>rand_distr</code>.</p>
+<p>Several items in <code>distr</code> were also renamed or moved:</p>
+<ul>
+<li>Struct <code>Standard</code> -&gt; <code>StandardUniform</code></li>
+<li>Struct <code>Slice</code> → <code>slice::Choose</code></li>
+<li>Struct <code>EmptySlice</code> → <code>slice::Empty</code></li>
+<li>Trait <code>DistString</code> → <code>SampleString</code></li>
+<li>Struct <code>DistIter</code> → <code>Iter</code></li>
+<li>Struct <code>DistMap</code> → <code>Map</code></li>
+<li>Struct <code>WeightedIndex</code> → <code>weighted::WeightedIndex</code></li>
+<li>Enum <code>WeightedError</code> → <code>weighted::Error</code></li>
+</ul>
+<p>Some additional items were renamed in <code>rand_distr</code>:</p>
+<ul>
+<li>Struct <code>weighted_alias::WeightedAliasIndex</code> → <code>weighted::WeightedAliasIndex</code></li>
+<li>Trait <code>weighted_alias::AliasableWeight</code> → <code>weighted::AliasableWeight</code></li>
+</ul>
+<p>The <a href="https://docs.rs/rand/latest/rand/distr/struct.StandardUniform.html"><code>StandardUniform</code></a> distribution no longer supports sampling <code>Option&lt;T&gt;</code> types (for any <code>T</code>).</p>
+<p><code>isize</code> and <code>usize</code> types are no longer supported by <a href="https://docs.rs/rand/latest/rand/trait.Fill.html"><code>Fill</code></a>, <a href="https://docs.rs/rand_distr/latest/rand_distr/weighted_alias/struct.WeightedAliasIndex.html"><code>WeightedAliasIndex</code></a> or <a href="https://docs.rs/rand/latest/rand/distr/struct.StandardUniform.html"><code>StandardUniform</code></a>. <code>isize</code> is also no longer supported by <a href="https://docs.rs/rand/latest/rand/distr/struct.Uniform.html"><code>Uniform</code></a>. <code>usize</code> remains supported by <a href="https://docs.rs/rand/latest/rand/distr/struct.Uniform.html"><code>Uniform</code></a> through <a href="https://docs.rs/rand/latest/rand/distr/uniform/struct.UniformUsize.html"><code>UniformUsize</code></a> and now has portable results across 32- and 64-bit platforms.</p>
+<p>The constructors <code>fn new</code>, <code>fn new_inclusive</code> for <a href="https://docs.rs/rand/latest/rand/distr/struct.Uniform.html"><code>Uniform</code></a> and <a href="https://docs.rs/rand/latest/rand/distr/uniform/trait.UniformSampler.html"><code>UniformSampler</code></a> now return a <a href="https://doc.rust-lang.org/stable/std/result/enum.Result.html"><code>Result</code></a> instead of panicking on invalid inputs. Additionally, <a href="https://docs.rs/rand/latest/rand/distr/struct.Uniform.html"><code>Uniform</code></a> now supports <a href="https://doc.rust-lang.org/stable/std/convert/trait.TryFrom.html"><code>TryFrom</code></a> (instead of <code>From</code>) for range types.</p>
+<h2 id="nightly-features"><a class="header" href="#nightly-features">Nightly features</a></h2>
+<h3 id="simd"><a class="header" href="#simd">SIMD</a></h3>
+<p>SIMD support now targets <a href="https://doc.rust-lang.org/stable/std/simd/index.html"><code>std::simd</code></a>.</p>
+<h2 id="reproducibility-1"><a class="header" href="#reproducibility-1">Reproducibility</a></h2>
+<p>See the <code>CHANGELOG.md</code> files for details of reproducibility-breaking changes affecting <code>rand</code> and <code>rand_distr</code>.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="contributing"><a class="header" href="#contributing">Contributing</a></h1>
+<p>Thank you for your interest in contributing to Rand!</p>
+<p>We are open to all contributors, but please consider that we have limited
+resources, usually have other on-going work within the project, and that even
+accepting complete PRs costs us time (review and potentially on-going support),
+thus we may take considerable time to get back to you.</p>
+<h2 id="all-contributions"><a class="header" href="#all-contributions">All contributions</a></h2>
+<ul>
+<li>
+<p><strong>Scope:</strong> please consider whether your “issue” falls within the existing
+scope of the project or is an enhancement. Note that whether something is
+considered a <em>defect</em> may depend on your point of view. We may choose to
+reject contributions to avoid increasing our workload.</p>
+<p>If you wish to expand the scope of the project (e.g. new platforms or
+additional CI testing) then please be prepared to provide on-going
+support.</p>
+</li>
+<li>
+<p><strong>Fixes:</strong> if you can easily fix this yourself, please consider making a PR
+instead of opening an issue. On the other hand if it’s less easy or looks
+like it may conflict with other work, don’t hesitate to open an issue.</p>
+</li>
+</ul>
+<h2 id="pull-requests"><a class="header" href="#pull-requests">Pull Requests</a></h2>
+<ul>
+<li>
+<p><strong>Changelog:</strong> unless your change is trivial, please include a note in the
+changelog (<code>CHANGELOG.md</code>) of each crate affected, under the <code>[Unreleased]</code>
+heading at the top (add if necessary). Please include the PR number (this
+implies the note must be added <em>after</em> opening a PR).</p>
+</li>
+<li>
+<p><strong>Commits:</strong> if contributing large changes, consider splitting these over
+multiple commits, if possible such that each commit at least compiles.
+Rebasing commits may be appropriate when making significant changes.</p>
+</li>
+<li>
+<p><strong>Documentation:</strong> we require documentation of all public items. Short
+examples may be included where appropriate.</p>
+</li>
+<li>
+<p><strong>Maintainability:</strong> it is important to us that code is easy to read and
+understand and not hard to review for correctness.</p>
+</li>
+<li>
+<p><strong>Performance:</strong> we always aim for good performance and sometimes do
+considerable extra work to get there, however we must also make compromises
+for the sake of maintainability, and consider whether a minor efficiency
+gain is worth the extra code complexity. <a href="#benchmarks">Use benchmarks</a>.</p>
+</li>
+<li>
+<p><strong>Style:</strong> make it neat. <em>Usually</em> limit length to 80 chars.</p>
+</li>
+<li>
+<p><strong>Unsafe:</strong> use it where necessary, not if there is a good alternative.
+Ensure <code>unsafe</code> code is easy to review for correctness.</p>
+</li>
+<li>
+<p><strong>License and attribution:</strong> this project is freely licenced under the MIT
+and Apache Public Licence v2. We assume that all contributions are made
+under these licence grants. Copyrights are retained by their contributors.</p>
+<p>Our works are attributed to “The Rand Project Developers”. This is not a
+formal entity but merely the collection of all contributors to this project.
+For more, see the <code>COPYRIGHT</code> file.</p>
+</li>
+<li>
+<p><strong>Thank you!</strong></p>
+</li>
+</ul>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="documentation"><a class="header" href="#documentation">Documentation</a></h1>
+<h3 id="style"><a class="header" href="#style">Style</a></h3>
+<p>All documentation is in English, but no particular dialect is preferred.</p>
+<p>The documentation should be accessible to multiple audiences: both seasoned
+Rustaceans and relative newcomers, those with experience in statistical
+modelling or cryptography, as well as those new to the subjects. Since it is
+often impossible to write appropriate one-size-fits-all documentation, we
+prefer concise technical documentation with reference to extended articles
+aimed at more specific audiences.</p>
+<h2 id="api-documentation"><a class="header" href="#api-documentation">API documentation</a></h2>
+<h3 id="rand-crates"><a class="header" href="#rand-crates">Rand crates</a></h3>
+<p>It is recommended to use nightly Rust for correct link handling.</p>
+<p>To build all API documentation for all crates in the
+<a href="https://github.com/rust-random/rand">rust-random/rand</a> repository, run:</p>
+<pre><code class="language-sh"># Build doc for all modules:
+cargo doc --all --no-deps
+
+# And open it:
+xdg-open target/doc/rand/index.html
+</code></pre>
+<p>On Linux, it is easy to set up automatic rebuilds after any edit:</p>
+<pre><code class="language-sh">while inotifywait -r -e close_write src/ rand_*/; do cargo doc; done
+</code></pre>
+<p>After editing API documentation, we recommend testing examples:</p>
+<pre><code class="language-sh">cargo test --doc
+</code></pre>
+<p>Rand API docs are automatically built and hosted at
+<a href="https://rust-random.github.io/rand">rust-random.github.io/rand</a> for the latest code in master.</p>
+<h3 id="getrandom-crate"><a class="header" href="#getrandom-crate">Getrandom crate</a></h3>
+<p>The <a href="https://github.com/rust-random/getrandom">rust-random/getrandom</a>
+repository contains only a single crate, hence a simple <code>cargo doc</code> will
+suffice.</p>
+<h3 id="cross-crate-links"><a class="header" href="#cross-crate-links">Cross-crate links</a></h3>
+<p>When referring to another crate, we prefer linking to the crate page on
+crates.io since (a) this includes the README documenting the purpose of the
+crate and (b) this links directly to both the repository and the API
+documentation. Example:</p>
+<pre><code class="language-rust noplayground">// Link to the crate page:
+//! [`rand_chacha`]: https://crates.io/crates/rand_chacha</code></pre>
+<p>When referring to an item from within another crate,</p>
+<ol>
+<li>if that item is accessible via a crate dependency (even if not via the
+public API), use the Rust item path</li>
+<li>when linking to another crate within the <code>rust-random/rand</code> repository,
+relative paths within the generated documentation files (under <code>target/doc</code>)
+can be used; these work on <a href="https://rust-random.github.io/rand">rust-random.github.io/rand</a> but not
+currently on <code>docs.rs</code> (see <a href="https://github.com/rust-lang/docs.rs/issues/204">docs#204</a>)</li>
+<li>if neither of the above are applicable, use an absolute link</li>
+<li>consider revising documentation, e.g. refer to the crate instead</li>
+</ol>
+<p>Examples:</p>
+<pre><code class="language-rust noplayground">//! We depend on rand_core, therefore can use the Rust path:
+//! [`BlockRngCore`]: rand_core::block::BlockRngCore
+
+//! rand_chacha is not a dependency, but is within the same repository:
+//! [`ChaCha20Rng`]: ../../rand_chacha/struct.ChaCha20Rng.html
+
+//! Link directly to docs.rs, with major &amp; minor but no patch version:
+//! [`getrandom`]: https://docs.rs/getrandom/0.1/getrandom/fn.getrandom.html</code></pre>
+<h2 id="auxiliary-documentation"><a class="header" href="#auxiliary-documentation">Auxiliary documentation</a></h2>
+<h3 id="readme-files"><a class="header" href="#readme-files">README files</a></h3>
+<p>README files contain a brief introduction to the crate, shield badges, useful
+links, feature-flag documentation, licence information, and potentially an
+example.</p>
+<p>For the most part these files do not have any continuous testing.
+Where examples are included (currently only for the <code>rand_jitter</code> crate),
+we enable continuous testing via <code>doc_comment</code> (see
+<a href="https://github.com/rust-random/rngs/blob/master/rand_jitter/src/lib.rs#L62">lib.rs:62 onwards</a>).</p>
+<h3 id="changelog-files"><a class="header" href="#changelog-files">CHANGELOG files</a></h3>
+<p>Changelog formats are based on the
+<a href="http://keepachangelog.com/en/1.0.0/">Keep a Changelog</a> format.</p>
+<p>All significant changes merged since the last release should be listed under an
+<code>[Unreleased]</code> section at the top of log.</p>
+<h3 id="the-book"><a class="header" href="#the-book">The book</a></h3>
+<p>The source to this book is contained in the
+<a href="https://github.com/rust-random/book">rust-random/book</a> repository.
+It is built using mdbook, which makes building and testing easy:</p>
+<pre><code class="language-sh">cargo install mdbook --version "^0.4"
+
+mdbook build --open
+mdbook test
+
+# To automatically rebuild after any changes:
+mdbook watch
+</code></pre>
+<p>Note that links in the book are relative and designed to work in the
+<a href="https://rust-random.github.io/book/">published book</a>. If you build the book
+locally, you might want to set up a symbolic link pointing to your build of the
+API documentation:</p>
+<pre><code class="language-sh">ln -s ../rand/target/doc rand
+</code></pre>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="scope"><a class="header" href="#scope">Scope</a></h1>
+<p>Over time, the scope of the project has grown, and Rand has moved from using a
+monolithic crate to using a “main” crate plus multiple single-purpose crates.
+For new functionality, one must consider where, and whether, it fits within the
+Rand project.</p>
+<p>Small, focused crates may be used for a few reasons, but we aim <em>not</em> to
+maximally divide functionality into small crates. Valid reasons for using a
+separate crate for a feature are therefore:</p>
+<ul>
+<li>to allow a clear dependency hierarchy (<code>rand_core</code>)</li>
+<li>to make the feature available in a stand-alone fashion (e.g. <code>getrandom</code>)</li>
+<li>to remove little-used features with non-trivial amounts of code from widely
+used crates (e.g. <code>rand_jitter</code> and <code>rand_distr</code> both extracted
+functionality from <code>rand</code>)</li>
+<li>to allow choice, without including large amounts of unused code for all
+users, but also without producing an enormous number of new crates
+(RNG family crates like <code>rand_xoshiro</code> and <code>rand_isaac</code>)</li>
+</ul>
+<h2 id="traits-basics-and-ui"><a class="header" href="#traits-basics-and-ui">Traits, basics and UI</a></h2>
+<p>The main user interface to the Rand project remains the central <code>rand</code> crate.
+Goals for this crate are:</p>
+<ul>
+<li>ease of use</li>
+<li>expose commonly used functionality in a single place</li>
+<li>permit usage of additional randomness sources and distribution samplers</li>
+</ul>
+<p>To allow better modularity, the core traits have been moved to the <code>rand_core</code>
+crate. Goals of this crate are:</p>
+<ul>
+<li>expose the core traits with minimal dependencies</li>
+<li>provide common tools needed to implement various randomness sources</li>
+</ul>
+<h2 id="external-random-sources"><a class="header" href="#external-random-sources">External random sources</a></h2>
+<p>The main (and usually only) external source of randomness is the Operating
+System, interfaced via the <code>getrandom</code> crate. This crate also supports usage of
+RDRAND on a few <code>no_std</code> targets.</p>
+<p>Support for other <code>no_std</code> targets has been discussed but with little real
+implementation effort. See
+<a href="https://github.com/rust-random/getrandom/issues/4">getrandom#4</a>.</p>
+<p>The <code>rand_jitter</code> crate provides an implementation of a
+<a href="http://www.chronox.de/jent.html">CPU Jitter</a> entropy harvester, and is only
+included in Rand for historical reasons.</p>
+<h2 id="pseudo-random-generators-1"><a class="header" href="#pseudo-random-generators-1">Pseudo-random generators</a></h2>
+<p>The Rand library includes several pseudo-random number generators, for the
+following reasons:</p>
+<ul>
+<li>to implement the <code>StdRng</code> and <code>SmallRng</code> generators</li>
+<li>to provide a few high-quality alternative generators</li>
+<li>historical usage</li>
+</ul>
+<p>These are implemented within “family” crates, e.g. <code>rand_chacha</code>, <code>rand_pcg</code>,
+<code>rand_xoshiro</code>.</p>
+<p>We have received several requests to adopt new algorithms into the library; when
+evaluating such requests we must consider several things:</p>
+<ul>
+<li>purpose for inclusion within Rand</li>
+<li>whether the PRNG is cryptographically secure, and if so, how trustworthy
+such claims are</li>
+<li>statistical quality of output</li>
+<li>performance and features of the generator</li>
+<li>reception and third-party review of the algorithm</li>
+</ul>
+<h2 id="distributions-5"><a class="header" href="#distributions-5">Distributions</a></h2>
+<p>The <code>Distribution</code> trait is provided by Rand, along with commonly-used
+distributions (mostly linear ones).</p>
+<p>Additional distributions are packaged within the <code>rand_distr</code> crate, which
+depends on <code>rand</code> and re-exports all of its distributions.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="testing-1"><a class="header" href="#testing-1">Testing</a></h1>
+<p>Rand has a number of unit tests, though these are not comprehensive or perfect
+(improvements welcome). We prefer to have tests for all new functionality.</p>
+<p>The first line of testing is simply to run <code>cargo test</code> from the appropriate
+directory. Since Rand supports <code>no_std</code> (core-only), <code>core+alloc</code> and <code>std</code>
+environments, it is important to test all three (depending on which features
+are applicable to the code in question):</p>
+<pre><code class="language-sh"># Test using std:
+cargo test
+# Test using only core:
+cargo test --tests --no-default-features
+# Test using core + alloc (requires nightly):
+cargo +nightly test --tests --no-default-features --features=alloc
+</code></pre>
+<p>It may also be worth testing with other feature flags:</p>
+<pre><code class="language-sh">cargo test --all-features
+</code></pre>
+<p>Note that this only tests the current package (i.e. the main Rand lib when run
+from the repo’s top level). To test another lib, <code>cd</code> to its directory.</p>
+<p>We do not recommend using Cargo’s <code>--package</code> option due to its
+<a href="https://github.com/rust-lang/cargo/issues/5364">surprising interactions</a>
+with <code>--feature</code> options and failure when multiple versions of the same package
+are in the build tree. The CI instead uses <code>--manifest-path</code> to select packages;
+while developing, using <code>cd</code> is easier.</p>
+<h2 id="writing-tests"><a class="header" href="#writing-tests">Writing tests</a></h2>
+<p>Tests may be unit tests within a <code>test</code> sub-module, documentation examples,
+example applications (<code>examples</code> dir), integration tests (<code>tests</code> dir), or
+benchmarks (<code>benches</code> dir).</p>
+<p>Note that <em>only</em> unit tests and integration tests are expected to pass in
+<code>no_std</code> (core only) and <code>core+alloc</code> configurations. This is a deliberate
+choice; example code should only need to target the common case (<code>std</code>).</p>
+<h3 id="random-number-generators"><a class="header" href="#random-number-generators">Random Number Generators</a></h3>
+<p>Often test code needs some RNG to test with, but does not need any particular
+RNG. In this case, we prefer use of <code>::test::rng</code> which is simple, fast to
+initialise and deterministic:</p>
+<pre><code class="language-rust ignore">let mut rng = ::test::rng(528); // just pick some number</code></pre>
+<p>Various tests concern properties which are <em>probably</em> true, but not definitely.
+We prefer that such tests are deterministic to avoid spurious failures.</p>
+<div style="break-before: page; page-break-before: always;"></div>
+<h1 id="benchmarks"><a class="header" href="#benchmarks">Benchmarks</a></h1>
+<p>We already have many benchmarks:</p>
+<pre><code class="language-sh">cargo +nightly bench
+
+# In a few cases, nightly features may use different code paths:
+cargo +nightly bench --features=nightly
+</code></pre>
+<p>Benchmarks for distributions now live in the <code>rand_distr</code> crate; all other
+benchmarks (including all our RNGs) live in the main <code>rand</code> crate
+(hence the many dev-dependencies).</p>
+<p>A lot of code in Rand is performance sensitive, most of it is expected to be
+used in hot loops in some libraries/applications. If you change code in
+<code>rand_core</code>, in PRNG crates, or in the <code>rngs</code> or <code>distr</code> modules
+(especially when an ‘obvious cleanup’), make sure the benchmarks do not regress.</p>
+<p>Please report before-and-after results for any affected benchmarks. If you are
+optimising something previously not benchmarked, please add new benchmarks
+first, then add your changes in a separate commit (to make before-and-after
+benchmarking easy).</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+
+            </nav>
+
+        </div>
+
+        <template id=fa-eye><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M288 32c-80.8 0-145.5 36.8-192.6 80.6C48.6 156 17.3 208 2.5 243.7c-3.3 7.9-3.3 16.7 0 24.6C17.3 304 48.6 356 95.4 399.4C142.5 443.2 207.2 480 288 480s145.5-36.8 192.6-80.6c46.8-43.5 78.1-95.4 93-131.1c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C433.5 68.8 368.8 32 288 32zM432 256c0 79.5-64.5 144-144 144s-144-64.5-144-144s64.5-144 144-144s144 64.5 144 144zM288 192c0 35.3-28.7 64-64 64c-11.5 0-22.3-3-31.6-8.4c-.2 2.8-.4 5.5-.4 8.4c0 53 43 96 96 96s96-43 96-96s-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6z"/></svg></span></template>
+        <template id=fa-eye-slash><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M38.8 5.1C28.4-3.1 13.3-1.2 5.1 9.2S-1.2 34.7 9.2 42.9l592 464c10.4 8.2 25.5 6.3 33.7-4.1s6.3-25.5-4.1-33.7L525.6 386.7c39.6-40.6 66.4-86.1 79.9-118.4c3.3-7.9 3.3-16.7 0-24.6c-14.9-35.7-46.2-87.7-93-131.1C465.5 68.8 400.8 32 320 32c-68.2 0-125 26.3-169.3 60.8L38.8 5.1zM223.1 149.5C248.6 126.2 282.7 112 320 112c79.5 0 144 64.5 144 144c0 24.9-6.3 48.3-17.4 68.7L408 294.5c5.2-11.8 8-24.8 8-38.5c0-53-43-96-96-96c-2.8 0-5.6 .1-8.4 .4c5.3 9.3 8.4 20.1 8.4 31.6c0 10.2-2.4 19.8-6.6 28.3l-90.3-70.8zm223.1 298L373 389.9c-16.4 6.5-34.3 10.1-53 10.1c-79.5 0-144-64.5-144-144c0-6.9 .5-13.6 1.4-20.2L83.1 161.5C60.3 191.2 44 220.8 34.5 243.7c-3.3 7.9-3.3 16.7 0 24.6c14.9 35.7 46.2 87.7 93 131.1C174.5 443.2 239.2 480 320 480c47.8 0 89.9-12.9 126.2-32.5z"/></svg></span></template>
+        <template id=fa-copy><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M502.6 70.63l-61.25-61.25C435.4 3.371 427.2 0 418.7 0H255.1c-35.35 0-64 28.66-64 64l.0195 256C192 355.4 220.7 384 256 384h192c35.2 0 64-28.8 64-64V93.25C512 84.77 508.6 76.63 502.6 70.63zM464 320c0 8.836-7.164 16-16 16H255.1c-8.838 0-16-7.164-16-16L239.1 64.13c0-8.836 7.164-16 16-16h128L384 96c0 17.67 14.33 32 32 32h47.1V320zM272 448c0 8.836-7.164 16-16 16H63.1c-8.838 0-16-7.164-16-16L47.98 192.1c0-8.836 7.164-16 16-16H160V128H63.99c-35.35 0-64 28.65-64 64l.0098 256C.002 483.3 28.66 512 64 512h192c35.2 0 64-28.8 64-64v-32h-47.1L272 448z"/></svg></span></template>
+        <template id=fa-play><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M73 39c-14.8-9.1-33.4-9.4-48.5-.9S0 62.6 0 80V432c0 17.4 9.4 33.4 24.5 41.9s33.7 8.1 48.5-.9L361 297c14.3-8.7 23-24.2 23-41s-8.7-32.2-23-41L73 39z"/></svg></span></template>
+        <template id=fa-clock-rotate-left><span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M75 75L41 41C25.9 25.9 0 36.6 0 57.9V168c0 13.3 10.7 24 24 24H134.1c21.4 0 32.1-25.9 17-41l-30.8-30.8C155 85.5 203 64 256 64c106 0 192 86 192 192s-86 192-192 192c-40.8 0-78.6-12.7-109.7-34.4c-14.5-10.1-34.4-6.6-44.6 7.9s-6.6 34.4 7.9 44.6C151.2 495 201.7 512 256 512c141.4 0 256-114.6 256-256S397.4 0 256 0C185.3 0 121.3 28.7 75 75zm181 53c-13.3 0-24 10.7-24 24V256c0 6.4 2.5 12.5 7 17l72 72c9.4 9.4 24.6 9.4 33.9 0s9.4-24.6 0-33.9l-65-65V152c0-13.3-10.7-24-24-24z"/></svg></span></template>
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+        <script src="ace-2a3cd908.js"></script>
+        <script src="mode-rust-2c9d5c9a.js"></script>
+        <script src="editor-16ca416c.js"></script>
+        <script src="theme-dawn-4493f9c8.js"></script>
+        <script src="theme-tomorrow_night-9dbe62a9.js"></script>
+
+        <script src="elasticlunr-ef4e11c1.min.js"></script>
+        <script src="mark-09e88c2c.min.js"></script>
+        <script src="searcher-c2a407aa.js"></script>
+
+        <script src="clipboard-1626706a.min.js"></script>
+        <script src="highlight-abc7f01d.js"></script>
+        <script src="book-a0b12cfe.js"></script>
+
+        <!-- Custom JS scripts -->
+
+        <script>
+        window.addEventListener('load', function() {
+            window.setTimeout(window.print, 100);
+        });
+        </script>
+
+
+    </div>
+    </body>
+</html>
