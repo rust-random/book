@@ -21,12 +21,13 @@ To build all API documentation for all crates in the
 [rust-random/rand](https://github.com/rust-random/rand) repository, run:
 
 ```sh
-# Build doc for all modules:
-cargo doc --all --no-deps
+# Optionally, enable some unstable but widely used doc features:
+export RUSTDOCFLAGS="--cfg docsrs -Zunstable-options --generate-link-to-definition"
 
-# And open it:
-xdg-open target/doc/rand/index.html
+# Build doc for all crates in the workspace:
+cargo doc --workspace --no-deps --all-features --open
 ```
+(Alternatively, check the `Cargo.toml` under `[package.metadata.docs.rs]` which may suggest workspace- or crate-specific configuration.)
 
 On Linux, it is easy to set up automatic rebuilds after any edit:
 ```sh
