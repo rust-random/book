@@ -21,12 +21,13 @@ To build all API documentation for all crates in the
 [rust-random/rand](https://github.com/rust-random/rand) repository, run:
 
 ```sh
-# Build doc for all modules:
-cargo doc --all --no-deps
+# Optionally, enable some unstable but widely used doc features:
+export RUSTDOCFLAGS="--cfg docsrs -Zunstable-options --generate-link-to-definition"
 
-# And open it:
-xdg-open target/doc/rand/index.html
+# Build doc for all crates in the workspace:
+cargo doc --workspace --no-deps --all-features --open
 ```
+(Alternatively, check the `Cargo.toml` under `[package.metadata.docs.rs]` which may suggest workspace- or crate-specific configuration.)
 
 On Linux, it is easy to set up automatic rebuilds after any edit:
 ```sh
@@ -38,9 +39,6 @@ After editing API documentation, we recommend testing examples:
 ```sh
 cargo test --doc
 ```
-
-Rand API docs are automatically built and hosted at
-[rust-random.github.io/rand] for the latest code in master.
 
 ### Getrandom crate
 
@@ -64,12 +62,7 @@ When referring to an item from within another crate,
 
 1.  if that item is accessible via a crate dependency (even if not via the
     public API), use the Rust item path
-2.  when linking to another crate within the `rust-random/rand` repository,
-    relative paths within the generated documentation files (under `target/doc`)
-    can be used; these work on [rust-random.github.io/rand] but not
-    currently on `docs.rs` (see [docs#204])
-3.  if neither of the above are applicable, use an absolute link
-4.  consider revising documentation, e.g. refer to the crate instead
+2.  otherwise, use an absolute link to docs.rs
 
 Examples:
 
@@ -129,5 +122,4 @@ API documentation:
 ln -s ../rand/target/doc rand
 ```
 
-[rust-random.github.io/rand]: https://rust-random.github.io/rand
 [docs#204]: https://github.com/rust-lang/docs.rs/issues/204
