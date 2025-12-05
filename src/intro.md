@@ -13,6 +13,5 @@ This book contains:
 Outside this book, you may want:
 
 -   [API reference for the latest release](https://docs.rs/rand/)
--   [API reference for the master branch](https://rust-random.github.io/rand/)
 -   [The Rand repository](https://github.com/rust-random/rand/)
 -   [The Book source](https://github.com/rust-random/book/)
