@@ -35,10 +35,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-9a27f250.js";
+            window.path_to_searchindex_js = "searchindex-b9068593.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-eea303fd.js"></script>
+        <script src="toc-e38812b7.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -188,20 +188,19 @@ aimed at more specific audiences.</p>
 <p>It is recommended to use nightly Rust for correct link handling.</p>
 <p>To build all API documentation for all crates in the
 <a href="https://github.com/rust-random/rand">rust-random/rand</a> repository, run:</p>
-<pre><code class="language-sh"># Build doc for all modules:
-cargo doc --all --no-deps
+<pre><code class="language-sh"># Optionally, enable some unstable but widely used doc features:
+export RUSTDOCFLAGS="--cfg docsrs -Zunstable-options --generate-link-to-definition"
 
-# And open it:
-xdg-open target/doc/rand/index.html
+# Build doc for all crates in the workspace:
+cargo doc --workspace --no-deps --all-features --open
 </code></pre>
+<p>(Alternatively, check the <code>Cargo.toml</code> under <code>[package.metadata.docs.rs]</code> which may suggest workspace- or crate-specific configuration.)</p>
 <p>On Linux, it is easy to set up automatic rebuilds after any edit:</p>
 <pre><code class="language-sh">while inotifywait -r -e close_write src/ rand_*/; do cargo doc; done
 </code></pre>
 <p>After editing API documentation, we recommend testing examples:</p>
 <pre><code class="language-sh">cargo test --doc
 </code></pre>
-<p>Rand API docs are automatically built and hosted at
-<a href="https://rust-random.github.io/rand">rust-random.github.io/rand</a> for the latest code in master.</p>
 <h3 id="getrandom-crate"><a class="header" href="#getrandom-crate">Getrandom crate</a></h3>
 <p>The <a href="https://github.com/rust-random/getrandom">rust-random/getrandom</a>
 repository contains only a single crate, hence a simple <code>cargo doc</code> will
@@ -217,12 +216,7 @@ documentation. Example:</p>
 <ol>
 <li>if that item is accessible via a crate dependency (even if not via the
 public API), use the Rust item path</li>
-<li>when linking to another crate within the <code>rust-random/rand</code> repository,
-relative paths within the generated documentation files (under <code>target/doc</code>)
-can be used; these work on <a href="https://rust-random.github.io/rand">rust-random.github.io/rand</a> but not
-currently on <code>docs.rs</code> (see <a href="https://github.com/rust-lang/docs.rs/issues/204">docs#204</a>)</li>
-<li>if neither of the above are applicable, use an absolute link</li>
-<li>consider revising documentation, e.g. refer to the crate instead</li>
+<li>otherwise, use an absolute link to docs.rs</li>
 </ol>
 <p>Examples:</p>
 <pre><code class="language-rust noplayground">//! We depend on rand_core, therefore can use the Rust path:
