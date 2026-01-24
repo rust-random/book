@@ -3,7 +3,7 @@
 Below we list a short example. For more, please refer to the [API documentation]
 or the [guide].
 
-Lets kick things off with an example ([playground link](https://play.rust-lang.org/?version=stable&mode=debug&edition=2018&gist=7792ed032694bc558ca229be71a7783a)):
+Lets kick things off with an example
 
 ```rust,editable
 # extern crate rand;
