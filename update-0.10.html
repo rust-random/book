@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Types of generators - The Rust Rand Book</title>
+        <title>Updating to 0.10 - The Rust Rand Book</title>
 
 
         <!-- Custom HTML head -->
@@ -174,124 +174,66 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h1 id="types-of-generators"><a class="header" href="#types-of-generators">Types of generators</a></h1>
-<p>The previous section introduced <a href="https://docs.rs/rand_core/latest/rand_core/trait.RngCore.html"><code>RngCore</code></a>, the trait which all <em>random data
-sources</em> must implement. But what exactly is a random data source?</p>
-<p>This section concerns theory; see also the chapter on
-<a href="guide-rngs.html">random number generators</a>.</p>
-<pre class="playground"><code class="language-rust edition2024">use rand::{RngExt, SeedableRng};
+                        <h1 id="updating-to-010"><a class="header" href="#updating-to-010">Updating to 0.10</a></h1>
+<p>In the following, instructions are provided for porting your code from
+<code>rand 0.9</code> to <code>rand 0.10</code>.</p>
+<p>The following is a migration guide focussing on potentially-breaking changes. For a full list of changes, see the relevant changelogs:</p>
+<ul>
+<li><a href="https://github.com/rust-random/rand/blob/master/CHANGELOG.md">CHANGELOG.md</a>.</li>
+<li><a href="https://docs.rs/crate/rand_core/latest/source/CHANGELOG.md">rand_core/CHANGELOG.md</a>.</li>
+</ul>
+<h2 id="tryrng-traits"><a class="header" href="#tryrng-traits">[Try]Rng traits</a></h2>
+<p>The <code>rand_core</code> traits <code>RngCore, TryRngCore</code> were renamed to <code>Rng, TryRng</code> and the <code>rand</code> trait <code>Rng</code> to <code>RngExt</code> respectively.</p>
+<p>The relationship between these traits also changed; previously, every <code>R: RngCore</code> implemented <code>TryRngCore</code> but otherwise the two traits were independent; now <code>Rng: TryRng&lt;Error = Infallible&gt;</code> and every <code>R: TryRng&lt;Error = Infallible&gt; + ?Sized</code> implements <code>Rng</code>.</p>
+<p>Further, while we previously implemented <code>R: RngCore</code> for every <code>R: DerefMut where R::Target: RngCore</code>, we were unable to do so due to conflicting-trait errors (solving this would have required specialization or negative trait bounds). Now, we implement <code>R: TryRng</code> for every <code>R: DerefMut where R::Target: TryRng</code> which thus implies <code>R: Rng</code> for every <code>R: DerefMut where R::Target: Rng</code>.</p>
+<p>The biggest impact here is that infallible PRNGs must implement <code>TryRng</code> with <code>Error = Infallible</code> instead of implementing <code>RngCore</code>.</p>
+<p>Users of <code>rand</code> will often need to import <code>rand::RngExt</code> may need to migrate from <code>R: RngCore</code> to <code>R: Rng</code> (noting that where <code>R: Rng</code> was previously used it may be preferable to keep <code>R: Rng</code> even though the direct replacement would be <code>R: RngExt</code>; the two bounds are equivalent for <code>R: Sized</code>).</p>
+<h2 id="sysrng"><a class="header" href="#sysrng">SysRng</a></h2>
+<p><code>rand_core::OsRng</code> has been replaced with <code>getrandom::SysRng</code> (also available as <code>rand::rngs::SysRng</code>).</p>
+<p>The methods <code>SeedableRng::from_os_rng</code> and <code>try_from_os_rng</code> have thus been removed. <a href="https://docs.rs/rand/latest/rand/fn.make_rng.html"><code>rand::make_rng()</code></a> is provided as a partial replacement; otherwise use <code>SomeRng::try_from_rng(&amp;mut SysRng).unwrap()</code>.</p>
+<h2 id="prngs"><a class="header" href="#prngs">PRNGs</a></h2>
+<p><code>StdRng</code> is now provided by <code>chacha20</code> instead of <code>rand_chacha</code>. For the time being both packages are maintained, but <code>rand_chacha</code> is likely to be discontinued in the future. The <code>ChaCha{8,12,20}Rng</code> types are a direct replacement for the like-named <code>rand_chacha</code> types; these maintain reproducibility of output and have a similar API.</p>
+<p>Note that <code>rand::rngs</code> now provides several named PRNGs, making it simpler to write <a href="crate-reprod.html">reproducible</a> code: <code>ChaCha{8,12,20}Rng</code>, <code>Xoshiro{128,256}PlusPlus</code>.</p>
+<p>Other PRNG crates have been updated with minimal changes (though this may not remain the case indefinitely; see <a href="https://github.com/rust-random/rngs/issues/98">rngs#98</a>). One new crate has been added: <a href="https://docs.rs/rand_sfc/latest/rand_sfc/">rand_sfc</a>.</p>
+<h3 id="clone-and-serialization-support"><a class="header" href="#clone-and-serialization-support">Clone and serialization support</a></h3>
+<p><code>StdRng</code> and <code>ChaCha{8,12,20}Rng</code> no longer implement <code>Clone</code> or the <a href="https://serde.rs/">serde</a> traits. This was a deliberate choice to prevent accidental key-stream duplication or persisting to external storage. Note that it remains possible to clone or serialize these RNGs by reconstructing a new instance with the same key, then setting the stream (if applicable) and word position. For example:</p>
+<pre class="playground"><code class="language-rust editable edition2024">use rand::{rngs::ChaCha8Rng, Rng, SeedableRng};
 
-<span class="boring">fn main() {
-</span>// prepare a non-deterministic random number generator:
-let mut rng = rand::rng();
-println!("{}", rng.random::&lt;i32&gt;()); // prints an unknown value
+let mut rng1: ChaCha8Rng = rand::make_rng();
+let _ = rng1.next_u64();
 
-// prepare a deterministic generator:
-let mut rng = rand::rngs::ChaCha8Rng::seed_from_u64(123);
-println!("{}", rng.random::&lt;i32&gt;()); // prints -416273517
-<span class="boring">}</span></code></pre>
-<h2 id="true-random-number-generators"><a class="header" href="#true-random-number-generators">True random number generators</a></h2>
-<p>A <strong>true</strong> random number generator (TRNG) is something which produces random
-numbers by observing some natural process, such as atomic decay or thermal noise.
-(Whether or not these things are <em>truly</em> random or are in fact deterministic —
-for example if the universe itself is a simulation — is besides the point here.
-For our purposes, it is sufficient that they are not distinguishable from true
-randomness.)</p>
-<p>Note that these processes are often biased, thus some type of <em>debiasing</em> must
-be used to yield the unbiased random data we desire.</p>
-<h2 id="pseudo-random-number-generators"><a class="header" href="#pseudo-random-number-generators">Pseudo-random number generators</a></h2>
-<p>CPUs are of course supposed to compute deterministically, yet it turns out they
-can do a pretty good job of emulating random processes. Most pseudo-random
-number generators are deterministic and can be defined by just:</p>
+let mut rng2 = ChaCha8Rng::from_seed(rng1.get_seed());
+rng2.set_stream(rng1.get_stream());
+rng2.set_word_pos(rng1.get_word_pos());
+
+assert_eq!(rng1.next_u64(), rng2.next_u64());</code></pre>
+<h2 id="other-changes"><a class="header" href="#other-changes">Other changes</a></h2>
+<p><code>TryRngCore::read_adapter</code> was replaced with <code>rand::RngReader</code>.</p>
+<h3 id="reseedingrng"><a class="header" href="#reseedingrng">ReseedingRng</a></h3>
+<p><code>ReseedingRng</code> has been removed without replacement since, as far as we have been able to discern, <code>ThreadRng</code> is the only important use-case. We have thus opted to move its functionality into <code>ThreadRng</code> as an implementation detail.</p>
+<h2 id="dependencies"><a class="header" href="#dependencies">Dependencies</a></h2>
+<p>Rand crates now require <strong><code>rustc</code></strong> version 1.85.0 or later.</p>
+<p>The dependency on <strong><code>getrandom</code></strong> was bumped to version 0.4. See <a href="https://github.com/rust-random/getrandom/blob/master/CHANGELOG.md">the getrandom CHANGELOG</a>.</p>
+<h3 id="features"><a class="header" href="#features">Features</a></h3>
+<p>Feature flags:</p>
 <ul>
-<li>some initial <em>state</em></li>
-<li>a function to compute a random value from the state</li>
-<li>a function to advance to the next state</li>
-<li>(optionally) a function to derive the initial state from a <em>seed</em> or <em>key</em></li>
+<li><code>os_rng</code> was renamed to <code>sys_rng</code></li>
+<li><code>thread_rng</code>, <code>std_rng</code> and <code>sys_rng</code> are no longer enabled by default (TODO: this is not yet confirmed)</li>
+<li><code>small_rng</code> has been removed; its functionality is always available</li>
+<li><code>chacha</code> is a new flag, enabling <code>rand::rngs::ChaCha{8,12,20}Rng</code></li>
 </ul>
-<p>The fact that these are deterministic can sometimes be very useful: it allows a
-simulation, randomised art work or game to be repeated exactly, producing a
-result which is a function of the seed. For more on this see the
-<a href="crate-reprod.html">reproducibility</a> chapter (note that determinism alone isn’t
-enough to guarantee reproducibility).</p>
-<p>The other big attraction of PRNGs is their speed: some of these algorithms
-require only a few CPU operations per random value, and thus can produce
-random data on demand much more quickly than most TRNGs.</p>
-<p>Note however that PRNGs have several limitations:</p>
-<ul>
-<li>They are no stronger than their seed: if the seed is known or guessable,
-and the algorithm is known (or guessed), then only a small number of output
-sequences are likely.</li>
-<li>Since the state size is usually fixed, only a finite number of output values
-are possible before the generator loops and repeats itself.</li>
-<li>Several algorithms are easily predictable after seeing a few values, and
-with many other algorithms it is not clear whether they could be “cracked”.</li>
-</ul>
-<h2 id="cryptographically-secure-pseudo-random-number-generator"><a class="header" href="#cryptographically-secure-pseudo-random-number-generator">Cryptographically secure pseudo-random number generator</a></h2>
-<p>Cryptographically secure pseudo-random number generators (CSPRNGs) are the
-subset of PRNGs which are considered secure. That is:</p>
-<ul>
-<li>their state is sufficiently large that a brute-force approach simply trying
-all initial values is not a feasible method of finding the initial state
-used to produce an observed sequence of output values,</li>
-<li>and there is no other algorithm which is sufficiently better than the
-brute-force method which would make it feasible to predict the next output
-value.</li>
-</ul>
-<p>Achieving secure generation requires not only a secure algorithm (CSPRNG), but
-also a secure and sufficiently large seed value (typically 256 bits), and
-protection against side-channel attacks (i.e. preventing attackers from reading
-the internal state).</p>
-<p>Some CSPRNGs additionally satisfy a third property:</p>
-<ul>
-<li>a CSPRNG is backtracking resistant if it is impossible for an attacker to
-calculate prior output values of the PRNG despite having discovered the
-value of the current internal state (implying that all future output is
-compromised).</li>
-</ul>
-<h2 id="hardware-random-number-generator"><a class="header" href="#hardware-random-number-generator">Hardware random number generator</a></h2>
-<p>A <strong>hardware</strong> random number generator (HRNG) is theoretically an adaptor from
-some TRNG to digital information. In practice, these may use a PRNG to debias
-the TRNG. Even though an HRNG has some underlying TRNG, it is not guaranteed to
-be secure: the TRNG itself may produce insufficient entropy (i.e. be too
-predictable), or the signal amplification and debiasing process may be flawed.</p>
-<p>An HRNG may be used to provide the seed for a PRNG, although usually this is not
-the only way to obtain a secure seed (see the next section). An HRNG might
-replace a PRNG altogether, although since we now have very fast and very strong
-software PRNGs, and since software implementations are easier to verify than
-hardware ones, this is often not the preferred solution.</p>
-<p>Since a PRNG needs a random seed value to be secure, an HRNG may be used to
-provide that seed, or even replace the need for a PRNG. However, since the goal
-is usually “only” to produce unpredictable random values, there are acceptable
-alternatives to <em>true</em> random number generators (see next section).</p>
-<h2 id="entropy"><a class="header" href="#entropy">Entropy</a></h2>
-<p>As noted above, for a CSPRNG to be secure, its seed value must also be secure.
-The word <em>entropy</em> can be used in two ways:</p>
-<ul>
-<li>as a measure of the amount of unknown information in some piece of data</li>
-<li>as a piece of unknown data</li>
-</ul>
-<p>Ideally, a random boolean or a coin flip has 1 bit of entropy, although if the
-value is biased, there will be less. Shannon Entropy attempts to measure this.</p>
-<p>For example, a Unix time-stamp (seconds since the start of 1970) contains both
-high- and low-resolution data. This is typically a 32-bit number, but the amount
-of <em>entropy</em> will depend on how precisely a hypothetical attacker can guess the
-number. If an attacker can guess the number to the nearest minute, this may be
-approximately 6 bits (2^6 = 64); if an attacker can guess this to the second,
-this is 0 bits. <a href="https://docs.rs/rand_jitter/latest/rand_jitter/struct.JitterRng.html"><code>JitterRng</code></a> uses this concept to scavenge entropy without an
-HRNG (but using nanosecond resolution timers and conservatively assuming only a
-couple of bits entropy is available per time-stamp, after running several tests
-on the timer’s quality).</p>
+<h2 id="reproducibility"><a class="header" href="#reproducibility">Reproducibility</a></h2>
+<p>There are no known value-breaking changes to <code>rand</code> in v0.10.</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="guide-data.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="update-0.9.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                             </a>
 
-                            <a rel="next prefetch" href="guide-rngs.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="contributing.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                             </a>
 
@@ -301,11 +243,11 @@ on the timer’s quality).</p>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="guide-data.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="update-0.9.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"/></svg></span>
                     </a>
 
-                    <a rel="next prefetch" href="guide-rngs.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="contributing.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <span class=fa-svg><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><!--! Font Awesome Free 6.2.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2022 Fonticons, Inc. --><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"/></svg></span>
                     </a>
             </nav>

@@ -35,10 +35,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-93141246.js";
+            window.path_to_searchindex_js = "searchindex-36cf1434.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-e38812b7.js"></script>
+        <script src="toc-a6f3352f.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -390,9 +390,18 @@ seeded with a secure random key. Should the key be known or guessable, all
 output of the CSPRNG is easy to guess. This implies that the seed should
 come from a trusted source; usually either the OS or another CSPRNG. For this
 purpose, we recommend using the <a href="https://docs.rs/getrandom/"><code>getrandom</code></a> crate which interfaces the OS’s
-secure random interface. <a href="https://docs.rs/rand/latest/rand/trait.SeedableRng.html#method.from_os_rng"><code>SeedableRng::from_os_rng</code></a> is a wrapper around
-<a href="https://docs.rs/getrandom/"><code>getrandom</code></a> for convenience. Alternatively, using a user-space CSPRNG such as
-<a href="https://docs.rs/rand/latest/rand/rngs/struct.ThreadRng.html"><code>ThreadRng</code></a> for seeding should be sufficient.</p>
+secure random interface. Alternatively, using a user-space CSPRNG such as
+<a href="https://docs.rs/rand/latest/rand/fn.make_rng.html"><code>rand::make_rng()</code></a> or <a href="https://docs.rs/rand/latest/rand/rngs/struct.ThreadRng.html"><code>ThreadRng</code></a> for seeding should be sufficient. In code:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use rand::{rngs::ChaCha12Rng, rngs::SysRng, SeedableRng};
+
+/// Seed explicitly from SysRng:
+let mut rng1 = ChaCha12Rng::try_from_rng(&amp;mut SysRng).unwrap();
+
+/// Seed from ThreadRng (or SysRng if ThreadRng is not available):
+let mut rng2: ChaCha12Rng = rand::make_rng();
+<span class="boring">}</span></code></pre>
 <p>Further, it should be obvious that the internal state of a CSPRNG must be
 kept secret. With that in mind, our implementations do not provide direct
 access to most of their internal state, and <code>Debug</code> implementations do not

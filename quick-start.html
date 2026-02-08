@@ -35,10 +35,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-93141246.js";
+            window.path_to_searchindex_js = "searchindex-36cf1434.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-e38812b7.js"></script>
+        <script src="toc-a6f3352f.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -178,8 +178,7 @@
 <p>Below we list a short example. For more, please refer to the <a href="https://docs.rs/rand/">API documentation</a>
 or the <a href="guide.html">guide</a>.</p>
 <p>Lets kick things off with an example</p>
-<pre class="playground"><code class="language-rust editable edition2024"><span class="boring">extern crate rand;
-</span>// import commonly used items from the prelude:
+<pre class="playground"><code class="language-rust editable edition2024">// import commonly used items from the prelude:
 use rand::prelude::*;
 
 fn main() {
@@ -243,12 +242,10 @@ All cryptographic RNGs accept a more appropriate seed via <a href="https://docs.
 <p>We use <code>ChaCha8Rng</code> below because it is fast and portable with good quality.
 See the <a href="guide-rngs.html">RNGs</a> section for more RNGs, but avoid <code>SmallRng</code> and <code>StdRng</code> if you
 care about reproducible results.</p>
-<pre class="playground"><code class="language-rust editable edition2024"><span class="boring">extern crate rand;
-</span><span class="boring">extern crate rand_chacha;
-</span>use rand::{Rng, SeedableRng};
+<pre class="playground"><code class="language-rust editable edition2024">use rand::{rngs::ChaCha8Rng, RngExt, SeedableRng};
 
 fn main() {
-    let mut rng = rand_chacha::ChaCha8Rng::seed_from_u64(10);
+    let mut rng = ChaCha8Rng::seed_from_u64(10);
     println!("Random f32: {}", rng.random::&lt;f32&gt;());
 }</code></pre>
 

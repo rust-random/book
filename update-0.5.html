@@ -35,10 +35,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-93141246.js";
+            window.path_to_searchindex_js = "searchindex-36cf1434.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-e38812b7.js"></script>
+        <script src="toc-a6f3352f.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -235,7 +235,8 @@ than <code>gen()</code></li>
 <p>A new trait has been added: <code>FromEntropy</code>. This is automatically implemented for
 any type supporting <code>SeedableRng</code>, and provides construction from fresh, strong
 entropy:</p>
-<pre><code class="language-rust noplayground">use rand_0_5::{ChaChaRng, FromEntropy};
+<pre><code class="language-rust noplayground"><span class="boring">extern crate rand_0_5 as rand;
+</span>use rand::{ChaChaRng, FromEntropy};
 
 let mut rng = ChaChaRng::from_entropy();</code></pre>
 <h4 id="seeding-prngs"><a class="header" href="#seeding-prngs">Seeding PRNGs</a></h4>
@@ -268,7 +269,8 @@ use cannot be guaranteed.</em></p>
 <p>A new <code>Error</code> type has been added, designed explicitly for no-std compatibility,
 simplicity, and enough flexibility for our uses (carrying a <code>cause</code> when
 possible):</p>
-<pre><code class="language-rust noplayground"><span class="boring">use rand_0_5::ErrorKind;
+<pre><code class="language-rust noplayground"><span class="boring">extern crate rand_0_5 as rand;
+</span><span class="boring">use rand::ErrorKind;
 </span>pub struct Error {
     pub kind: ErrorKind,
     pub msg: &amp;'static str,
@@ -316,10 +318,9 @@ those using <code>BlockRngCore</code>.</p>
 <p>The method <code>ChaChaRng::set_counter</code> has been replaced by two new methods,
 <code>set_word_pos</code> and <code>set_stream</code>. Where necessary, the behaviour of the old
 method may be emulated as follows:</p>
-<pre><code class="language-rust noplayground"><span class="boring">extern crate rand;
-</span><span class="boring">extern crate rand_chacha;
+<pre><code class="language-rust noplayground"><span class="boring">extern crate rand_0_5 as rand;
 </span><span class="boring">use rand::prelude::*;
-</span><span class="boring">use rand_chacha::ChaChaRng;
+</span><span class="boring">use rand_chacha_0_1::ChaChaRng;
 </span><span class="boring">fn main() {
 </span>let lower = 88293;
 let higher = 9300932;

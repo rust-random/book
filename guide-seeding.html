@@ -35,10 +35,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-93141246.js";
+            window.path_to_searchindex_js = "searchindex-36cf1434.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-e38812b7.js"></script>
+        <script src="toc-a6f3352f.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -192,22 +192,19 @@ We recommend using <code>[u8; 12]</code> or larger for non-cryptographic PRNGs a
 <p>PRNGs may be seeded directly from such a value with <a href="https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#tymethod.from_seed"><code>SeedableRng::from_seed</code></a>.</p>
 <h2 id="seeding-from-"><a class="header" href="#seeding-from-">Seeding from …</a></h2>
 <h3 id="fresh-entropy"><a class="header" href="#fresh-entropy">Fresh entropy</a></h3>
-<p>Using a fresh seed (direct from the OS) is easy using <a href="https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#method.from_os_rng"><code>SeedableRng::from_os_rng</code></a>:</p>
-<pre class="playground"><code class="language-rust editable edition2024"><span class="boring">extern crate rand;
-</span><span class="boring">extern crate rand_chacha;
-</span>use rand::prelude::*;
-use rand_chacha::ChaCha20Rng;
+<p>Using a fresh seed is easy using <a href="https://docs.rs/rand/latest/rand/fn.make_rng.html"><code>rand::make_rng()</code></a>:</p>
+<pre class="playground"><code class="language-rust editable edition2024">use rand::prelude::*;
+use rand::rngs::ChaCha20Rng;
 
 fn main() {
-    let mut rng = ChaCha20Rng::from_os_rng();
+    let mut rng: ChaCha20Rng = rand::make_rng();
     println!("{}", rng.random_range(0..100));
 }</code></pre>
 <p>Note that this requires <code>rand_core</code> has the feature <code>getrandom</code> enabled.</p>
 <h3 id="another-rng"><a class="header" href="#another-rng">Another RNG</a></h3>
 <p>Quite obviously, another RNG may be used to fill a seed. We provide a
 convenience method for this:</p>
-<pre class="playground"><code class="language-rust editable edition2024"><span class="boring">extern crate rand;
-</span>use rand::prelude::*;
+<pre class="playground"><code class="language-rust editable edition2024">use rand::prelude::*;
 
 fn main() {
     let mut rng = SmallRng::from_rng(&amp;mut rand::rng());
@@ -215,10 +212,8 @@ fn main() {
 }</code></pre>
 <p>But, say you want to save a key and use it later. For that you need to be a
 little bit more explicit:</p>
-<pre class="playground"><code class="language-rust editable edition2024"><span class="boring">extern crate rand;
-</span><span class="boring">extern crate rand_chacha;
-</span>use rand::prelude::*;
-use rand_chacha::ChaCha8Rng;
+<pre class="playground"><code class="language-rust editable edition2024">use rand::prelude::*;
+use rand::rngs::ChaCha8Rng;
 
 fn main() {
     let mut seed: &lt;ChaCha8Rng as SeedableRng&gt;::Seed = Default::default();
@@ -239,10 +234,8 @@ distinct, fixed random number seeds, e.g. 1, 2, 3, etc.</p>
 Internally, it uses a simple PRNG to fill the bits of the seed from the input
 number while providing good bit-avalanche (so that two similar numbers such as
 0 and 1 translate to very different seeds and independent RNG sequences).</p>
-<pre class="playground"><code class="language-rust editable edition2024"><span class="boring">extern crate rand;
-</span><span class="boring">extern crate rand_chacha;
-</span>use rand::prelude::*;
-use rand_chacha::ChaCha8Rng;
+<pre class="playground"><code class="language-rust editable edition2024">use rand::prelude::*;
+use rand::rngs::ChaCha8Rng;
 
 fn main() {
     let mut rng = ChaCha8Rng::seed_from_u64(2);

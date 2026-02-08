@@ -35,10 +35,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-93141246.js";
+            window.path_to_searchindex_js = "searchindex-36cf1434.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-e38812b7.js"></script>
+        <script src="toc-a6f3352f.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -182,8 +182,7 @@ cd randomly
 cargo add rand --features small_rng
 </code></pre>
 <p>Now, paste the following into <code>src/main.rs</code>:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate rand;
-</span>use rand::prelude::*;
+<pre class="playground"><code class="language-rust edition2024">use rand::prelude::*;
 
 fn main() {
     let mut rng = rand::rng();

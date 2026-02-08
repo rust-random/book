@@ -35,10 +35,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-93141246.js";
+            window.path_to_searchindex_js = "searchindex-36cf1434.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-e38812b7.js"></script>
+        <script src="toc-a6f3352f.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -272,7 +272,7 @@ trivial calculations). Manual batching could improve performance of the above
 non-deterministic simulation too.</p>
 <p>(Note: this example is <a href="https://github.com/rust-random/rand/blob/master/examples/rayon-monte-carlo.rs">https://github.com/rust-random/rand/blob/master/examples/rayon-monte-carlo.rs</a>.)</p>
 <pre class="playground"><code class="language-rust edition2024">use rand::distr::{Distribution, Uniform};
-use rand_chacha::{rand_core::SeedableRng, ChaCha8Rng};
+use rand::{SeedableRng, rngs::ChaCha8Rng};
 use rayon::prelude::*;
 
 static SEED: u64 = 0;

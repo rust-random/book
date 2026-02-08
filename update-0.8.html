@@ -35,10 +35,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-93141246.js";
+            window.path_to_searchindex_js = "searchindex-36cf1434.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-e38812b7.js"></script>
+        <script src="toc-a6f3352f.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -221,9 +221,9 @@ being copied must be updated to use a mutable reference instead. For example,</p
 let a: u32 = Standard.sample_iter(rng).next().unwrap();
 let b: u32 = Standard.sample_iter(rng).next().unwrap();</code></pre>
 <p>can be replaced with the following code:</p>
-<pre><code class="language-rust noplayground"><span class="boring">extern crate rand;
-</span><span class="boring">use rand_0_8::prelude::*;
-</span><span class="boring">use rand_0_8::distributions::Standard;
+<pre><code class="language-rust noplayground"><span class="boring">extern crate rand_0_8 as rand;
+</span><span class="boring">use rand::prelude::*;
+</span><span class="boring">use rand::distributions::Standard;
 </span><span class="boring">fn main () {
 </span>let mut rng = thread_rng();
 let a: u32 = Standard.sample_iter(&amp;mut rng).next().unwrap();
@@ -282,10 +282,10 @@ Rand 0.7 you could write:
     .take(7)
     .collect();</code></pre>
 With Rand 0.8, this is equivalent to the following:
-<pre><code class="language-rust noplayground"><span class="boring">extern crate rand;
-</span><span class="boring">use rand_0_8::{distributions::Alphanumeric, Rng};
+<pre><code class="language-rust noplayground"><span class="boring">extern crate rand_0_8 as rand;
+</span><span class="boring">use rand::{distributions::Alphanumeric, Rng};
 </span><span class="boring">fn main() {
-</span><span class="boring">let mut rng = rand_0_8::thread_rng();
+</span><span class="boring">let mut rng = rand::thread_rng();
 </span>let chars: String = std::iter::repeat(())
     .map(|()| rng.sample(Alphanumeric))
     .map(char::from)

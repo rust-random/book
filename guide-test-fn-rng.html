@@ -35,10 +35,10 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-93141246.js";
+            window.path_to_searchindex_js = "searchindex-36cf1434.js";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-e38812b7.js"></script>
+        <script src="toc-a6f3352f.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -176,9 +176,9 @@
                     <main>
                         <h1 id="testing-functions-which-use-rngs"><a class="header" href="#testing-functions-which-use-rngs">Testing functions which use RNGs</a></h1>
 <p>Occasionally a function that uses random number generators might need to be tested. For functions that need to be tested with test vectors, the following approach might be adapted:</p>
-<pre class="playground"><code class="language-rust edition2024">use rand::{TryCryptoRng, rngs::OsRng};
+<pre class="playground"><code class="language-rust edition2024">use rand::{TryCryptoRng, rngs::SysRng};
 
-pub struct CryptoOperations&lt;R: TryCryptoRng = OsRng&gt; {
+pub struct CryptoOperations&lt;R: TryCryptoRng = SysRng&gt; {
     rng: R
 }
 
@@ -203,7 +203,7 @@ impl&lt;R: TryCryptoRng&gt; CryptoOperations&lt;R&gt; {
 }
 
 fn main() {
-    let rng = OsRng;
+    let rng = SysRng;
     let mut crypto_ops = &lt;CryptoOperations&gt;::new(rng);
 
     let mut secret: [u8; 8] = *b"\x00\x01\x02\x03\x04\x05\x06\x07";
