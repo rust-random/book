@@ -94,7 +94,7 @@ Lets go over the distributions by type:
 -   For enums, you have to implement uniform sampling yourself. For example, you
     could use the following approach:
     ```rust,noplayground
-    # use rand::{Rng, distr::{Distribution, StandardUniform}};
+    # use rand::{Rng, RngExt, distr::{Distribution, StandardUniform}};
     pub enum Food {
         Burger,
         Pizza,

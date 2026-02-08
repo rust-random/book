@@ -25,16 +25,14 @@ PRNGs may be seeded directly from such a value with [`SeedableRng::from_seed`].
 
 ### Fresh entropy
 
-Using a fresh seed (direct from the OS) is easy using [`SeedableRng::from_os_rng`]:
+Using a fresh seed is easy using [`rand::make_rng()`]:
 
 ```rust,editable
-# extern crate rand;
-# extern crate rand_chacha;
 use rand::prelude::*;
-use rand_chacha::ChaCha20Rng;
+use rand::rngs::ChaCha20Rng;
 
 fn main() {
-    let mut rng = ChaCha20Rng::from_os_rng();
+    let mut rng: ChaCha20Rng = rand::make_rng();
     println!("{}", rng.random_range(0..100));
 }
 ```
@@ -47,7 +45,6 @@ Quite obviously, another RNG may be used to fill a seed. We provide a
 convenience method for this:
 
 ```rust,editable
-# extern crate rand;
 use rand::prelude::*;
 
 fn main() {
@@ -60,10 +57,8 @@ But, say you want to save a key and use it later. For that you need to be a
 little bit more explicit:
 
 ```rust,editable
-# extern crate rand;
-# extern crate rand_chacha;
 use rand::prelude::*;
-use rand_chacha::ChaCha8Rng;
+use rand::rngs::ChaCha8Rng;
 
 fn main() {
     let mut seed: <ChaCha8Rng as SeedableRng>::Seed = Default::default();
@@ -91,10 +86,8 @@ number while providing good bit-avalanche (so that two similar numbers such as
 0 and 1 translate to very different seeds and independent RNG sequences).
 
 ```rust,editable
-# extern crate rand;
-# extern crate rand_chacha;
 use rand::prelude::*;
-use rand_chacha::ChaCha8Rng;
+use rand::rngs::ChaCha8Rng;
 
 fn main() {
     let mut rng = ChaCha8Rng::seed_from_u64(2);
@@ -150,7 +143,7 @@ function such as Argon2 must be used.
 [`SeedableRng::from_seed`]: https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#tymethod.from_seed
 [`SeedableRng::from_rng`]: https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#method.from_rng
 [`SeedableRng::seed_from_u64`]: https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#method.seed_from_u64
-[`SeedableRng::from_os_rng`]: https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#method.from_os_rng
 [`XorShiftRng`]: https://docs.rs/rand_xorshift/latest/rand_xorshift/struct.XorShiftRng.html
 [`ChaCha8Rng`]: https://docs.rs/rand_chacha/latest/rand_chacha/struct.ChaCha8Rng.html
 [`rand_seeder`]: https://github.com/rust-random/seeder/
+[`rand::make_rng()`]: https://docs.rs/rand/latest/rand/fn.make_rng.html

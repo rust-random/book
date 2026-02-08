@@ -108,7 +108,7 @@ non-deterministic simulation too.
 
 ```rust
 use rand::distr::{Distribution, Uniform};
-use rand_chacha::{rand_core::SeedableRng, ChaCha8Rng};
+use rand::{SeedableRng, rngs::ChaCha8Rng};
 use rayon::prelude::*;
 
 static SEED: u64 = 0;

@@ -247,9 +247,17 @@ seeded with a secure random key. Should the key be known or guessable, all
 output of the CSPRNG is easy to guess. This implies that the seed should
 come from a trusted source; usually either the OS or another CSPRNG. For this
 purpose, we recommend using the [`getrandom`] crate which interfaces the OS's
-secure random interface. [`SeedableRng::from_os_rng`] is a wrapper around
-[`getrandom`] for convenience. Alternatively, using a user-space CSPRNG such as
-[`ThreadRng`] for seeding should be sufficient.
+secure random interface. Alternatively, using a user-space CSPRNG such as
+[`rand::make_rng()`] or [`ThreadRng`] for seeding should be sufficient. In code:
+```rust
+use rand::{rngs::ChaCha12Rng, rngs::SysRng, SeedableRng};
+
+/// Seed explicitly from SysRng:
+let mut rng1 = ChaCha12Rng::try_from_rng(&mut SysRng).unwrap();
+
+/// Seed from ThreadRng (or SysRng if ThreadRng is not available):
+let mut rng2: ChaCha12Rng = rand::make_rng();
+```
 
 Further, it should be obvious that the internal state of a CSPRNG must be
 kept secret. With that in mind, our implementations do not provide direct
@@ -335,5 +343,5 @@ by P. Hellekalek.
 [NIST]: https://www.nist.gov/
 [ECRYPT]: http://www.ecrypt.eu.org/
 [`getrandom`]: https://docs.rs/getrandom/
-[`SeedableRng::from_os_rng`]: https://docs.rs/rand/latest/rand/trait.SeedableRng.html#method.from_os_rng
 [zeroize]: https://crates.io/crates/zeroize
+[`rand::make_rng()`]: https://docs.rs/rand/latest/rand/fn.make_rng.html

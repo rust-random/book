@@ -6,7 +6,7 @@ In the following, instructions are provided for porting your code from
 The following is a migration guide focussing on potentially-breaking changes. For a full list of changes, see the relevant changelogs:
 
 -   [CHANGELOG.md](https://github.com/rust-random/rand/blob/master/CHANGELOG.md).
--   [rand_core/CHANGELOG.md](https://github.com/rust-random/rand/blob/master/rand_core/CHANGELOG.md).
+-   [rand_core/CHANGELOG.md](https://docs.rs/crate/rand_core/latest/source/CHANGELOG.md).
 -   [rand_distr/CHANGELOG.md](https://github.com/rust-random/rand/blob/master/rand_distr/CHANGELOG.md).
 
 ## Renamed functions and methods
