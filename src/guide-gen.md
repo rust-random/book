@@ -7,7 +7,7 @@ This section concerns theory; see also the chapter on
 [random number generators](guide-rngs.md).
 
 ```rust
-use rand::{Rng, SeedableRng};
+use rand::{RngExt, SeedableRng};
 
 # fn main() {
 // prepare a non-deterministic random number generator:
@@ -15,7 +15,7 @@ let mut rng = rand::rng();
 println!("{}", rng.random::<i32>()); // prints an unknown value
 
 // prepare a deterministic generator:
-let mut rng = rand_chacha::ChaCha8Rng::seed_from_u64(123);
+let mut rng = rand::rngs::ChaCha8Rng::seed_from_u64(123);
 println!("{}", rng.random::<i32>()); // prints -416273517
 # }
 ```

@@ -26,7 +26,7 @@ Users of `rand` will often need to import `rand::RngExt` may need to migrate fro
 
 `rand_core::OsRng` has been replaced with `getrandom::SysRng` (also available as `rand::rngs::SysRng`).
 
-The methods `SeedableRng::from_os_rng` and `try_from_os_rng` have thus been removed. `rand::make_rng()` is provided as a partial replacement; otherwise use `SomeRng::try_from_rng(&mut SysRng).unwrap()`.
+The methods `SeedableRng::from_os_rng` and `try_from_os_rng` have thus been removed. [`rand::make_rng()`] is provided as a partial replacement; otherwise use `SomeRng::try_from_rng(&mut SysRng).unwrap()`.
 
 
 ## PRNGs
@@ -41,10 +41,10 @@ Other PRNG crates have been updated with minimal changes (though this may not re
 
 `StdRng` and `ChaCha{8,12,20}Rng` no longer implement `Clone` or the [serde] traits. This was a deliberate choice to prevent accidental key-stream duplication or persisting to external storage. Note that it remains possible to clone or serialize these RNGs by reconstructing a new instance with the same key, then setting the stream (if applicable) and word position. For example:
 ```rust,editable
-use rand::{rngs::ChaCha8Rng, Rng};
+use rand::{rngs::ChaCha8Rng, Rng, SeedableRng};
 
 let mut rng1: ChaCha8Rng = rand::make_rng();
-let _: u128 = rng1.next_u64();
+let _ = rng1.next_u64();
 
 let mut rng2 = ChaCha8Rng::from_seed(rng1.get_seed());
 rng2.set_stream(rng1.get_stream());
@@ -85,3 +85,4 @@ There are no known value-breaking changes to `rand` in v0.10.
 
 
 [serde]: https://serde.rs/
+[`rand::make_rng()`]: https://docs.rs/rand/latest/rand/fn.make_rng.html

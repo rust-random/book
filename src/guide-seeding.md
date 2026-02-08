@@ -25,14 +25,14 @@ PRNGs may be seeded directly from such a value with [`SeedableRng::from_seed`].
 
 ### Fresh entropy
 
-Using a fresh seed (direct from the OS) is easy using [`SeedableRng::from_os_rng`]:
+Using a fresh seed is easy using [`rand::make_rng()`]:
 
 ```rust,editable
 use rand::prelude::*;
-use rand_chacha::ChaCha20Rng;
+use rand::rngs::ChaCha20Rng;
 
 fn main() {
-    let mut rng = ChaCha20Rng::from_os_rng();
+    let mut rng: ChaCha20Rng = rand::make_rng();
     println!("{}", rng.random_range(0..100));
 }
 ```
@@ -58,7 +58,7 @@ little bit more explicit:
 
 ```rust,editable
 use rand::prelude::*;
-use rand_chacha::ChaCha8Rng;
+use rand::rngs::ChaCha8Rng;
 
 fn main() {
     let mut seed: <ChaCha8Rng as SeedableRng>::Seed = Default::default();
@@ -87,7 +87,7 @@ number while providing good bit-avalanche (so that two similar numbers such as
 
 ```rust,editable
 use rand::prelude::*;
-use rand_chacha::ChaCha8Rng;
+use rand::rngs::ChaCha8Rng;
 
 fn main() {
     let mut rng = ChaCha8Rng::seed_from_u64(2);
@@ -143,7 +143,7 @@ function such as Argon2 must be used.
 [`SeedableRng::from_seed`]: https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#tymethod.from_seed
 [`SeedableRng::from_rng`]: https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#method.from_rng
 [`SeedableRng::seed_from_u64`]: https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#method.seed_from_u64
-[`SeedableRng::from_os_rng`]: https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#method.from_os_rng
 [`XorShiftRng`]: https://docs.rs/rand_xorshift/latest/rand_xorshift/struct.XorShiftRng.html
 [`ChaCha8Rng`]: https://docs.rs/rand_chacha/latest/rand_chacha/struct.ChaCha8Rng.html
 [`rand_seeder`]: https://github.com/rust-random/seeder/
+[`rand::make_rng()`]: https://docs.rs/rand/latest/rand/fn.make_rng.html

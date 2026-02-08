@@ -81,10 +81,10 @@ See the [RNGs] section for more RNGs, but avoid `SmallRng` and `StdRng` if you
 care about reproducible results.
 
 ```rust,editable
-use rand::{Rng, SeedableRng};
+use rand::{rngs::ChaCha8Rng, RngExt, SeedableRng};
 
 fn main() {
-    let mut rng = rand_chacha::ChaCha8Rng::seed_from_u64(10);
+    let mut rng = ChaCha8Rng::seed_from_u64(10);
     println!("Random f32: {}", rng.random::<f32>());
 }
 ```

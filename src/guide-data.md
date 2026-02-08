@@ -1,7 +1,7 @@
 # Random data
 
 ```rust
-# use rand::RngCore;
+# use rand::Rng;
 # fn main() {
 // get some random data:
 let mut data = [0u8; 8];

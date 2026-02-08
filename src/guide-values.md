@@ -38,7 +38,7 @@ Finally, it has a function to sample from arbitrary distributions:
 Examples:
 
 ```rust
-use rand::Rng;
+use rand::RngExt;
 # fn main() {
 let mut rng = rand::rng();
 
@@ -90,7 +90,7 @@ according to reasonable logic:
 
 Given that, we can implement the [`StandardUniform`] distribution for our own types:
 ```rust
-use rand::Rng;
+use rand::{Rng, RngExt};
 use rand::distr::{Distribution, StandardUniform, Uniform};
 use std::f64::consts::TAU; // = 2π
 

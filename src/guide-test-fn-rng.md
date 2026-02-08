@@ -3,9 +3,9 @@
 Occasionally a function that uses random number generators might need to be tested. For functions that need to be tested with test vectors, the following approach might be adapted:
 
 ```rust
-use rand::{TryCryptoRng, rngs::OsRng};
+use rand::{TryCryptoRng, rngs::SysRng};
 
-pub struct CryptoOperations<R: TryCryptoRng = OsRng> {
+pub struct CryptoOperations<R: TryCryptoRng = SysRng> {
     rng: R
 }
 
@@ -30,7 +30,7 @@ impl<R: TryCryptoRng> CryptoOperations<R> {
 }
 
 fn main() {
-    let rng = OsRng;
+    let rng = SysRng;
     let mut crypto_ops = <CryptoOperations>::new(rng);
 
     let mut secret: [u8; 8] = *b"\x00\x01\x02\x03\x04\x05\x06\x07";
