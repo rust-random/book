@@ -7,8 +7,6 @@ This section concerns theory; see also the chapter on
 [random number generators](guide-rngs.md).
 
 ```rust
-# extern crate rand;
-# extern crate rand_chacha;
 use rand::{Rng, SeedableRng};
 
 # fn main() {

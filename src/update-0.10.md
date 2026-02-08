@@ -41,7 +41,6 @@ Other PRNG crates have been updated with minimal changes (though this may not re
 
 `StdRng` and `ChaCha{8,12,20}Rng` no longer implement `Clone` or the [serde] traits. This was a deliberate choice to prevent accidental key-stream duplication or persisting to external storage. Note that it remains possible to clone or serialize these RNGs by reconstructing a new instance with the same key, then setting the stream (if applicable) and word position. For example:
 ```rust,editable
-# extern crate rand;
 use rand::{rngs::ChaCha8Rng, Rng};
 
 let mut rng1: ChaCha8Rng = rand::make_rng();

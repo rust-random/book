@@ -53,7 +53,6 @@ let b: u32 = Standard.sample_iter(rng).next().unwrap();
 ```
 can be replaced with the following code:
 ```rust,noplayground
-# extern crate rand;
 # use rand_0_8::prelude::*;
 # use rand_0_8::distributions::Standard;
 # fn main () {

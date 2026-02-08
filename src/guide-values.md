@@ -38,7 +38,6 @@ Finally, it has a function to sample from arbitrary distributions:
 Examples:
 
 ```rust
-# extern crate rand;
 use rand::Rng;
 # fn main() {
 let mut rng = rand::rng();
@@ -58,7 +57,6 @@ println!("roll = {}", rng.random_range(1..=6));
 
 Additionally, the [`random`] function is a short-cut to [`Rng::random`] on the [`rng()`]:
 ```rust
-# extern crate rand;
 # use rand::Rng;
 # fn main() {
 println!("Tossing a coin...");
@@ -92,7 +90,6 @@ according to reasonable logic:
 
 Given that, we can implement the [`StandardUniform`] distribution for our own types:
 ```rust
-# extern crate rand;
 use rand::Rng;
 use rand::distr::{Distribution, StandardUniform, Uniform};
 use std::f64::consts::TAU; // = 2π

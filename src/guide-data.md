@@ -1,7 +1,6 @@
 # Random data
 
 ```rust
-# extern crate rand;
 # use rand::RngCore;
 # fn main() {
 // get some random data:

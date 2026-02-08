@@ -28,8 +28,6 @@ PRNGs may be seeded directly from such a value with [`SeedableRng::from_seed`].
 Using a fresh seed (direct from the OS) is easy using [`SeedableRng::from_os_rng`]:
 
 ```rust,editable
-# extern crate rand;
-# extern crate rand_chacha;
 use rand::prelude::*;
 use rand_chacha::ChaCha20Rng;
 
@@ -47,7 +45,6 @@ Quite obviously, another RNG may be used to fill a seed. We provide a
 convenience method for this:
 
 ```rust,editable
-# extern crate rand;
 use rand::prelude::*;
 
 fn main() {
@@ -60,8 +57,6 @@ But, say you want to save a key and use it later. For that you need to be a
 little bit more explicit:
 
 ```rust,editable
-# extern crate rand;
-# extern crate rand_chacha;
 use rand::prelude::*;
 use rand_chacha::ChaCha8Rng;
 
@@ -91,8 +86,6 @@ number while providing good bit-avalanche (so that two similar numbers such as
 0 and 1 translate to very different seeds and independent RNG sequences).
 
 ```rust,editable
-# extern crate rand;
-# extern crate rand_chacha;
 use rand::prelude::*;
 use rand_chacha::ChaCha8Rng;
 

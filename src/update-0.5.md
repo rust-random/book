@@ -183,8 +183,6 @@ The method `ChaChaRng::set_counter` has been replaced by two new methods,
 method may be emulated as follows:
 
 ```rust,noplayground
-# extern crate rand;
-# extern crate rand_chacha;
 # use rand::prelude::*;
 # use rand_chacha::ChaChaRng;
 # fn main() {
