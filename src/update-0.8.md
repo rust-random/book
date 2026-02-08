@@ -53,8 +53,9 @@ let b: u32 = Standard.sample_iter(rng).next().unwrap();
 ```
 can be replaced with the following code:
 ```rust,noplayground
-# use rand_0_8::prelude::*;
-# use rand_0_8::distributions::Standard;
+# extern crate rand_0_8 as rand;
+# use rand::prelude::*;
+# use rand::distributions::Standard;
 # fn main () {
 let mut rng = thread_rng();
 let a: u32 = Standard.sample_iter(&mut rng).next().unwrap();
@@ -130,10 +131,10 @@ Several smaller changes occurred to rand distributions:
     ```
     With Rand 0.8, this is equivalent to the following:
     ```rust,noplayground
-    # extern crate rand;
-    # use rand_0_8::{distributions::Alphanumeric, Rng};
+    # extern crate rand_0_8 as rand;
+    # use rand::{distributions::Alphanumeric, Rng};
     # fn main() {
-    # let mut rng = rand_0_8::thread_rng();
+    # let mut rng = rand::thread_rng();
     let chars: String = std::iter::repeat(())
         .map(|()| rng.sample(Alphanumeric))
         .map(char::from)

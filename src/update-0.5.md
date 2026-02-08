@@ -75,7 +75,8 @@ any type supporting `SeedableRng`, and provides construction from fresh, strong
 entropy:
 
 ```rust,noplayground
-use rand_0_5::{ChaChaRng, FromEntropy};
+# extern crate rand_0_5 as rand;
+use rand::{ChaChaRng, FromEntropy};
 
 let mut rng = ChaChaRng::from_entropy();
 ```
@@ -121,7 +122,8 @@ A new `Error` type has been added, designed explicitly for no-std compatibility,
 simplicity, and enough flexibility for our uses (carrying a `cause` when
 possible):
 ```rust,noplayground
-# use rand_0_5::ErrorKind;
+# extern crate rand_0_5 as rand;
+# use rand::ErrorKind;
 pub struct Error {
     pub kind: ErrorKind,
     pub msg: &'static str,
@@ -183,8 +185,9 @@ The method `ChaChaRng::set_counter` has been replaced by two new methods,
 method may be emulated as follows:
 
 ```rust,noplayground
+# extern crate rand_0_5 as rand;
 # use rand::prelude::*;
-# use rand_chacha::ChaChaRng;
+# use rand_chacha_0_1::ChaChaRng;
 # fn main() {
 let lower = 88293;
 let higher = 9300932;
