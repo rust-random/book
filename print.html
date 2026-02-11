@@ -36,7 +36,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-36cf1434.js";
+            window.path_to_searchindex_js = "searchindex-753e24b7.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-a6f3352f.js"></script>
@@ -445,7 +445,7 @@ new module organization in your imports.</p>
 <p>Next, lets make a new crate and add rand as a dependency:</p>
 <pre><code class="language-sh">cargo new randomly
 cd randomly
-cargo add rand --features small_rng
+cargo add rand 
 </code></pre>
 <p>Now, paste the following into <code>src/main.rs</code>:</p>
 <pre class="playground"><code class="language-rust edition2024">use rand::prelude::*;
