@@ -6,7 +6,7 @@ Next, lets make a new crate and add rand as a dependency:
 ```sh
 cargo new randomly
 cd randomly
-cargo add rand --features small_rng
+cargo add rand 
 ```
 
 Now, paste the following into `src/main.rs`:
