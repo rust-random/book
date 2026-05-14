@@ -74,7 +74,6 @@ The dependency on **`getrandom`** was bumped to version 0.4. See [the getrandom 
 Feature flags:
 
 -   `os_rng` was renamed to `sys_rng`
--   `thread_rng`, `std_rng` and `sys_rng` are no longer enabled by default (TODO: this is not yet confirmed)
 -   `small_rng` has been removed; its functionality is always available
 -   `chacha` is a new flag, enabling `rand::rngs::ChaCha{8,12,20}Rng`
 
