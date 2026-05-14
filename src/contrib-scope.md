@@ -58,7 +58,7 @@ following reasons:
 -   to provide a few high-quality alternative generators
 -   historical usage
 
-These are implemented within "family" crates, e.g. `rand_chacha`, `rand_pcg`,
+These are implemented within "family" crates, e.g. `chacha20`, `rand_pcg`,
 `rand_xoshiro`.
 
 We have received several requests to adopt new algorithms into the library; when

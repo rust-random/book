@@ -80,8 +80,8 @@ table since CSPRNGs may not have observable defects.
 | name | full name |  performance | initialization | memory | security (predictability) | forward secrecy |
 |------|-----------|--------------|--------------|----------|----------------|-------------------------|
 | [`StdRng`] | (unspecified) | 1.5 GB/s | fast | 136 bytes | widely trusted | no |
-| [`ChaCha20Rng`] | ChaCha20 | 1.8 GB/s | fast | 136 bytes | [rigorously analysed](https://tools.ietf.org/html/rfc7539#section-1) | no |
-| [`ChaCha8Rng`] | ChaCha8 | 2.2 GB/s | fast | 136 bytes | small security margin | no |
+| [`ChaCha20`] | ChaCha20 | 1.8 GB/s | fast | 136 bytes | [rigorously analysed](https://tools.ietf.org/html/rfc7539#section-1) | no |
+| [`ChaCha8`] | ChaCha8 | 2.2 GB/s | fast | 136 bytes | small security margin | no |
 | [`Hc128Rng`] | HC-128 | 2.1 GB/s | slow | 4176 bytes | [recommended by eSTREAM](http://www.ecrypt.eu.org/stream/) | no |
 | [`IsaacRng`] | ISAAC | 1.1 GB/s | slow | 2072 bytes | [unknown](https://burtleburtle.net/bob/rand/isaacafa.html) | unknown |
 | [`Isaac64Rng`] | ISAAC-64 | 2.2 GB/s | slow | 4136 bytes| unknown | unknown |
@@ -131,13 +131,13 @@ Mersenne Twister MT19937 algorithm requires 2.5 kB of state.
 CSPRNGs typically require more memory; since the seed size is recommended
 to be at least 192 bits and some more may be required for the algorithm,
 256 bits would be approximately the minimum secure size. In practice,
-CSPRNGs tend to use quite a bit more, [`ChaChaRng`] is relatively small with
+CSPRNGs tend to use quite a bit more, [`ChaCha20`] is relatively small with
 136 bytes of state.
 
 ### Initialization time
 
 The time required to initialize new generators varies significantly. Many
-simple PRNGs and even some cryptographic ones (including [`ChaChaRng`])
+simple PRNGs and even some cryptographic ones (including [`ChaCha20`])
 only need to copy the seed value and some constants into their state, and
 thus can be constructed very quickly. In contrast, CSPRNGs with large state
 require an expensive key-expansion.
@@ -322,9 +322,8 @@ by P. Hellekalek.
 [`Xoshiro256PlusPlus`]: https://docs.rs/rand_xoshiro/latest/rand_xoshiro/struct.Xoshiro256PlusPlus.html
 [`Xoshiro256Plus`]: https://docs.rs/rand_xoshiro/latest/rand_xoshiro/struct.Xoshiro256Plus.html
 [`SplitMix64`]: https://docs.rs/rand_xoshiro/latest/rand_xoshiro/struct.SplitMix64.html
-[`ChaChaRng`]: https://docs.rs/rand_chacha/latest/rand_chacha/type.ChaChaRng.html
-[`ChaCha20Rng`]: https://docs.rs/rand_chacha/latest/rand_chacha/struct.ChaCha20Rng.html
-[`ChaCha8Rng`]: https://docs.rs/rand_chacha/latest/rand_chacha/struct.ChaCha8Rng.html
+[`ChaCha20`]: https://docs.rs/chacha20/latest/chacha20/type.ChaCha20.html
+[`ChaCha8`]: https://docs.rs/chacha20/latest/chacha20/type.ChaCha8.html
 [`Hc128Rng`]: https://docs.rs/rand_hc/latest/rand_hc/struct.Hc128Rng.html
 [`IsaacRng`]: https://docs.rs/rand_isaac/latest/rand_isaac/isaac/struct.IsaacRng.html
 [`Isaac64Rng`]: https://docs.rs/rand_isaac/latest/rand_isaac/isaac64/struct.Isaac64Rng.html

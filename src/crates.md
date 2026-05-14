@@ -3,7 +3,7 @@
 <pre><code class="language-plain">                                           ┌ <a href="https://docs.rs/statrs/">statrs</a>
 <a href="https://docs.rs/getrandom/">getrandom</a> ┐                                ├ <a href="https://docs.rs/rand_distr/">rand_distr</a>
           └ <a href="https://docs.rs/rand_core/">rand_core</a> ┬─────────────┬ <a href="https://docs.rs/rand/">rand</a> ┘
-                      ├ <a href="https://docs.rs/rand_chacha/">rand_chacha</a> ┘
+                      ├ <a href="https://docs.rs/chacha20/">chacha20</a> ┘
                       ├ <a href="https://docs.rs/rand_pcg/">rand_pcg</a>
                       └ [other RNG crates]
 </code></pre>
@@ -20,7 +20,7 @@ random-number sources.
 The following crates implement pseudo-random number generators
 (see [Our RNGs](guide-rngs.md)):
 
--   [`rand_chacha`] provides generators using the ChaCha cipher
+-   [`chacha20`] provides generators using the ChaCha cipher
 -   [`rand_hc`] implements a generator using the HC-128 cipher
 -   [`rand_isaac`] implements the ISAAC generators
 -   [`rand_pcg`] implements a small selection of PCG generators
@@ -59,7 +59,7 @@ number distributions: uniform and weighted sampling. For everything else,
 [`rand_distr`]: https://docs.rs/rand_distr/
 [`statrs`]: https://docs.rs/statrs/
 [`getrandom`]: https://docs.rs/getrandom/
-[`rand_chacha`]: https://docs.rs/rand_chacha/
+[`chacha20`]: https://docs.rs/chacha20/
 [`rand_pcg`]: https://docs.rs/rand_pcg/
 [`rand_xoshiro`]: https://docs.rs/rand_xoshiro/
 [`log`]: https://docs.rs/log/

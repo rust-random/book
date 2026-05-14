@@ -55,7 +55,7 @@ documentation. Example:
 
 ```rust,noplayground
 // Link to the crate page:
-//! [`rand_chacha`]: https://crates.io/crates/rand_chacha
+//! [`chacha20`]: https://crates.io/crates/chacha20
 ```
 
 When referring to an item from within another crate,
@@ -70,11 +70,13 @@ Examples:
 //! We depend on rand_core, therefore can use the Rust path:
 //! [`BlockRngCore`]: rand_core::block::BlockRngCore
 
-//! rand_chacha is not a dependency, but is within the same repository:
-//! [`ChaCha20Rng`]: ../../rand_chacha/struct.ChaCha20Rng.html
+//! When working inside the `rust-random/rngs` repository, sibling crates
+//! such as rand_xoshiro are not dependencies but share a docs build, so a
+//! relative path works:
+//! [`Xoshiro256PlusPlus`]: ../../rand_xoshiro/struct.Xoshiro256PlusPlus.html
 
 //! Link directly to docs.rs, with major & minor but no patch version:
-//! [`getrandom`]: https://docs.rs/getrandom/0.1/getrandom/fn.getrandom.html
+//! [`getrandom`]: https://docs.rs/getrandom/0.3/getrandom/fn.getrandom.html
 ```
 
 ## Auxiliary documentation
