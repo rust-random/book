@@ -47,7 +47,7 @@ You may wish to refer to the [pcg-random] and [xoshiro] websites.
 | [`Xoshiro256PlusPlus`] | Xoshiro256++ | 11 GB/s | 32 bytes | ★★★☆☆ | `u64` * 2<sup>256</sup> - 1 | jump-ahead |
 | [`Xoshiro256Plus`] | Xoshiro256+ | 13 GB/s | 32 bytes | ★★☆☆☆ | `u64` * 2<sup>256</sup> - 1 | jump-ahead |
 | [`SplitMix64`] | splitmix64 | 13 GB/s | 8 bytes | ★☆☆☆☆ | `u64` * 2<sup>64</sup> | — |
-| [`StepRng`] | counter | 35 GB/s | 16 bytes | ☆☆☆☆☆ | `u64` * 2<sup>64</sup> | — |
+| `StepRng` | counter | 35 GB/s | 16 bytes | ☆☆☆☆☆ | `u64` * 2<sup>64</sup> | — |
 
 Here, performance is measured roughly for `u64` outputs on an
 AMD Ryzen 9 9950X3D (note that this will vary significantly by application; in
@@ -311,7 +311,6 @@ by P. Hellekalek.
 [`rngs` module]: https://docs.rs/rand/latest/rand/rngs/
 [`SmallRng`]: https://docs.rs/rand/latest/rand/rngs/struct.SmallRng.html
 [`StdRng`]: https://docs.rs/rand/latest/rand/rngs/struct.StdRng.html
-[`StepRng`]: https://docs.rs/rand/latest/rand/rngs/mock/struct.StepRng.html
 [`rand::rng`]: https://docs.rs/rand/latest/rand/fn.rng.html
 [basic PRNGs]: #basic-pseudo-random-number-generators-prngs
 [CSPRNGs]: #cryptographically-secure-pseudo-random-number-generators-csprngs
@@ -322,8 +321,8 @@ by P. Hellekalek.
 [`Xoshiro256PlusPlus`]: https://docs.rs/rand_xoshiro/latest/rand_xoshiro/struct.Xoshiro256PlusPlus.html
 [`Xoshiro256Plus`]: https://docs.rs/rand_xoshiro/latest/rand_xoshiro/struct.Xoshiro256Plus.html
 [`SplitMix64`]: https://docs.rs/rand_xoshiro/latest/rand_xoshiro/struct.SplitMix64.html
-[`ChaCha20Rng`]: https://docs.rs/chacha20/latest/chacha20/type.ChaCha20Rng.html
-[`ChaCha8Rng`]: https://docs.rs/chacha20/latest/chacha20/type.ChaCha8Rng.html
+[`ChaCha20Rng`]: https://docs.rs/chacha20/latest/chacha20/struct.ChaCha20Rng.html
+[`ChaCha8Rng`]: https://docs.rs/chacha20/latest/chacha20/struct.ChaCha8Rng.html
 [`Hc128Rng`]: https://docs.rs/rand_hc/latest/rand_hc/struct.Hc128Rng.html
 [`IsaacRng`]: https://docs.rs/rand_isaac/latest/rand_isaac/isaac/struct.IsaacRng.html
 [`Isaac64Rng`]: https://docs.rs/rand_isaac/latest/rand_isaac/isaac64/struct.Isaac64Rng.html
