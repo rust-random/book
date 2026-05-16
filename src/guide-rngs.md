@@ -39,19 +39,19 @@ You may wish to refer to the [pcg-random] and [xoshiro] websites.
 
 | name | full name | performance | memory | quality | period | features |
 |------|-----------|-------------|--------|---------|--------|----------|
-| [`SmallRng`] | (unspecified) | 7 GB/s | 16 bytes | ★★★☆☆ | ≥ `u32` * 2<sup>64</sup> | not portable |
-| [`Pcg32`] | PCG XSH RR 64/32 (LCG) | 3 GB/s | 16 bytes | ★★★☆☆ | `u32` * 2<sup>64</sup> | — |
-| [`Pcg64`] | PCG XSL 128/64 (LCG) | 4 GB/s | 32 bytes | ★★★☆☆ | `u64` * 2<sup>128</sup> | — |
-| [`Pcg64Mcg`] | PCG XSL 128/64 (MCG) | 7 GB/s | 16 bytes | ★★★☆☆ | `u64` * 2<sup>126</sup> | — |
-| [`XorShiftRng`] | Xorshift 32/128 | 5 GB/s | 16 bytes | ★☆☆☆☆ | `u32` * 2<sup>128</sup> - 1 | — |
-| [`Xoshiro256PlusPlus`] | Xoshiro256++ | 7 GB/s | 32 bytes | ★★★☆☆ | `u64` * 2<sup>256</sup> - 1 | jump-ahead |
-| [`Xoshiro256Plus`] | Xoshiro256+ | 8 GB/s | 32 bytes | ★★☆☆☆ | `u64` * 2<sup>256</sup> - 1 | jump-ahead |
-| [`SplitMix64`] | splitmix64 | 8 GB/s | 8 bytes | ★☆☆☆☆ | `u64` * 2<sup>64</sup> | — |
-| [`StepRng`] | counter | 51 GB/s | 16 bytes | ☆☆☆☆☆ | `u64` * 2<sup>64</sup> | — |
+| [`SmallRng`] | (unspecified) | 11 GB/s | 16 bytes | ★★★☆☆ | ≥ `u32` * 2<sup>64</sup> | not portable |
+| [`Pcg32`] | PCG XSH RR 64/32 (LCG) | 5 GB/s | 16 bytes | ★★★☆☆ | `u32` * 2<sup>64</sup> | — |
+| [`Pcg64`] | PCG XSL 128/64 (LCG) | 7 GB/s | 32 bytes | ★★★☆☆ | `u64` * 2<sup>128</sup> | — |
+| [`Pcg64Mcg`] | PCG XSL 128/64 (MCG) | 8 GB/s | 16 bytes | ★★★☆☆ | `u64` * 2<sup>126</sup> | — |
+| [`XorShiftRng`] | Xorshift 32/128 | 7 GB/s | 16 bytes | ★☆☆☆☆ | `u32` * 2<sup>128</sup> - 1 | — |
+| [`Xoshiro256PlusPlus`] | Xoshiro256++ | 11 GB/s | 32 bytes | ★★★☆☆ | `u64` * 2<sup>256</sup> - 1 | jump-ahead |
+| [`Xoshiro256Plus`] | Xoshiro256+ | 13 GB/s | 32 bytes | ★★☆☆☆ | `u64` * 2<sup>256</sup> - 1 | jump-ahead |
+| [`SplitMix64`] | splitmix64 | 13 GB/s | 8 bytes | ★☆☆☆☆ | `u64` * 2<sup>64</sup> | — |
+| [`StepRng`] | counter | 35 GB/s | 16 bytes | ☆☆☆☆☆ | `u64` * 2<sup>64</sup> | — |
 
-Here, performance is measured roughly for `u64` outputs on a 3.4GHz Haswell CPU
-(note that this will vary significantly by application; in general cryptographic
-RNGs do better with byte sequence output). Quality ratings are
+Here, performance is measured roughly for `u64` outputs on an
+AMD Ryzen 9 9950X3D (note that this will vary significantly by application; in
+general cryptographic RNGs do better with byte sequence output). Quality ratings are
 based on theory and observable defects, roughly as follows:
 
 -   ★☆☆☆☆ = suitable for simple applications but with significant flaws
@@ -79,12 +79,12 @@ table since CSPRNGs may not have observable defects.
 
 | name | full name |  performance | initialization | memory | security (predictability) | forward secrecy |
 |------|-----------|--------------|--------------|----------|----------------|-------------------------|
-| [`StdRng`] | (unspecified) | 1.5 GB/s | fast | 136 bytes | widely trusted | no |
-| [`ChaCha20Rng`] | ChaCha20 | 1.8 GB/s | fast | 136 bytes | [rigorously analysed](https://tools.ietf.org/html/rfc7539#section-1) | no |
-| [`ChaCha8Rng`] | ChaCha8 | 2.2 GB/s | fast | 136 bytes | small security margin | no |
-| [`Hc128Rng`] | HC-128 | 2.1 GB/s | slow | 4176 bytes | [recommended by eSTREAM](http://www.ecrypt.eu.org/stream/) | no |
-| [`IsaacRng`] | ISAAC | 1.1 GB/s | slow | 2072 bytes | [unknown](https://burtleburtle.net/bob/rand/isaacafa.html) | unknown |
-| [`Isaac64Rng`] | ISAAC-64 | 2.2 GB/s | slow | 4136 bytes| unknown | unknown |
+| [`StdRng`] | (unspecified) | 4.1 GB/s | fast | 136 bytes | widely trusted | no |
+| [`ChaCha20Rng`] | ChaCha20 | 2.6 GB/s | fast | 136 bytes | [rigorously analysed](https://tools.ietf.org/html/rfc7539#section-1) | no |
+| [`ChaCha8Rng`] | ChaCha8 | 5.8 GB/s | fast | 136 bytes | small security margin | no |
+| [`Hc128Rng`] | HC-128 | 4.6 GB/s | slow | 4176 bytes | [recommended by eSTREAM](http://www.ecrypt.eu.org/stream/) | no |
+| [`IsaacRng`] | ISAAC | 2.1 GB/s | slow | 2072 bytes | [unknown](https://burtleburtle.net/bob/rand/isaacafa.html) | unknown |
+| [`Isaac64Rng`] | ISAAC-64 | 3.7 GB/s | slow | 4136 bytes| unknown | unknown |
 
 It should be noted that the ISAAC generators are only included for
 historical reasons: they have been with the Rust language since the very
