@@ -1,11 +1,19 @@
 # The crate family
 
 <pre><code class="language-plain">                                           ┌ <a href="https://docs.rs/statrs/">statrs</a>
-<a href="https://docs.rs/getrandom/">getrandom</a> ┐                                ├ <a href="https://docs.rs/rand_distr/">rand_distr</a>
-          └ <a href="https://docs.rs/rand_core/">rand_core</a> ┬─────────────┬ <a href="https://docs.rs/rand/">rand</a> ┘
-                      ├ <a href="https://docs.rs/chacha20/">chacha20</a> ┘
-                      ├ <a href="https://docs.rs/rand_pcg/">rand_pcg</a>
-                      └ [other RNG crates]
+                                           ├ <a href="https://docs.rs/rand_distr/">rand_distr</a>
+          <a href="https://docs.rs/rand_core/">rand_core</a> ┬───────────────┬ <a href="https://docs.rs/rand/">rand</a> ┘
+                    ├ <a href="https://docs.rs/chacha20/">chacha20</a> ─────┤
+                    ├ <a href="https://docs.rs/getrandom/">getrandom</a> ────┘
+                    ├ <a href="https://docs.rs/rand_chacha/">rand_chacha</a>
+                    ├ <a href="https://docs.rs/rand_hc/">rand_hc</a>
+                    ├ <a href="https://docs.rs/rand_isaac/">rand_isaac</a>
+                    ├ <a href="https://docs.rs/rand_jitter/">rand_jitter</a>
+                    ├ <a href="https://docs.rs/rand_pcg/">rand_pcg</a>
+                    ├ <a href="https://docs.rs/rand_sfc/">rand_sfc</a>
+                    ├ <a href="https://docs.rs/rand_seeder/">rand_seeder</a>
+                    ├ <a href="https://docs.rs/rand_xorshift/">rand_xorshift</a>
+                    └ <a href="https://docs.rs/rand_xoshiro/">rand_xoshiro</a>
 </code></pre>
 
 ## Interfaces
@@ -21,13 +29,21 @@ The following crates implement pseudo-random number generators
 (see [Our RNGs](guide-rngs.md)):
 
 -   [`chacha20`] provides generators using the ChaCha cipher
+    (used internally by [`rand`] via the `chacha` feature)
+-   [`rand_chacha`] also provides ChaCha-cipher generators
+    (predecessor of `chacha20` for this purpose; kept for compatibility)
 -   [`rand_hc`] implements a generator using the HC-128 cipher
 -   [`rand_isaac`] implements the ISAAC generators
 -   [`rand_pcg`] implements a small selection of PCG generators
--   [`rand_xoshiro`] implements the SplitMix and Xoshiro generators
+-   [`rand_sfc`] implements the SFC (Small Fast Counter) generators
 -   [`rand_xorshift`] implements the basic Xorshift generator
+-   [`rand_xoshiro`] implements the SplitMix and Xoshiro generators
 
 Exceptionally, [`SmallRng`] is implemented directly in [`rand`].
+
+In addition, [`rand_jitter`] provides a jitter-based entropy source, and
+[`rand_seeder`] derives seeds from arbitrary hashable data (used as a building
+block in [Seeding RNGs](guide-seeding.md)).
 
 ## rand (main crate)
 
@@ -64,8 +80,12 @@ number distributions: uniform and weighted sampling. For everything else,
 [`rand_xoshiro`]: https://docs.rs/rand_xoshiro/
 [`log`]: https://docs.rs/log/
 [`serde`]: https://serde.rs/
+[`rand_chacha`]: https://docs.rs/rand_chacha/
 [`rand_hc`]: https://docs.rs/rand_hc/
 [`rand_isaac`]: https://docs.rs/rand_isaac/
+[`rand_jitter`]: https://docs.rs/rand_jitter/
+[`rand_sfc`]: https://docs.rs/rand_sfc/
+[`rand_seeder`]: https://docs.rs/rand_seeder/
 [`rand_xorshift`]: https://docs.rs/rand_xorshift/
 
 [`RngCore`]: https://docs.rs/rand_core/latest/rand_core/trait.RngCore.html
