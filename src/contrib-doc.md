@@ -46,39 +46,6 @@ The [rust-random/getrandom](https://github.com/rust-random/getrandom)
 repository contains only a single crate, hence a simple `cargo doc` will
 suffice.
 
-### Cross-crate links
-
-When referring to another crate, we prefer linking to the crate page on
-crates.io since (a) this includes the README documenting the purpose of the
-crate and (b) this links directly to both the repository and the API
-documentation. Example:
-
-```rust,noplayground
-// Link to the crate page:
-//! [`chacha20`]: https://crates.io/crates/chacha20
-```
-
-When referring to an item from within another crate,
-
-1.  if that item is accessible via a crate dependency (even if not via the
-    public API), use the Rust item path
-2.  otherwise, use an absolute link to docs.rs
-
-Examples:
-
-```rust,noplayground
-//! We depend on rand_core, therefore can use the Rust path:
-//! [`BlockRngCore`]: rand_core::block::BlockRngCore
-
-//! When working inside the `rust-random/rngs` repository, sibling crates
-//! such as rand_xoshiro are not dependencies but share a docs build, so a
-//! relative path works:
-//! [`Xoshiro256PlusPlus`]: ../../rand_xoshiro/struct.Xoshiro256PlusPlus.html
-
-//! Link directly to docs.rs, with major & minor but no patch version:
-//! [`getrandom`]: https://docs.rs/getrandom/0.3/getrandom/fn.getrandom.html
-```
-
 ## Auxiliary documentation
 
 ### README files
