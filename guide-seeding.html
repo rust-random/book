@@ -35,7 +35,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-0e8f3877.js";
+            window.path_to_searchindex_js = "searchindex-e7afdbda.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-a6f3352f.js"></script>
@@ -225,7 +225,7 @@ fn main() {
 behave badly when seeded from the same type of generator (in this case, Xorshift
 generates a clone). For cryptographic PRNGs this is not a problem;
 for others it is recommended to seed from a different type of generator.
-<a href="https://docs.rs/rand_chacha/latest/rand_chacha/struct.ChaCha8Rng.html"><code>ChaCha8Rng</code></a> is an excellent choice for a deterministic master generator
+<a href="https://docs.rs/rand/latest/rand/rngs/struct.ChaCha8Rng.html"><code>ChaCha8Rng</code></a> is an excellent choice for a deterministic master generator
 (but for cryptographic uses, prefer the 12-round variant or higher).</p>
 <h3 id="a-simple-number"><a class="header" href="#a-simple-number">A simple number</a></h3>
 <p>For some applications, especially simulations, all you want are a sequence of
@@ -251,12 +251,12 @@ change to the string should result in a fully independent generator sequence.</p
 to a hash result, then using that result to seed a generator. The
 <a href="https://github.com/rust-random/seeder/"><code>rand_seeder</code></a> crate is designed for just this purpose.</p>
 <pre><code class="language-rust noplayground">use rand::prelude::*;
+use rand::rngs::Xoshiro256PlusPlus;
 use rand_seeder::{Seeder, SipHasher};
-use rand_pcg::Pcg64;
 
 fn main() {
     // In one line:
-    let mut rng: Pcg64 = Seeder::from("stripy zebra").into_rng();
+    let mut rng: Xoshiro256PlusPlus = Seeder::from("stripy zebra").into_rng();
     println!("{}", rng.random::&lt;char&gt;());
 
     // If we want to be more explicit, first we create a SipRng:
@@ -265,11 +265,11 @@ fn main() {
     // (Note: hasher_rng is a full RNG and can be used directly.)
 
     // Now, we use hasher_rng to create a seed:
-    let mut seed: &lt;Pcg64 as SeedableRng&gt;::Seed = Default::default();
+    let mut seed: &lt;Xoshiro256PlusPlus as SeedableRng&gt;::Seed = Default::default();
     hasher_rng.fill(&amp;mut seed);
 
     // And create our RNG from that seed:
-    let mut rng = Pcg64::from_seed(seed);
+    let mut rng = Xoshiro256PlusPlus::from_seed(seed);
     println!("{}", rng.random::&lt;char&gt;());
 }</code></pre>
 <p>Note that <code>rand_seeder</code> is <strong>not suitable</strong> for cryptographic usage.

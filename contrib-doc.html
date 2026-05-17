@@ -35,7 +35,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-0e8f3877.js";
+            window.path_to_searchindex_js = "searchindex-e7afdbda.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-a6f3352f.js"></script>
@@ -205,28 +205,6 @@ cargo doc --workspace --no-deps --all-features --open
 <p>The <a href="https://github.com/rust-random/getrandom">rust-random/getrandom</a>
 repository contains only a single crate, hence a simple <code>cargo doc</code> will
 suffice.</p>
-<h3 id="cross-crate-links"><a class="header" href="#cross-crate-links">Cross-crate links</a></h3>
-<p>When referring to another crate, we prefer linking to the crate page on
-crates.io since (a) this includes the README documenting the purpose of the
-crate and (b) this links directly to both the repository and the API
-documentation. Example:</p>
-<pre><code class="language-rust noplayground">// Link to the crate page:
-//! [`rand_chacha`]: https://crates.io/crates/rand_chacha</code></pre>
-<p>When referring to an item from within another crate,</p>
-<ol>
-<li>if that item is accessible via a crate dependency (even if not via the
-public API), use the Rust item path</li>
-<li>otherwise, use an absolute link to docs.rs</li>
-</ol>
-<p>Examples:</p>
-<pre><code class="language-rust noplayground">//! We depend on rand_core, therefore can use the Rust path:
-//! [`BlockRngCore`]: rand_core::block::BlockRngCore
-
-//! rand_chacha is not a dependency, but is within the same repository:
-//! [`ChaCha20Rng`]: ../../rand_chacha/struct.ChaCha20Rng.html
-
-//! Link directly to docs.rs, with major &amp; minor but no patch version:
-//! [`getrandom`]: https://docs.rs/getrandom/0.1/getrandom/fn.getrandom.html</code></pre>
 <h2 id="auxiliary-documentation"><a class="header" href="#auxiliary-documentation">Auxiliary documentation</a></h2>
 <h3 id="readme-files"><a class="header" href="#readme-files">README files</a></h3>
 <p>README files contain a brief introduction to the crate, shield badges, useful

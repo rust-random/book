@@ -35,7 +35,7 @@
             const path_to_root = "";
             const default_light_theme = "light";
             const default_dark_theme = "navy";
-            window.path_to_searchindex_js = "searchindex-0e8f3877.js";
+            window.path_to_searchindex_js = "searchindex-e7afdbda.js";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc-a6f3352f.js"></script>
@@ -197,7 +197,7 @@ a unique stream on each.</p>
 <h3 id="streams"><a class="header" href="#streams">Streams</a></h3>
 <p>Which RNG families support multiple streams?</p>
 <ul>
-<li><a href="https://docs.rs/rand_chacha/latest/rand_chacha/">ChaCha</a>: the ChaCha RNGs
+<li><a href="https://docs.rs/rand/latest/rand/rngs/struct.ChaCha20Rng.html">ChaCha</a>: the ChaCha RNGs
 support 256-bit seed, 64-bit stream and 64-bit counter (per 16-word block),
 thus supporting 2<sup>64</sup> streams of 2<sup>68</sup> words each.</li>
 <li><a href="https://docs.rs/rand_hc/latest/rand_hc/">Hc128</a> is a cryptographic RNG
@@ -264,7 +264,7 @@ fn main() {
 <h2 id="practice-deterministic-multi-threaded"><a class="header" href="#practice-deterministic-multi-threaded">Practice: deterministic multi-threaded</a></h2>
 <p>We use approach (4) above to achieve a deterministic result: initialize all RNGs
 from a single seed, but using multiple streams.
-We use <a href="https://docs.rs/rand_chacha/latest/rand_chacha/struct.ChaCha8Rng.html#method.set_stream"><code>ChaCha8Rng::set_stream</code></a> to achieve this.</p>
+We use <a href="https://docs.rs/rand/latest/rand/rngs/struct.ChaCha8Rng.html#method.set_stream"><code>ChaCha8Rng::set_stream</code></a> to achieve this.</p>
 <p>Note further that we manually batch multiple work-units according to
 <code>BATCH_SIZE</code>. This is important since the cost of initializing an RNG is large
 compared to the cost of our work unit (generating two random samples plus some
