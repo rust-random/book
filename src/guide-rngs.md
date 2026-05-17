@@ -40,9 +40,9 @@ You may wish to refer to the [pcg-random] and [xoshiro] websites.
 | name | full name | performance | memory | quality | period | features |
 |------|-----------|-------------|--------|---------|--------|----------|
 | [`SmallRng`] | (unspecified) | (unspecified) | (unspecified) | ★★★☆☆ | ≥ `u32` * 2<sup>64</sup> | not portable |
-| [`Pcg32`] | PCG XSH RR 64/32 (LCG) | 5 GB/s | 16 bytes | ★★★☆☆ | `u32` * 2<sup>64</sup> | — |
-| [`Pcg64`] | PCG XSL 128/64 (LCG) | 7 GB/s | 32 bytes | ★★★☆☆ | `u64` * 2<sup>128</sup> | — |
-| [`Pcg64Mcg`] | PCG XSL 128/64 (MCG) | 8 GB/s | 16 bytes | ★★★☆☆ | `u64` * 2<sup>126</sup> | — |
+| [`Pcg32`] | PCG XSH RR 64/32 (LCG) | 5 GB/s | 16 bytes | ★★★☆☆ | `u32` * 2<sup>64</sup> | jump-ahead |
+| [`Pcg64`] | PCG XSL 128/64 (LCG) | 7 GB/s | 32 bytes | ★★★☆☆ | `u64` * 2<sup>128</sup> | jump-ahead |
+| [`Pcg64Mcg`] | PCG XSL 128/64 (MCG) | 8 GB/s | 16 bytes | ★★★☆☆ | `u64` * 2<sup>126</sup> | jump-ahead |
 | [`XorShiftRng`] | Xorshift 32/128 | 7 GB/s | 16 bytes | ★☆☆☆☆ | `u32` * 2<sup>128</sup> - 1 | — |
 | [`Xoshiro256PlusPlus`] | Xoshiro256++ | 11 GB/s | 32 bytes | ★★★☆☆ | `u64` * 2<sup>256</sup> - 1 | jump-ahead |
 | [`Xoshiro256Plus`] | Xoshiro256+ | 13 GB/s | 32 bytes | ★★☆☆☆ | `u64` * 2<sup>256</sup> - 1 | jump-ahead |
