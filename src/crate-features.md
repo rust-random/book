@@ -9,7 +9,7 @@ Release versions of `Cargo.toml` can be viewed on `docs.rs`:
 -   <https://docs.rs/crate/rand/latest/source/Cargo.toml.orig>
 -   <https://docs.rs/crate/rand_core/latest/source/Cargo.toml.orig>
 -   <https://docs.rs/crate/rand_distr/latest/source/Cargo.toml.orig>
--   <https://docs.rs/crate/rand_chacha/latest/source/Cargo.toml.orig>
+-   <https://docs.rs/crate/chacha20/latest/source/Cargo.toml.orig>
 -   <https://docs.rs/crate/rand_xoshiro/latest/source/Cargo.toml.orig>
 -   <https://docs.rs/crate/rand_pcg/latest/source/Cargo.toml.orig>
 

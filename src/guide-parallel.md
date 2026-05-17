@@ -25,7 +25,7 @@ a unique stream on each.
 
 Which RNG families support multiple streams?
 
--   [ChaCha](https://docs.rs/rand_chacha/latest/rand_chacha/): the ChaCha RNGs
+-   [ChaCha](https://docs.rs/rand/latest/rand/rngs/struct.ChaCha20Rng.html): the ChaCha RNGs
     support 256-bit seed, 64-bit stream and 64-bit counter (per 16-word block),
     thus supporting 2<sup>64</sup> streams of 2<sup>68</sup> words each.
 -   [Hc128](https://docs.rs/rand_hc/latest/rand_hc/) is a cryptographic RNG
@@ -145,4 +145,4 @@ fn main() {
 
 [`rng()`]: https://docs.rs/rand/latest/rand/fn.rng.html
 [`map_init`]: https://docs.rs/rayon/latest/rayon/iter/trait.ParallelIterator.html#method.map_init
-[`ChaCha8Rng::set_stream`]: https://docs.rs/rand_chacha/latest/rand_chacha/struct.ChaCha8Rng.html#method.set_stream
+[`ChaCha8Rng::set_stream`]: https://docs.rs/rand/latest/rand/rngs/struct.ChaCha8Rng.html#method.set_stream

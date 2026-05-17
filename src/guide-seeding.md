@@ -110,12 +110,12 @@ to a hash result, then using that result to seed a generator. The
 
 ```rust,noplayground
 use rand::prelude::*;
+use rand::rngs::Xoshiro256PlusPlus;
 use rand_seeder::{Seeder, SipHasher};
-use rand_pcg::Pcg64;
 
 fn main() {
     // In one line:
-    let mut rng: Pcg64 = Seeder::from("stripy zebra").into_rng();
+    let mut rng: Xoshiro256PlusPlus = Seeder::from("stripy zebra").into_rng();
     println!("{}", rng.random::<char>());
 
     // If we want to be more explicit, first we create a SipRng:
@@ -124,11 +124,11 @@ fn main() {
     // (Note: hasher_rng is a full RNG and can be used directly.)
 
     // Now, we use hasher_rng to create a seed:
-    let mut seed: <Pcg64 as SeedableRng>::Seed = Default::default();
+    let mut seed: <Xoshiro256PlusPlus as SeedableRng>::Seed = Default::default();
     hasher_rng.fill(&mut seed);
 
     // And create our RNG from that seed:
-    let mut rng = Pcg64::from_seed(seed);
+    let mut rng = Xoshiro256PlusPlus::from_seed(seed);
     println!("{}", rng.random::<char>());
 }
 ```
@@ -144,6 +144,6 @@ function such as Argon2 must be used.
 [`SeedableRng::from_rng`]: https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#method.from_rng
 [`SeedableRng::seed_from_u64`]: https://docs.rs/rand_core/latest/rand_core/trait.SeedableRng.html#method.seed_from_u64
 [`XorShiftRng`]: https://docs.rs/rand_xorshift/latest/rand_xorshift/struct.XorShiftRng.html
-[`ChaCha8Rng`]: https://docs.rs/rand_chacha/latest/rand_chacha/struct.ChaCha8Rng.html
+[`ChaCha8Rng`]: https://docs.rs/rand/latest/rand/rngs/struct.ChaCha8Rng.html
 [`rand_seeder`]: https://github.com/rust-random/seeder/
 [`rand::make_rng()`]: https://docs.rs/rand/latest/rand/fn.make_rng.html
