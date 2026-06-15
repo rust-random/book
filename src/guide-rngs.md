@@ -80,12 +80,14 @@ table since CSPRNGs may not have observable defects.
 | name | full name |  performance | initialization | memory | security (predictability) | forward secrecy |
 |------|-----------|--------------|--------------|----------|----------------|-------------------------|
 | [`StdRng`] | (unspecified) | fast | fast | (unspecified) | widely trusted | no |
-| [`ChaCha20Rng`] | ChaCha20 | 2.6 GB/s | fast | 320 bytes | [rigorously analysed](https://tools.ietf.org/html/rfc7539#section-1) | no |
-| [`ChaCha12Rng`] | ChaCha12 | 4.1 GB/s | fast | 320 bytes | [large security margin](https://eprint.iacr.org/2019/1492) | no |
-| [`ChaCha8Rng`] | ChaCha8 | 5.8 GB/s | fast | 320 bytes | [sufficient security margin](https://eprint.iacr.org/2019/1492) | no |
+| [`ChaCha20Rng`] | ChaCha20 | 2.6 GB/s | fast | 320 bytes[^size] | [rigorously analysed](https://tools.ietf.org/html/rfc7539#section-1) | no |
+| [`ChaCha12Rng`] | ChaCha12 | 4.1 GB/s | fast | 320 bytes[^size] | [large security margin](https://eprint.iacr.org/2019/1492) | no |
+| [`ChaCha8Rng`] | ChaCha8 | 5.8 GB/s | fast | 320 bytes[^size] | [sufficient security margin](https://eprint.iacr.org/2019/1492) | no |
 | [`Hc128Rng`] | HC-128 | 4.6 GB/s | slow | 4176 bytes | [recommended by eSTREAM](http://www.ecrypt.eu.org/stream/) | no |
 | [`IsaacRng`] | ISAAC | 2.1 GB/s | slow | 2072 bytes | [unknown](https://burtleburtle.net/bob/rand/isaacafa.html) | unknown |
 | [`Isaac64Rng`] | ISAAC-64 | 3.7 GB/s | slow | 4136 bytes| unknown | unknown |
+
+[^size]: The size is an implementation detail, and may change.
 
 It should be noted that the ISAAC generators are only included for
 historical reasons: they have been with the Rust language since the very
