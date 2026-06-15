@@ -39,7 +39,7 @@ You may wish to refer to the [pcg-random] and [xoshiro] websites.
 
 | name | full name | performance | memory | quality | period | features |
 |------|-----------|-------------|--------|---------|--------|----------|
-| [`SmallRng`] | (unspecified) | (unspecified) | (unspecified) | ★★★☆☆ | ≥ `u32` * 2<sup>64</sup> | not portable |
+| [`SmallRng`] | (unspecified) | fast | small | ★★★☆☆ | ≥ `u32` * 2<sup>64</sup> | not portable |
 | [`Pcg32`] | PCG XSH RR 64/32 (LCG) | 5 GB/s | 16 bytes | ★★★☆☆ | `u32` * 2<sup>64</sup> | jump-ahead |
 | [`Pcg64`] | PCG XSL 128/64 (LCG) | 7 GB/s | 32 bytes | ★★★☆☆ | `u64` * 2<sup>128</sup> | jump-ahead |
 | [`Pcg64Mcg`] | PCG XSL 128/64 (MCG) | 8 GB/s | 16 bytes | ★★★☆☆ | `u64` * 2<sup>126</sup> | jump-ahead |
@@ -79,10 +79,10 @@ table since CSPRNGs may not have observable defects.
 
 | name | full name |  performance | initialization | memory | security (predictability) | forward secrecy |
 |------|-----------|--------------|--------------|----------|----------------|-------------------------|
-| [`StdRng`] | (unspecified) | (unspecified) | fast | (unspecified) | widely trusted | no |
-| [`ChaCha20Rng`] | ChaCha20 | 2.6 GB/s | fast | 136 bytes | [rigorously analysed](https://tools.ietf.org/html/rfc7539#section-1) | no |
-| [`ChaCha12Rng`] | ChaCha12 | 4.1 GB/s | fast | 136 bytes | [large security margin](https://eprint.iacr.org/2019/1492) | no |
-| [`ChaCha8Rng`] | ChaCha8 | 5.8 GB/s | fast | 136 bytes | [sufficient security margin](https://eprint.iacr.org/2019/1492) | no |
+| [`StdRng`] | (unspecified) | fast | fast | (unspecified) | widely trusted | no |
+| [`ChaCha20Rng`] | ChaCha20 | 2.6 GB/s | fast | 320 bytes | [rigorously analysed](https://tools.ietf.org/html/rfc7539#section-1) | no |
+| [`ChaCha12Rng`] | ChaCha12 | 4.1 GB/s | fast | 320 bytes | [large security margin](https://eprint.iacr.org/2019/1492) | no |
+| [`ChaCha8Rng`] | ChaCha8 | 5.8 GB/s | fast | 320 bytes | [sufficient security margin](https://eprint.iacr.org/2019/1492) | no |
 | [`Hc128Rng`] | HC-128 | 4.6 GB/s | slow | 4176 bytes | [recommended by eSTREAM](http://www.ecrypt.eu.org/stream/) | no |
 | [`IsaacRng`] | ISAAC | 2.1 GB/s | slow | 2072 bytes | [unknown](https://burtleburtle.net/bob/rand/isaacafa.html) | unknown |
 | [`Isaac64Rng`] | ISAAC-64 | 3.7 GB/s | slow | 4136 bytes| unknown | unknown |
