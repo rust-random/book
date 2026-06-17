@@ -135,7 +135,7 @@ fn main() {
         })
         .reduce(|| 0usize, |a, b| a + b);
 
-    // prints 3.1409052 (determinstic and reproducible result)
+    // prints 3.1409052 (deterministic and reproducible result)
     println!(
         "π is approximately {}",
         4. * (in_circle as f64) / ((BATCH_SIZE * BATCHES) as f64)

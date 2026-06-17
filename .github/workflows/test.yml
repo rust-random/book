@@ -20,6 +20,12 @@ jobs:
           use-linkcheck: true
       - run: mdbook build
 
+  typos:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v6
+      - uses: crate-ci/typos@v1
+
   code-samples:
     name: Test code samples
     runs-on: ubuntu-latest
