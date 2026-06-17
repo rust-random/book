@@ -18,7 +18,7 @@
     - [Parallel RNGs](guide-parallel.md)
     - [Random values](guide-values.md)
     - [Random distributions](guide-dist.md)
-    - [Random processess](guide-process.md)
+    - [Random processes](guide-process.md)
     - [Sequences](guide-seq.md)
     - [Error handling](guide-err.md)
     - [Testing randomized functions](guide-test-fn-rng.md)
