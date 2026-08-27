@@ -3,7 +3,7 @@
 Below we list a short example. For more, please refer to the [API documentation]
 or the [guide].
 
-Lets kick things off with an example
+Let's kick things off with an example
 
 ```rust,editable
 // import commonly used items from the prelude:
